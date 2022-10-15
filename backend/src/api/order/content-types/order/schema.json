@@ -40,7 +40,7 @@
     "books": {
       "type": "relation",
       "relation": "oneToMany",
-      "target": "api::book.book"
+      "target": "api::cart.cart"
     }
   }
 }

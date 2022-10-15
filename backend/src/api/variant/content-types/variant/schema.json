@@ -43,11 +43,32 @@
         "audios"
       ]
     },
-    "languages": {
+    "language": {
       "type": "relation",
-      "relation": "manyToMany",
+      "relation": "manyToOne",
       "target": "api::language.language",
       "inversedBy": "variants"
+    },
+    "pageFormate": {
+      "type": "enumeration",
+      "enum": [
+        "A0",
+        "A1",
+        "A2",
+        "A3",
+        "A4",
+        "A5",
+        "A6"
+      ]
+    },
+    "pageQuality": {
+      "type": "enumeration",
+      "enum": [
+        "WHITE_OFFSET",
+        "WHITE_OR_NATURAL",
+        "GLOSS_TEXT",
+        "WHITE_SMOOTH_OFFSET"
+      ]
     }
   }
 }
