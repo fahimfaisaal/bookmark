@@ -1,4 +1,4 @@
-'use strict';
+const seed = require("./seed");
 
 module.exports = {
   /**
@@ -16,5 +16,9 @@ module.exports = {
    * This gives you an opportunity to set up your data model,
    * run jobs, or perform some special logic.
    */
-  bootstrap(/*{ strapi }*/) {},
+  async bootstrap({ strapi }) {
+    const { CREATE_DUMMY_DATA_ON_BOOTSTRAP } = process.env;
+
+    CREATE_DUMMY_DATA_ON_BOOTSTRAP === "true" && (await seed(strapi));
+  },
 };
