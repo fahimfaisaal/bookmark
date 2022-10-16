@@ -1,4 +1,4 @@
-const seed = require("./seed");
+const seed = require("../_seed");
 
 module.exports = {
   /**

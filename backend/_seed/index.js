@@ -1,4 +1,7 @@
 const { Strapi } = require("@strapi/strapi");
+const { generateModel } = require('./helpers')
+
+
 // this object will store all models ids, it will help us to connect random relation.
 const modelIds = {
   users: [],
@@ -11,7 +14,10 @@ const modelIds = {
   categories: [],
   variants: [],
   orders: [],
+  carts: [],
+  editions:[]
 };
+
 
 /**
  * it will rechive the strapi object and create dummy data with faker js.
@@ -19,6 +25,23 @@ const modelIds = {
  * @param {Strapi} strapi
  */
 module.exports = async function (strapi) {
-  //
-  console.log({ strapi });
+  for (const key in modelIds) {
+    const modelName = key.replace(/s$/, '')
+    const envName = `${modelName.toUpperCase()}_COUNT`
+    let modelCount = process.env[envName] ?? 0
+
+    while (modelCount--) {
+      console.log(generateModel[modelName]())
+    }
+  }
+    
 };
+
+
+async function createModels() {
+
+}
+
+async function relateModels() {
+
+}
