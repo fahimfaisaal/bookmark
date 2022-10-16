@@ -19,13 +19,20 @@ const Button = (theme) => {
         {
           props: { variant: 'btnLight' },
           style: {
-            backgroundColor: `${palette.background.paper}`,
+            backgroundColor:
+              palette.mode === 'light'
+                ? `${palette.secondary.main}`
+                : `${palette.background.paper}`,
             color: `${palette.common.black}`,
             border: `3px solid ${palette.background.dark}`,
             padding: '12px 16px',
             fontFamily: 'Open sans',
             fontSize: '0.7rem',
             fontWeight: 600,
+            '&:hover': {
+              backgroundColor: `${palette.secondary.main}`,
+              color: `${palette.common.white}`,
+            },
           },
         },
         {

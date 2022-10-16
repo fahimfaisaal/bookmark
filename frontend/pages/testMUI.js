@@ -40,8 +40,6 @@ const ResponsiveAppBar = () => {
     <AppBar
       position="static"
       sx={{
-        backgroundColor: 'common.white',
-        color: 'common.black',
         boxShadow: myShadows.menu,
       }}
     >

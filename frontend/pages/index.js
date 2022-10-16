@@ -4,12 +4,23 @@ import {
   Container,
   CssBaseline,
   Divider,
+  Switch,
   Typography,
 } from '@mui/material';
 import ResponsiveAppBar from './testMUI';
 import myShadows from '../src/theme/shadows';
+import { useState } from 'react';
+import theme from '../src/theme';
 
 export default function Home() {
+  const [dark, setDark] = useState(false);
+
+  if (dark) {
+    theme.palette.mode = 'dark';
+  } else {
+    theme.palette.mode = 'light';
+  }
+
   return (
     <Container
       sx={{
@@ -19,10 +30,11 @@ export default function Home() {
     >
       <CssBaseline />
       <ResponsiveAppBar />
-      <Typography variant="h1" color="primary">
-        Heading - 1
-      </Typography>
-      <Typography variant="h2" sx={{ color: 'common.black' }}>
+
+      <Switch color="primary" checked={dark} onChange={() => setDark(!dark)} />
+
+      <Typography variant="h1">Heading - 1</Typography>
+      <Typography variant="h2" sx={{}}>
         {' '}
         Popular Products{' '}
       </Typography>
