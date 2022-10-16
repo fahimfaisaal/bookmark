@@ -34,7 +34,8 @@ module.exports = async function (strapi) {
       console.log(generateModel[modelName]())
     }
   }
-    
+  
+  process.exit(0)
 };
 
 
