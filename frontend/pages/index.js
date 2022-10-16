@@ -1,10 +1,17 @@
-import { Box, Button, CssBaseline, Divider, Typography } from '@mui/material';
+import {
+  Box,
+  Button,
+  Container,
+  CssBaseline,
+  Divider,
+  Typography,
+} from '@mui/material';
 import ResponsiveAppBar from './testMUI';
 import myShadows from '../src/theme/shadows';
 
 export default function Home() {
   return (
-    <div
+    <Container
       sx={{
         backgroundColor: (theme) =>
           theme.palette.mode === 'light' ? 'common.white' : 'common.black',
@@ -41,31 +48,28 @@ export default function Home() {
         footpath nearby.
       </Typography>
       <Divider sx={{ m: 4 }} />
-      <Button variant="contained" sx={{ backgroundColor: 'primary.main' }}>
-        Primary Main
-      </Button>
-      <Button variant="contained" sx={{ backgroundColor: 'primary.light' }}>
-        Primary Light
-      </Button>
-      <Button variant="contained" sx={{ backgroundColor: 'primary.dark' }}>
-        Primary Dark
-      </Button>
-      <Button variant="contained" sx={{ backgroundColor: 'secondary.main' }}>
-        Secondary Main
+      <Button variant="btnDark" sx={{ m: 2 }}>
+        Become a Seller{' '}
       </Button>
       <Button
         variant="contained"
-        sx={{
-          backgroundColor: 'secondary.light',
-          color: 'common.black',
-          '&:hover': {
-            backgroundColor: 'action.hover',
-            color: 'common.white',
-          },
-        }}
+        sx={{ backgroundColor: 'primary.light', m: 2 }}
       >
-        Secondary Light
+        Primary Light
       </Button>
+      <Button
+        variant="contained"
+        sx={{ backgroundColor: 'primary.dark', m: 2 }}
+      >
+        Join
+      </Button>
+      <Button
+        variant="contained"
+        sx={{ backgroundColor: 'secondary.main', m: 2 }}
+      >
+        Secondary Main
+      </Button>
+      <Button variant="btnLight">English</Button>
       <Button variant="contained" sx={{ backgroundColor: 'secondary.dark' }}>
         Secondary Dark
       </Button>
@@ -111,6 +115,6 @@ export default function Home() {
       >
         boxShadow: 2
       </Box>
-    </div>
+    </Container>
   );
 }

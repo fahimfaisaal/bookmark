@@ -60,16 +60,19 @@ const typography = {
   },
   body1: {
     fontFamily: FONT_SECONDARY,
+    fontWeight: 300,
     lineHeight: 1.5,
     fontSize: pxToRem(16),
   },
   body2: {
     fontFamily: FONT_SECONDARY,
+    fontWeight: 300,
     lineHeight: 22 / 14,
     fontSize: pxToRem(14),
   },
   caption: {
     fontFamily: FONT_SECONDARY,
+    fontWeight: 300,
     lineHeight: 1,
     fontSize: pxToRem(12),
   },

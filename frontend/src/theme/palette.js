@@ -49,7 +49,7 @@ const palette = {
     secondary: '#9CA3AF',
     disabled: GREY[500],
   },
-  background: { paper: '#F9FAFB', default: '#F3F4F6' },
+  background: { paper: '#F9FAFB', default: '#F3F4F6', dark: '#F3F4F6' },
   action: {
     hover: PRIMARY.dark,
     focus: GREY[500_24],
