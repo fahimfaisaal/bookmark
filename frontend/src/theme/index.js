@@ -1,13 +1,13 @@
 import { createTheme } from '@mui/material/styles';
 import ComponentsOverrides from './overrides';
-import { paletteDark, paletteLight } from './palette';
+import paletteLight from './palette';
 import typography from './typography';
 
 // Create a theme instance.
 const theme = createTheme({
   palette: {
     mode: 'light',
-    ...(value === 'light' ? { ...paletteLight } : { ...paletteDark }),
+    ...paletteLight,
   },
   typography: {
     ...typography,
