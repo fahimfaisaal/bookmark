@@ -6,15 +6,18 @@ import {
   Divider,
   Switch,
   Typography,
+  useTheme,
 } from '@mui/material';
 import ResponsiveAppBar from './testMUI';
 import myShadows from '../src/theme/shadows';
-import { useState } from 'react';
-import theme from '../src/theme';
 import { UseThemeContext } from '../context/ThemeContext';
+import ComponentsOverrides from '../src/theme/overrides';
 
 export default function Home() {
   const { mode, handleChangeMode } = UseThemeContext();
+  const theme = useTheme();
+
+  theme.components = ComponentsOverrides(theme);
 
   return (
     <Container
