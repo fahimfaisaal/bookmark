@@ -41,6 +41,7 @@ const ResponsiveAppBar = () => {
       position="static"
       sx={{
         boxShadow: myShadows.menu,
+        backgroundColor: 'primary.main',
       }}
     >
       <Container maxWidth="xl">

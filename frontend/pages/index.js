@@ -11,15 +11,10 @@ import ResponsiveAppBar from './testMUI';
 import myShadows from '../src/theme/shadows';
 import { useState } from 'react';
 import theme from '../src/theme';
+import { UseThemeContext } from '../context/ThemeContext';
 
 export default function Home() {
-  const [dark, setDark] = useState(false);
-
-  if (dark) {
-    theme.palette.mode = 'dark';
-  } else {
-    theme.palette.mode = 'light';
-  }
+  const { mode, handleChangeMode } = UseThemeContext();
 
   return (
     <Container
@@ -31,9 +26,15 @@ export default function Home() {
       <CssBaseline />
       <ResponsiveAppBar />
 
-      <Switch color="primary" checked={dark} onChange={() => setDark(!dark)} />
+      <Switch
+        color="primary"
+        checked={mode === 'dark'}
+        onChange={() => handleChangeMode()}
+      />
 
       <Button variant="btnDark">Demo</Button>
+
+      <Button variant="btnLight"></Button>
 
       <Typography variant="h1">Heading - 1</Typography>
       <Typography variant="h2" sx={{}}>

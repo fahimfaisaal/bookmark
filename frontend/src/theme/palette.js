@@ -1,3 +1,4 @@
+import { grey } from '@mui/material/colors';
 import { alpha } from '@mui/material/styles';
 
 // SETUP COLORS
@@ -36,7 +37,31 @@ const SECONDARY = {
   contrastText: '#fff',
 };
 
-const paletteLight = {
+export const paletteDark = {
+  common: { black: '#000', white: '#fff' },
+  primary: { ...PRIMARY },
+  secondary: {
+    main: '#1E293B',
+  },
+  divider: grey[500],
+  blue: '#171F69',
+  grey: GREY,
+  background: {
+    default: '#0F172A',
+    paper: '#0F172A',
+  },
+  text: {
+    primary: '#fff',
+    secondary: grey[500],
+  },
+  action: {
+    hover: PRIMARY.dark,
+    focus: GREY[500_24],
+    disabled: GREY[500_80],
+  },
+};
+
+export const paletteLight = {
   common: { black: '#000', white: '#fff' },
   primary: { ...PRIMARY },
   secondary: { ...SECONDARY },
@@ -55,5 +80,3 @@ const paletteLight = {
     disabled: GREY[500_80],
   },
 };
-
-export default paletteLight;

@@ -4,8 +4,9 @@ import Head from 'next/head';
 import { ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import { CacheProvider } from '@emotion/react';
-import theme from '../src/theme/index';
+
 import createEmotionCache from '../src/createEmotionCache';
+import { ThemeContext } from '../context/ThemeContext';
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
 
@@ -23,10 +24,10 @@ export default function MyApp(props) {
           rel="stylesheet"
         />
       </Head>
-      <ThemeProvider theme={theme}>
+      <ThemeContext>
         <CssBaseline />
         <Component {...pageProps} />
-      </ThemeProvider>
+      </ThemeContext>
     </CacheProvider>
   );
 }
