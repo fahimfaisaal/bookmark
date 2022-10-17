@@ -1,4 +1,5 @@
 const { faker } = require('@faker-js/faker');
+const fs = require('fs/promises')
 
 const uploadFile = async (strapi, {
   data,
@@ -26,33 +27,38 @@ const uploadFile = async (strapi, {
   return uploadedFile
 }
 
-const createModel = (strapi) =>
+const uniqueFields = {
+  user: 'plugin::users-permissions.user'
+}
+
+const createModel = (strapi,) =>
   async (modelName, model) =>
-    await strapi.entityService.create(`api::${modelName}.${modelName}`, { data: model })
+    strapi.entityService.create(uniqueFields[modelName] ?? `api::${modelName}.${modelName}`, { data: model })
 
 const updateModel = (strapi) =>
   async (modelName, populate, model) =>
-    await strapi.entityService.update(`api::${modelName}.${modelName}`, populate, { data: model })
+    await strapi.entityService.update(uniqueFields[modelName] ?? `api::${modelName}.${modelName}`, populate, { data: model })
 
 const generateModel = {
   user: () => {
-    const [firstName, lastName] = faker.name.fullName().split(/\s/)
+    const fullName = faker.name.fullName().split(/\s+/)
+    const [firstName, lastName] = fullName
     const randStr = faker.random.alphaNumeric(5)
 
     return {
       firstName,
       lastName,
-      username: faker.internet.userName(firstName, randStr),
-      email: faker.internet.email(firstName + randStr, lastName),
+      username: faker.internet.userName(fullName, randStr).toLowerCase().replace(/\W/g, ''),
+      email: faker.internet.email(fullName + randStr, lastName),
       password: faker.random.alphaNumeric(6),
       gender: faker.helpers.arrayElement(['male', 'female', 'others']).toUpperCase(),
-      birthDate: faker.date.birthdate({ min: 18, max: 65, mode: 'age' }),
+      // birthDate: faker.date.birthdate({ min: 18, max: 65, mode: 'age' }),
       phone: faker.phone.number('+8801#-########'),
       address: faker.address.country(), // TODO: create address function
     }
   },
   author: () => ({
-    name: faker.internet.fullName(),
+    name: faker.name.fullName(),
     bio: faker.lorem.text(),
     birthDate: faker.date.birthdate({ min: 30, max: 65, mode: 'age' })
   }),
@@ -85,7 +91,7 @@ const generateModel = {
     description: faker.commerce.productDescription()
   }),
   variant: () => ({
-    format: toEnumeration(['pdf', 'audio', 'hard_cover']),
+    format: faker.helpers.arrayElement(['pdf', 'audio', 'hard_cover']),
     pageQuality: faker.helpers.arrayElement(['white_offset', 'white_or_natural', 'gloss_text', 'white_smooth_offset']).toUpperCase(),
     pageFormat: faker.helpers.arrayElement(['a0', 'a1', 'a2', 'a3', 'a4', 'a5', 'a6']).toUpperCase(),
     price: faker.datatype.number({
@@ -106,9 +112,19 @@ const generateModel = {
   })
 }
 
+async function readFile(path, writePlaceholder) {
+  try {
+    return await fs.readFile(path);
+  } catch {
+    await fs.writeFile(path, writePlaceholder);
+    return writePlaceholder;
+  }
+}
+
 module.exports = {
   uploadFile,
   createModel,
   updateModel,
-  generateModel
+  generateModel,
+  readFile
 }
