@@ -33,6 +33,8 @@ export default function Home() {
 
       <Switch color="primary" checked={dark} onChange={() => setDark(!dark)} />
 
+      <Button variant="btnDark">Demo</Button>
+
       <Typography variant="h1">Heading - 1</Typography>
       <Typography variant="h2" sx={{}}>
         {' '}

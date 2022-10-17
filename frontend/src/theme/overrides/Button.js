@@ -1,5 +1,3 @@
-import palette from '../palette';
-
 const Button = (theme) => {
   return {
     MuiButton: {
@@ -20,28 +18,28 @@ const Button = (theme) => {
           props: { variant: 'btnLight' },
           style: {
             backgroundColor:
-              palette.mode === 'light'
-                ? `${palette.secondary.main}`
-                : `${palette.background.paper}`,
-            color: `${palette.common.black}`,
-            border: `3px solid ${palette.background.dark}`,
+              theme.palette.mode === 'light'
+                ? `${theme.palette.secondary.main}`
+                : `${theme.palette.background.paper}`,
+            color: `${theme.palette.common.black}`,
+            border: `3px solid ${theme.palette.background.dark}`,
             padding: '12px 16px',
             fontFamily: 'Open sans',
             fontSize: '0.7rem',
             fontWeight: 600,
             '&:hover': {
-              backgroundColor: `${palette.secondary.main}`,
-              color: `${palette.common.white}`,
+              backgroundColor: `${theme.palette.secondary.main}`,
+              color: `${theme.palette.common.white}`,
             },
           },
         },
         {
           props: { variant: 'btnDark' },
           style: {
-            backgroundColor: `${palette.primary.main}`,
-            color: `${palette.common.white}`,
+            backgroundColor: `${theme.palette.primary.main}`,
+            color: `${theme.palette.common.white}`,
             '&:hover': {
-              backgroundColor: `${palette.action.hover}`,
+              backgroundColor: `${theme.palette.action.hover}`,
             },
           },
         },
