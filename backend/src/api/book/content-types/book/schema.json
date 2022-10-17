@@ -40,7 +40,7 @@
       "enum": [
         "IN_STOCK",
         "STOCK_OUT",
-        "COMMING_SOON",
+        "COMING_SOON",
         "PRE_ORDER"
       ]
     },
@@ -81,15 +81,21 @@
       "target": "api::rating.rating",
       "inversedBy": "bookId"
     },
-    "edition": {
+    "publishYear": {
       "type": "date",
-      "required": true
+      "required": false
     },
     "editions": {
       "type": "relation",
-      "relation": "manyToMany",
-      "target": "api::edition.edition",
-      "inversedBy": "books"
+      "relation": "oneToMany",
+      "target": "api::book.book",
+      "mappedBy": "book"
+    },
+    "book": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::book.book",
+      "inversedBy": "editions"
     },
     "variants": {
       "type": "relation",
