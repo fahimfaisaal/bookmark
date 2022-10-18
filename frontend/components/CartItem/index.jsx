@@ -1,5 +1,5 @@
-import React from 'react';
-import VerticalQuantityBtn from './vertical';
+import React from "react";
+import VerticalQuantityBtn from "./VerticalQuntityBtn";
 
 const CartItem = ({ quantity, price, title }) => {
   return (
