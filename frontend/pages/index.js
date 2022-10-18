@@ -14,6 +14,7 @@ import { UseThemeContext } from '../context/ThemeContext';
 import ComponentsOverrides from '../src/theme/overrides';
 import RecipeReviewCard from '../components/test/Card';
 import CartItem from '../components/CartItem';
+import BookCard from '../components/BookCard';
 
 export default function Home() {
   const { mode, handleChangeMode } = UseThemeContext();
@@ -136,7 +137,7 @@ export default function Home() {
         boxShadow: 2
       </Box>
       <RecipeReviewCard />
-
+      <BookCard />
       <CartItem />
     </Container>
   );
