@@ -71,6 +71,7 @@ export const paletteLight = {
   text: {
     primary: "#1f2937",
     secondary: "#6e89a4",
+    third: "#f97316",
     disabled: GREY[500],
   },
   background: { paper: "#F9FAFB", default: "#F3F4F6", dark: "#F3F4F6" },
