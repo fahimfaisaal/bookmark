@@ -1,24 +1,68 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { apiSlice } from "../api/apiSlice";
+import { userLoggedIn } from "./authSlice";
 
-const initialState = {
-    accessToken: undefined,
-    user: undefined,
-};
+export const authApi = apiSlice.injectEndpoints({
+    endpoints: (builder) => ({
+        register: builder.mutation({
+            query: (data) => ({
+                url: "/register",
+                method: "POST",
+                body: data,
+            }),
+            async onQueryStarted(arg, { queryFulfilled, dispatch }) {
+                try {
+                    const result = await queryFulfilled;
 
-const authSlice = createSlice({
-    name: "auth",
-    initialState,
-    reducers: {
-        userLoggedIn: (state, action) => {
-            state.accessToken = action.payload.accessToken;
-            state.user = action.payload.user;
-        },
-        userLoggedOut: (state) => {
-            state.accessToken = undefined;
-            state.user = undefined;
-        },
-    },
+                    localStorage.setItem(
+                        "auth",
+                        JSON.stringify({
+                            accessToken: result.data.accessToken,
+                            user: result.data.user,
+                        })
+                    );
+
+                    dispatch(
+                        userLoggedIn({
+                            accessToken: result.data.accessToken,
+                            user: result.data.user,
+                        })
+                    );
+                } catch (err) {
+                    // do nothing
+                }
+            },
+        }),
+        login: builder.mutation({
+            query: (data) => ({
+                url: "/login",
+                method: "POST",
+                body: data,
+            }),
+
+            async onQueryStarted(arg, { queryFulfilled, dispatch }) {
+                try {
+                    const result = await queryFulfilled;
+
+                    localStorage.setItem(
+                        "auth",
+                        JSON.stringify({
+                            accessToken: result.data.accessToken,
+                            user: result.data.user,
+                        })
+                    );
+
+                    dispatch(
+                        userLoggedIn({
+                            accessToken: result.data.accessToken,
+                            user: result.data.user,
+                        })
+                    );
+                } catch (err) {
+                    // do nothing
+                }
+            },
+        }),
+    }),
 });
 
-export const { userLoggedIn, userLoggedOut } = authSlice.actions;
-export default authSlice.reducer;
+export const { useLoginMutation, useRegisterMutation } = authApi;
