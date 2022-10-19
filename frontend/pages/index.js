@@ -15,6 +15,12 @@ import ComponentsOverrides from '../src/theme/overrides';
 import RecipeReviewCard from '../components/test/Card';
 import CartItem from '../components/CartItem';
 import BookCard from '../components/BookCard';
+import AddressCard from '../components/AddressCard';
+import ReviewCard from '../components/ReviewCard';
+import LocationIcon from '../components/Icons/Location';
+import SocialMediaIcons from '../components/Icons/SocialMedia';
+import AuthorCard from '../components/AuthorCard';
+import AuthorProfile from '../components/AuthorProfile';
 
 export default function Home() {
   const { mode, handleChangeMode } = UseThemeContext();
@@ -37,8 +43,15 @@ export default function Home() {
         checked={mode === 'dark'}
         onChange={() => handleChangeMode()}
       />
+      <AuthorProfile />
+      <LocationIcon />
+      <SocialMediaIcons />
+      <AuthorCard />
 
-      <Button variant="btnDark">Demo</Button>
+      <AddressCard />
+      <ReviewCard />
+      <BookCard />
+      <CartItem />
 
       <Button variant="btnLight"></Button>
 

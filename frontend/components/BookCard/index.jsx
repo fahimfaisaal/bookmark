@@ -1,7 +1,9 @@
-import { Button, Stack, Typography } from '@mui/material';
+import * as React from 'react';
+import { Stack, Typography } from '@mui/material';
 import Image from 'next/image';
-import { StyledContainer } from './Styles';
-// import { FaShoppingCart } from 'react-icons/fa';
+import { StyledBox, StyledContainer, StyledFav } from './Styles';
+import { FaShoppingCart } from 'react-icons/fa';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 
 const BookCard = ({
   title,
@@ -13,27 +15,45 @@ const BookCard = ({
   salePrice,
 }) => {
   return (
-    <>
-      <Image src="/Comic-Books.jpg" width={300} height={400} />
-      <Typography variant="subtitle1" color="common.black">
-        Superhero & Aliens
-      </Typography>
-      <Stack direction="row" spacing={2} alignItems="center">
-        <Typography variant="caption">by</Typography>
-        <Typography variant="body2">Brandon T.Trigg</Typography>
+    <StyledBox>
+      <Image src="/Comic-Books.jpg" width={250} height={350} />
+      <Stack
+        direction="row"
+        spacing={2}
+        justifyContent="space-between"
+        alignItems="center"
+      >
+        <Typography variant="h3" color="text.primary">
+          Superhero & Aliens
+        </Typography>
+        <StyledFav>
+          <FavoriteBorderIcon />
+        </StyledFav>
       </Stack>
-      <Stack direction="row" spacing={2} alignItems="center">
+      <Stack direction="row" spacing={1} alignItems="center">
+        <Typography variant="caption">by</Typography>
+        <Typography variant="subtitle2">Brandon T.Trigg</Typography>
+      </Stack>
+      <Typography
+        variant="caption"
+        sx={{ color: 'text.secondary', margin: '5px 0' }}
+      >
+        Stock: 25 pcs left
+      </Typography>
+      <Stack
+        direction="row"
+        spacing={2}
+        alignItems="center"
+        justifyContent="space-between"
+      >
         <Typography variant="caption" color="orange">
           $300.00
         </Typography>
         <StyledContainer>
-          <Button>
-            {/* <FaShoppingCart /> Cart */}
-            Cart{' '}
-          </Button>
+          <FaShoppingCart /> Cart
         </StyledContainer>
       </Stack>
-    </>
+    </StyledBox>
   );
 };
 
