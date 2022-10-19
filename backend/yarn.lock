@@ -1145,6 +1145,7 @@
   resolved "https://registry.yarnpkg.com/@faker-js/faker/-/faker-7.6.0.tgz#9ea331766084288634a9247fcd8b84f16ff4ba07"
   integrity sha512-XK6BTq1NDMo9Xqw/YkYyGjSsg44fbNwYRx7QK2CuoQgyy+f1rrTDHoExVM5PsyXCtfl2vs2vVJ0MN0yN6LppRw==
 
+
 "@fingerprintjs/fingerprintjs@3.3.3":
   version "3.3.3"
   resolved "https://registry.npmjs.org/@fingerprintjs/fingerprintjs/-/fingerprintjs-3.3.3.tgz"
