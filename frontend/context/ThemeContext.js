@@ -1,30 +1,30 @@
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { createContext, useContext, useState } from 'react';
-import { paletteDark, paletteLight } from '../src/theme/palette';
-import typography from '../src/theme/typography';
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { createContext, useContext, useState } from "react";
+import { paletteDark, paletteLight } from "../src/theme/palette";
+import typography from "../src/theme/typography";
 
 const Context = createContext();
 
 export const ThemeContext = ({ children }) => {
-  const [mode, setMode] = useState('light');
+  const [mode, setMode] = useState("light");
 
   const handleChangeMode = () => {
-    if (mode === 'light') {
-      setMode('dark');
+    if (mode === "light") {
+      setMode("dark");
     } else {
-      setMode('light');
+      setMode("light");
     }
   };
 
   const theme = createTheme({
     palette: {
       mode,
-      ...(mode === 'light' ? { ...paletteLight } : { ...paletteDark }),
+      ...(mode === "light" ? { ...paletteLight } : { ...paletteDark }),
     },
     typography: {
       ...typography,
     },
-    shadows: Array(25).fill('none'),
+    shadows: Array(25).fill("none"),
   });
 
   return (
