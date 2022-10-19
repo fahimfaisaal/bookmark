@@ -1,0 +1,46 @@
+{
+  "kind": "collectionType",
+  "collectionName": "orders",
+  "info": {
+    "singularName": "order",
+    "pluralName": "orders",
+    "displayName": "Order",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "placedOn": {
+      "type": "date"
+    },
+    "deliverOn": {
+      "type": "date"
+    },
+    "status": {
+      "type": "enumeration",
+      "enum": [
+        "PLACED",
+        "PROCESSING",
+        "DELIVERED",
+        "RETURNED"
+      ]
+    },
+    "isCanceled": {
+      "type": "boolean",
+      "default": false
+    },
+    "usersId": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "orders"
+    },
+    "books": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::cart.cart"
+    }
+  }
+}
