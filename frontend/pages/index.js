@@ -8,6 +8,10 @@ import {
   Typography,
   useTheme,
 } from '@mui/material';
+import AuthorCard from '../components/AuthorCard';
+import CartItem from '../components/CartItem';
+import CategoryCard from '../components/CategoryCard';
+import PublicationCard from '../components/PublicationCard';
 import RecipeReviewCard from '../components/test/Card';
 import { UseThemeContext } from '../context/ThemeContext';
 import ComponentsOverrides from '../src/theme/overrides';
@@ -136,6 +140,10 @@ export default function Home() {
         boxShadow: 2
       </Box>
       <RecipeReviewCard />
+      <CategoryCard />
+      <CartItem />
+      <AuthorCard />
+      <PublicationCard />
     </Container>
   );
 }

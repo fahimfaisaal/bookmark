@@ -1,12 +1,11 @@
-import { Typography } from "@mui/material";
-import { ContainerStyle } from "./Styles";
+import { BtnContainerStyle, ContainerStyle, QntContainerStyle } from "./Styles";
 
 const VerticalQuantityBtn = () => {
   return (
     <ContainerStyle>
-      <Typography variant="button">+</Typography>
-      <Typography variant="body1">1</Typography>
-      <Typography variant="button">-</Typography>
+      <BtnContainerStyle variant="button">+</BtnContainerStyle>
+      <QntContainerStyle variant="button">1</QntContainerStyle>
+      <BtnContainerStyle variant="button">-</BtnContainerStyle>
     </ContainerStyle>
   );
 };
