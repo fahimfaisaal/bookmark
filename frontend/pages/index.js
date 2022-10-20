@@ -17,7 +17,6 @@ import PublicationCard from '../components/PublicationCard';
 import ReviewCard from '../components/ReviewCard';
 import { UseThemeContext } from '../context/ThemeContext';
 import ComponentsOverrides from '../src/theme/overrides';
-import ResponsiveAppBar from './testMUI';
 
 export default function Home() {
   const { mode, handleChangeMode } = UseThemeContext();
@@ -61,23 +60,26 @@ export default function Home() {
           fontSize: '.7rem',
         }}
       >
-        Downloadable
+        boxShadow: 1
       </Button>
-      <Button variant="btnCat">English</Button>
-      <Button variant="btnCart" sx={{ m: 1, padding: '14px ' }}>
-        Add to Cart
-      </Button>
-      <AuthorProfile />
-      <LocationIcon />
-      <SocialMediaIcons />
-      <BookCard />
-      <AddressCard />
-      <ReviewCard />
-      {/* ==========Done by Rezuan========= */}
-      <CategoryCard />
-      <CartItem />
-      <AuthorCard />
-      <PublicationCard />
+      <Box
+        sx={{
+          backgroundColor: 'common.white',
+          boxShadow: myShadows.box,
+          width: '8rem',
+          height: '5rem',
+          color: (theme) =>
+            theme.palette.mode === 'dark' ? 'grey.300' : 'grey.800',
+          p: 1,
+          m: 1,
+          borderRadius: 2,
+          textAlign: 'center',
+          fontSize: '0.875rem',
+          fontWeight: '700',
+        }}
+      >
+        boxShadow: 2
+      </Box>
     </Container>
   );
 }
