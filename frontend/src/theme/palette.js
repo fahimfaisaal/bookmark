@@ -43,6 +43,7 @@ export const paletteDark = {
   secondary: {
     main: '#1E293B',
   },
+  blue: '#171F69',
   divider: grey[500],
   blue: '#171F69',
   grey: GREY,
@@ -74,7 +75,7 @@ export const paletteLight = {
     third: '#f97316',
     disabled: GREY[500],
   },
-  background: { paper: '#F9FAFB', default: '#F3F4F6', dark: '#F3F4F6' },
+  background: { paper: '#F9FAFB', default: '#F3F4F6', dark: '#D1D5DB' },
   action: {
     hover: PRIMARY.dark,
     focus: GREY[500_24],

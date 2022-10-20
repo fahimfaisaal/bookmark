@@ -1,13 +1,12 @@
-import styled from '@emotion/styled';
 import { Grid, Typography } from '@mui/material';
-import { Box, Stack } from '@mui/system';
+import { Stack } from '@mui/system';
 import CustomImage from '../CutomImage';
 import { StyledBox } from './Styles';
 
 const AuthorProfile = ({ language, birthdate, description, title }) => {
   return (
     <Grid container spacing={6}>
-      <Grid item xs={12} lg={6}>
+      <Grid item xs={12} sm={6} lg={6}>
         <StyledBox>
           <CustomImage
             src="https://pickbazar-react.vercel.app/_next/image?url=https%3A%2F%2Fpickbazarlaravel.s3.ap-southeast-1.amazonaws.com%2F1607%2FAuthor-img-800-%25281%2529.jpg&w=1080&q=75"
@@ -17,7 +16,7 @@ const AuthorProfile = ({ language, birthdate, description, title }) => {
           />
         </StyledBox>
       </Grid>
-      <Grid item xs={12} lg={6}>
+      <Grid item xs={12} sm={6} lg={6}>
         <Stack direction="column" spacing={3}>
           <Typography variant="h1">Brandon T. Trigg</Typography>
           <Typography variant="body2">
