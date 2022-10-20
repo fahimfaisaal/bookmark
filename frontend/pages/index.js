@@ -3,18 +3,8 @@ import {
   Container,
   CssBaseline,
   Switch,
-  useTheme,
+  useTheme
 } from '@mui/material';
-import AddressCard from '../components/AddressCard';
-import AuthorCard from '../components/AuthorCard';
-import AuthorProfile from '../components/AuthorProfile';
-import BookCard from '../components/BookCard';
-import CartItem from '../components/CartItem';
-import CategoryCard from '../components/CategoryCard';
-import LocationIcon from '../components/Icons/Location';
-import SocialMediaIcons from '../components/Icons/SocialMedia';
-import PublicationCard from '../components/PublicationCard';
-import ReviewCard from '../components/ReviewCard';
 import { UseThemeContext } from '../context/ThemeContext';
 import ComponentsOverrides from '../src/theme/overrides';
 
