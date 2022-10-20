@@ -20,7 +20,7 @@ const relations = [
     relationType: 'm2m',
     relateWith: 'author',
     labels: ['authors', 'books'],
-    max: 3,
+    max: 2,
     min: 1
   },
   {
@@ -30,6 +30,7 @@ const relations = [
     label: 'variants',
     max: 3,
     min: 1,
+    unique: 'true'
   },
   {
     model: 'book',
@@ -44,8 +45,9 @@ const relations = [
     model: 'user',
     relationType: 'o2m',
     relateWith: 'rating',
-    max: 15,
-    min: 0,
+    label: "ratings",
+    min: 1,
+    max: 10,
     unique: true
   },
   {
@@ -71,7 +73,7 @@ const relations = [
     relateWith: 'variant',
     label: 'variants',
     max: 15,
-    min: 0
+    min: 1
   },
 ]
 

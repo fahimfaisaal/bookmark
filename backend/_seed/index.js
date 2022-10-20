@@ -1,5 +1,5 @@
 const { Strapi } = require("@strapi/strapi");
-const { generateModel, createModel, readFile, updateModel } = require('./helpers')
+const { generateModel, createModel, readFile, updateModel, findManyModel, deleteModel } = require('./helpers')
 const relations = require('./relations')
 const path = require('path')
 const fs = require('fs/promises')
@@ -15,26 +15,30 @@ const modelIds = {
   tag: [],
   category: [],
   variant: [],
+  order: [],
+  cart: []
 };
 
 const relateFuncs = {
   o2m: async (modelRelation, update) => {
     const { model, relateWith, max, min, unique, label } = modelRelation
-    let relationCount = faker.datatype.number({
-      max,
-      min
-    })
+
     let relationModelIds = [...modelIds[relateWith]]
 
-    if (relationCount > relationModelIds.length) {
-      relationCount = relationModelIds.length
-    }
 
     for (const modelId of modelIds[model]) {
       if (relationModelIds.length === 0) {
         break
       }
-      const shuffle = faker.helpers.shuffle(relationModelIds)
+      let relationCount = faker.datatype.number({
+        max,
+        min
+      })
+      if (relationCount > relationModelIds.length) {
+        relationCount = relationModelIds.length
+      }
+
+      const shuffle = [...faker.helpers.shuffle(relationModelIds)]
       const relateModels = shuffle.splice(0, relationCount)
 
       await update(model, modelId, {
@@ -59,10 +63,7 @@ const relateFuncs = {
     }
 
     for (const modelId of modelIds[model]) {
-      if (relationModelIds.length === 0) {
-        break
-      }
-      const shuffle = faker.helpers.shuffle(relationModelIds)
+      const shuffle = [...faker.helpers.shuffle(relationModelIds)]
       const relateModels = shuffle.splice(0, relationCount)
 
       await update(model, modelId, {
@@ -83,7 +84,7 @@ const relateFuncs = {
  * @see - [Generate Dummy Data in Strapi](https://blog.andriishupta.dev/generate-dummy-data-in-strapi#heading-single-type)
  * @param {Strapi} strapi
  */
-module.exports = async function (strapi) {
+const seed = async function (strapi) {
   console.info('🚀 start seeding')
   for (const modelName in modelIds) {
     const envName = `${modelName.toUpperCase()}_COUNT`
@@ -91,10 +92,10 @@ module.exports = async function (strapi) {
 
     if (modelCount) {
       await createModels(modelName, modelCount)
-      await relateModels()
     }
   }
   console.info('✅ seed completed')
+  await relateModels()
 
   async function createModels(modelName, modelCount) {
     console.info(`⌛️ creating ${modelCount} ${modelName} models`)
@@ -141,6 +142,30 @@ module.exports = async function (strapi) {
   process.exit(0)
 };
 
+const reset = async (strapi) => {
+  const findMany = findManyModel(strapi)
+  const del = deleteModel(strapi)
+  console.info(`⌛️ resetting db`)
+
+  for (const modelName in modelIds) {
+    const ids = await findMany(modelName, {
+      fields: ['id']
+    })
+
+    if (ids.length) {
+      console.info(`⌛️ deleting ${modelName}`)
+      for (const { id } of ids) {
+        await del(modelName, id)
+      }
+      console.info(`✅ delete all ${modelName} successfully`)
+    }
+  }
+
+  console.info(`✅ reset db successfully`);
+
+  process.exit(0)
+}
+
 
 async function generateUserInfo(users) {
   console.info(`⌛️ writing users info`)
@@ -154,4 +179,10 @@ async function generateUserInfo(users) {
     await generateUserInfo(users)
   }
   console.info(`✅ user info wrote successfully at ${resolvedPath}`)
+}
+
+
+module.exports = {
+  seed,
+  reset
 }

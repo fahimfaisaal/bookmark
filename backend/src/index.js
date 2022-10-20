@@ -1,4 +1,4 @@
-const seed = require("../_seed");
+const { seed, reset } = require("../_seed");
 
 module.exports = {
   /**
@@ -17,6 +17,13 @@ module.exports = {
    * run jobs, or perform some special logic.
    */
   async bootstrap({ strapi }) {
-    process.env.FORCE_APP_BOOTSTRAP_ONLY === "true" && await seed(strapi);
+    switch (process.env.FORCE_APP_BOOTSTRAP_ONLY_TO) {
+      case 'seed':
+        await seed(strapi)
+        break
+      case 'reset-db':
+        await reset(strapi)
+        break
+    }
   },
 };

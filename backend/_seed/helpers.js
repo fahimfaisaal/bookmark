@@ -33,18 +33,43 @@ const uniqueFields = {
 
 const createModel = (strapi,) =>
   async (modelName, model) =>
-    strapi.entityService.create(uniqueFields[modelName] ?? `api::${modelName}.${modelName}`, { data: model })
+    strapi.entityService.create(uniqueFields[modelName] ?? `api::${modelName}.${modelName}`, {
+      data: {
+        ...model,
+        publishedAt: new Date()
+    } })
+
+const deleteModel = (strapi,) =>
+  async (modelName, populateId) =>
+    strapi.entityService.delete(uniqueFields[modelName] ?? `api::${modelName}.${modelName}`, populateId)
+
+const findManyModel = (strapi,) =>
+  async (modelName, parameters) =>
+    strapi.entityService.findMany(uniqueFields[modelName] ?? `api::${modelName}.${modelName}`, parameters)
+
+
+const createAddress = () => {
+  const address = {
+    country: faker.address.country(),
+    city: faker.address.city(),
+    state: faker.address.state(),
+    zip: faker.address.zipCode(),
+    streetAddress: faker.address.streetAddress()
+  }
+
+  return new URLSearchParams(address).toString()
+}
 
 const updateModel = (strapi) =>
   async (modelName, populate, model) =>
     await strapi.entityService.update(uniqueFields[modelName] ?? `api::${modelName}.${modelName}`, populate, { data: model })
-
-const generateModel = {
-  user: () => {
+    const generateModel = {
+      user: () => {
+    const date = new Date(faker.date.birthdate({ min: 18, max: 65, mode: 'age' }))
     const fullName = faker.name.fullName().split(/\s+/)
     const [firstName, lastName] = fullName
     const randStr = faker.random.alphaNumeric(5)
-
+    
     return {
       firstName,
       lastName,
@@ -52,9 +77,8 @@ const generateModel = {
       email: faker.internet.email(fullName + randStr, lastName),
       password: faker.random.alphaNumeric(6),
       gender: faker.helpers.arrayElement(['male', 'female', 'others']).toUpperCase(),
-      // birthDate: faker.date.birthdate({ min: 18, max: 65, mode: 'age' }),
       phone: faker.phone.number('+8801#-########'),
-      address: faker.address.country(), // TODO: create address function
+      address: createAddress(), 
     }
   },
   author: () => ({
@@ -124,7 +148,9 @@ async function readFile(path, writePlaceholder) {
 module.exports = {
   uploadFile,
   createModel,
+  findManyModel,
   updateModel,
+  deleteModel,
   generateModel,
   readFile
 }
