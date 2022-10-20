@@ -5,3 +5,5 @@ export const favouritesApi = apiSlice.injectEndpoints({
         getFavouriteBooks: builder.query({ query: () => `` }),
     })
 })
+
+export const {useGetFavouriteBooksQuery} = favouritesApi

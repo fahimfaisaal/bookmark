@@ -1,6 +1,8 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { userLoggedOut } from "../auth/authSlice";
 
+// NEXT_PUBLIC_API_URL=http://localhost:1337/api
+
 const baseQuery = fetchBaseQuery({
   baseUrl: process.env.NEXT_PUBLIC_API_URL,
   prepareHeaders: async (headers, { getState, endpoint }) => {
@@ -24,6 +26,7 @@ export const apiSlice = createApi({
     }
     return result;
   },
-  tagTypes: [],
+  tagTypes: ['books', 'book', 'carts', 'cart', 'orders', 'order','ratings', 'tags', 'user', 'favourites'],
+  keepUnusedDataFor: 3600,
   endpoints: (builder) => ({}),
 });
