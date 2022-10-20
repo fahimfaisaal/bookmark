@@ -8,19 +8,11 @@ import {
   Typography,
   useTheme,
 } from '@mui/material';
-import ResponsiveAppBar from './testMUI';
-import myShadows from '../src/theme/shadows';
+import RecipeReviewCard from '../components/test/Card';
 import { UseThemeContext } from '../context/ThemeContext';
 import ComponentsOverrides from '../src/theme/overrides';
-import RecipeReviewCard from '../components/test/Card';
-import CartItem from '../components/CartItem';
-import BookCard from '../components/BookCard';
-import AddressCard from '../components/AddressCard';
-import ReviewCard from '../components/ReviewCard';
-import LocationIcon from '../components/Icons/Location';
-import SocialMediaIcons from '../components/Icons/SocialMedia';
-import AuthorCard from '../components/AuthorCard';
-import AuthorProfile from '../components/AuthorProfile';
+import myShadows from '../src/theme/shadows';
+import ResponsiveAppBar from './testMUI';
 
 export default function Home() {
   const { mode, handleChangeMode } = UseThemeContext();
@@ -33,6 +25,7 @@ export default function Home() {
       sx={{
         backgroundColor: (theme) =>
           theme.palette.mode === 'light' ? 'common.white' : 'common.black',
+        margin: '50px auto',
       }}
     >
       <CssBaseline />
@@ -43,15 +36,8 @@ export default function Home() {
         checked={mode === 'dark'}
         onChange={() => handleChangeMode()}
       />
-      <AuthorProfile />
-      <LocationIcon />
-      <SocialMediaIcons />
-      <AuthorCard />
 
-      <AddressCard />
-      <ReviewCard />
-      <BookCard />
-      <CartItem />
+      <Button variant="btnDark">Demo</Button>
 
       <Button variant="btnLight"></Button>
 
@@ -150,8 +136,6 @@ export default function Home() {
         boxShadow: 2
       </Box>
       <RecipeReviewCard />
-      <BookCard />
-      <CartItem />
     </Container>
   );
 }

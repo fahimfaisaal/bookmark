@@ -37,15 +37,15 @@ const typography = {
     // ...responsiveFontSizes({ sm: 52, md: 58, lg: 64 }),
   },
   h2: {
-    fontWeight: 400,
+    fontWeight: 700,
     lineHeight: 64 / 48,
     fontSize: pxToRem(24),
     // ...responsiveFontSizes({ sm: 40, md: 44, lg: 48 }),
   },
   h3: {
-    fontWeight: 400,
+    fontWeight: 700,
     lineHeight: 1.5,
-    fontSize: pxToRem(18),
+    fontSize: pxToRem(16),
     // ...responsiveFontSizes({ sm: 26, md: 30, lg: 32 }),
   },
   subtitle1: {
@@ -56,7 +56,7 @@ const typography = {
   subtitle2: {
     fontWeight: 600,
     lineHeight: 22 / 14,
-    fontSize: pxToRem(12),
+    fontSize: pxToRem(14),
   },
   body1: {
     fontFamily: FONT_SECONDARY,
@@ -84,7 +84,7 @@ const typography = {
     textTransform: 'uppercase',
   },
   button: {
-    fontWeight: 700,
+    fontWeight: 500,
     lineHeight: 24 / 14,
     fontSize: pxToRem(14),
     textTransform: 'capitalize',
