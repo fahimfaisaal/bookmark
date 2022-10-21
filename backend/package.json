@@ -7,7 +7,9 @@
     "dev": "strapi develop",
     "start": "strapi start",
     "build": "strapi build",
-    "strapi": "strapi"
+    "strapi": "strapi",
+    "seed": "cross-env FORCE_APP_BOOTSTRAP_ONLY_TO=seed strapi start",
+    "reset:db": "cross-env FORCE_APP_BOOTSTRAP_ONLY_TO=reset-db strapi start"
   },
   "dependencies": {
     "@strapi/plugin-i18n": "4.4.3",
@@ -25,5 +27,9 @@
     "node": ">=14.19.1 <=18.x.x",
     "npm": ">=6.0.0"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "@faker-js/faker": "^7.6.0",
+    "cross-env": "^7.0.3"
+  }
 }

@@ -42,7 +42,7 @@
       "target": "api::author.author",
       "inversedBy": "publishers"
     },
-    "websiteLink": {
+    "website": {
       "type": "string"
     },
     "logo": {
@@ -55,6 +55,9 @@
         "videos",
         "audios"
       ]
+    },
+    "socials": {
+      "type": "string"
     }
   }
 }

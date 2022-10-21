@@ -19,7 +19,7 @@
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::variant.variant",
-      "mappedBy": "language"
+      "mappedBy": "languageId"
     }
   }
 }

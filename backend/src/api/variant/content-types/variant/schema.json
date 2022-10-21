@@ -12,7 +12,7 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "book": {
+    "bookId": {
       "type": "relation",
       "relation": "manyToOne",
       "target": "api::book.book",
@@ -43,7 +43,7 @@
         "audios"
       ]
     },
-    "language": {
+    "languageId": {
       "type": "relation",
       "relation": "manyToOne",
       "target": "api::language.language",
