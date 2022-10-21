@@ -1,0 +1,38 @@
+{
+  "kind": "collectionType",
+  "collectionName": "payments",
+  "info": {
+    "singularName": "payment",
+    "pluralName": "payments",
+    "displayName": "Payment",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "type": {
+      "type": "enumeration",
+      "enum": [
+        "CARD",
+        "BKASH",
+        "STRAPI"
+      ],
+      "required": true
+    },
+    "order": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::order.order"
+    },
+    "transactionId": {
+      "type": "string",
+      "required": true
+    },
+    "paidAt": {
+      "type": "date",
+      "required": true
+    }
+  }
+}
