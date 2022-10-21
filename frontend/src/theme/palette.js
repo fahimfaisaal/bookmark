@@ -38,18 +38,18 @@ const SECONDARY = {
 };
 
 export const paletteDark = {
-  common: { black: '#000', white: '#fff' },
+  common: { white: '#fff', black: '#000' },
   primary: { ...PRIMARY },
   secondary: {
     main: '#1E293B',
   },
   blue: '#171F69',
   divider: grey[500],
-  blue: '#171F69',
   grey: GREY,
   background: {
     default: '#0F172A',
     paper: '#0F172A',
+    dark: GREY[500_32],
   },
   text: {
     primary: '#fff',

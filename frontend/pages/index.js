@@ -13,6 +13,7 @@ import CartItem from '../components/CartItem';
 import CategoryCard from '../components/CategoryCard';
 import LocationIcon from '../components/Icons/Location';
 import SocialMediaIcons from '../components/Icons/SocialMedia';
+import Profile from '../components/Profile';
 import PublicationCard from '../components/PublicationCard';
 import { UseThemeContext } from '../context/ThemeContext';
 import ComponentsOverrides from '../src/theme/overrides';
@@ -27,7 +28,7 @@ export default function Home() {
     <Container
       sx={{
         backgroundColor: (theme) =>
-          theme.palette.mode === 'light' ? 'common.white' : 'common.black',
+          theme.palette.mode === 'light' ? '#F3F4F6' : 'common.black',
         margin: '50px auto',
       }}
     >
@@ -39,6 +40,8 @@ export default function Home() {
         onChange={() => handleChangeMode()}
       />
       {/* ==========Done by Rezuan========= */}
+      <Profile />
+
       <br />
       <br />
       <Button variant="btnGreen">Become a Seller</Button>
