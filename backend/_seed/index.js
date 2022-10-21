@@ -9,7 +9,8 @@ async function forceAction(strapi) {
     'tag',
     'language',
     'publisher',
-    'variant'
+    'variant',
+    'rating'
   ]
   const dbService = new DbService(strapi, interactModels)
 

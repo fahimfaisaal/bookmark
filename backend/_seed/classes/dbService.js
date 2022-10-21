@@ -63,7 +63,7 @@ class DbService {
 
   async #generateUserInfo(users) {
     console.info(`⌛️ writing users info`)
-    const resolvedPath = path.resolve(__dirname, 'user.info.json')
+    const resolvedPath = path.resolve(__dirname, '..', 'user.info.json')
 
     try {
       const createdUsers = JSON.parse((await readFile(resolvedPath, '[]')).toString())
@@ -162,7 +162,7 @@ class DbService {
 
       console.info(`✅ reset db successfully`);
 
-      await fs.unlink(path.resolve(__dirname, 'user.info.json'))
+      await fs.unlink(path.resolve(__dirname, '..', 'user.info.json'))
 
       console.info('🗑️ delete user.info.json');
     } catch (e) {
