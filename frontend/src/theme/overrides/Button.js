@@ -73,6 +73,8 @@ const Button = (theme) => {
           style: {
             ...repeatStyleGreen(theme),
             backgroundColor: `${theme.palette.primary.light}`,
+            borderRadius: '20px',
+            fontSize: '.7rem',
           },
         },
         {

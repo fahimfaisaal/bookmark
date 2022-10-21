@@ -39,37 +39,53 @@ export default function Home() {
         onChange={() => handleChangeMode()}
       />
       {/* ==========Done by Rezuan========= */}
-      <Button variant="btnGreen" sx={{ margin: 5 }}>
-        Become a Seller
-      </Button>
-      <Button variant="btnGreen" sx={{ m: 2 }}>
-        Login
-      </Button>
-      <Button variant="btnAskSeller" sx={{ m: 2 }}>
-        Ask seller a question
-      </Button>
-      <div>
-        <Button variant="btnGreenCart">Add to cart</Button>
-      </div>
-      <Button
-        variant="btnCart"
-        sx={{
-          m: 2,
-        }}
-      >
-        Add to Cart
-      </Button>
+      <br />
+      <br />
+      <Button variant="btnGreen">Become a Seller</Button>
+      <br />
+      <br />
+      <Button variant="btnGreen">Login</Button>
+      <br />
+      <br />
+      <Button variant="btnAskSeller">Ask seller a question</Button>
+      <br />
+      <br />
+      <Button variant="btnGreenLight">Downloadable</Button>
+      <br />
+      <br />
+      <Button variant="btnGreenCart">Add to cart</Button>
+      <br />
+      <br />
+      <Button variant="btnCart">Add to Cart</Button>
+      <br />
+      <br />
       <Button variant="btnCat">English</Button>
+      <br />
+      <br />
       {/* ==========Done by Rezuan========= */}
       <PublicationCard />
+      <br />
+      <br />
       <CategoryCard />
+      <br />
+      <br />
       <LocationIcon />
+      <br />
+      <br />
       <SocialMediaIcons />
+      <br />
+      <br />
       <CartItem />
+      <br />
+      <br />
       <AddressCard />
       <AuthorProfile />
       <AuthorCard />
       <BookCard />
+      <br />
+      <br />
+      <br />
+      <br />
     </Container>
   );
 }
