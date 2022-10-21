@@ -12,7 +12,7 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "book": {
+    "bookId": {
       "type": "relation",
       "relation": "manyToOne",
       "target": "api::book.book",

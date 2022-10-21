@@ -97,17 +97,17 @@
       "target": "api::book.book",
       "inversedBy": "editions"
     },
-    "variants": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::variant.variant",
-      "mappedBy": "book"
-    },
     "users": {
       "type": "relation",
       "relation": "manyToMany",
       "target": "plugin::users-permissions.user",
       "inversedBy": "favorites"
+    },
+    "variants": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::variant.variant",
+      "mappedBy": "bookId"
     }
   }
 }
