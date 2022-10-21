@@ -65,7 +65,6 @@ const updateModel = (strapi) =>
     await strapi.entityService.update(uniqueFields[modelName] ?? `api::${modelName}.${modelName}`, populate, { data: model })
     const generateModel = {
       user: () => {
-    const date = new Date(faker.date.birthdate({ min: 18, max: 65, mode: 'age' }))
     const fullName = faker.name.fullName().split(/\s+/)
     const [firstName, lastName] = fullName
     const randStr = faker.random.alphaNumeric(5)
@@ -78,13 +77,13 @@ const updateModel = (strapi) =>
       password: faker.random.alphaNumeric(6),
       gender: faker.helpers.arrayElement(['male', 'female', 'others']).toUpperCase(),
       phone: faker.phone.number('+8801#-########'),
-      address: createAddress(), 
+      address: createAddress(),
+      role: 1
     }
   },
   author: () => ({
     name: faker.name.fullName(),
     bio: faker.lorem.text(),
-    birthDate: faker.date.birthdate({ min: 30, max: 65, mode: 'age' })
   }),
   publisher: () => {
     const name = faker.word.noun()

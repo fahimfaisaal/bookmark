@@ -20,62 +20,49 @@ const modelIds = {
 };
 
 const relateFuncs = {
-  o2m: async (modelRelation, update) => {
-    const { model, relateWith, max, min, unique, label } = modelRelation
-
-    let relationModelIds = [...modelIds[relateWith]]
-
+  m2m: async (modelRelation, update) => {
+    const { model, relateWith, max, min, labels: [label1, label2] } = modelRelation
+    const memoizeLabel2 = {}
 
     for (const modelId of modelIds[model]) {
-      if (relationModelIds.length === 0) {
-        break
-      }
-      let relationCount = faker.datatype.number({
+      const relationCount = faker.datatype.number({
         max,
         min
       })
-      if (relationCount > relationModelIds.length) {
-        relationCount = relationModelIds.length
-      }
-
-      const shuffle = [...faker.helpers.shuffle(relationModelIds)]
-      const relateModels = shuffle.splice(0, relationCount)
-
-      await update(model, modelId, {
-        [label]: relateModels
-      })
-
-      if (unique) {
-        relationModelIds = shuffle
-      }
-    }
-  },
-  m2m: async (modelRelation, update) => {
-    const { model, relateWith, max, min, labels: [label1, label2] } = modelRelation
-    let relationCount = faker.datatype.number({
-      max,
-      min
-    })
-    let relationModelIds = [...modelIds[relateWith]]
-
-    if (relationCount > relationModelIds.length) {
-      relationCount = relationModelIds.length
-    }
-
-    for (const modelId of modelIds[model]) {
-      const shuffle = [...faker.helpers.shuffle(relationModelIds)]
-      const relateModels = shuffle.splice(0, relationCount)
+      const shuffle = faker.helpers.shuffle(modelIds[relateWith])
+      const relateModels = shuffle.slice(0, relationCount)
 
       await update(model, modelId, {
         [label1]: relateModels
       })
 
       for (const relateId of relateModels) {
-        await update(relateWith, relateId, {
-          [label2]: modelId
-        })
+        if (relateId in memoizeLabel2) {
+          memoizeLabel2[relateId].push(modelId)
+        } else {
+          memoizeLabel2[relateId] = [modelId]
+        }
       }
     }
+
+    for (const relateId in memoizeLabel2) {
+      await update(relateWith, relateId, {
+        [label2]: memoizeLabel2[relateId]
+      })
+    }
+  },
+  o2m: async (modelRelation, update) => {
+    const { model, relateWith, label } = modelRelation
+    const relationModelIds = [...modelIds[relateWith]]
+
+    for (const modelId of modelIds[model]) {
+      const relateIndex = Math.floor(Math.random() * relationModelIds.length)
+
+      await update(model, modelId, {
+        [label]: relationModelIds.at(relateIndex)
+      })
+    }
+
   }
 }
 
@@ -135,8 +122,10 @@ const seed = async function (strapi) {
     const update = updateModel(strapi)
     
     for (const modelInfo of relations) {
+      console.info(`↕️ relating ${modelInfo.model} with ${modelInfo.relateWith} in ${modelInfo.relationType} relation`)
       await relateFuncs[modelInfo.relationType](modelInfo, update)
     }
+    console.info('✅ relation completed')
   }
   
   process.exit(0)

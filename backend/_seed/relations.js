@@ -1,80 +1,75 @@
 const relations = [
   {
     model: 'book',
-    relationType: 'm2m',
     relateWith: 'category',
+    relationType: 'm2m',
     labels: ['categories', 'books'],
     max: 3,
     min: 1
   },
   {
     model: 'book',
-    relationType: 'm2m',
     relateWith: 'tag',
+    relationType: 'm2m',
     labels: ['tags', 'books'],
     max: 5,
     min: 1
   },
   {
     model: 'book',
-    relationType: 'm2m',
     relateWith: 'author',
+    relationType: 'm2m',
     labels: ['authors', 'books'],
-    max: 2,
-    min: 1
-  },
-  {
-    model: 'book',
-    relationType: 'o2m',
-    relateWith: 'variant',
-    label: 'variants',
     max: 3,
     min: 1,
-    unique: 'true'
-  },
-  {
-    model: 'book',
-    relationType: 'o2m',
-    relateWith: 'rating',
-    label: 'ratings',
-    max: 5,
-    min: 1,
-    unique: true
   },
   {
     model: 'user',
-    relationType: 'o2m',
-    relateWith: 'rating',
-    label: "ratings",
-    min: 1,
+    relateWith: 'book',
+    relationType: 'm2m',
+    labels: ['favorites', 'books'],
     max: 10,
-    unique: true
+    min: 3
   },
   {
     model: 'author',
-    relationType: 'm2m',
     relateWith: 'publisher',
+    relationType: 'm2m',
     labels: ['publishers', 'authors'],
     max: 5,
     min: 1
   },
   {
-    model: 'publisher',
-    relationType: 'o2m',
+    model: 'rating',
     relateWith: 'book',
-    label: 'books',
-    max: 10,
-    min: 1,
-    unique: true
+    relationType: 'o2m',
+    label: 'bookId',
   },
   {
-    model: 'language',
+    model: 'rating',
+    relateWith: 'user',
     relationType: 'o2m',
-    relateWith: 'variant',
-    label: 'variants',
-    max: 15,
-    min: 1
+    label: 'userId',
   },
+  {
+    model: 'book',
+    relateWith: 'publisher',
+    relationType: 'o2m',
+    label: 'publisherId',
+  },
+  {
+    model: 'variant',
+    relateWith: 'language',
+    relationType: 'o2m',
+    label: 'languageId'
+  },
+  {
+    model: 'variant',
+    relateWith: 'book',
+    relationType: 'o2m',
+    label: 'bookId'
+  },
+
 ]
 
 module.exports = relations
