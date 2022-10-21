@@ -3,8 +3,17 @@ import {
   Container,
   CssBaseline,
   Switch,
-  useTheme
+  useTheme,
 } from '@mui/material';
+import AddressCard from '../components/AddressCard';
+import AuthorCard from '../components/AuthorCard';
+import AuthorProfile from '../components/AuthorProfile';
+import BookCard from '../components/BookCard';
+import CartItem from '../components/CartItem';
+import CategoryCard from '../components/CategoryCard';
+import LocationIcon from '../components/Icons/Location';
+import SocialMediaIcons from '../components/Icons/SocialMedia';
+import PublicationCard from '../components/PublicationCard';
 import { UseThemeContext } from '../context/ThemeContext';
 import ComponentsOverrides from '../src/theme/overrides';
 
@@ -23,7 +32,6 @@ export default function Home() {
       }}
     >
       <CssBaseline />
-      <ResponsiveAppBar />
 
       <Switch
         color="primary"
@@ -34,42 +42,34 @@ export default function Home() {
       <Button variant="btnGreen" sx={{ margin: 5 }}>
         Become a Seller
       </Button>
-      <Button variant="btnGreen" sx={{ width: '30%', m: 2 }}>
+      <Button variant="btnGreen" sx={{ m: 2 }}>
         Login
       </Button>
-      <Button
-        variant="btnGreen"
-        sx={{ m: 2, borderRadius: '20px', fontSize: '.7rem' }}
-      >
+      <Button variant="btnAskSeller" sx={{ m: 2 }}>
         Ask seller a question
       </Button>
+      <div>
+        <Button variant="btnGreenCart">Add to cart</Button>
+      </div>
       <Button
-        variant="btnGreen"
+        variant="btnCart"
         sx={{
           m: 2,
-          fontSize: '.7rem',
         }}
       >
-        boxShadow: 1
+        Add to Cart
       </Button>
-      <Box
-        sx={{
-          backgroundColor: 'common.white',
-          boxShadow: myShadows.box,
-          width: '8rem',
-          height: '5rem',
-          color: (theme) =>
-            theme.palette.mode === 'dark' ? 'grey.300' : 'grey.800',
-          p: 1,
-          m: 1,
-          borderRadius: 2,
-          textAlign: 'center',
-          fontSize: '0.875rem',
-          fontWeight: '700',
-        }}
-      >
-        boxShadow: 2
-      </Box>
+      <Button variant="btnCat">English</Button>
+      {/* ==========Done by Rezuan========= */}
+      <PublicationCard />
+      <CategoryCard />
+      <LocationIcon />
+      <SocialMediaIcons />
+      <CartItem />
+      <AddressCard />
+      <AuthorProfile />
+      <AuthorCard />
+      <BookCard />
     </Container>
   );
 }

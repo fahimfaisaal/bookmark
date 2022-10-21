@@ -12,6 +12,7 @@ export const StyledBox = styled(Box)(({ theme }) => ({
   borderRadius: '6px',
   padding: '10px',
 }));
+
 export const StyledContainer = styled(Button)(({ theme }) => ({
   fontSize: '12px',
   display: 'flex',

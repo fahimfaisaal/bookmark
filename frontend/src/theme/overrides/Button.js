@@ -1,3 +1,30 @@
+//=============Reusable Styles========
+const repeatStyleGreen = (theme) => ({
+  backgroundColor: `${theme.palette.primary.main}`,
+  color: `${theme.palette.common.white}`,
+  padding: '8px 12px',
+  border: 'none',
+  '&:hover': {
+    backgroundColor: `${theme.palette.primary.dark}`,
+  },
+});
+
+const repeatStyleCart = (theme) => ({
+  backgroundColor: `${theme.palette.background.dark}`,
+  color: `${theme.palette.text.primary}`,
+  border: `1px solid #D1D5DB`,
+  width: '40%',
+  height: '56px',
+  padding: '20px',
+  fontFamily: 'Open sans',
+  fontSize: '1rem',
+  fontWeight: 600,
+  '&:hover': {
+    color: `${theme.palette.text.primary}`,
+  },
+});
+//=============Reusable Styles========
+
 const Button = (theme) => {
   return {
     MuiButton: {
@@ -32,25 +59,50 @@ const Button = (theme) => {
         {
           props: { variant: 'btnCart' },
           style: {
-            backgroundColor: `${theme.palette.background.dark}`,
-            color: `${theme.palette.text.primary}`,
-            border: `1px solid #D1D5DB`,
-            width: '40%',
-            fontFamily: 'Open sans',
-            fontSize: '0.856rem',
-            fontWeight: 600,
-            '&:hover': {
-              color: `${theme.palette.text.primary}`,
-            },
+            ...repeatStyleCart(theme),
           },
         },
         {
           props: { variant: 'btnGreen' },
           style: {
+            ...repeatStyleGreen(theme),
+          },
+        },
+        {
+          props: { variant: 'btnGreenLight' },
+          style: {
+            ...repeatStyleGreen(theme),
+            backgroundColor: `${theme.palette.primary.light}`,
+          },
+        },
+        {
+          props: { variant: 'btnGreen' },
+          style: {
+            ...repeatStyleGreen(theme),
+          },
+        },
+        {
+          props: { variant: 'btnLogin' },
+          style: {
+            ...repeatStyleGreen(theme),
+            width: '30%',
+          },
+        },
+        {
+          props: { variant: 'btnAskSeller' },
+          style: {
+            ...repeatStyleGreen(theme),
+            borderRadius: '20px',
+            fontSize: '.7rem',
+          },
+        },
+        {
+          props: { variant: 'btnGreenCart' },
+          style: {
+            ...repeatStyleCart(theme),
             backgroundColor: `${theme.palette.primary.main}`,
             color: `${theme.palette.common.white}`,
-            padding: '8px 12px',
-            border: 'none',
+            width: '40%',
             '&:hover': {
               backgroundColor: `${theme.palette.primary.dark}`,
             },
