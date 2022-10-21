@@ -102,6 +102,12 @@
       "relation": "oneToMany",
       "target": "api::variant.variant",
       "mappedBy": "book"
+    },
+    "users": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "favorites"
     }
   }
 }

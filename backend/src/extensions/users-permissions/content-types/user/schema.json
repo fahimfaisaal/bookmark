@@ -116,8 +116,9 @@
     },
     "favorites": {
       "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::book.book"
+      "relation": "manyToMany",
+      "target": "api::book.book",
+      "inversedBy": "users"
     }
   }
 }
