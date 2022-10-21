@@ -13,27 +13,29 @@
   "pluginOptions": {},
   "attributes": {
     "description": {
-      "type": "text"
+      "type": "text",
+      "maxLength": 1500,
+      "minLength": 50
     },
     "images": {
       "type": "media",
       "multiple": true,
       "required": false,
       "allowedTypes": [
-        "images",
-        "files",
-        "videos",
-        "audios"
+        "images"
       ]
     },
     "favorites": {
-      "type": "integer"
+      "type": "integer",
+      "default": 0
     },
     "bestSelling": {
       "type": "boolean"
     },
     "name": {
-      "type": "string"
+      "type": "string",
+      "maxLength": 100,
+      "minLength": 10
     },
     "status": {
       "type": "enumeration",
@@ -42,7 +44,8 @@
         "STOCK_OUT",
         "COMING_SOON",
         "PRE_ORDER"
-      ]
+      ],
+      "required": true
     },
     "slug": {
       "type": "uid",
@@ -55,7 +58,8 @@
       "inversedBy": "books"
     },
     "totalPages": {
-      "type": "integer"
+      "type": "integer",
+      "required": true
     },
     "tags": {
       "type": "relation",

@@ -19,7 +19,14 @@
       "type": "relation",
       "relation": "manyToMany",
       "target": "api::book.book",
-      "inversedBy": "categories"
+      "mappedBy": "categories"
+    },
+    "coverImage": {
+      "allowedTypes": [
+        "images"
+      ],
+      "type": "media",
+      "multiple": false
     }
   }
 }
