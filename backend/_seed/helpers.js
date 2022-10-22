@@ -50,7 +50,7 @@ const generateModel = {
       lastName,
       username: faker.internet.userName(fullName, randStr).toLowerCase().replace(/\W/g, ''),
       email: faker.internet.email(fullName + randStr, lastName),
-      password: faker.random.alphaNumeric(6),
+      password: '121212aA',
       gender: faker.helpers.arrayElement(['male', 'female', 'others']).toUpperCase(),
       phone: faker.phone.number('+8801#-########'),
       address: createAddress(),
