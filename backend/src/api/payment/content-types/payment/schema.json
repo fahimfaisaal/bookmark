@@ -15,7 +15,6 @@
     "type": {
       "type": "enumeration",
       "enum": [
-        "CARD",
         "BKASH",
         "STRIPE"
       ],
