@@ -6,6 +6,7 @@ export const StyledContainer = styled(Box)(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
   gap: '20px',
+  width: '100%',
   border: 'none',
   borderRadius: '8px',
   padding: '30px',

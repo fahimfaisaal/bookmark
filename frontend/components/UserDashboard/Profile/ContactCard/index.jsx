@@ -1,6 +1,6 @@
 import { InputLabel, TextField } from '@mui/material';
 import React from 'react';
-import { StyledContainer } from '../Styles';
+import { StyledContainer } from '../../Styles';
 
 const ContactCard = () => {
   return (

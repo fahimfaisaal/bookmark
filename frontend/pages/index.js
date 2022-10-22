@@ -13,8 +13,9 @@ import CartItem from '../components/CartItem';
 import CategoryCard from '../components/CategoryCard';
 import LocationIcon from '../components/Icons/Location';
 import SocialMediaIcons from '../components/Icons/SocialMedia';
-import Profile from '../components/Profile';
 import PublicationCard from '../components/PublicationCard';
+import UserDashboard from '../components/UserDashboard';
+import Profile from '../components/UserDashboard/Profile';
 import { UseThemeContext } from '../context/ThemeContext';
 import ComponentsOverrides from '../src/theme/overrides';
 
@@ -40,7 +41,7 @@ export default function Home() {
         onChange={() => handleChangeMode()}
       />
       {/* ==========Done by Rezuan========= */}
-      <Profile />
+      <UserDashboard />
 
       <br />
       <br />

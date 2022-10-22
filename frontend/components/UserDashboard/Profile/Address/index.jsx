@@ -1,6 +1,6 @@
 import { InputLabel, Typography } from '@mui/material';
-import AddressCard from '../../AddressCard';
-import { StyledContainer } from '../Styles';
+import AddressCard from '../../../AddressCard';
+import { StyledContainer } from '../../Styles';
 
 const Address = () => {
   return (

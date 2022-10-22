@@ -5,7 +5,7 @@ import { Button, InputLabel } from '@mui/material';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import { StyledBox, StyledInput, StyledLabel } from './Styles';
 import { Stack } from '@mui/system';
-import { StyledContainer } from '../Styles';
+import { StyledContainer } from '../../Styles';
 
 const InputField = () => {
   return (
@@ -19,16 +19,17 @@ const InputField = () => {
             <StyledInput type="file" /> Upload an image
           </StyledLabel>
         </StyledBox>
-        <InputLabel color="secondary">Name</InputLabel>
-        <TextField fullWidth placeholder="Name" id="fullWidth" />
-        <InputLabel color="secondary">Bio</InputLabel>
-        <TextField
-          fullWidth
-          id="outlined-textarea"
-          placeholder="Bio"
-          rows={4}
-          multiline
-        />
+
+        <InputLabel color="secondary" htmlFor="name">
+          Name
+        </InputLabel>
+        <TextField fullWidth placeholder="Name" id="name" />
+
+        <InputLabel color="secondary" htmlFor="bio">
+          Bio
+        </InputLabel>
+        <TextField fullWidth id="bio" placeholder="Bio" rows={4} multiline />
+
         <Box textAlign={'right'}>
           <Button variant="btnGreen">Save</Button>
         </Box>
