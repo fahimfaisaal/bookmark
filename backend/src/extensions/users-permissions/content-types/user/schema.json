@@ -70,10 +70,16 @@
       "mappedBy": "userId"
     },
     "firstName": {
-      "type": "string"
+      "type": "string",
+      "required": true,
+      "maxLength": 30,
+      "minLength": 2
     },
     "lastName": {
-      "type": "string"
+      "type": "string",
+      "maxLength": 30,
+      "minLength": 3,
+      "required": true
     },
     "gender": {
       "type": "enumeration",
@@ -81,7 +87,8 @@
         "MALE",
         "FEMALE",
         "OTHERS"
-      ]
+      ],
+      "required": true
     },
     "birthDate": {
       "type": "date"
@@ -91,14 +98,12 @@
       "multiple": false,
       "required": false,
       "allowedTypes": [
-        "images",
-        "files",
-        "videos",
-        "audios"
+        "images"
       ]
     },
     "phone": {
-      "type": "string"
+      "type": "string",
+      "required": true
     },
     "address": {
       "type": "text"
@@ -118,7 +123,7 @@
       "type": "relation",
       "relation": "manyToMany",
       "target": "api::book.book",
-      "inversedBy": "users"
+      "mappedBy": "users"
     }
   }
 }
