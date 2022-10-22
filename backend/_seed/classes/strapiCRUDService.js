@@ -1,4 +1,9 @@
 class StrapiCRUDService {
+/**
+ * @type {import("@strapi/strapi").Strapi}
+ * @param {Strapi} strapi
+ * @param {Set<string>} interactModels
+ */
   constructor(strapi, interactModels) {
     this.strapi = strapi
     this.modelUIDs = strapi.db.config.models.reduce(

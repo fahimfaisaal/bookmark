@@ -111,6 +111,11 @@ const generateModel = {
   })
 }
 
+/**
+ * @param {string} path 
+ * @param {string} writePlaceholder 
+ * @returns {string|Buffer}
+ */
 async function readFile(path, writePlaceholder) {
   try {
     return await fs.readFile(path);

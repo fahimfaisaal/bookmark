@@ -6,6 +6,11 @@ const { faker } = require('@faker-js/faker');
 const StrapiCRUDService = require("./strapiCRUDService");
 
 class DbService {
+/**
+ * @type {import("@strapi/strapi").Strapi}
+ * @param {Strapi} strapi
+ * @param {Array<string>} interactModels
+ */
   constructor(strapi, interactModels) {
     this.strapi = strapi
     this.modelIds = interactModels.reduce(
@@ -15,6 +20,11 @@ class DbService {
     this.entityService = new StrapiCRUDService(strapi, new Set(interactModels))
   }
 
+  /**
+   * this function create a model by specific model name
+   * @param {string} modelName - the name of model
+   * @param {number} modelCount 
+   */
   async #createModels(modelName, modelCount) {
     console.info(`⌛️ creating ${modelCount} ${modelName} models`)
     const users = []
@@ -43,6 +53,9 @@ class DbService {
     console.info(`✅ ${modelName} models created successfully`)
   }
 
+  /**
+   * this function relate all models based on this.modelIds
+   */
   async #relateModels() {
     console.info('⌛️ start creating relation')
 
@@ -61,6 +74,15 @@ class DbService {
     console.info('✅ relation completed')
   }
 
+  /**
+   * it will generate all created user information & write a json file for it
+   * @typedef UserInfo
+   * @type {Object}
+   * @property {Object} email
+   * @property {string} username
+   * @property {string} password
+   * @param {Array<UserInfo>} users 
+   */
   async #generateUserInfo(users) {
     console.info(`⌛️ writing users info`)
     const resolvedPath = path.resolve(__dirname, '..', 'user.info.json')
@@ -76,6 +98,16 @@ class DbService {
     console.info(`✅ user info wrote successfully at ${resolvedPath}`)
   }
 
+  /**
+   * @typedef ModelInfoM2M
+   * @type {Object}
+   * @property {string} model - the model name
+   * @property {string} relateWith - the model to relate with
+   * @property {[string, string]} labels - the plural name of relate model & model
+   * @property {number} max
+   * @property {number} min
+   * @param {ModelInfoM2M} modelInfo 
+   */
   async #relateManyToMany(modelInfo) {
     const { model, relateWith, max, min, labels: [label1, label2] } = modelInfo
     const memoizeLabel2 = {}
@@ -108,6 +140,14 @@ class DbService {
     }
   }
 
+/**
+ * @typedef ModelInfoO2M
+ * @type {Object}
+ * @property {string} model - the model name
+ * @property {string} relateWith - the model to relate with
+ * @property {string} labels- the plural name of relate model
+ * @param {ModelInfoO2M} modelInfo 
+ */
   async #relateOneToMany(modelInfo) {
     const { model, relateWith, label } = modelInfo
     const relationModelIds = [...this.modelIds[relateWith]]

@@ -1,5 +1,9 @@
 const DbService = require('./classes/dbService')
 
+/**
+ * @type {import("@strapi/strapi").Strapi}
+ * @param {Strapi} strapi 
+ */
 async function forceAction(strapi) {
   const interactModels = [
     'user',
