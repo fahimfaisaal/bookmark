@@ -24,7 +24,11 @@ export const ThemeContext = ({ children }) => {
     typography: {
       ...typography,
     },
-    shadows: Array(25).fill("none"),
+    shadows: [
+      "none",
+      "rgba(0, 0, 0, 0.16) 0px 1px 4px",
+      ...Array(23).fill("none"),
+    ],
   });
 
   return (
