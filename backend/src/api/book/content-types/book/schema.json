@@ -79,12 +79,6 @@
       "target": "api::publisher.publisher",
       "inversedBy": "books"
     },
-    "ratings": {
-      "type": "relation",
-      "relation": "manyToOne",
-      "target": "api::rating.rating",
-      "inversedBy": "bookId"
-    },
     "publishYear": {
       "type": "date",
       "required": false
@@ -111,6 +105,12 @@
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::variant.variant",
+      "mappedBy": "bookId"
+    },
+    "ratings": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::rating.rating",
       "mappedBy": "bookId"
     }
   }

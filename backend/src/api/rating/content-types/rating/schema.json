@@ -25,9 +25,9 @@
     },
     "bookId": {
       "type": "relation",
-      "relation": "oneToMany",
+      "relation": "manyToOne",
       "target": "api::book.book",
-      "mappedBy": "ratings"
+      "inversedBy": "ratings"
     },
     "userId": {
       "type": "relation",
