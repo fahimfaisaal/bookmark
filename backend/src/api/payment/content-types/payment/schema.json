@@ -17,7 +17,7 @@
       "enum": [
         "CARD",
         "BKASH",
-        "STRAPI"
+        "STRIPE"
       ],
       "required": true
     },
