@@ -59,13 +59,13 @@ const generateModel = {
   },
   author: () => ({
     name: faker.name.fullName(),
-    bio: faker.lorem.text(),
+    bio: faker.lorem.sentence(20),
   }),
   publisher: () => {
     const name = faker.word.noun()
     return {
       name,
-      bio: faker.lorem.text(),
+      bio: faker.lorem.sentence(20),
       socials: ['facebook', 'twitter', 'linkedin'].map(socialName => `https://${socialName}.com/${name}`).join(','),
       website: faker.internet.domainName()
     }
@@ -87,7 +87,11 @@ const generateModel = {
     name: faker.commerce.productName(),
     publishedYear: faker.date.past(),
     status: faker.helpers.arrayElement(['in_stock', 'stock_out', 'coming_soon', 'pre_order']).toUpperCase(),
-    description: faker.commerce.productDescription()
+    description: faker.commerce.productDescription(),
+    totalPages: faker.datatype.number({
+      min: 30,
+      max: 3000
+    })
   }),
   variant: () => ({
     format: faker.helpers.arrayElement(['pdf', 'audio', 'hard_cover']),

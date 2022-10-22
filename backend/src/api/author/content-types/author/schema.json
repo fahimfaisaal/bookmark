@@ -15,7 +15,7 @@
     "name": {
       "type": "string",
       "required": true,
-      "maxLength": 20,
+      "maxLength": 50,
       "minLength": 3
     },
     "image": {
