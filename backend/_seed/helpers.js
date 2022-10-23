@@ -1,31 +1,6 @@
 const { faker } = require('@faker-js/faker');
 const fs = require('fs/promises')
 
-const uploadFile = async (strapi, {
-  data,
-  file,
-}) => {
-  const { refId, ref, field } = data
-  const { name, path, type } = file
-
-  const fileStat = statSync(path);
-
-  const [uploadedFile] = await strapi.plugins.upload.services.upload.upload({
-    data: {
-      refId,
-      ref,
-      field
-    },
-    files: {
-      path,
-      name,
-      type,
-      size: fileStat.size,
-    },
-  });
-
-  return uploadedFile
-}
 
 const createAddress = () => {
   const address = {
@@ -39,8 +14,10 @@ const createAddress = () => {
   return new URLSearchParams(address).toString()
 }
 
+
+
 const generateModel = {
-  user: () => {
+  user: (mediaId) => {
     const fullName = faker.name.fullName().split(/\s+/)
     const [firstName, lastName] = fullName
     const randStr = faker.random.alphaNumeric(5)
@@ -50,16 +27,18 @@ const generateModel = {
       lastName,
       username: faker.internet.userName(fullName, randStr).toLowerCase().replace(/\W/g, ''),
       email: faker.internet.email(fullName + randStr, lastName),
-      password: faker.random.alphaNumeric(6),
+      password: '121212aA',
       gender: faker.helpers.arrayElement(['male', 'female', 'others']).toUpperCase(),
       phone: faker.phone.number('+8801#-########'),
       address: createAddress(),
-      role: 1
+      role: 1, 
+      avatar: mediaId[4] //media image
     }
   },
-  author: () => ({
+  author: (mediaId) => ({
     name: faker.name.fullName(),
     bio: faker.lorem.sentence(20),
+    image: mediaId[3]
   }),
   publisher: () => {
     const name = faker.word.noun()
@@ -80,13 +59,23 @@ const generateModel = {
   tag: () => ({
     type: faker.word.noun()
   }),
-  category: () => ({
-    type: faker.word.noun()
-  }),
-  book: () => ({
+  category: (mediaID) => {
+    try {
+      // const mediaId = await imageFileUpload(strapi,'../public/uploads/category.png','category.png' )
+     return {
+      type: faker.word.noun(), 
+      coverImage: mediaID[0]
+     }
+    } catch (error) {
+      console.log("error ->", error)
+    }
+   
+  },
+  book: (mediaId) => ({
     name: faker.commerce.productName(),
     publishedYear: faker.date.past(),
     status: faker.helpers.arrayElement(['in_stock', 'stock_out', 'coming_soon', 'pre_order']).toUpperCase(),
+    images: [mediaId[1], mediaId[2]],
     description: faker.commerce.productDescription(),
     totalPages: faker.datatype.number({
       min: 30,
@@ -130,7 +119,6 @@ async function readFile(path, writePlaceholder) {
 }
 
 module.exports = {
-  uploadFile,
   generateModel,
   readFile
 }
