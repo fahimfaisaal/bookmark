@@ -1,4 +1,6 @@
 import {
+  Box,
+  Button,
   Table,
   TableBody,
   TableCell,
@@ -6,7 +8,7 @@ import {
   TableRow,
   Typography,
 } from '@mui/material';
-import { StyledButton, StyledTableCell, StyledTableContainer } from './Styles';
+import { StyledOrder, StyledTableCell, StyledTableContainer } from './Styles';
 
 const OrderItem = () => {
   return (
@@ -19,7 +21,7 @@ const OrderItem = () => {
               <Typography component="span">#66</Typography>
             </TableCell>
             <TableCell>
-              <StyledButton>Order Received</StyledButton>
+              <Button variant="btnOrder">Order Received</Button>
             </TableCell>
           </TableRow>
         </TableHead>

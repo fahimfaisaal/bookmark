@@ -16,17 +16,32 @@ const ChangePassword = () => {
         <InputLabel color="secondary" htmlFor="old-pass">
           Old Password
         </InputLabel>
-        <TextField fullWidth placeholder="*********" id="old-pass" />
+        <TextField
+          size="small"
+          fullWidth
+          placeholder="*********"
+          id="old-pass"
+        />
 
         <InputLabel color="secondary" htmlFor="new-pass">
           New Password
         </InputLabel>
-        <TextField fullWidth placeholder="*********" id="new-pass" />
+        <TextField
+          size="small"
+          fullWidth
+          placeholder="*********"
+          id="new-pass"
+        />
 
         <InputLabel color="secondary" htmlFor="confirm-pass">
           Confirm Password
         </InputLabel>
-        <TextField fullWidth placeholder="*********" id="confirm-pass" />
+        <TextField
+          size="small"
+          fullWidth
+          placeholder="*********"
+          id="confirm-pass"
+        />
 
         <Box textAlign={'right'}>
           <Button variant="btnGreen">Submit</Button>

@@ -1,8 +1,9 @@
-import { Box, Typography } from '@mui/material';
+import { Typography } from '@mui/material';
 import React from 'react';
 import { StyledContainer } from '../Styles';
 import OrderDetails from './OrderDetails';
 import OrderItem from './OrderItem';
+import ProgressBar from './ProgressBar';
 
 const MyOrders = () => {
   return (
@@ -10,6 +11,7 @@ const MyOrders = () => {
       <Typography variant="h2">My Orders</Typography>
       <OrderItem />
       <OrderDetails />
+      <ProgressBar />
     </StyledContainer>
   );
 };

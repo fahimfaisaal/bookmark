@@ -110,6 +110,21 @@ const Button = (theme) => {
             },
           },
         },
+        {
+          props: { variant: 'btnOrder' },
+          style: {
+            backgroundColor: '#DBEAFE',
+            padding: '8px 12px',
+            color: '#7E8CF6',
+            fontWeight: 500,
+            '&:hover': {
+              borderRadius: '5px',
+              backgroundColor: '#DBEAFE',
+              color: '#7E8CF6',
+              fontWeight: 500,
+            },
+          },
+        },
       ],
     },
   };
