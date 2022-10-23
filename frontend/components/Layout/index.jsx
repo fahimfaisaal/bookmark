@@ -5,9 +5,9 @@ import Footer from "./Footer";
 import NavBar from "./NavBar";
 
 const ChildrenContainer = styled(Box)(({ theme }) => ({
-  margin: "110px 5%",
+  margin: "150px 5%",
   [theme.breakpoints.down("sm")]: {
-    margin: "110px 3%",
+    margin: "150px 3%",
   },
 }));
 

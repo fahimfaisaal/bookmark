@@ -7,8 +7,7 @@ export const ContainerStyle = styled(Box)(({ theme }) => ({
   gap: "0px",
   alignItems: "center",
   borderRadius: "20px",
-  padding: "2px 20px",
-  width: "30px",
+  padding: "2px 12px",
   background: `${theme.palette.background.dark}`,
 }));
 

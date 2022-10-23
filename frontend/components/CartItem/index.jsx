@@ -12,7 +12,7 @@ import {
 import VerticalQuantityBtn from "./VerticalQuntityBtn";
 const CartItem = ({ quantity, price, title }) => {
   return (
-    <ItemContainerStyle direction={"row"} spacing={3}>
+    <ItemContainerStyle direction={"row"} spacing={2}>
       <VerticalQuantityBtn />
       <ImgContainerStyle>
         <img src="images/book-1.jpg" alt="" height={70} width={60} />

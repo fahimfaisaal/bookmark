@@ -1,6 +1,5 @@
 import { Box, Grid, Typography } from "@mui/material";
 import { Stack } from "@mui/system";
-import React from "react";
 import { LogoContainer } from "../NavBar/Styles";
 import FooterItem from "./FooterItem";
 import {
@@ -36,13 +35,17 @@ const Footer = () => {
           <LogoContainer>
             <img src="/images/logo-1.png" alt="" />
           </LogoContainer>
-          <Typography variant="body2" py={3}>
+          <Typography variant="body2" py={3} fontWeight={400}>
             2429 River Drive, Suite 35 Cottonhall, CA 2296 United Kingdom
           </Typography>
-          <Typography variant="body2" py={3}>
-            dummy@dummy.com
-            <Typography variant="body2">+1 256-698-0694</Typography>
-          </Typography>
+          <Box py={3}>
+            <Typography variant="body2" fontWeight={400}>
+              dummy@dummy.com
+            </Typography>
+            <Typography variant="body2" fontWeight={400}>
+              +1 256-698-0694
+            </Typography>
+          </Box>
         </Grid>
         <Grid item lg={3} md={6} xs={12}>
           <FooterItem title={"Explore"} data={exploreData} />
@@ -60,7 +63,7 @@ const Footer = () => {
           justifyContent={"space-between"}
           alignItems={"center"}
         >
-          <Typography variant="body2" my={3}>
+          <Typography variant="body2" my={3} fontWeight={400}>
             © Copyright 2022 RedQ, Inc. All rights reserved
           </Typography>
           <Stack

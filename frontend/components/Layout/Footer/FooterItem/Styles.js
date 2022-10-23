@@ -7,6 +7,7 @@ export const LinkContainer = styled(Link)(({ theme }) => ({
   marginBottom: "15px",
   color: `${theme.palette.text.primary}`,
   fontSize: "16px",
+  fontWeight: "400",
   cursor: "pointer",
   textDecoration: "none",
   "&:hover": {

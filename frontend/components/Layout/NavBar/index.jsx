@@ -2,9 +2,11 @@ import {
   Avatar,
   Badge,
   Box,
+  Button,
   Divider,
   InputBase,
   Link,
+  ListItem,
   Menu,
   MenuItem,
   SwipeableDrawer,
@@ -14,7 +16,9 @@ import {
 } from "@mui/material";
 import IconButton from "@mui/material/IconButton";
 import { Stack } from "@mui/system";
+import { useRouter } from "next/router";
 import { useState } from "react";
+import { AiOutlineFilter } from "react-icons/ai";
 import { BiSearch, BiUser } from "react-icons/bi";
 import { CgMenuLeft, CgShoppingBag } from "react-icons/cg";
 import { HiOutlineShoppingBag, HiShoppingBag } from "react-icons/hi";
@@ -32,17 +36,168 @@ import {
   IconContainer,
   LinkContainer,
   LogoContainer,
+  MenuContainer,
+  MenuHeaderContiner,
   MenuItemContainer,
+  MenuLinkContainer,
+  MenuListContainer,
+  MiniTopBarContainer,
   MobileBarContainer,
   MobileMenuContainer,
+  MobMenuItemContainer,
   SearchContainer,
   ThemeSwitch,
 } from "./Styles";
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
+const menuItems = [
+  {
+    link: "/books",
+    text: "Books",
+  },
+  {
+    link: "/authors",
+    text: "Authors",
+  },
+  {
+    link: "/publishers",
+    text: "Publishers",
+  },
+  {
+    link: "/contact",
+    text: "Contact",
+  },
+  {
+    link: "/about",
+    text: "About Us",
+  },
+];
+
+const profileMenuItems = [
+  {
+    link: "/profile",
+    text: "Profile",
+  },
+  {
+    link: "/orders",
+    text: "My Orders",
+  },
+  {
+    link: "/wishlists",
+    text: "My Wishlists",
+  },
+  {
+    link: "/checkout",
+    text: "Checkout",
+  },
+  {
+    link: "/change-password",
+    text: "Change Password",
+  },
+  {
+    link: "",
+    text: "Logout",
+  },
+];
+
+const categoreyItems = [
+  {
+    link: "",
+    text: "Comic books",
+  },
+  {
+    link: "",
+    text: " Science Fiction",
+  },
+  {
+    link: "",
+    text: "Literature",
+  },
+  {
+    link: "",
+    text: "Childrens",
+  },
+  {
+    link: "",
+    text: "Literature",
+  },
+  {
+    link: "",
+    text: "Horror Fiction",
+  },
+];
+
+const SearchBar = ({ normal }) => {
+  const theme = useTheme();
+  const [focus, setFocus] = useState(false);
+  const handleOnFocus = () => {
+    setFocus(true);
+  };
+  const handleOnBlur = () => {
+    setFocus(false);
+  };
+
+  return (
+    <SearchContainer
+      sx={
+        focus
+          ? { border: `1px solid ${theme.palette.primary.main}` }
+          : { border: `1px solid ${theme.palette.background.dark}` }
+      }
+      normal={normal}
+    >
+      <BiSearch />
+      <InputBase
+        placeholder="Search (type at least 3 chars)"
+        onFocus={handleOnFocus}
+        onBlur={handleOnBlur}
+      />
+    </SearchContainer>
+  );
+};
+
+const Drawer = ({ anchor, data, open, toggle }) => {
+  return (
+    <SwipeableDrawer
+      anchor={anchor}
+      open={open}
+      onClose={toggle(false)}
+      onOpen={toggle(true)}
+    >
+      <MenuContainer role="presentation">
+        <MenuHeaderContiner>
+          <Stack
+            direction={"row"}
+            justifyContent={"space-between"}
+            alignItems={"center"}
+          >
+            <Link href="/">
+              <img src="/images/logo-1.png" alt="" width={180} height={30} />
+            </Link>
+            <Box>
+              <CloseBtnContaner onClick={toggle(false)}>
+                <IoIosClose />
+              </CloseBtnContaner>
+            </Box>
+          </Stack>
+        </MenuHeaderContiner>
+        <Divider />
+
+        <MenuListContainer>
+          {data.map((item) => (
+            <ListItem key={item.text}>
+              <MenuLinkContainer href={item.link}>
+                {item.text}
+              </MenuLinkContainer>
+            </ListItem>
+          ))}
+        </MenuListContainer>
+      </MenuContainer>
+    </SwipeableDrawer>
+  );
+};
 
 const NavBar = () => {
   const [anchorElUser, setAnchorElUser] = useState(null);
-  const [focus, setFocus] = useState(false);
   const { handleChangeMode } = UseThemeContext();
 
   const handleOpenUserMenu = (event) => {
@@ -52,15 +207,6 @@ const NavBar = () => {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
-
-  const handleOnFocus = () => {
-    setFocus(true);
-  };
-  const handleOnBlur = () => {
-    setFocus(false);
-  };
-
-  const theme = useTheme();
 
   const [cartModalTrg, setCartModalTrig] = useState(false);
 
@@ -81,24 +227,57 @@ const NavBar = () => {
     setSearchTrig(true);
   };
 
-  const SearchBar = ({ normal, handleOnFocus, handleOnBlur }) => {
-    return (
-      <SearchContainer
-        sx={
-          focus
-            ? { border: `1px solid ${theme.palette.primary.main}` }
-            : { border: `1px solid ${theme.palette.background.dark}` }
-        }
-        normal={normal}
-      >
-        <BiSearch />
-        <InputBase
-          placeholder="Search (type at least 3 chars)"
-          onFocus={handleOnFocus}
-          onBlur={handleOnBlur}
-        />
-      </SearchContainer>
-    );
+  const [mobMenuTrig, setMobMenuTrig] = useState(false);
+
+  const toggleMenuDraw = (open) => (event) => {
+    if (
+      event &&
+      event.type === "keydown" &&
+      (event.key === "Tab" || event.key === "Shift")
+    ) {
+      return;
+    }
+    setMobMenuTrig(open);
+  };
+  const [profileMenuTrig, setProfileMenuTrig] = useState(false);
+
+  const toggleProfileDraw = (open) => (event) => {
+    if (
+      event &&
+      event.type === "keydown" &&
+      (event.key === "Tab" || event.key === "Shift")
+    ) {
+      return;
+    }
+    setProfileMenuTrig(open);
+  };
+  const [filterMenuTrig, setFilterMenuTrig] = useState(false);
+
+  const toggleFilterDraw = (open) => (event) => {
+    if (
+      event &&
+      event.type === "keydown" &&
+      (event.key === "Tab" || event.key === "Shift")
+    ) {
+      return;
+    }
+    setFilterMenuTrig(open);
+  };
+
+  const [mobSearchTrig, setMobSearchTrig] = useState(false);
+
+  const handleSearchToggle = () => {
+    if (mobSearchTrig) {
+      setMobSearchTrig(false);
+    } else {
+      setMobSearchTrig(true);
+    }
+  };
+
+  const router = useRouter();
+
+  const handleHome = () => {
+    router.push("/");
   };
 
   return (
@@ -117,26 +296,19 @@ const NavBar = () => {
           </Link>
           {!serachTrig ? (
             <Stack direction={"row"} spacing={2} alignItems="center">
-              <LinkContainer href="/books">Books</LinkContainer>
-              <LinkContainer href="/authors">Authors</LinkContainer>
-              <LinkContainer href="publishers">Publishers</LinkContainer>
-              <LinkContainer href="/contact">Contact</LinkContainer>
-              <LinkContainer href="/about">About Us</LinkContainer>
+              {menuItems.map((item) => (
+                <LinkContainer href={item.link} key={item.text}>
+                  {item.text}
+                </LinkContainer>
+              ))}
               <LinkContainer additional={true} onClick={toggleSearch}>
                 Search
               </LinkContainer>
             </Stack>
           ) : (
-            <SearchBar
-              handleOnBlur={handleOnBlur}
-              handleOnFocus={handleOnFocus}
-            />
+            <SearchBar normal={false} />
           )}
-          <SearchBar
-            normal={true}
-            handleOnBlur={handleOnBlur}
-            handleOnFocus={handleOnFocus}
-          />
+          <SearchBar normal={true} />
           <IconContainer>
             <ThemeSwitch onChange={handleChangeMode} />
           </IconContainer>
@@ -185,18 +357,18 @@ const NavBar = () => {
               ))}
             </Menu>
           </Box>
+          <Box>
+            <Button variant="contained">Join</Button>
+          </Box>
         </Stack>
+
         <SwipeableDrawer
           anchor={"right"}
           open={cartModalTrg}
           onClose={toggleDrawer(false)}
           onOpen={toggleDrawer(true)}
         >
-          <CartContainer
-            role="presentation"
-            // onClick={toggleDrawer(false)}
-            // onKeyDown={toggleDrawer(false)}
-          >
+          <CartContainer role="presentation">
             <CartHeaderContainer>
               <Stack
                 direction={"row"}
@@ -229,6 +401,7 @@ const NavBar = () => {
           </CartContainer>
         </SwipeableDrawer>
       </AppBarContainer>
+
       <MobileBarContainer position="fixed">
         <Stack
           direction={"row"}
@@ -236,13 +409,44 @@ const NavBar = () => {
           alignItems="center"
           justifyContent={"center"}
         >
-          <Link href="/">
-            <LogoContainer marginTop={"8px"}>
-              <img src="/images/logo-1.png" alt="" />
-            </LogoContainer>
-          </Link>
+          {mobSearchTrig ? (
+            <SearchBar normal={false} />
+          ) : (
+            <Link href="/">
+              <LogoContainer marginTop={"8px"}>
+                <img src="/images/logo-1.png" alt="" />
+              </LogoContainer>
+            </Link>
+          )}
         </Stack>
       </MobileBarContainer>
+      <MiniTopBarContainer>
+        <Stack
+          direction={"row"}
+          justifyContent={"space-between"}
+          alignItems={"center"}
+        >
+          <Box>
+            <Button variant="outlined" onClick={toggleFilterDraw(true)}>
+              <AiOutlineFilter />
+              <Typography variant="h4" marginLeft={"5px"}>
+                Filter
+              </Typography>
+            </Button>
+          </Box>
+          <Box>
+            <ThemeSwitch onChange={handleChangeMode} />
+          </Box>
+        </Stack>
+
+        <Drawer
+          anchor={"left"}
+          open={filterMenuTrig}
+          toggle={toggleFilterDraw}
+          data={categoreyItems}
+        />
+      </MiniTopBarContainer>
+
       <MobileMenuContainer position="fexed">
         <Stack
           direction={"row"}
@@ -250,12 +454,41 @@ const NavBar = () => {
           alignItems="center"
           justifyContent={"space-between"}
         >
-          <CgMenuLeft />
-          <BiSearch />
-          <VscHome />
-          <CgShoppingBag />
-          <BiUser />
+          <MobMenuItemContainer onClick={toggleMenuDraw(true)}>
+            <CgMenuLeft />
+          </MobMenuItemContainer>
+
+          <MobMenuItemContainer onClick={handleSearchToggle}>
+            <BiSearch />
+          </MobMenuItemContainer>
+
+          <MobMenuItemContainer onClick={handleHome}>
+            <VscHome />
+          </MobMenuItemContainer>
+
+          <MobMenuItemContainer onClick={toggleDrawer(true)}>
+            <Badge badgeContent={2} color="primary">
+              <CgShoppingBag />
+            </Badge>
+          </MobMenuItemContainer>
+
+          <MobMenuItemContainer onClick={toggleProfileDraw(true)}>
+            <BiUser />
+          </MobMenuItemContainer>
         </Stack>
+
+        <Drawer
+          anchor={"left"}
+          open={mobMenuTrig}
+          toggle={toggleMenuDraw}
+          data={menuItems}
+        />
+        <Drawer
+          anchor={"right"}
+          open={profileMenuTrig}
+          toggle={toggleProfileDraw}
+          data={profileMenuItems}
+        />
       </MobileMenuContainer>
     </>
   );

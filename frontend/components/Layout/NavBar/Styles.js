@@ -1,4 +1,4 @@
-import { AppBar, Link, Switch, Typography } from "@mui/material";
+import { AppBar, Link, List, Switch, Typography } from "@mui/material";
 import { Box, styled } from "@mui/system";
 
 const barStyle = (theme) => {
@@ -52,6 +52,7 @@ export const LinkContainer = styled(Link)(({ theme, additional }) => ({
   padding: 0,
   color: `${theme.palette.text.primary}`,
   fontSize: "17px",
+  fontWeight: "450",
   cursor: "pointer",
   textDecoration: "none",
   "&:hover": {
@@ -107,6 +108,9 @@ export const CartContainer = styled(Box)(({ theme }) => ({
   width: "470px",
   background: `${theme.palette.background.default}`,
   height: "100%",
+  [theme.breakpoints.down("sm")]: {
+    width: "100%",
+  },
 }));
 
 export const CartHeaderContainer = styled(Box)(({ theme }) => ({
@@ -180,5 +184,56 @@ export const ThemeSwitch = styled(Switch)(({ theme }) => ({
     opacity: 1,
     backgroundColor: theme.palette.mode === "dark" ? "#8796A5" : "#aab4be",
     borderRadius: 20 / 2,
+  },
+}));
+
+export const MobMenuItemContainer = styled(Box)(() => ({
+  cursor: "pointer",
+}));
+
+export const MenuContainer = styled(Box)(({ theme }) => ({
+  width: "470px",
+  background: `${theme.palette.background.default}`,
+  height: "100%",
+  [theme.breakpoints.down("sm")]: {
+    width: "100%",
+  },
+}));
+
+export const MenuHeaderContiner = styled(Box)(() => ({
+  padding: "20px 25px",
+}));
+
+export const MenuListContainer = styled(List)(() => ({
+  padding: "15px 25px",
+}));
+
+export const MenuLinkContainer = styled(Link)(({ theme }) => ({
+  cursor: "pointer",
+  color: `${theme.palette.text.primary}`,
+  fontSize: "16px",
+  fontWeight: "450",
+  textDecoration: "none",
+  transition: "all .4s",
+  padding: "5px 0",
+  "&:hover": {
+    color: `${theme.palette.action.hover}`,
+  },
+}));
+
+export const MiniTopBarContainer = styled(Box)(({ theme }) => ({
+  backgroundColor: `${theme.palette.background.default}`,
+  boxShadow: `${theme.shadows[2]}`,
+  padding: "10px 10px",
+  display: "none",
+  width: "100%",
+  position: "fixed",
+  top: "60px",
+  left: "0px",
+  color: `${theme.palette.text.primary}`,
+  zIndex: "99",
+  fontSize: "30px",
+  [theme.breakpoints.down("md")]: {
+    display: "block",
   },
 }));
