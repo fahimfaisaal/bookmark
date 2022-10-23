@@ -48,6 +48,12 @@ const typography = {
     fontSize: pxToRem(16),
     // ...responsiveFontSizes({ sm: 26, md: 30, lg: 32 }),
   },
+  h4: {
+    fontWeight: 600,
+    lineHeight: 1.5,
+    fontSize: pxToRem(14),
+    // ...responsiveFontSizes({ sm: 26, md: 30, lg: 32 }),
+  },
   subtitle1: {
     fontWeight: 600,
     lineHeight: 1.5,
