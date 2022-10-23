@@ -13,36 +13,39 @@
   "pluginOptions": {},
   "attributes": {
     "description": {
-      "type": "text"
+      "type": "text",
+      "maxLength": 1500,
+      "minLength": 50
     },
     "images": {
       "type": "media",
       "multiple": true,
       "required": false,
       "allowedTypes": [
-        "images",
-        "files",
-        "videos",
-        "audios"
+        "images"
       ]
     },
     "favorites": {
-      "type": "integer"
+      "type": "integer",
+      "default": 0
     },
     "bestSelling": {
       "type": "boolean"
     },
     "name": {
-      "type": "string"
+      "type": "string",
+      "maxLength": 100,
+      "minLength": 10
     },
     "status": {
       "type": "enumeration",
       "enum": [
         "IN_STOCK",
         "STOCK_OUT",
-        "COMMING_SOON",
+        "COMING_SOON",
         "PRE_ORDER"
-      ]
+      ],
+      "required": true
     },
     "slug": {
       "type": "uid",
@@ -55,7 +58,8 @@
       "inversedBy": "books"
     },
     "totalPages": {
-      "type": "integer"
+      "type": "integer",
+      "required": true
     },
     "tags": {
       "type": "relation",
@@ -75,27 +79,39 @@
       "target": "api::publisher.publisher",
       "inversedBy": "books"
     },
-    "ratings": {
-      "type": "relation",
-      "relation": "manyToOne",
-      "target": "api::rating.rating",
-      "inversedBy": "bookId"
-    },
-    "edition": {
+    "publishYear": {
       "type": "date",
-      "required": true
+      "required": false
     },
     "editions": {
       "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::book.book",
+      "mappedBy": "book"
+    },
+    "book": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::book.book",
+      "inversedBy": "editions"
+    },
+    "users": {
+      "type": "relation",
       "relation": "manyToMany",
-      "target": "api::edition.edition",
-      "inversedBy": "books"
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "favorites"
     },
     "variants": {
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::variant.variant",
-      "mappedBy": "book"
+      "mappedBy": "bookId"
+    },
+    "ratings": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::rating.rating",
+      "mappedBy": "bookId"
     }
   }
 }

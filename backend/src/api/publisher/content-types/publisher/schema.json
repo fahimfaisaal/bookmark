@@ -14,21 +14,22 @@
   "attributes": {
     "name": {
       "type": "string",
-      "required": true
+      "required": true,
+      "maxLength": 100,
+      "minLength": 3
     },
     "banner": {
       "type": "media",
       "multiple": false,
       "required": false,
       "allowedTypes": [
-        "images",
-        "files",
-        "videos",
-        "audios"
+        "images"
       ]
     },
     "bio": {
-      "type": "text"
+      "type": "text",
+      "maxLength": 300,
+      "minLength": 10
     },
     "books": {
       "type": "relation",
@@ -42,7 +43,7 @@
       "target": "api::author.author",
       "inversedBy": "publishers"
     },
-    "websiteLink": {
+    "website": {
       "type": "string"
     },
     "logo": {
@@ -50,11 +51,11 @@
       "multiple": true,
       "required": false,
       "allowedTypes": [
-        "images",
-        "files",
-        "videos",
-        "audios"
+        "images"
       ]
+    },
+    "socials": {
+      "type": "string"
     }
   }
 }

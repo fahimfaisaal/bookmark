@@ -43,6 +43,7 @@ export const paletteDark = {
   secondary: {
     main: "#1E293B",
   },
+  blue: '#171F69',
   divider: grey[500],
   blue: "#171F69",
   grey: GREY,
