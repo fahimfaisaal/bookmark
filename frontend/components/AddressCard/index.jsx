@@ -4,7 +4,7 @@ import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 const AddressCard = ({ billingAddress }) => {
   return (
-    <Card sx={{ width: 275, margin: '5px' }}>
+    <Card sx={{ width: 275, backgroundColor: 'background.default' }}>
       <CardContent>
         <Typography variant="h3" component="div">
           Billing

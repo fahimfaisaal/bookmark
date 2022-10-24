@@ -1,6 +1,6 @@
 import { Grid, Typography } from '@mui/material';
 import { Stack } from '@mui/system';
-import CustomImage from '../CutomImage';
+import CustomImage from '../CustomImage';
 import { StyledBox } from './Styles';
 
 const AuthorProfile = ({ language, birthdate, description, title }) => {

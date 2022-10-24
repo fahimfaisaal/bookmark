@@ -3,8 +3,19 @@ import {
   Container,
   CssBaseline,
   Switch,
-  useTheme
+  useTheme,
 } from '@mui/material';
+import AddressCard from '../components/AddressCard';
+import AuthorCard from '../components/AuthorCard';
+import AuthorProfile from '../components/AuthorProfile';
+import BookCard from '../components/BookCard';
+import CartItem from '../components/CartItem';
+import CategoryCard from '../components/CategoryCard';
+import LocationIcon from '../components/Icons/Location';
+import SocialMediaIcons from '../components/Icons/SocialMedia';
+import PublicationCard from '../components/PublicationCard';
+import UserDashboard from '../components/UserDashboard';
+import Profile from '../components/UserDashboard/Profile';
 import { UseThemeContext } from '../context/ThemeContext';
 import ComponentsOverrides from '../src/theme/overrides';
 
@@ -18,12 +29,11 @@ export default function Home() {
     <Container
       sx={{
         backgroundColor: (theme) =>
-          theme.palette.mode === 'light' ? 'common.white' : 'common.black',
+          theme.palette.mode === 'light' ? '#F3F4F6' : 'common.black',
         margin: '50px auto',
       }}
     >
       <CssBaseline />
-      <ResponsiveAppBar />
 
       <Switch
         color="primary"
@@ -31,45 +41,55 @@ export default function Home() {
         onChange={() => handleChangeMode()}
       />
       {/* ==========Done by Rezuan========= */}
-      <Button variant="btnGreen" sx={{ margin: 5 }}>
-        Become a Seller
-      </Button>
-      <Button variant="btnGreen" sx={{ width: '30%', m: 2 }}>
-        Login
-      </Button>
-      <Button
-        variant="btnGreen"
-        sx={{ m: 2, borderRadius: '20px', fontSize: '.7rem' }}
-      >
-        Ask seller a question
-      </Button>
-      <Button
-        variant="btnGreen"
-        sx={{
-          m: 2,
-          fontSize: '.7rem',
-        }}
-      >
-        boxShadow: 1
-      </Button>
-      <Box
-        sx={{
-          backgroundColor: 'common.white',
-          boxShadow: myShadows.box,
-          width: '8rem',
-          height: '5rem',
-          color: (theme) =>
-            theme.palette.mode === 'dark' ? 'grey.300' : 'grey.800',
-          p: 1,
-          m: 1,
-          borderRadius: 2,
-          textAlign: 'center',
-          fontSize: '0.875rem',
-          fontWeight: '700',
-        }}
-      >
-        boxShadow: 2
-      </Box>
+      <UserDashboard />
+
+      <br />
+      <br />
+      <Button variant="btnGreen">Become a Seller</Button>
+      <br />
+      <br />
+      <Button variant="btnGreen">Login</Button>
+      <br />
+      <br />
+      <Button variant="btnAskSeller">Ask seller a question</Button>
+      <br />
+      <br />
+      <Button variant="btnGreenLight">Downloadable</Button>
+      <br />
+      <br />
+      <Button variant="btnGreenCart">Add to cart</Button>
+      <br />
+      <br />
+      <Button variant="btnCart">Add to Cart</Button>
+      <br />
+      <br />
+      <Button variant="btnCat">English</Button>
+      <br />
+      <br />
+      {/* ==========Done by Rezuan========= */}
+      <PublicationCard />
+      <br />
+      <br />
+      <CategoryCard />
+      <br />
+      <br />
+      <LocationIcon />
+      <br />
+      <br />
+      <SocialMediaIcons />
+      <br />
+      <br />
+      <CartItem />
+      <br />
+      <br />
+      <AddressCard />
+      <AuthorProfile />
+      <AuthorCard />
+      <BookCard />
+      <br />
+      <br />
+      <br />
+      <br />
     </Container>
   );
 }

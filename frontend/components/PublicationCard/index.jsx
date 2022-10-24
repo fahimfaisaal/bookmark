@@ -1,5 +1,6 @@
 import { Box, Stack } from '@mui/system';
 import { BsFacebook, BsInstagram, BsYoutube } from 'react-icons/bs';
+import CustomImage from '../CustomImage';
 import CardTitle from '../shared/ui/CardTitle';
 import { ContainerStyle, LinkContainer, LogoContainer } from './Styles';
 
@@ -7,7 +8,7 @@ const PublicationCard = ({ img, title, slug }) => {
   return (
     <ContainerStyle>
       <LogoContainer>
-        <img src="/images/publisher-logo.png" alt="" />
+        <CustomImage src="/images/publisher-logo.png" alt="" />
       </LogoContainer>
       <Box>
         <CardTitle title={'Too cool publication'} variant={'h2'} />

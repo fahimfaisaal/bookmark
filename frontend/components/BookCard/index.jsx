@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { Stack, Typography } from '@mui/material';
-import Image from 'next/image';
 import { StyledBox, StyledContainer, StyledFav } from './Styles';
 import { FaShoppingCart } from 'react-icons/fa';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import CustomImage from '../CustomImage';
 
 const BookCard = ({
   title,
@@ -16,12 +16,18 @@ const BookCard = ({
 }) => {
   return (
     <StyledBox>
-      <Image src="/Comic-Books.jpg" width={250} height={350} />
+      <CustomImage
+        src="/Comic-Books.jpg"
+        height="350px"
+        title="comic-book"
+        width="250px"
+      />
       <Stack
         direction="row"
         spacing={2}
         justifyContent="space-between"
         alignItems="center"
+        sx={{ mt: 1 }}
       >
         <Typography variant="h3" color="text.primary">
           Superhero & Aliens
