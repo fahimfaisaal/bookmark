@@ -1,25 +1,20 @@
-const { generateModel, readFile } = require("../helpers");
-const relations = require("../relations");
-const path = require("path");
-const fs = require("fs/promises");
+const generateModel = require("../generateModel");
 const { faker } = require("@faker-js/faker");
-const StrapiCRUDService = require("./strapiCRUDService");
+const StrapiCRUDService = require("./strapiService");
+const { getFiles } = require("../helpers");
+const { resolve } = require('path')
 
 class DbService {
-  #callOnce = true;
-  media;
-  /**
-   * @type {import("@strapi/strapi").Strapi}
-   * @param {Strapi} strapi
-   * @param {Array<string>} interactModels
-   */
-  constructor(strapi, interactModels) {
-    this.strapi = strapi;
-    this.modelIds = interactModels.reduce(
-      (acc, modelName) => ((acc[modelName] = []), acc),
-      {}
-    );
-    this.entityService = new StrapiCRUDService(strapi, new Set(interactModels));
+/**
+ * @type {import("@strapi/strapi").Strapi}
+ * @param {Strapi} strapi
+ * @param {Array<string>} interactModels
+ */
+  constructor(strapi, models) {
+    this.strapi = strapi
+    this.models = models
+    this.modelIdMap = models.reduce((acc, { modelName }) => (acc[modelName] = [], acc), {})
+    this.strapiService = new StrapiCRUDService(strapi, new Set(Object.keys(this.modelIdMap)))
   }
 
   /**
@@ -28,126 +23,47 @@ class DbService {
    * @param {number} modelCount
    */
   async #createModels(modelName, modelCount) {
-    console.info(`⌛️ creating ${modelCount} ${modelName} models`);
-    const users = [];
+    console.info(`⌛️ creating ${modelCount} ${modelName} models`)
 
-    try {
-      if (this.#callOnce) {
-        this.media = await this.entityService.imageFileUploadLists();
-        this.#callOnce = false;
-      }
+    const models = []
 
-      while (modelCount--) {
-        // console.info("media -> ", this.media);
-        const modelFakeData = await generateModel[modelName](this.media);
-        const modelEntry = await this.entityService.create(
-          modelName,
-          modelFakeData
-        );
-        this.modelIds[modelName].push(modelEntry.id);
+    while (modelCount--) {
+      models.push({
+        ...generateModel[modelName](this.strapi),
+        publishedAt: new Date()
+      })
 
-        modelName === "user" &&
-          users.push({
-            email: modelEntry.email,
-            username: modelEntry.username,
-            password: modelFakeData.password,
-          });
-      }
-
-      if (users.length) {
-        this.#generateUserInfo(users);
-      }
-    } catch (e) {
-      console.log(e.message);
-      process.exit(0);
     }
+
+    await this.strapiService.createMany(modelName, models)
 
     console.info(`✅ ${modelName} models created successfully`);
   }
 
   /**
-   * this function relate all models based on this.modelIds
-   */
-  async #relateModels() {
-    console.info("⌛️ start creating relation");
-
-    for (const modelInfo of relations) {
-      console.info(
-        `↕️ relating ${modelInfo.model} with ${modelInfo.relateWith} in ${modelInfo.relationType} relation`
-      );
-
-      switch (modelInfo.relationType) {
-        case "m2m":
-          await this.#relateManyToMany(modelInfo);
-          break;
-        case "o2m":
-          await this.#relateOneToMany(modelInfo);
-      }
-    }
-
-    console.info("✅ relation completed");
-  }
-
-  /**
-   * it will generate all created user information & write a json file for it
-   * @typedef UserInfo
-   * @type {Object}
-   * @property {Object} email
-   * @property {string} username
-   * @property {string} password
-   * @param {Array<UserInfo>} users
-   */
-  async #generateUserInfo(users) {
-    console.info(`⌛️ writing users info`);
-    const resolvedPath = path.resolve(__dirname, "..", "user.info.json");
-
-    try {
-      const createdUsers = JSON.parse(
-        (await readFile(resolvedPath, "[]")).toString()
-      );
-      await fs.writeFile(
-        resolvedPath,
-        JSON.stringify(createdUsers.concat(users), null, 2)
-      );
-    } catch (e) {
-      await fs.writeFile(resolvedPath, "[]");
-      await this.#generateUserInfo(users);
-    }
-
-    console.info(`✅ user info wrote successfully at ${resolvedPath}`);
-  }
-
-  /**
-   * @typedef ModelInfoM2M
-   * @type {Object}
-   * @property {string} model - the model name
+   * @param {string} modelName - the model name
+   * @typedef RelateInfoM2M
    * @property {string} relateWith - the model to relate with
    * @property {[string, string]} labels - the plural name of relate model & model
    * @property {number} max
    * @property {number} min
-   * @param {ModelInfoM2M} modelInfo
+   * @param {RelateInfoM2M} relateInfo 
    */
-  async #relateManyToMany(modelInfo) {
-    const {
-      model,
-      relateWith,
-      max,
-      min,
-      labels: [label1, label2],
-    } = modelInfo;
-    const memoizeLabel2 = {};
+  async #relateManyToMany(modelName, relateInfo) {
+    const { relateWith, max, min, labels: [label1, label2] } = relateInfo
+    const memoizeLabel2 = {}
 
-    for (const modelId of this.modelIds[model]) {
+    for (const modelId of this.modelIdMap[modelName]) {
       const relationCount = faker.datatype.number({
         max,
         min,
       });
-      const shuffle = faker.helpers.shuffle(this.modelIds[relateWith]);
-      const relateModels = shuffle.slice(0, relationCount);
+      const shuffle = faker.helpers.shuffle(this.modelIdMap[relateWith])
+      const relateModels = shuffle.slice(0, relationCount)
 
-      await this.entityService.update(model, modelId, {
-        [label1]: relateModels,
-      });
+      await this.strapiService.update(modelName, modelId, {
+        [label1]: relateModels
+      })
 
       for (const relateId of relateModels) {
         if (relateId in memoizeLabel2) {
@@ -159,47 +75,95 @@ class DbService {
     }
 
     for (const relateId in memoizeLabel2) {
-      await this.entityService.update(relateWith, relateId, {
+      await this.strapiService.update(relateWith, relateId, {
         [label2]: memoizeLabel2[relateId],
       });
     }
   }
 
   /**
+   * @param {string} modelName - the model name
    * @typedef ModelInfoO2M
    * @type {Object}
-   * @property {string} model - the model name
    * @property {string} relateWith - the model to relate with
    * @property {string} labels- the plural name of relate model
-   * @param {ModelInfoO2M} modelInfo
+   * @param {ModelInfoO2M} relationInfo 
    */
-  async #relateOneToMany(modelInfo) {
-    const { model, relateWith, label } = modelInfo;
-    const relationModelIds = [...this.modelIds[relateWith]];
+  async #relateOneToMany(modelName, relationInfo) {
+    const { relateWith, label } = relationInfo
+    const relationModelIds = [...this.modelIdMap[relateWith]]
 
-    for (const modelId of this.modelIds[model]) {
-      const relateIndex = Math.floor(Math.random() * relationModelIds.length);
+    for (const modelId of this.modelIdMap[modelName]) {
+      const relateIndex = Math.floor(Math.random() * relationModelIds.length)
 
-      await this.entityService.update(model, modelId, {
-        [label]: relationModelIds.at(relateIndex),
-      });
+      await this.strapiService.update(modelName, modelId, {
+        [label]: relationModelIds.at(relateIndex)
+      })
     }
   }
+
 
   async seed() {
     try {
-      console.info("🚀 start seeding");
-      for (const modelName in this.modelIds) {
-        const envName = `${modelName.toUpperCase()}_COUNT`;
-        let modelCount = process.env[envName] ?? 0;
+      console.info('🚀 start seeding')
+      for (const { modelName, count } of this.models) {
+        await this.#createModels(modelName, count)
+      }
+      console.error('✅ seed completed')
 
-        if (modelCount) {
-          await this.#createModels(modelName, modelCount);
+    } catch (e) {
+      console.log(e.message)
+    } finally {
+      process.exit(0);
+    }
+  }
+
+  /**
+ * this function relate all models based on this.modelIdMap
+ */
+  async relateModels() {
+    try {
+      console.info('⌛️ start creating relation')
+
+      for (const modelName in this.modelIdMap) {
+        this.modelIdMap[modelName] = (await this.strapiService.findMany(modelName, {
+          fields: ['id'],
+        })).map(({ id }) => id)
+      }
+
+      for (const { modelName, relations } of this.models) {
+        for (const relationInfo of (relations ?? [])) {
+          console.info(`↕️ relating ${modelName} with ${relationInfo.relateWith} in ${relationInfo.type} relation`)
+
+          switch (relationInfo.type) {
+            case 'm2m':
+              await this.#relateManyToMany(modelName, relationInfo)
+              break;
+            case 'o2m':
+              await this.#relateOneToMany(modelName, relationInfo)
+          }
         }
       }
-      console.info("✅ seed completed");
 
-      await this.#relateModels();
+      console.info('✅ relation completed')
+    } catch (e) {
+      console.error(e.message)
+    } finally {
+      process.exit(0)
+    }
+  }
+
+  async resetModels() {
+    try {
+      console.info('⌛️ resetting models')
+
+      for (const { modelName } of this.models) {
+        console.info(`⌛️ deleting ${modelName}`)
+        await this.strapiService.deleteMany(modelName)
+        console.info(`✅ delete all ${modelName} successfully`)
+      }
+
+      console.info(`✅ reset models successfully`);
     } catch (e) {
       throw e;
     } finally {
@@ -207,34 +171,45 @@ class DbService {
     }
   }
 
-  async reset() {
-    console.info(`⌛️ resetting db`);
-
+  async seedMedias() {
     try {
-      for (const modelName in this.modelIds) {
-        const ids = await this.entityService.findMany(modelName, {
-          fields: ["id"],
-        });
+      for (const { modelName, medias } of this.models.filter(model => model.medias)) {
+        for (const media of medias) {
+          const { fieldName, path, type } = media
+          const exactPath = resolve(process.cwd(), ...(path.split('/')))
+          const files = getFiles(exactPath)
 
-        if (ids.length) {
-          console.info(`⌛️ deleting ${modelName}`);
-          for (const { id } of ids) {
-            await this.entityService.delete(modelName, id);
+          for (const { basename, filename, ext } of files) {
+            await this.strapiService.uploadFile({
+              data: {
+                refId: faker.datatype.number({ min: 1, max: 1e5 }), // random id
+                ref: this.strapiService.modelUIDs[modelName],  // pointing any model
+                field: fieldName,
+              },
+              file: {
+                path: resolve(exactPath, basename),
+                name: filename,
+                type: `${type ? type + '/' : ''}${ext}`,
+              }
+            })
           }
-          console.info(`✅ delete all ${modelName} successfully`);
         }
       }
-
-      console.info(`✅ reset db successfully`);
-
-      await fs.unlink(path.resolve(__dirname, "..", "user.info.json"));
-
-      console.info("🗑️ delete user.info.json");
     } catch (e) {
-      throw e;
+      console.log(e.message)
     } finally {
-      process.exit(0);
+      process.exit(0)
     }
+  }
+
+  async resetMedias() {
+    console.info('⌛️ start resetting medias')
+    const ids = await strapi.plugins.upload.services.upload.findMany()
+
+    for (const { id } of ids) {
+      await strapi.plugins.upload.services.upload.remove({ id })
+    }
+    console.info(`✅ reset media successfully`);
   }
 }
 
