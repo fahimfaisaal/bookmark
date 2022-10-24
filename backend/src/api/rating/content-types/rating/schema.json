@@ -4,7 +4,8 @@
   "info": {
     "singularName": "rating",
     "pluralName": "ratings",
-    "displayName": "Rating"
+    "displayName": "Rating",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -12,16 +13,21 @@
   "pluginOptions": {},
   "attributes": {
     "rate": {
-      "type": "float"
+      "type": "decimal",
+      "max": 5,
+      "min": 0,
+      "required": true
     },
     "comment": {
-      "type": "text"
+      "type": "text",
+      "maxLength": 1000,
+      "minLength": 10
     },
     "bookId": {
       "type": "relation",
-      "relation": "oneToMany",
+      "relation": "manyToOne",
       "target": "api::book.book",
-      "mappedBy": "ratings"
+      "inversedBy": "ratings"
     },
     "userId": {
       "type": "relation",

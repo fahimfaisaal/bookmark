@@ -27,27 +27,6 @@ const uploadFile = async (strapi, {
   return uploadedFile
 }
 
-const uniqueFields = {
-  user: 'plugin::users-permissions.user'
-}
-
-const createModel = (strapi,) =>
-  async (modelName, model) =>
-    strapi.entityService.create(uniqueFields[modelName] ?? `api::${modelName}.${modelName}`, {
-      data: {
-        ...model,
-        publishedAt: new Date()
-    } })
-
-const deleteModel = (strapi,) =>
-  async (modelName, populateId) =>
-    strapi.entityService.delete(uniqueFields[modelName] ?? `api::${modelName}.${modelName}`, populateId)
-
-const findManyModel = (strapi,) =>
-  async (modelName, parameters) =>
-    strapi.entityService.findMany(uniqueFields[modelName] ?? `api::${modelName}.${modelName}`, parameters)
-
-
 const createAddress = () => {
   const address = {
     country: faker.address.country(),
@@ -60,11 +39,8 @@ const createAddress = () => {
   return new URLSearchParams(address).toString()
 }
 
-const updateModel = (strapi) =>
-  async (modelName, populate, model) =>
-    await strapi.entityService.update(uniqueFields[modelName] ?? `api::${modelName}.${modelName}`, populate, { data: model })
-    const generateModel = {
-      user: () => {
+const generateModel = {
+  user: () => {
     const fullName = faker.name.fullName().split(/\s+/)
     const [firstName, lastName] = fullName
     const randStr = faker.random.alphaNumeric(5)
@@ -83,13 +59,13 @@ const updateModel = (strapi) =>
   },
   author: () => ({
     name: faker.name.fullName(),
-    bio: faker.lorem.text(),
+    bio: faker.lorem.sentence(20),
   }),
   publisher: () => {
     const name = faker.word.noun()
     return {
       name,
-      bio: faker.lorem.text(),
+      bio: faker.lorem.sentence(20),
       socials: ['facebook', 'twitter', 'linkedin'].map(socialName => `https://${socialName}.com/${name}`).join(','),
       website: faker.internet.domainName()
     }
@@ -111,7 +87,11 @@ const updateModel = (strapi) =>
     name: faker.commerce.productName(),
     publishedYear: faker.date.past(),
     status: faker.helpers.arrayElement(['in_stock', 'stock_out', 'coming_soon', 'pre_order']).toUpperCase(),
-    description: faker.commerce.productDescription()
+    description: faker.commerce.productDescription(),
+    totalPages: faker.datatype.number({
+      min: 30,
+      max: 3000
+    })
   }),
   variant: () => ({
     format: faker.helpers.arrayElement(['pdf', 'audio', 'hard_cover']),
@@ -135,6 +115,11 @@ const updateModel = (strapi) =>
   })
 }
 
+/**
+ * @param {string} path 
+ * @param {string} writePlaceholder 
+ * @returns {string|Buffer}
+ */
 async function readFile(path, writePlaceholder) {
   try {
     return await fs.readFile(path);
@@ -146,10 +131,6 @@ async function readFile(path, writePlaceholder) {
 
 module.exports = {
   uploadFile,
-  createModel,
-  findManyModel,
-  updateModel,
-  deleteModel,
   generateModel,
   readFile
 }

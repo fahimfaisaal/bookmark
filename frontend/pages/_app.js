@@ -3,6 +3,7 @@ import CssBaseline from "@mui/material/CssBaseline";
 import Head from "next/head";
 import PropTypes from "prop-types";
 import * as React from "react";
+import Layout from "../components/Layout";
 
 import { ThemeContext } from "../context/ThemeContext";
 import createEmotionCache from "../src/createEmotionCache";
@@ -29,7 +30,9 @@ export default function MyApp(props) {
       </Head>
       <ThemeContext>
         <CssBaseline />
-        <Component {...pageProps} />
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
       </ThemeContext>
     </CacheProvider>
   );
