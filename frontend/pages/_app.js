@@ -1,12 +1,15 @@
-import { CacheProvider } from "@emotion/react";
-import CssBaseline from "@mui/material/CssBaseline";
-import Head from "next/head";
-import PropTypes from "prop-types";
-import * as React from "react";
-import Layout from "../components/Layout";
+/** @format */
 
-import { ThemeContext } from "../context/ThemeContext";
-import createEmotionCache from "../src/createEmotionCache";
+import { CacheProvider } from '@emotion/react';
+import CssBaseline from '@mui/material/CssBaseline';
+import Head from 'next/head';
+import PropTypes from 'prop-types';
+import * as React from 'react';
+import 'react-multi-carousel/lib/styles.css';
+import Layout from '../components/Layout';
+
+import { ThemeContext } from '../context/ThemeContext';
+import createEmotionCache from '../src/createEmotionCache';
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
 
@@ -21,7 +24,7 @@ export default function MyApp(props) {
         <link
           rel="preconnect"
           href="https://fonts.gstatic.com"
-          crossOrigin={"true"}
+          crossOrigin={'true'}
         />
         <link
           href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&family=Poppins:wght@100;200;300;400;500;600;700&display=swap"

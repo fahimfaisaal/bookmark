@@ -1,13 +1,15 @@
-import styled from "@emotion/styled";
-import { Box } from "@mui/system";
-import React from "react";
-import Footer from "./Footer";
-import NavBar from "./NavBar";
+/** @format */
+
+import styled from '@emotion/styled';
+import { Box } from '@mui/system';
+import React from 'react';
+import Footer from './Footer';
+import NavBar from './NavBar';
 
 const ChildrenContainer = styled(Box)(({ theme }) => ({
-  margin: "150px 5%",
-  [theme.breakpoints.down("sm")]: {
-    margin: "150px 3%",
+  margin: '130px 5%',
+  [theme.breakpoints.down('sm')]: {
+    margin: '130px 3%',
   },
 }));
 

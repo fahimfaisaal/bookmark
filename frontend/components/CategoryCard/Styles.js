@@ -1,9 +1,11 @@
-import { Box, styled } from "@mui/system";
+/** @format */
+
+import { Box, styled } from '@mui/system';
 
 export const ImageContainerStyle = styled(Box)(({ theme }) => ({
-  width: "150px",
-  height: "180px",
+  width: '170px',
+  height: '205px',
   img: {
-    borderRadius: "10px",
+    borderRadius: '10px',
   },
 }));
