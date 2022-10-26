@@ -1,5 +1,3 @@
-/** @format */
-
 import { Button, Grid, Link } from '@mui/material';
 import { Stack } from '@mui/system';
 import React from 'react';
@@ -147,4 +145,3 @@ const Home = () => {
 };
 
 export default Home;
-

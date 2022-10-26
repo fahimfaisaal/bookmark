@@ -1,5 +1,3 @@
-/** @format */
-
 import { TextField } from '@mui/material';
 import React from 'react';
 import { InputLabelStyle } from './Styles';

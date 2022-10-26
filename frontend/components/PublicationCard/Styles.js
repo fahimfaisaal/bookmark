@@ -1,5 +1,3 @@
-/** @format */
-
 import { Link } from '@mui/material';
 import { Box, styled } from '@mui/system';
 import myShadows from '../../src/theme/shadows';

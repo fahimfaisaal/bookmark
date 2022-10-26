@@ -1,5 +1,3 @@
-/** @format */
-
 import { Link, Typography } from '@mui/material';
 import { Box, styled } from '@mui/system';
 

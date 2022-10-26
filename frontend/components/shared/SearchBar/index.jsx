@@ -1,5 +1,3 @@
-/** @format */
-
 import { InputBase, useTheme } from '@mui/material';
 import { useState } from 'react';
 import { BiSearch } from 'react-icons/bi';

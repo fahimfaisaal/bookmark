@@ -1,5 +1,3 @@
-/** @format */
-
 import styled from '@emotion/styled';
 import { Box, Button, Link } from '@mui/material';
 import { Stack } from '@mui/system';

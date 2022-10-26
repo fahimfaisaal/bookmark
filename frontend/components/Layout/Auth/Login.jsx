@@ -1,5 +1,3 @@
-/** @format */
-
 import { Divider, Link, Stack, Typography } from '@mui/material';
 import Dialog from '@mui/material/Dialog';
 

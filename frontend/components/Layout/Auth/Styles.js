@@ -1,5 +1,3 @@
-/** @format */
-
 import { FormGroup, Stack, Typography } from '@mui/material';
 import { Box, styled } from '@mui/system';
 

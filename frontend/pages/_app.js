@@ -1,5 +1,3 @@
-/** @format */
-
 import { CacheProvider } from '@emotion/react';
 import CssBaseline from '@mui/material/CssBaseline';
 import Head from 'next/head';

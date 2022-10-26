@@ -1,5 +1,3 @@
-/** @format */
-
 import { CloseBtnContaner } from '../NavBar/Styles';
 
 import { IoIosClose } from 'react-icons/io';

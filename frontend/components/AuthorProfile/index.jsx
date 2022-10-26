@@ -1,5 +1,3 @@
-/** @format */
-
 import { Grid, Typography } from '@mui/material';
 import { Stack } from '@mui/system';
 import CustomImage from '../CustomImage';
@@ -33,7 +31,9 @@ const AuthorProfile = ({ language, birthdate, description, title }) => {
 
           <Stack direction="row" alignItems="center" gap={2}>
             <Typography variant="h2">Born :</Typography>
-            <Typography variant="body1" pt={'5px'}>24 October, 1995</Typography>
+            <Typography variant="body1" pt={'5px'}>
+              24 October, 1995
+            </Typography>
           </Stack>
           <Stack direction="row" alignItems="center" gap={2}>
             <Typography variant="h2">Language: </Typography>

@@ -1,5 +1,3 @@
-/** @format */
-
 import { Box, Stack } from '@mui/system';
 import { BsFacebook, BsInstagram, BsYoutube } from 'react-icons/bs';
 import CustomImage from '../CustomImage';

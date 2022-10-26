@@ -1,5 +1,3 @@
-/** @format */
-
 import styled from '@emotion/styled';
 
 const commonStyle = (theme) => {

@@ -1,12 +1,13 @@
-/** @format */
-
-import React from 'react';
+import { Box } from '@mui/material';
+import Filter from '../../components/Filter';
+import PublicationCover from '../../components/PublicationCover';
 
 const PublicationItem = () => {
   return (
-    <div>
-      <h1>Publication Item Page</h1>
-    </div>
+    <Box>
+      <Filter />
+      <PublicationCover />
+    </Box>
   );
 };
 

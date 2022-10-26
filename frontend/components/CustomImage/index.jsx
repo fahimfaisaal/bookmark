@@ -1,5 +1,3 @@
-/** @format */
-
 const CustomImage = ({ src, title, width, height }) => {
   return (
     <img

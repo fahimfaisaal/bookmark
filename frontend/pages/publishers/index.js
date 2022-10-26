@@ -1,5 +1,3 @@
-/** @format */
-
 import { Box, Grid, Stack, Typography } from '@mui/material';
 import PublicationCard from '../../components/PublicationCard';
 import SearchBar from '../../components/shared/SearchBar';

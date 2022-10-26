@@ -1,5 +1,3 @@
-/** @format */
-
 import { Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import { DialogHeader } from './Styles';

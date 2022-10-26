@@ -1,5 +1,3 @@
-/** @format */
-
 import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
 
 import { LeftBtnStyle, RightBtnStyle } from './Styles';

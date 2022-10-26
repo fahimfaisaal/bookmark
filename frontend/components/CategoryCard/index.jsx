@@ -1,5 +1,3 @@
-/** @format */
-
 import { Box } from '@mui/system';
 import CardTitle from '../PublicationCard/CardTitle';
 import { ImageContainerStyle } from './Styles';

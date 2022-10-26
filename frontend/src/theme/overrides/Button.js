@@ -1,5 +1,3 @@
-/** @format */
-
 //=============Reusable Styles========
 const repeatStyleGreen = (theme) => ({
   backgroundColor: `${theme.palette.primary.main}`,

@@ -1,5 +1,3 @@
-/** @format */
-
 import { AppBar, Link, List, Switch, Typography } from '@mui/material';
 import { Box, styled } from '@mui/system';
 

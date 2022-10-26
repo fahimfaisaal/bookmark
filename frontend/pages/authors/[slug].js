@@ -1,5 +1,3 @@
-/** @format */
-
 import { Button, Grid, Stack } from '@mui/material';
 import { Box } from '@mui/system';
 import AuthorProfile from '../../components/AuthorProfile';

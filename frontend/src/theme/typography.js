@@ -3,7 +3,6 @@
  * font-family: 'Open Sans', sans-serif;
  * font-family: 'Poppins', sans-serif;
  *
- * @format
  */
 
 // function responsiveFontSizes({ sm, md, lg }) {

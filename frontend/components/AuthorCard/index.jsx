@@ -1,5 +1,3 @@
-/** @format */
-
 import { Stack } from '@mui/system';
 import React from 'react';
 import CardTitle from '../PublicationCard/CardTitle';

@@ -1,5 +1,3 @@
-/** @format */
-
 import { Dialog, Divider, Link, Typography } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';

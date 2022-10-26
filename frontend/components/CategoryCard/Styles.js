@@ -1,5 +1,3 @@
-/** @format */
-
 import { Box, styled } from '@mui/system';
 
 export const ImageContainerStyle = styled(Box)(({ theme }) => ({
