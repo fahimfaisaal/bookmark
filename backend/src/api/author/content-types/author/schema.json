@@ -1,0 +1,50 @@
+{
+  "kind": "collectionType",
+  "collectionName": "authors",
+  "info": {
+    "singularName": "author",
+    "pluralName": "authors",
+    "displayName": "Author",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true,
+      "maxLength": 50,
+      "minLength": 3
+    },
+    "image": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "bio": {
+      "type": "text",
+      "maxLength": 300,
+      "minLength": 20
+    },
+    "birth": {
+      "type": "date"
+    },
+    "books": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::book.book",
+      "mappedBy": "authors"
+    },
+    "publishers": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::publisher.publisher",
+      "mappedBy": "authors"
+    }
+  }
+}

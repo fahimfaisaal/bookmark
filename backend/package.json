@@ -1,0 +1,39 @@
+{
+  "name": "backend",
+  "private": true,
+  "version": "0.1.0",
+  "description": "A Strapi application",
+  "scripts": {
+    "dev": "strapi develop",
+    "start": "strapi start",
+    "build": "strapi build",
+    "strapi": "strapi",
+    "seed:models": "cross-env FORCE_APP_BOOTSTRAP_ONLY_TO=SEED_MODELS strapi start",
+    "reset:models": "cross-env FORCE_APP_BOOTSTRAP_ONLY_TO=RESET_MODELS strapi start",
+    "relate:models": "cross-env FORCE_APP_BOOTSTRAP_ONLY_TO=RELATE_MODELS strapi start",
+    "seed:medias": "cross-env FORCE_APP_BOOTSTRAP_ONLY_TO=SEED_MEDIAS strapi start",
+    "reset:medias": "cross-env FORCE_APP_BOOTSTRAP_ONLY_TO=RESET_MEDIAS strapi start"
+  },
+  "dependencies": {
+    "@strapi/plugin-i18n": "4.4.3",
+    "@strapi/plugin-users-permissions": "4.4.3",
+    "@strapi/strapi": "4.4.3",
+    "pg": "^8.8.0"
+  },
+  "author": {
+    "name": "A Strapi developer"
+  },
+  "strapi": {
+    "uuid": "6522849a-92b8-4c46-a738-89e6658849f8"
+  },
+  "engines": {
+    "node": ">=14.19.1 <=18.x.x",
+    "npm": ">=6.0.0"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "@faker-js/faker": "^7.6.0",
+    "cross-env": "^7.0.3",
+    "yaml": "^2.1.3"
+  }
+}

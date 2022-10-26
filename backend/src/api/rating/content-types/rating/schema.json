@@ -1,0 +1,39 @@
+{
+  "kind": "collectionType",
+  "collectionName": "ratings",
+  "info": {
+    "singularName": "rating",
+    "pluralName": "ratings",
+    "displayName": "Rating",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "rate": {
+      "type": "decimal",
+      "max": 5,
+      "min": 0,
+      "required": true
+    },
+    "comment": {
+      "type": "text",
+      "maxLength": 1000,
+      "minLength": 10
+    },
+    "bookId": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::book.book",
+      "inversedBy": "ratings"
+    },
+    "userId": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "ratings"
+    }
+  }
+}
