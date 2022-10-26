@@ -1,6 +1,7 @@
 /** @format */
 
-import { Grid, Link } from '@mui/material';
+import { Button, Grid, Link } from '@mui/material';
+import { Stack } from '@mui/system';
 import React from 'react';
 import Carousel from 'react-multi-carousel';
 import AuthorCard from '../components/AuthorCard';
@@ -16,6 +17,7 @@ import {
   HeroContainer,
   SectionContainer,
   SectionHeaderStyle,
+  SeeAllLinkStyle,
 } from './Styles';
 
 const responsive = (xl, lg, md, sm, xs) => {
@@ -91,10 +93,22 @@ const Home = () => {
             </Grid>
           ))}
         </Grid>
+        <Stack direction={'row'} justifyContent={'center'} my={5}>
+          <Button variant="contained" size="large" disableElevation={true}>
+            Load More
+          </Button>
+        </Stack>
       </SectionContainer>
 
       <SectionContainer>
-        <SectionHeaderStyle variant="h1">Top Authors</SectionHeaderStyle>
+        <Stack
+          direction={'row'}
+          alignItems={'center'}
+          justifyContent={'space-between'}
+        >
+          <SectionHeaderStyle variant="h1">Top Authors</SectionHeaderStyle>
+          <SeeAllLinkStyle href="/authors">See All</SeeAllLinkStyle>
+        </Stack>
         <Carousel
           responsive={responsive(8, 6, 3, 2, 1)}
           customLeftArrow={<CustomLeftBtn />}
@@ -107,9 +121,16 @@ const Home = () => {
       </SectionContainer>
 
       <SectionContainer>
-        <SectionHeaderStyle variant="h1" sx={{ margin: 0 }}>
-          Top Publishers
-        </SectionHeaderStyle>
+        <Stack
+          direction={'row'}
+          alignItems={'center'}
+          justifyContent={'space-between'}
+        >
+          <SectionHeaderStyle variant="h1" sx={{ margin: 0 }}>
+            Top Publishers
+          </SectionHeaderStyle>
+          <SeeAllLinkStyle href="/publishers">See All</SeeAllLinkStyle>
+        </Stack>
 
         <Carousel
           responsive={responsive(5, 4, 2, 1, 1)}

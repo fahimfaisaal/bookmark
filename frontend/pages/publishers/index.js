@@ -1,11 +1,11 @@
 /** @format */
 
 import { Box, Grid, Stack, Typography } from '@mui/material';
-import AuthorCard from '../../components/AuthorCard';
+import PublicationCard from '../../components/PublicationCard';
 import SearchBar from '../../components/shared/SearchBar';
-import { HeaderContainerStyle, HeaderStyle } from './Styles';
+import { HeaderContainerStyle, HeaderStyle } from '../authors/Styles';
 
-const Authors = () => {
+const Publications = () => {
   const loopCount = [];
   for (let i = 0; i < 10; i++) {
     loopCount.push(i);
@@ -15,7 +15,7 @@ const Authors = () => {
       <HeaderContainerStyle>
         <HeaderStyle>
           <Typography variant="h1" color={'primary'}>
-            Search Our beloved authors
+            Manufacturers/Publishers
           </Typography>
           <Typography variant="body1">
             Lorem ipsum dolor sit amet, consectetu eradipiscing elit.
@@ -29,10 +29,10 @@ const Authors = () => {
         </HeaderStyle>
       </HeaderContainerStyle>
       <Box my={5}>
-        <Grid container spacing={3}>
+        <Grid container spacing={2}>
           {loopCount.map((item) => (
-            <Grid item lg={2} md={4} sm={6} xs={12} key={item}>
-              <AuthorCard />
+            <Grid item lg={3} md={6} sm={12} xs={12} key={item}>
+              <PublicationCard />
             </Grid>
           ))}
         </Grid>
@@ -41,4 +41,4 @@ const Authors = () => {
   );
 };
 
-export default Authors;
+export default Publications;

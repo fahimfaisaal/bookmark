@@ -1,6 +1,6 @@
 /** @format */
 
-import { Typography } from '@mui/material';
+import { Link, Typography } from '@mui/material';
 import { Box, styled } from '@mui/system';
 
 export const ContainerStyle = styled(Box)(() => ({}));
@@ -28,4 +28,16 @@ export const SectionContainer = styled(Box)(() => ({
 
 export const SliderContainer = styled(Box)(() => ({
   padding: '10px',
+}));
+
+export const SeeAllLinkStyle = styled(Link)(({ theme }) => ({
+  cursor: 'pointer',
+  color: 'inherit',
+  fontSize: '18px',
+  fontWeight: '500',
+  textDecoration: 'none',
+  transition: 'all 0.4s',
+  '&:hover': {
+    color: `${theme.palette.text.third}`,
+  },
 }));

@@ -6,7 +6,6 @@ import {
   Box,
   Button,
   Divider,
-  InputBase,
   Link,
   ListItem,
   Menu,
@@ -14,7 +13,6 @@ import {
   SwipeableDrawer,
   Tooltip,
   Typography,
-  useTheme,
 } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 import { Stack } from '@mui/system';
@@ -29,6 +27,7 @@ import { MdOutlineFavoriteBorder } from 'react-icons/md';
 import { VscHome } from 'react-icons/vsc';
 import { UseThemeContext } from '../../../context/ThemeContext';
 import CartItem from '../../CartItem';
+import SearchBar from '../../shared/SearchBar';
 import Login from '../Auth/Login';
 import Register from '../Auth/Register';
 import {
@@ -49,7 +48,6 @@ import {
   MobileBarContainer,
   MobileMenuContainer,
   MobMenuItemContainer,
-  SearchContainer,
   ThemeSwitch,
 } from './Styles';
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
@@ -130,34 +128,39 @@ const categoreyItems = [
   },
 ];
 
-const SearchBar = ({ normal }) => {
-  const theme = useTheme();
-  const [focus, setFocus] = useState(false);
-  const handleOnFocus = () => {
-    setFocus(true);
-  };
-  const handleOnBlur = () => {
-    setFocus(false);
-  };
+// const SearchBar = ({
+//   normal = false,
+//   placeholder = 'Search Books (at least 3 char)',
+//   width,
+// }) => {
+//   const theme = useTheme();
+//   const [focus, setFocus] = useState(false);
+//   const handleOnFocus = () => {
+//     setFocus(true);
+//   };
+//   const handleOnBlur = () => {
+//     setFocus(false);
+//   };
 
-  return (
-    <SearchContainer
-      sx={
-        focus
-          ? { border: `1px solid ${theme.palette.primary.main}` }
-          : { border: `1px solid ${theme.palette.background.dark}` }
-      }
-      normal={normal}
-    >
-      <BiSearch />
-      <InputBase
-        placeholder="Search (type at least 3 chars)"
-        onFocus={handleOnFocus}
-        onBlur={handleOnBlur}
-      />
-    </SearchContainer>
-  );
-};
+//   return (
+//     <SearchContainer
+//       sx={
+//         focus
+//           ? { border: `1px solid ${theme.palette.primary.main}` }
+//           : { border: `1px solid ${theme.palette.background.dark}` }
+//       }
+//       normal={normal}
+//       width={width}
+//     >
+//       <BiSearch />
+//       <InputBase
+//         placeholder={placeholder}
+//         onFocus={handleOnFocus}
+//         onBlur={handleOnBlur}
+//       />
+//     </SearchContainer>
+//   );
+// };
 
 const Drawer = ({ anchor, data, open, toggle }) => {
   return (

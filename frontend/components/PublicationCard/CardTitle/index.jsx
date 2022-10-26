@@ -17,7 +17,9 @@ export const TitleContainerStyle = styled(Typography)(({ theme }) => ({
 const CardTitle = ({ title, variant }) => {
   return (
     <TitleContainerStyle variant={variant}>
-      {title.length > 15 ? title.slice(0, 15) + '...' : title}
+      {/* {title.length > 15 ? title.slice(0, 15) + '...' : title}
+       */}
+      {title}
     </TitleContainerStyle>
   );
 };

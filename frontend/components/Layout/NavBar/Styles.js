@@ -67,7 +67,7 @@ export const LinkContainer = styled(Link)(({ theme, additional }) => ({
   },
 }));
 
-export const SearchContainer = styled(Box)(({ theme, normal }) => ({
+export const SearchContainer = styled(Box)(({ theme, normal, width }) => ({
   background: `${theme.palette.background.dark}`,
   border: `1px solid ${theme.palette.background.dark}`,
   borderRadius: '7px',
