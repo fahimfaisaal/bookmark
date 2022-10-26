@@ -1,9 +1,21 @@
-import * as React from 'react';
-import { Stack, Typography } from '@mui/material';
-import Image from 'next/image';
-import { StyledBox, StyledContainer, StyledFav } from './Styles';
-import { FaShoppingCart } from 'react-icons/fa';
+/** @format */
+
+import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import { Link, Stack, Typography } from '@mui/material';
+import * as React from 'react';
+import { FaShoppingCart } from 'react-icons/fa';
+import CustomImage from '../CustomImage';
+import {
+  CartBtnStyle,
+  ContentContainerStyle,
+  DiscountLabelStyle,
+  PriceStyle,
+  StyledBox,
+  StyledFav,
+  TitleStyle,
+  WriterLinkStyle,
+} from './Styles';
 
 const BookCard = ({
   title,
@@ -14,45 +26,64 @@ const BookCard = ({
   stock,
   salePrice,
 }) => {
+  const [favorite, setFavorite] = React.useState(false);
+
+  const handleFavorite = () => {
+    if (favorite) {
+      setFavorite(false);
+    } else {
+      setFavorite(true);
+    }
+  };
+
   return (
     <StyledBox>
-      <Image src="/Comic-Books.jpg" width={250} height={350} />
-      <Stack
-        direction="row"
-        spacing={2}
-        justifyContent="space-between"
-        alignItems="center"
-      >
-        <Typography variant="h3" color="text.primary">
-          Superhero & Aliens
+      <Link href="/books" sx={{ cursor: 'pointer' }}>
+        <CustomImage
+          src="/Comic-Books.jpg"
+          height="350px"
+          title="comic-book"
+          width="250px"
+        />
+      </Link>
+      <ContentContainerStyle>
+        <TitleStyle href="/">
+          <Typography variant="h3" color="text.primary" py={'5px'}>
+            Superhero & Aliens Superhero Aliens
+          </Typography>
+        </TitleStyle>
+
+        <Stack direction="row" spacing={1} alignItems="center">
+          <Typography variant="caption">by</Typography>
+          <WriterLinkStyle>
+            <Typography variant="body2">Brandon T.Trigg</Typography>
+          </WriterLinkStyle>
+        </Stack>
+        <Typography
+          variant="caption"
+          sx={{ color: 'text.secondary', margin: '5px 0' }}
+        >
+          Stock: 25 pcs left
         </Typography>
-        <StyledFav>
-          <FavoriteBorderIcon />
-        </StyledFav>
-      </Stack>
-      <Stack direction="row" spacing={1} alignItems="center">
-        <Typography variant="caption">by</Typography>
-        <Typography variant="subtitle2">Brandon T.Trigg</Typography>
-      </Stack>
-      <Typography
-        variant="caption"
-        sx={{ color: 'text.secondary', margin: '5px 0' }}
-      >
-        Stock: 25 pcs left
-      </Typography>
-      <Stack
-        direction="row"
-        spacing={2}
-        alignItems="center"
-        justifyContent="space-between"
-      >
-        <Typography variant="caption" color="orange">
-          $300.00
-        </Typography>
-        <StyledContainer>
-          <FaShoppingCart /> Cart
-        </StyledContainer>
-      </Stack>
+        <PriceStyle direction={'row'} alignItems={'center'}>
+          <Typography variant="h4">$300.00</Typography>
+          <Typography variant="h5">$330.00</Typography>
+        </PriceStyle>
+        <Stack
+          direction="row"
+          spacing={2}
+          alignItems="center"
+          justifyContent="space-between"
+        >
+          <CartBtnStyle>
+            <FaShoppingCart /> Cart
+          </CartBtnStyle>
+          <StyledFav onClick={handleFavorite}>
+            {favorite ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+          </StyledFav>
+        </Stack>
+      </ContentContainerStyle>
+      <DiscountLabelStyle>10%</DiscountLabelStyle>
     </StyledBox>
   );
 };
