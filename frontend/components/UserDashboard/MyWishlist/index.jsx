@@ -21,7 +21,7 @@ const MyWishlist = () => {
             </StyledImage>
             <Stack direction="column" spacing={1}>
               <Typography variant="h3">Baby Spinach</Typography>
-              <Typography variant="subtitle1">Grocery Shop</Typography>
+              <Typography variant="subtitle2">Grocery Shop</Typography>
               <StyledContainer variant="btnDark">
                 5 <StarIcon fontSize="small" />
               </StyledContainer>
