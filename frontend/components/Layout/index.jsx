@@ -1,6 +1,8 @@
+import { useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
 import { Box } from '@mui/system';
 import React from 'react';
+import ComponentsOverrides from '../../src/theme/overrides';
 import Footer from './Footer';
 import NavBar from './NavBar';
 
@@ -12,6 +14,8 @@ const ChildrenContainer = styled(Box)(({ theme }) => ({
 }));
 
 const Layout = ({ children }) => {
+  const theme = useTheme();
+  theme.components = ComponentsOverrides(theme);
   return (
     <div>
       <NavBar />

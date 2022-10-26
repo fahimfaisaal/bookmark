@@ -1,9 +1,11 @@
-const Profile = () => {
+import Profile from '../../components/UserDashboard/Profile';
+
+const ProfilePage = () => {
   return (
-    <div>
-      <h1>Profile Page</h1>
-    </div>
+    <>
+      <Profile />
+    </>
   );
 };
 
-export default Profile;
+export default ProfilePage;
