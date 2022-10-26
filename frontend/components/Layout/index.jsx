@@ -14,13 +14,13 @@ const ChildrenContainer = styled(Box)(({ theme }) => ({
 }));
 
 const Layout = ({ children }) => {
-  return (
-    <div>
-      <NavBar />
-      <ChildrenContainer>{children}</ChildrenContainer>
-      <Footer />
-    </div>
-  );
+    return (
+        <div>
+            <NavBar />
+            <ChildrenContainer>{children}</ChildrenContainer>
+            <Footer />
+        </div>
+    );
 };
 
 export default Layout;
