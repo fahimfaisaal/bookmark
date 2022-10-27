@@ -6,6 +6,7 @@ export const StyledTableContainer = styled(TableContainer)(({ theme }) => ({
   cursor: 'pointer',
   border: `2px solid ${theme.palette.background.default}`,
   borderRadius: '5px',
+  marginTop: '15px',
   '&:hover': {
     border: `2px solid ${theme.palette.primary.main}`,
     borderRadius: '5px',

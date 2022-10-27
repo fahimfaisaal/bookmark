@@ -1,95 +1,150 @@
-import {
-  Button,
-  Container,
-  CssBaseline,
-  Switch,
-  useTheme,
-} from '@mui/material';
-import AddressCard from '../components/AddressCard';
+import { Button, Grid, Link } from '@mui/material';
+import { Stack } from '@mui/system';
+import React from 'react';
+import Carousel from 'react-multi-carousel';
 import AuthorCard from '../components/AuthorCard';
-import AuthorProfile from '../components/AuthorProfile';
 import BookCard from '../components/BookCard';
-import CartItem from '../components/CartItem';
 import CategoryCard from '../components/CategoryCard';
-import LocationIcon from '../components/Icons/Location';
-import SocialMediaIcons from '../components/Icons/SocialMedia';
 import PublicationCard from '../components/PublicationCard';
-import UserDashboard from '../components/UserDashboard';
+import {
+  CustomLeftBtn,
+  CustomRightBtn,
+} from '../components/shared/ui/CarouselBtn';
+import ProfileMenu from '../components/UserDashboard/Menu';
 import Profile from '../components/UserDashboard/Profile';
-import { UseThemeContext } from '../context/ThemeContext';
-import ComponentsOverrides from '../src/theme/overrides';
+import {
+  ContainerStyle,
+  HeroContainer,
+  SectionContainer,
+  SectionHeaderStyle,
+  SeeAllLinkStyle,
+} from './Styles';
 
-export default function Home() {
-  const { mode, handleChangeMode } = UseThemeContext();
-  const theme = useTheme();
+const responsive = (xl, lg, md, sm, xs) => {
+  return {
+    superLargeDesktop: {
+      // the naming can be any, depends on you.
+      breakpoint: { max: 4000, min: 3000 },
+      items: xl,
+    },
+    desktop: {
+      breakpoint: { max: 3000, min: 1025 },
+      items: lg,
+    },
+    laptop: {
+      breakpoint: { max: 1024, min: 769 },
+      items: md,
+    },
+    tablet: {
+      breakpoint: { max: 768, min: 481 },
+      items: sm,
+    },
+    mobile: {
+      breakpoint: { max: 480, min: 0 },
+      items: xs,
+    },
+  };
+};
 
-  theme.components = ComponentsOverrides(theme);
-
+const Home = () => {
+  const loopCount = [];
+  for (let i = 0; i < 10; i++) {
+    loopCount.push(i);
+  }
   return (
-    <Container
-      sx={{
-        backgroundColor: (theme) =>
-          theme.palette.mode === 'light' ? '#F3F4F6' : 'common.black',
-        margin: '50px auto',
-      }}
-    >
-      <CssBaseline />
+    <ContainerStyle>
+      <HeroContainer>
+        <Link sx={{ cursor: 'pointer' }}>
+          <img src="/images/Cover.png" />
+        </Link>
+      </HeroContainer>
+      <SectionContainer>
+        <SectionHeaderStyle variant="h1">Popular Products</SectionHeaderStyle>
+        <Grid container spacing={3}>
+          {loopCount.map((item) => (
+            <Grid item lg={3} md={6} xs={12} key={item}>
+              <BookCard />
+            </Grid>
+          ))}
+        </Grid>
+      </SectionContainer>
 
-      <Switch
-        color="primary"
-        checked={mode === 'dark'}
-        onChange={() => handleChangeMode()}
-      />
-      {/* ==========Done by Rezuan========= */}
-      <UserDashboard />
+      <SectionContainer>
+        <SectionHeaderStyle variant="h1">
+          Which Book You Like to See?
+        </SectionHeaderStyle>
+        <Carousel
+          responsive={responsive(10, 7, 5, 3, 2)}
+          customLeftArrow={<CustomLeftBtn />}
+          customRightArrow={<CustomRightBtn />}
+        >
+          {loopCount.map((item) => (
+            <CategoryCard key={item} />
+          ))}
+        </Carousel>
+      </SectionContainer>
 
-      <br />
-      <br />
-      <Button variant="btnGreen">Become a Seller</Button>
-      <br />
-      <br />
-      <Button variant="btnGreen">Login</Button>
-      <br />
-      <br />
-      <Button variant="btnAskSeller">Ask seller a question</Button>
-      <br />
-      <br />
-      <Button variant="btnGreenLight">Downloadable</Button>
-      <br />
-      <br />
-      <Button variant="btnGreenCart">Add to cart</Button>
-      <br />
-      <br />
-      <Button variant="btnCart">Add to Cart</Button>
-      <br />
-      <br />
-      <Button variant="btnCat">English</Button>
-      <br />
-      <br />
-      {/* ==========Done by Rezuan========= */}
-      <PublicationCard />
-      <br />
-      <br />
-      <CategoryCard />
-      <br />
-      <br />
-      <LocationIcon />
-      <br />
-      <br />
-      <SocialMediaIcons />
-      <br />
-      <br />
-      <CartItem />
-      <br />
-      <br />
-      <AddressCard />
-      <AuthorProfile />
-      <AuthorCard />
-      <BookCard />
-      <br />
-      <br />
-      <br />
-      <br />
-    </Container>
+      <SectionContainer>
+        <SectionHeaderStyle variant="h1">New Arrival Books</SectionHeaderStyle>
+        <Grid container spacing={2}>
+          {loopCount.map((item) => (
+            <Grid item lg={3} md={6} xs={12} key={item}>
+              <BookCard />
+            </Grid>
+          ))}
+        </Grid>
+        <Stack direction={'row'} justifyContent={'center'} my={5}>
+          <Button variant="contained" size="large" disableElevation={true}>
+            Load More
+          </Button>
+        </Stack>
+      </SectionContainer>
+
+      <SectionContainer>
+        <Stack
+          direction={'row'}
+          alignItems={'center'}
+          justifyContent={'space-between'}
+        >
+          <SectionHeaderStyle variant="h1">Top Authors</SectionHeaderStyle>
+          <SeeAllLinkStyle href="/authors">See All</SeeAllLinkStyle>
+        </Stack>
+        <Carousel
+          responsive={responsive(8, 6, 3, 2, 1)}
+          customLeftArrow={<CustomLeftBtn />}
+          customRightArrow={<CustomRightBtn />}
+        >
+          {loopCount.map((item) => (
+            <AuthorCard key={item} />
+          ))}
+        </Carousel>
+      </SectionContainer>
+
+      <SectionContainer>
+        <Stack
+          direction={'row'}
+          alignItems={'center'}
+          justifyContent={'space-between'}
+        >
+          <SectionHeaderStyle variant="h1" sx={{ margin: 0 }}>
+            Top Publishers
+          </SectionHeaderStyle>
+          <SeeAllLinkStyle href="/publishers">See All</SeeAllLinkStyle>
+        </Stack>
+
+        <Carousel
+          responsive={responsive(5, 4, 2, 1, 1)}
+          customLeftArrow={<CustomLeftBtn />}
+          customRightArrow={<CustomRightBtn />}
+        >
+          {loopCount.map((item) => (
+            <PublicationCard key={item} />
+          ))}
+        </Carousel>
+      </SectionContainer>
+      <ProfileMenu />
+    </ContainerStyle>
   );
-}
+};
+
+export default Home;

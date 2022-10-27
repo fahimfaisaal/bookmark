@@ -1,17 +1,18 @@
+import { Box, Grid } from '@mui/material';
 import React from 'react';
-import ChangePassword from './ChangePassword';
-import MyOrders from './MyOrders';
-import MyWishlist from './MyWishlist';
-import Profile from './Profile';
+import ProfileMenu from './Menu';
+import { StyledGrid } from './Styles';
 
-const UserDashboard = () => {
+const UserDashboard = ({ children }) => {
   return (
-    <div>
-      <Profile />
-      <ChangePassword />
-      <MyOrders />
-      <MyWishlist />
-    </div>
+    <StyledGrid container spacing={4}>
+      <Grid item md={12} lg={3}>
+        <ProfileMenu />
+      </Grid>
+      <Grid item md={12} lg={9}>
+        <Box>{children}</Box>
+      </Grid>
+    </StyledGrid>
   );
 };
 

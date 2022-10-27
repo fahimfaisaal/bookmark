@@ -6,7 +6,7 @@ import {
   Typography,
 } from '@mui/material';
 import { Box } from '@mui/system';
-import { StyledContainer } from '../Styles';
+import { StyledContainer } from './Styles';
 const ChangePassword = () => {
   return (
     <>

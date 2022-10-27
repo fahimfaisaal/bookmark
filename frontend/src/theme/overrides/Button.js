@@ -87,7 +87,7 @@ const Button = (theme) => {
           props: { variant: 'btnLogin' },
           style: {
             ...repeatStyleGreen(theme),
-            width: '30%',
+            width: '100%',
           },
         },
         {

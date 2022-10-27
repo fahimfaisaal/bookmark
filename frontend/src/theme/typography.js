@@ -1,8 +1,9 @@
-/* 
-font-family: 'Open Sans', sans-serif;
-font-family: 'Poppins', sans-serif;
-
-*/
+/**
+ * /*
+ * font-family: 'Open Sans', sans-serif;
+ * font-family: 'Poppins', sans-serif;
+ *
+ */
 
 // function responsiveFontSizes({ sm, md, lg }) {
 //   return {
@@ -22,8 +23,8 @@ function pxToRem(value) {
   return `${value / 16}rem`;
 }
 
-const FONT_PRIMARY = "Open Sans, sans-serif";
-const FONT_SECONDARY = "Poppins, sans-serif";
+const FONT_PRIMARY = 'Open Sans, sans-serif';
+const FONT_SECONDARY = 'Poppins, sans-serif';
 
 const typography = {
   fontFamily: FONT_PRIMARY,
@@ -33,22 +34,28 @@ const typography = {
   h1: {
     fontWeight: 600,
     lineHeight: 80 / 64,
-    fontSize: pxToRem(27),
+    fontSize: pxToRem(30),
     // ...responsiveFontSizes({ sm: 52, md: 58, lg: 64 }),
   },
   h2: {
-    fontWeight: 700,
+    fontWeight: 600,
     lineHeight: 64 / 48,
-    fontSize: pxToRem(24),
+    fontSize: pxToRem(20),
     // ...responsiveFontSizes({ sm: 40, md: 44, lg: 48 }),
   },
   h3: {
-    fontWeight: 700,
+    fontWeight: 600,
     lineHeight: 1.5,
     fontSize: pxToRem(16),
     // ...responsiveFontSizes({ sm: 26, md: 30, lg: 32 }),
   },
   h4: {
+    fontWeight: 600,
+    lineHeight: 1.5,
+    fontSize: pxToRem(14),
+    // ...responsiveFontSizes({ sm: 26, md: 30, lg: 32 }),
+  },
+  h5: {
     fontWeight: 600,
     lineHeight: 1.5,
     fontSize: pxToRem(14),
@@ -87,13 +94,13 @@ const typography = {
     lineHeight: 1.5,
     fontSize: pxToRem(12),
     letterSpacing: 1.1,
-    textTransform: "uppercase",
+    textTransform: 'uppercase',
   },
   button: {
     fontWeight: 500,
     lineHeight: 24 / 14,
     fontSize: pxToRem(14),
-    textTransform: "capitalize",
+    textTransform: 'capitalize',
   },
 };
 
