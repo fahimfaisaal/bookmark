@@ -1,6 +1,6 @@
 import { Button, Divider, List, ListItem } from '@mui/material';
 import Link from 'next/link';
-import { StyledContainer, StyledLink } from './Styles';
+import { StyledContainer, StyledLink, StyledListItem } from './Styles';
 
 const profileMenu = [
   {
@@ -30,11 +30,11 @@ const ProfileMenu = () => {
     <StyledContainer marginTop={2}>
       <List>
         {profileMenu.map((item) => (
-          <ListItem>
+          <StyledListItem>
             <Link href={item.path}>
               <StyledLink>{item.label}</StyledLink>
             </Link>
-          </ListItem>
+          </StyledListItem>
         ))}
       </List>
     </StyledContainer>

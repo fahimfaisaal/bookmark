@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { Box, Link as MLink } from '@mui/material';
+import { Box, Link as MLink, List, ListItem } from '@mui/material';
 import myShadows from '../../../src/theme/shadows';
 
 export const StyledLink = styled(MLink)(({ theme }) => ({
@@ -9,12 +9,22 @@ export const StyledLink = styled(MLink)(({ theme }) => ({
   fontWeight: 500,
   lineHeight: '24px',
   cursor: 'pointer',
-  // borderLeft: `1px solid black`,
+
   '&:hover': {
     color: `${theme.palette.primary.main}`,
   },
 }));
 
+export const StyledListItem = styled(ListItem)(({ theme }) => ({
+  margin: '10px 0px',
+  padding: '10px',
+  borderLeft: `3px solid ${theme.palette.background.paper}`,
+  cursor: 'pointer',
+
+  '&:hover': {
+    borderLeft: `3px solid ${theme.palette.primary.main}`,
+  },
+}));
 export const StyledContainer = styled(Box)(({ theme }) => ({
   margin: 0,
   padding: 0,
