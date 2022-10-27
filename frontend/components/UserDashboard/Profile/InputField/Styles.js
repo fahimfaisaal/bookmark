@@ -17,6 +17,6 @@ export const StyledBox = styled(Box)(({ theme }) => ({
   justifyContent: 'center',
   alignItems: 'center',
   minHeight: '200px',
-  border: `2px dashed ${theme.palette.background.dark}`,
+  border: `2px dashed ${theme.palette.background.other}`,
   borderRadius: '7px',
 }));

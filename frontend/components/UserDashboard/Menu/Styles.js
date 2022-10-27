@@ -9,18 +9,17 @@ export const StyledLink = styled(MLink)(({ theme }) => ({
   fontWeight: 500,
   lineHeight: '24px',
   cursor: 'pointer',
+  // borderLeft: `1px solid black`,
   '&:hover': {
     color: `${theme.palette.primary.main}`,
   },
 }));
 
 export const StyledContainer = styled(Box)(({ theme }) => ({
-  display: 'flex',
-  gap: '20px',
-  width: '100%',
+  margin: 0,
+  padding: 0,
   border: 'none',
   borderRadius: '8px',
-  padding: '30px',
   backgroundColor: `${theme.palette.background.paper}`,
   boxShadow: myShadows.common,
 }));

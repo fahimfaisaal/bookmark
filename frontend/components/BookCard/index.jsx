@@ -39,7 +39,7 @@ const BookCard = ({
       <Link href="/books" sx={{ cursor: 'pointer' }}>
         <CustomImage
           src="/Comic-Books.jpg"
-          height="350px"
+          minHeight="250px"
           title="comic-book"
           width="250px"
         />

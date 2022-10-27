@@ -2,36 +2,40 @@ import { Button, Divider, List, ListItem } from '@mui/material';
 import Link from 'next/link';
 import { StyledContainer, StyledLink } from './Styles';
 
+const profileMenu = [
+  {
+    path: '/profile',
+    label: 'Profile',
+  },
+  {
+    path: '/profile/change-password',
+    label: 'Change Password',
+  },
+  {
+    path: '/profile/my-orders',
+    label: 'My Orders',
+  },
+  {
+    path: '/profile/my-whishlist',
+    label: 'My Wishlist',
+  },
+  {
+    path: '',
+    label: 'Logout',
+  },
+];
+
 const ProfileMenu = () => {
   return (
     <StyledContainer marginTop={2}>
       <List>
-        <ListItem>
-          <Link href="/profile">
-            <StyledLink>Profile</StyledLink>
-          </Link>
-        </ListItem>
-        <ListItem>
-          <Link href="/profile/change-password">
-            <StyledLink>Change Password</StyledLink>
-          </Link>
-        </ListItem>
-        <ListItem>
-          <Link href="/profile/my-orders">
-            <StyledLink>My Orders</StyledLink>
-          </Link>
-        </ListItem>
-        <ListItem>
-          <Link href="/profile/my-whishlist">
-            <StyledLink>My Wishlist</StyledLink>
-          </Link>
-        </ListItem>
-        <Divider />
-        <ListItem>
-          <Link href="#">
-            <StyledLink>Logout</StyledLink>
-          </Link>
-        </ListItem>
+        {profileMenu.map((item) => (
+          <ListItem>
+            <Link href={item.path}>
+              <StyledLink>{item.label}</StyledLink>
+            </Link>
+          </ListItem>
+        ))}
       </List>
     </StyledContainer>
   );

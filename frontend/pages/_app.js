@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import * as React from 'react';
 import 'react-multi-carousel/lib/styles.css';
 import Layout from '../components/Layout';
+import UserDashboard from '../components/UserDashboard';
 
 import { ThemeContext } from '../context/ThemeContext';
 import createEmotionCache from '../src/createEmotionCache';

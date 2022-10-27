@@ -5,6 +5,8 @@ const MyFavList = () => {
   return (
     <UserDashboard>
       <MyWishlist />
+      <MyWishlist />
+      <MyWishlist />
     </UserDashboard>
   );
 };

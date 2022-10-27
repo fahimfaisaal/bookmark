@@ -1,30 +1,30 @@
-import { Box, Grid, Typography } from "@mui/material";
-import { Stack } from "@mui/system";
-import { LogoContainer } from "../NavBar/Styles";
-import FooterItem from "./FooterItem";
+import { Box, Grid, Typography } from '@mui/material';
+import { Stack } from '@mui/system';
+import { LogoContainer } from '../NavBar/Styles';
+import FooterItem from './FooterItem';
 import {
   FooterBottomContainer,
   FooterContainer,
   PaymentImgContainer,
-} from "./Styles";
+} from './Styles';
 
 const exploreData = [
-  { link: "/about", text: "About Us" },
-  { link: "/books", text: "Books" },
-  { link: "/authors", text: "Authors" },
-  { link: "/publishers", text: "Publishers" },
+  { link: '/about', text: 'About Us' },
+  { link: '/books', text: 'Books' },
+  { link: '/authors', text: 'Authors' },
+  { link: '/publishers', text: 'Publishers' },
 ];
 const customerServiceData = [
-  { link: "/contact", text: "Contact Us" },
-  { link: "", text: "FAQ & Helps" },
-  { link: "", text: "Returns" },
-  { link: "/books", text: "Store Pickup" },
+  { link: '/contact', text: 'Contact Us' },
+  { link: '', text: 'FAQ & Helps' },
+  { link: '', text: 'Returns' },
+  { link: '/books', text: 'Store Pickup' },
 ];
 const ourInfoData = [
-  { link: "", text: "Privacy policy update" },
-  { link: "", text: "Terms & conditions" },
-  { link: "", text: "Return Policy" },
-  { link: "", text: "Sitemap" },
+  { link: '', text: 'Privacy policy update' },
+  { link: '', text: 'Terms & conditions' },
+  { link: '', text: 'Return Policy' },
+  { link: '', text: 'Sitemap' },
 ];
 
 const Footer = () => {
@@ -48,29 +48,25 @@ const Footer = () => {
           </Box>
         </Grid>
         <Grid item lg={3} md={6} xs={12}>
-          <FooterItem title={"Explore"} data={exploreData} />
+          <FooterItem title={'Explore'} data={exploreData} />
         </Grid>
         <Grid item lg={3} md={6} xs={12}>
-          <FooterItem title={"Customer Service"} data={customerServiceData} />
+          <FooterItem title={'Customer Service'} data={customerServiceData} />
         </Grid>
         <Grid item lg={3} md={6} xs={12}>
-          <FooterItem title={"Our information"} data={ourInfoData} />
+          <FooterItem title={'Our information'} data={ourInfoData} />
         </Grid>
       </Grid>
       <Box py={4}>
         <FooterBottomContainer
-          direction={"row"}
-          justifyContent={"space-between"}
-          alignItems={"center"}
+          direction={'row'}
+          justifyContent={'space-between'}
+          alignItems={'center'}
         >
           <Typography variant="body2" my={3} fontWeight={400}>
             © Copyright 2022 RedQ, Inc. All rights reserved
           </Typography>
-          <Stack
-            direction={"row"}
-            justifyContent={"space-between"}
-            alignItems={"center"}
-          >
+          <Stack direction={'row'} alignItems={'center'}>
             <PaymentImgContainer>
               <img src="/images/payments/discover.png" alt="" />
             </PaymentImgContainer>

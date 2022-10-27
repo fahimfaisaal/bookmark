@@ -14,7 +14,7 @@ const MyWishlist = () => {
   return (
     <StyledStack direction={'row'} justifyContent="space-between">
       <Grid container>
-        <Grid item sm={12} md={6} lg={6}>
+        <Grid item sm={12} md={5} lg={6}>
           <Stack direction={'row'} spacing={3} alignItems="center">
             <StyledImage>
               <CustomImage src="/Comic-Books.jpg" width="70px" height="70px" />
@@ -28,7 +28,7 @@ const MyWishlist = () => {
             </Stack>
           </Stack>
         </Grid>
-        <Grid item sm={12} md={6} lg={6}>
+        <Grid item sm={12} md={7} lg={6}>
           <Stack direction={'column'} textAlign={'right'} marginTop="10px">
             <Typography variant="h3">$60.00</Typography>
             <Stack direction={'row'} justifyContent="end">

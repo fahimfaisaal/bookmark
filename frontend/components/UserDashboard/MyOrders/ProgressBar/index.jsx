@@ -13,7 +13,7 @@ const steps = [
 
 const ProgressBar = () => {
   return (
-    <Box sx={{ width: '100%' }}>
+    <Box sx={{ width: '100%', marginTop: '10px' }}>
       <Stepper activeStep={0} alternativeLabel>
         {steps.map((label) => (
           <Step key={label}>
