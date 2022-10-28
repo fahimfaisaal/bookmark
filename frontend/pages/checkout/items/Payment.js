@@ -16,7 +16,7 @@ const Payment = () => {
     <StyledContainer sx={{ marginTop: 1 }}>
       <Typography variant="h3">Choose Payment Method</Typography>
       <StyledBtn>stripe</StyledBtn>
-      <Stack direction={'row'} spacing={1} justifyContent="space-between">
+      <Stack direction={'column'} spacing={1} justifyContent="space-between">
         <TextField
           id="input-with-icon-textfield"
           InputProps={{
@@ -42,6 +42,7 @@ const Payment = () => {
           placeholder="mm/yy CVC"
         />
       </Stack>
+      <Button variant="btnOrder">Confirm</Button>
     </StyledContainer>
   );
 };

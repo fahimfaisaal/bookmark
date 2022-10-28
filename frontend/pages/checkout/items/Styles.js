@@ -19,10 +19,8 @@ export const StyledBtn = styled(Button)(({ theme }) => ({
   border: `1px solid ${theme.palette.primary.main}`,
   width: '100px',
   padding: '15px 10px',
-  fontWeight: 600,
+  fontSize: '1rem',
+  fontWeight: 700,
+  color: '#635BFF',
   boxShadow: `${theme.shadows[5]}`,
-}));
-
-export const StyledInput = styled(TextField)(({ theme }) => ({
-  border: 'none',
 }));
