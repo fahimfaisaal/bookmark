@@ -6,7 +6,7 @@ import { StyledTypo } from './Styles';
 
 const Contact = ({ text }) => {
   return (
-    <StyledContainer sx={{ boxShadow: 3 }}>
+    <StyledContainer sx={{ boxShadow: 5 }}>
       <Stack
         direction={'row'}
         justifyContent="space-between"

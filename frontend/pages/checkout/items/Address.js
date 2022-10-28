@@ -9,7 +9,7 @@ import { StyledContainer } from '../../../components/UserDashboard/Styles';
 import { StyledTypo } from './Styles';
 const Address = ({ billingAddress, label, text }) => {
   return (
-    <StyledContainer sx={{ boxShadow: 3, marginTop: 3 }}>
+    <StyledContainer sx={{ boxShadow: 5, marginTop: 3 }}>
       <Stack
         direction={'row'}
         justifyContent="space-between"
