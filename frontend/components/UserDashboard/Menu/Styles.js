@@ -27,9 +27,12 @@ export const StyledListItem = styled(ListItem)(({ theme }) => ({
 }));
 export const StyledContainer = styled(Box)(({ theme }) => ({
   margin: 0,
-  padding: 0,
   border: 'none',
   borderRadius: '8px',
+  boxShadow: `${theme.shadows[4]}`,
   backgroundColor: `${theme.palette.background.paper}`,
   boxShadow: myShadows.common,
+  [theme.breakpoints.down('md')]: {
+    // position: 'fixed',
+  },
 }));

@@ -6,7 +6,7 @@ import Modal from '../Modal';
 
 const ContactCard = () => {
   return (
-    <StyledContainer>
+    <StyledContainer sx={{ boxShadow: 3 }}>
       <Stack
         direction={'row'}
         justifyContent="space-between"
@@ -14,6 +14,7 @@ const ContactCard = () => {
         flexWrap={'wrap'}
       >
         <InputLabel color="secondary">Contact Number</InputLabel>
+
         <>
           <Modal btnText="+ Update" />
         </>

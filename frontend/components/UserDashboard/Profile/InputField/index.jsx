@@ -9,7 +9,7 @@ import { StyledContainer } from '../../Styles';
 
 const InputField = () => {
   return (
-    <StyledContainer>
+    <StyledContainer sx={{ boxShadow: 3 }}>
       <Stack direction={'column'} spacing={2}>
         <StyledBox>
           <StyledLabel>

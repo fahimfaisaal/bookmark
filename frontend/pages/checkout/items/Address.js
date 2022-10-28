@@ -4,24 +4,34 @@ import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import { Grid, InputLabel } from '@mui/material';
 import { Stack } from '@mui/system';
-import Modal from './Modal';
-const AddressCard = ({ billingAddress, label }) => {
+import Modal from '../../../components/AddressCard/Modal';
+import { StyledContainer } from '../../../components/UserDashboard/Styles';
+import { StyledTypo } from './Styles';
+const Address = ({ billingAddress, label, text }) => {
   return (
-    <>
+    <StyledContainer sx={{ boxShadow: 3, marginTop: 3 }}>
       <Stack
         direction={'row'}
         justifyContent="space-between"
         alignItems="center"
         flexWrap={'wrap'}
       >
-        <InputLabel color="secondary"> {label}</InputLabel>
+        <InputLabel color="secondary">
+          {' '}
+          <StyledTypo component={'span'}>{text}</StyledTypo> {label}
+        </InputLabel>
         <>
           <Modal btnText="+ Update" />
         </>
       </Stack>
-      <Grid container>
+      <Grid container sx={{}}>
         <Grid item>
-          <Card sx={{ backgroundColor: 'background.default' }}>
+          <Card
+            sx={{
+              backgroundColor: 'background.default',
+              border: '1px solid #009F7F',
+            }}
+          >
             <CardContent>
               <Typography variant="h3" component="div">
                 Billing
@@ -33,8 +43,8 @@ const AddressCard = ({ billingAddress, label }) => {
           </Card>
         </Grid>
       </Grid>
-    </>
+    </StyledContainer>
   );
 };
 
-export default AddressCard;
+export default Address;

@@ -19,15 +19,14 @@ const profileMenu = [
     path: '/profile/my-whishlist',
     label: 'My Wishlist',
   },
-  {
-    path: '',
-    label: 'Logout',
-  },
 ];
 
 const ProfileMenu = () => {
   return (
-    <StyledContainer marginTop={2}>
+    <StyledContainer
+      marginTop={2}
+      sx={{ boxShadow: 5, '&:hover': { boxShadow: 2 } }}
+    >
       <List>
         {profileMenu.map((item) => (
           <StyledListItem>
@@ -36,6 +35,11 @@ const ProfileMenu = () => {
             </Link>
           </StyledListItem>
         ))}
+        <StyledListItem sx={{ borderTop: `1px solid gray` }}>
+          <Link href="/">
+            <StyledLink>Logout</StyledLink>
+          </Link>
+        </StyledListItem>
       </List>
     </StyledContainer>
   );

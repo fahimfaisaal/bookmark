@@ -4,9 +4,8 @@ import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import { InputLabel, Typography } from '@mui/material';
+import { InputLabel } from '@mui/material';
 
 export default function Modal({ btnText }) {
   const [open, setOpen] = React.useState(false);
@@ -22,22 +21,32 @@ export default function Modal({ btnText }) {
   return (
     <>
       <Button onClick={handleClickOpen}>{btnText}</Button>
-      <Dialog open={open} onClose={handleClose}>
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        fullWidth={true}
+        maxWidth={'sm'}
+      >
         <DialogTitle>Update Address</DialogTitle>
         <DialogContent>
           <InputLabel color="secondary">
-            <TextField size="small" placeholder="title" />
+            <TextField fullWidth size="small" placeholder="title" />
             <br />
             <br />
             <TextField
+              fullWidth
               size="small"
               placeholder="street, city, country"
               id="contact"
             />
           </InputLabel>
         </DialogContent>
-        <DialogActions>
-          <Button variant="btnGreen" onClick={handleClose}>
+        <DialogActions
+          sx={{
+            padding: '10px 25px 20px',
+          }}
+        >
+          <Button variant="btnLogin" onClick={handleClose}>
             Update
           </Button>
         </DialogActions>

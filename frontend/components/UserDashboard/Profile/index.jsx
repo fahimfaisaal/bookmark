@@ -10,8 +10,8 @@ const Profile = () => {
     <Stack spacing={3}>
       <InputField />
       <ContactCard />
-      <StyledContainer>
-        <AddressCard />
+      <StyledContainer sx={{ boxShadow: 3 }}>
+        <AddressCard label={'Address'} />
       </StyledContainer>
     </Stack>
   );
