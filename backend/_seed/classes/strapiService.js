@@ -1,5 +1,5 @@
 const { statSync } = require("fs");
-const { join } = require("path");
+
 class StrapiCRUDService {
   /**
    * @type {import("@strapi/strapi").Strapi}
@@ -46,9 +46,8 @@ class StrapiCRUDService {
 
   async createMany(modelName, models) {
     return this.strapi.db.query(this.modelUIDs[modelName]).createMany({
-      data: models
-      }
-    )
+      data: models,
+    });
   }
 
   async findMany(modelName, parameters) {
@@ -65,11 +64,10 @@ class StrapiCRUDService {
       { data: model }
     );
   }
-  
+
   async deleteMany(modelName, filter = {}) {
-    return this.strapi.db.query(this.modelUIDs[modelName]).deleteMany(filter)
+    return this.strapi.db.query(this.modelUIDs[modelName]).deleteMany(filter);
   }
 }
 
 module.exports = StrapiCRUDService;
-
