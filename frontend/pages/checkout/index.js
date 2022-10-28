@@ -2,6 +2,7 @@ import { Grid } from '@mui/material';
 import { Container } from '@mui/system';
 import Address from './items/Address';
 import Contact from './items/Contact';
+import Payment from './items/Payment';
 import CheckoutTable from './items/table';
 
 const Checkout = () => {

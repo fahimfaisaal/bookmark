@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { Typography } from '@mui/material';
+import { Button, TextField, Typography } from '@mui/material';
 
 export const StyledTypo = styled(Typography)(({ theme }) => ({
   display: 'inline-block',
@@ -13,4 +13,16 @@ export const StyledTypo = styled(Typography)(({ theme }) => ({
   marginRight: '5px',
   color: 'white',
   backgroundColor: `${theme.palette.primary.main}`,
+}));
+
+export const StyledBtn = styled(Button)(({ theme }) => ({
+  border: `1px solid ${theme.palette.primary.main}`,
+  width: '100px',
+  padding: '15px 10px',
+  fontWeight: 600,
+  boxShadow: `${theme.shadows[5]}`,
+}));
+
+export const StyledInput = styled(TextField)(({ theme }) => ({
+  border: 'none',
 }));

@@ -1,5 +1,6 @@
 import { Button, Divider, Typography } from '@mui/material';
 import { Box, Container, Stack } from '@mui/system';
+import Payment from './Payment';
 
 const CheckoutTable = () => {
   return (
@@ -51,12 +52,13 @@ const CheckoutTable = () => {
         direction={'row'}
         justifyContent="space-between"
         spacing={3}
-        sx={{ marginBottom: 5 }}
+        sx={{ marginBottom: 2 }}
       >
         <Typography variant="h3">Total</Typography>
         <Typography variant="h3">$1.60</Typography>
       </Stack>
-      <Box>
+      <Payment />
+      <Box marginTop={3}>
         <Button variant="btnLogin">Place Order</Button>
       </Box>
     </Container>
