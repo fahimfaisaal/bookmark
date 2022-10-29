@@ -68,6 +68,7 @@ export const ContentContainerStyle = styled(Box)(() => ({
 
 export const TitleStyle = styled(Link)(({ theme }) => ({
   textDecoration: 'none',
+  cursor: 'pointer',
   h3: {
     transition: 'all 0.4s',
     fontSize: '17px',

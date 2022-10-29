@@ -1,4 +1,5 @@
-import { Stack } from '@mui/system';
+import { Box, Stack } from '@mui/system';
+import Link from 'next/link';
 import React from 'react';
 import CardTitle from '../PublicationCard/CardTitle';
 import { ImgContainerStyle } from './Styles';
@@ -10,7 +11,12 @@ const AuthorCard = () => {
         <ImgContainerStyle>
           <img src="/images/author-1.jpg" alt="" />
         </ImgContainerStyle>
-        <CardTitle title={'Brandon T. Trigg'} variant={'h3'} />
+
+        <Link href={'/authors/123'}>
+          <Box>
+            <CardTitle title={'Brandon T. Trigg'} variant={'h3'} />
+          </Box>
+        </Link>
       </Stack>
     </Stack>
   );

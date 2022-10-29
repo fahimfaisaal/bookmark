@@ -10,6 +10,22 @@ export const BookImagesContainer = styled(Box)(({ theme }) => ({
   width: '100%',
   background: `${theme.palette.background.paper}`,
   padding: '12%',
+  position: 'relative',
+}));
+
+export const ImgListItem = styled(Box)(({ theme, active }) => ({
+  height: '130px',
+  width: '100px',
+  backgroundColor: `${theme.palette.background.dark}`,
+  padding: '10px',
+  cursor: 'pointer',
+  border: `${active ? `3px solid ${theme.palette.grey[500]}` : null}`,
+}));
+export const ImgListContainer = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  gap: '20px',
+  overflowX: 'auto',
 }));
 
 export const BookDetailsContainer = styled(Box)(() => ({

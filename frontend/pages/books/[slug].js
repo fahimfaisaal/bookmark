@@ -9,8 +9,16 @@ import {
 } from '@mui/material';
 import { Stack } from '@mui/system';
 import Link from 'next/link';
-import React from 'react';
+import { useState } from 'react';
+import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
+import BookCard from '../../components/BookCard';
 import CustomImage from '../../components/CustomImage';
+import {
+  LeftBtnStyle,
+  RightBtnStyle,
+} from '../../components/shared/ui/CarouselBtn/Styles';
+import ReviewForm from './ReviewForm';
+import ReviewItem from './ReviewItem';
 import {
   AuthorLinkStyle,
   BookDetailsContainer,
@@ -19,21 +27,84 @@ import {
   BookPriceStyle,
   BookTitleStyle,
   FavIconStyle,
+  ImgListContainer,
+  ImgListItem,
   Qty,
   QtyBtnLeft,
   QtyBtnRight,
   VariantBtnStyle,
 } from './Styles';
 
+const images = [
+  '/images/book-1.jpg',
+  '/images/book-2.jpg',
+  '/images/book-3.jpg',
+];
+
+const loopCount = [];
+for (let i = 0; i < 4; i++) {
+  loopCount.push(i);
+}
+
 const BookItem = () => {
+  const [openReview, setOpenReview] = useState(false);
+  const [activeImg, setActiveImg] = useState(0);
+
+  const imgLastInd = images.length - 1;
+
+  const handleOpenReview = () => {
+    setOpenReview(true);
+  };
+
+  const handleCloseReview = () => {
+    setOpenReview(false);
+  };
+
+  const handleImgNext = () => {
+    if (activeImg < imgLastInd) {
+      setActiveImg((prev) => (prev += 1));
+    }
+    if (activeImg === imgLastInd) {
+      setActiveImg(0);
+    }
+  };
+  const handleImgPrev = () => {
+    if (activeImg > 0) {
+      setActiveImg((prev) => (prev -= 1));
+    }
+    if (activeImg === 0) {
+      setActiveImg(imgLastInd);
+    }
+  };
+  const handleImgCurrent = (index) => {
+    setActiveImg(index);
+  };
+
   return (
     <Box>
       <BookInfoContainer>
         <Grid container spacing={'50px'}>
           <Grid item lg={6} md={12}>
             <BookImagesContainer>
-              <CustomImage src={'/images/book-1.jpg'} />
+              <CustomImage src={images[activeImg]} />
+              <LeftBtnStyle onClick={handleImgPrev}>
+                <FiChevronLeft />
+              </LeftBtnStyle>
+              <RightBtnStyle onClick={handleImgNext}>
+                <FiChevronRight />
+              </RightBtnStyle>
             </BookImagesContainer>
+            <ImgListContainer py={5}>
+              {images.map((img, ind) => (
+                <ImgListItem
+                  active={activeImg === ind}
+                  key={ind}
+                  onClick={() => handleImgCurrent(ind)}
+                >
+                  <CustomImage src={img} />
+                </ImgListItem>
+              ))}
+            </ImgListContainer>
           </Grid>
           <Grid item lg={6} md={12}>
             <BookDetailsContainer>
@@ -50,7 +121,7 @@ const BookItem = () => {
               </Stack>
               <Stack direction={'row'} alignItems={'center'} spacing={1}>
                 <Typography variant="body2">By (Author)</Typography>
-                <Link href={'/authors'}>
+                <Link href={'/authors/123'}>
                   <AuthorLinkStyle variant="h3">
                     Brandon T. Trigg
                   </AuthorLinkStyle>
@@ -178,6 +249,44 @@ const BookItem = () => {
             </Link>
           </Stack>
         </Box>
+      </Box>
+
+      <Box my={5}>
+        <Divider />
+        <Stack
+          direction={'row'}
+          justifyContent={'space-between'}
+          alignItems={'center'}
+        >
+          <Typography variant="h2" py={3}>
+            Reviews (0)
+          </Typography>
+          <Button variant="contained" onClick={handleOpenReview}>
+            Add Review
+          </Button>
+        </Stack>
+        <Divider />
+        <Box py={3}>
+          <ReviewItem />
+          <Divider />
+        </Box>
+        <ReviewForm
+          open={openReview}
+          handleClickOpen={handleOpenReview}
+          handleClose={handleCloseReview}
+        />
+      </Box>
+      <Box py={5}>
+        <Typography variant="h1" my={2} fontWeight={700}>
+          Related Books
+        </Typography>
+        <Grid container spacing={3} py={2}>
+          {loopCount.map((item) => (
+            <Grid item lg={3} md={6} xs={12} key={item}>
+              <BookCard />
+            </Grid>
+          ))}
+        </Grid>
       </Box>
     </Box>
   );
