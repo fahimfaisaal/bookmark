@@ -30,7 +30,7 @@ export const StyledContainer = styled(Box)(({ theme }) => ({
   border: 'none',
   borderRadius: '8px',
   boxShadow: `${theme.shadows[4]}`,
-  backgroundColor: `${theme.palette.background.paper}`,
+  backgroundColor: `${theme.palette.background.default}`,
   boxShadow: myShadows.common,
   [theme.breakpoints.down('md')]: {
     // position: 'fixed',

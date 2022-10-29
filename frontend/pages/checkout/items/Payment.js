@@ -1,15 +1,15 @@
 import {
+  Box,
   Button,
-  Container,
   InputAdornment,
   TextField,
   Typography,
 } from '@mui/material';
-import { Box, Stack } from '@mui/system';
-import { StyledContainer } from '../../../components/UserDashboard/Styles';
+import { Stack } from '@mui/system';
 import { StyledBtn } from './Styles';
 import AddCardIcon from '@mui/icons-material/AddCard';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
+import { StyledContainer } from '../../../components/UserDashboard/Styles';
 
 const Payment = () => {
   return (

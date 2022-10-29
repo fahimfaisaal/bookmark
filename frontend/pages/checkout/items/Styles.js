@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { Button, TextField, Typography } from '@mui/material';
+import { Box, Button, TextField, Typography } from '@mui/material';
 
 export const StyledTypo = styled(Typography)(({ theme }) => ({
   display: 'inline-block',
@@ -23,4 +23,16 @@ export const StyledBtn = styled(Button)(({ theme }) => ({
   fontWeight: 700,
   color: '#635BFF',
   boxShadow: `${theme.shadows[5]}`,
+}));
+
+export const StyledContainer = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '20px',
+  width: '100%',
+  border: 'none',
+  borderRadius: '8px',
+  padding: '30px',
+  backgroundColor: `${theme.palette.background.default}`,
+  boxShadow: `${theme.shadows[1]}`,
 }));

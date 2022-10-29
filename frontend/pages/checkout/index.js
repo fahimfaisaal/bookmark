@@ -2,13 +2,12 @@ import { Grid } from '@mui/material';
 import { Container } from '@mui/system';
 import Address from './items/Address';
 import Contact from './items/Contact';
-import Payment from './items/Payment';
 import CheckoutTable from './items/table';
 
 const Checkout = () => {
   return (
-    <Container>
-      <Grid container spacing={2} sx={{ marginTop: 5 }}>
+    <Container sx={{ paddingTop: 14, marginTop: -12 }}>
+      <Grid container spacing={2}>
         <Grid item xs={12} sm={5} md={7} lg={8}>
           <Contact text={'1'} />
           <Address label={'Billing Address'} text="2" />

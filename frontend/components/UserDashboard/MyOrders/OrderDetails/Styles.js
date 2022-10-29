@@ -6,7 +6,7 @@ export const StyledBox = styled(Box)(({ theme }) => ({
   padding: '15px',
 }));
 export const StyledOrderBox = styled(Box)(({ theme }) => ({
-  backgroundColor: `${theme.palette.background.default}`,
+  backgroundColor: `${theme.palette.background.paper}`,
   borderTop: `1px solid ${theme.palette.background.dark}`,
   borderBottom: `1px solid ${theme.palette.background.dark}`,
   marginTop: '10px',
