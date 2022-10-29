@@ -3,6 +3,7 @@ const { faker } = require("@faker-js/faker");
 const StrapiCRUDService = require("./strapiService");
 const { getFiles } = require("../helpers");
 const { resolve } = require("path");
+const fs = require("fs");
 
 class DbService {
   /**
@@ -30,7 +31,6 @@ class DbService {
    */
   async #createModels(modelName, modelCount) {
     console.info(`⌛️ creating ${modelCount} ${modelName} models`);
-
     const models = [];
 
     while (modelCount--) {
@@ -41,7 +41,6 @@ class DbService {
     }
 
     await this.strapiService.createMany(modelName, models);
-
     console.info(`✅ ${modelName} models created successfully`);
   }
 
@@ -112,7 +111,7 @@ class DbService {
     }
   }
 
-  async seed() {
+  async seedModels() {
     try {
       console.info("🚀 start seeding");
       for (const { modelName, count } of this.models) {
@@ -265,6 +264,17 @@ class DbService {
         await strapi.plugins.upload.services.upload.remove({ id });
       }
       console.info(`✅ reset media successfully`);
+
+      console.info("⌛️ deleting uploaded medias");
+      const uploadFilePath = resolve(process.cwd(), "public", "uploads");
+      const uploadFiles = getFiles(uploadFilePath);
+
+      for (const file of uploadFiles) {
+        if (file.basename !== ".gitkeep") {
+          fs.unlinkSync(resolve(uploadFilePath, file.basename));
+        }
+      }
+      console.info("✅ delete uploaded medias");
     } catch (e) {
       console.log(e);
     } finally {
