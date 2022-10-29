@@ -40,6 +40,9 @@ const Register = ({ open, handleClickOpen, handleClose }) => {
             <InputGroup label={'Email'} type={'email'} />
           </InputContainer>
           <InputContainer>
+            <InputGroup label={'phone'} type={'text'} />
+          </InputContainer>
+          <InputContainer>
             <InputGroup label={'Password'} type={'password'} />
           </InputContainer>
           <InputContainer>

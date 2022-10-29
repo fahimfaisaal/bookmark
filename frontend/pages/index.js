@@ -1,24 +1,28 @@
-import { Button, Grid, Link } from '@mui/material';
-import { Stack } from '@mui/system';
-import React from 'react';
-import Carousel from 'react-multi-carousel';
-import AuthorCard from '../components/AuthorCard';
-import BookCard from '../components/BookCard';
-import CategoryCard from '../components/CategoryCard';
-import PublicationCard from '../components/PublicationCard';
+import { Button, Grid, Link } from "@mui/material";
+import { Stack } from "@mui/system";
+import React from "react";
+import Carousel from "react-multi-carousel";
+import AuthorCard from "../components/AuthorCard";
+import BookCard from "../components/BookCard";
+import CategoryCard from "../components/CategoryCard";
+import PublicationCard from "../components/PublicationCard";
 import {
   CustomLeftBtn,
   CustomRightBtn,
-} from '../components/shared/ui/CarouselBtn';
-import ProfileMenu from '../components/UserDashboard/Menu';
-import Profile from '../components/UserDashboard/Profile';
+} from "../components/shared/ui/CarouselBtn";
+import ProfileMenu from "../components/UserDashboard/Menu";
+import Profile from "../components/UserDashboard/Profile";
+import {
+  useGetAuthorsQuery,
+  useGetPublishersQuery,
+} from "../store/features/user/userApi";
 import {
   ContainerStyle,
   HeroContainer,
   SectionContainer,
   SectionHeaderStyle,
   SeeAllLinkStyle,
-} from './Styles';
+} from "./Styles";
 
 const responsive = (xl, lg, md, sm, xs) => {
   return {
@@ -51,10 +55,21 @@ const Home = () => {
   for (let i = 0; i < 10; i++) {
     loopCount.push(i);
   }
+  const {
+    data: authorLists,
+    isLoading: isAuthorLoading,
+    isError: isAuthorError,
+  } = useGetAuthorsQuery();
+  const {
+    data: publisherLists,
+    isLoading: isPublisherLoading,
+    isError: isPublisherError,
+  } = useGetPublishersQuery();
+  console.log({ lists: authorLists?.data });
   return (
     <ContainerStyle>
       <HeroContainer>
-        <Link sx={{ cursor: 'pointer' }}>
+        <Link sx={{ cursor: "pointer" }}>
           <img src="/images/Cover.png" />
         </Link>
       </HeroContainer>
@@ -93,7 +108,7 @@ const Home = () => {
             </Grid>
           ))}
         </Grid>
-        <Stack direction={'row'} justifyContent={'center'} my={5}>
+        <Stack direction={"row"} justifyContent={"center"} my={5}>
           <Button variant="contained" size="large" disableElevation={true}>
             Load More
           </Button>
@@ -102,9 +117,9 @@ const Home = () => {
 
       <SectionContainer>
         <Stack
-          direction={'row'}
-          alignItems={'center'}
-          justifyContent={'space-between'}
+          direction={"row"}
+          alignItems={"center"}
+          justifyContent={"space-between"}
         >
           <SectionHeaderStyle variant="h1">Top Authors</SectionHeaderStyle>
           <SeeAllLinkStyle href="/authors">See All</SeeAllLinkStyle>
@@ -114,17 +129,18 @@ const Home = () => {
           customLeftArrow={<CustomLeftBtn />}
           customRightArrow={<CustomRightBtn />}
         >
-          {loopCount.map((item) => (
-            <AuthorCard key={item} />
-          ))}
+          {authorLists?.data?.length > 0 &&
+            authorLists?.data?.map((author) => (
+              <AuthorCard key={author.id} author={author} />
+            ))}
         </Carousel>
       </SectionContainer>
 
       <SectionContainer>
         <Stack
-          direction={'row'}
-          alignItems={'center'}
-          justifyContent={'space-between'}
+          direction={"row"}
+          alignItems={"center"}
+          justifyContent={"space-between"}
         >
           <SectionHeaderStyle variant="h1" sx={{ margin: 0 }}>
             Top Publishers
@@ -137,9 +153,14 @@ const Home = () => {
           customLeftArrow={<CustomLeftBtn />}
           customRightArrow={<CustomRightBtn />}
         >
-          {loopCount.map((item) => (
+          {publisherLists?.data?.length > 0 &&
+            publisherLists?.data?.map((publisher) => (
+              <PublicationCard key={publisher?.id} publisher={publisher} />
+            ))}
+
+          {/* {loopCount.map((item) => (
             <PublicationCard key={item} />
-          ))}
+          ))} */}
         </Carousel>
       </SectionContainer>
       <ProfileMenu />

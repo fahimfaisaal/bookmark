@@ -1,24 +1,27 @@
-import { Box, Grid, Stack, Typography } from '@mui/material';
-import PublicationCard from '../../components/PublicationCard';
-import SearchBar from '../../components/shared/SearchBar';
-import { HeaderContainerStyle, HeaderStyle } from '../authors/Styles';
+import { Box, Grid, Stack, Typography } from "@mui/material";
+import PublicationCard from "../../components/PublicationCard";
+import CustomLink from "../../components/shared/CustomLink";
+import SearchBar from "../../components/shared/SearchBar";
+import { useGetPublishersQuery } from "../../store/features/user/userApi";
+import { HeaderContainerStyle, HeaderStyle } from "../authors/Styles";
 
 const Publications = () => {
-  const loopCount = [];
-  for (let i = 0; i < 10; i++) {
-    loopCount.push(i);
-  }
+  const {
+    data: publisherLists,
+    isLoading: isPublisherLoading,
+    isError: isPublisherError,
+  } = useGetPublishersQuery();
   return (
     <Box>
       <HeaderContainerStyle>
         <HeaderStyle>
-          <Typography variant="h1" color={'primary'}>
+          <Typography variant="h1" color={"primary"}>
             Manufacturers/Publishers
           </Typography>
           <Typography variant="body1">
             Lorem ipsum dolor sit amet, consectetu eradipiscing elit.
           </Typography>
-          <Stack direction={'row'} justifyContent={'center'} my={5}>
+          <Stack direction={"row"} justifyContent={"center"} my={5}>
             <SearchBar
               placeholder="Search Your Favorite Author from here"
               width="700px"
@@ -28,11 +31,14 @@ const Publications = () => {
       </HeaderContainerStyle>
       <Box my={5}>
         <Grid container spacing={2}>
-          {loopCount.map((item) => (
-            <Grid item lg={3} md={6} sm={12} xs={12} key={item}>
-              <PublicationCard />
-            </Grid>
-          ))}
+          {publisherLists?.data?.length > 0 &&
+            publisherLists?.data?.map((publisher) => (
+              <CustomLink href={`/publishers/${publisher?.attributes?.name}`}>
+              <Grid item lg={3} md={6} sm={12} xs={12} key={publisher?.id}>
+                <PublicationCard publisher={publisher} />
+              </Grid>
+              </CustomLink>
+            ))}
         </Grid>
       </Box>
     </Box>

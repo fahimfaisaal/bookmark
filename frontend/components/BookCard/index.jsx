@@ -16,13 +16,7 @@ import {
 } from './Styles';
 
 const BookCard = ({
-  title,
-  img,
-  price,
-  author,
-  category,
-  stock,
-  salePrice,
+  book
 }) => {
   const [favorite, setFavorite] = React.useState(false);
 
@@ -47,7 +41,7 @@ const BookCard = ({
       <ContentContainerStyle>
         <TitleStyle href="/">
           <Typography variant="h3" color="text.primary" py={'5px'}>
-            Superhero & Aliens Superhero Aliens
+            {book?.name}
           </Typography>
         </TitleStyle>
 
