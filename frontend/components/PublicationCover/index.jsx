@@ -1,49 +1,50 @@
 import { Typography } from '@mui/material';
 import { Stack } from '@mui/system';
 import { BsFacebook, BsInstagram, BsYoutube } from 'react-icons/bs';
-import CardTitle from '../PublicationCard/CardTitle';
+import CustomImage from '../CustomImage';
 
 import {
-  BannerContainer,
   BannerContainerStyle,
   ContainerStyle,
   DetailsContainerStyle,
   LinkContainer,
   LogoContainer,
   ProfileContainerStyle,
+  TitleStyle,
 } from './style';
 
 const PublicationCover = ({ img, title, slug }) => {
   return (
     <ContainerStyle>
-      <ProfileContainerStyle>
-        <Stack direction={'column'} justifyContent={'center'} spacing={2}>
-          <LogoContainer>
-            <img src="/images/publisher-logo.png" alt="" />
-          </LogoContainer>
-          <DetailsContainerStyle>
-            <CardTitle title={'Too cool publication'} variant={'h3'} />
+      <ProfileContainerStyle
+        direction={'column'}
+        alignItems={'center'}
+        justifyContent={'center'}
+      >
+        <LogoContainer>
+          <img src="/images/publisher-logo.png" alt="" />
+        </LogoContainer>
+        <DetailsContainerStyle>
+          <TitleStyle variant={'h2'}>Too Cool Publication</TitleStyle>
+          <LinkContainer>
+            <Typography variant="caption">https://redq.io/</Typography>
+          </LinkContainer>
+          <Stack direction={'row'} spacing={1} justifyContent={'center'}>
             <LinkContainer>
-              <Typography variant="caption">https://redq.io/</Typography>
+              <BsFacebook />
             </LinkContainer>
-            <Stack direction={'row'} spacing={1} justifyContent={'center'}>
-              <LinkContainer>
-                <BsFacebook />
-              </LinkContainer>
-              <LinkContainer>
-                <BsYoutube />
-              </LinkContainer>
-              <LinkContainer>
-                <BsInstagram />
-              </LinkContainer>
-            </Stack>
-          </DetailsContainerStyle>
-        </Stack>
+            <LinkContainer>
+              <BsYoutube />
+            </LinkContainer>
+            <LinkContainer>
+              <BsInstagram />
+            </LinkContainer>
+          </Stack>
+        </DetailsContainerStyle>
       </ProfileContainerStyle>
+
       <BannerContainerStyle>
-        <BannerContainer>
-          <img src="/images/Publisher-banner-2.jpg" alt="" />
-        </BannerContainer>
+        <CustomImage src="/images/publisher-banner.png" alt="" />
       </BannerContainerStyle>
     </ContainerStyle>
   );

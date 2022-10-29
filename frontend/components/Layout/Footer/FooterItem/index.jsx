@@ -1,9 +1,11 @@
-import { Typography } from "@mui/material";
-import { Box, Stack } from "@mui/system";
-import React from "react";
-import { LinkContainer } from "./Styles";
+import { Typography } from '@mui/material';
+import { Box, Stack } from '@mui/system';
+import Link from 'next/link';
+import React from 'react';
+import { LinkContainer } from './Styles';
 
 const FooterItem = ({ title, data }) => {
+  console.log(data);
   return (
     <Box>
       <Typography variant="h2" paddingBottom={4}>
@@ -11,9 +13,11 @@ const FooterItem = ({ title, data }) => {
       </Typography>
       <Stack>
         {data.map((item) => (
-          <LinkContainer href={item.Link} key={item.text}>
-            {item.text}
-          </LinkContainer>
+          <Link href={item.link}>
+            <Box>
+              <LinkContainer key={item.text}>{item.text}</LinkContainer>
+            </Box>
+          </Link>
         ))}
       </Stack>
     </Box>

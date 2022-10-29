@@ -1,6 +1,8 @@
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-import { Link, Stack, Typography } from '@mui/material';
+import { Stack, Typography } from '@mui/material';
+import { Box } from '@mui/system';
+import Link from 'next/link';
 import * as React from 'react';
 import { FaShoppingCart } from 'react-icons/fa';
 import CustomImage from '../CustomImage';
@@ -36,26 +38,32 @@ const BookCard = ({
 
   return (
     <StyledBox>
-      <Link href="/books" sx={{ cursor: 'pointer' }}>
-        <CustomImage
-          src="/Comic-Books.jpg"
-          minHeight="250px"
-          title="comic-book"
-          width="250px"
-        />
+      <Link href="/books/123" sx={{ cursor: 'pointer' }}>
+        <Box sx={{ cursor: 'pointer' }}>
+          <CustomImage
+            src="/Comic-Books.jpg"
+            height="350px"
+            title="comic-book"
+            width="250px"
+          />
+        </Box>
       </Link>
       <ContentContainerStyle>
-        <TitleStyle href="/">
-          <Typography variant="h3" color="text.primary" py={'5px'}>
-            Superhero & Aliens Superhero Aliens
-          </Typography>
+        <TitleStyle>
+          <Link href={'/books/123'}>
+            <Typography variant="h3" color="text.primary" py={'5px'}>
+              Superhero & Aliens Superhero Aliens
+            </Typography>
+          </Link>
         </TitleStyle>
 
         <Stack direction="row" spacing={1} alignItems="center">
           <Typography variant="caption">by</Typography>
-          <WriterLinkStyle>
-            <Typography variant="body2">Brandon T.Trigg</Typography>
-          </WriterLinkStyle>
+          <Link href={'/authors/123'}>
+            <WriterLinkStyle>
+              <Typography variant="body2">Brandon T.Trigg</Typography>
+            </WriterLinkStyle>
+          </Link>
         </Stack>
         <Typography
           variant="caption"

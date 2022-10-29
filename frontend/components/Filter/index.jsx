@@ -1,39 +1,52 @@
-import { Typography } from '@mui/material';
-import { ContainerStyle, LinkContainer, InnerContainerStyle } from './style';
-import SearchBar from './Search';
+import { Stack, Typography } from '@mui/material';
 import Divider from '@mui/material/Divider';
-import CheckboxList from './SquareList';
 import RadioBoxList from './CircleList';
 import RangeSlider from './RangeSlider';
+import SearchBarComp from './Search';
+import CheckboxList from './SquareList';
+import { ContainerStyle, InnerContainerStyle, LinkContainer } from './style';
+
+const categoryList = [
+  'Commic Book',
+  'Science Fiction',
+  'Literature',
+  'Horror Fiction',
+  'Children',
+  'Sifi',
+];
+const tagList = ['carton', 'fantacy', 'love', 'sad'];
 
 const Filter = ({ img, title, slug }) => {
-    return (
-        <ContainerStyle>
-            <InnerContainerStyle
-                style={{
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                    padding: '20px 18px',
-                }}
-            >
-                <Typography variant="h1" sx={{ fontWeight: '600' }}>
-                    Filter
-                </Typography>
-                <LinkContainer>
-                    <Typography variant="caption">Clear all</Typography>
-                </LinkContainer>
-            </InnerContainerStyle>
-            {/* TODO: Divider isn't being visible */}
-            <Divider sx={{ display: 'flex', flexDirection: 'column' }} />
-            <InnerContainerStyle style={{ flexDirection: 'column' }}>
-                <SearchBar />
-                <RadioBoxList />
-                <CheckboxList title={'Categories'} />
-                <RangeSlider />
-                <CheckboxList title={'Tags'} />
-            </InnerContainerStyle>
-        </ContainerStyle>
-    );
+  return (
+    <ContainerStyle>
+      <InnerContainerStyle>
+        <Stack
+          direction={'row'}
+          alignItems={'center'}
+          justifyContent={'space-between'}
+        >
+          <Typography variant="h2" fontSize={'26px'}>
+            Filter
+          </Typography>
+          <LinkContainer>
+            <Typography variant="h4">Clear all</Typography>
+          </LinkContainer>
+        </Stack>
+      </InnerContainerStyle>
+      <Divider />
+
+      <InnerContainerStyle>
+        <SearchBarComp />
+        <Divider />
+        <RadioBoxList />
+        <CheckboxList title={'Categories'} data={categoryList} />
+        <Divider />
+        <RangeSlider />
+        <Divider />
+        <CheckboxList title={'Tags'} data={tagList} />
+      </InnerContainerStyle>
+    </ContainerStyle>
+  );
 };
 
 export default Filter;

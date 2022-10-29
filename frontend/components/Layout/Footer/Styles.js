@@ -2,8 +2,11 @@ import { Link, Stack } from '@mui/material';
 import { Box, styled } from '@mui/system';
 
 export const FooterContainer = styled(Box)(({ theme }) => ({
-  backgroundColor: `${theme.palette.background.paper}`,
+  background: `${theme.palette.background.paper}`,
   padding: '50px 60px 35px',
+  [theme.breakpoints.down('md')]: {
+    padding: '30px 20px 20px',
+  },
 }));
 
 export const PaymentImgContainer = styled(Link)(() => ({
