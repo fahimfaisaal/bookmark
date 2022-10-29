@@ -14,11 +14,14 @@ export const booksApi = apiSlice.injectEndpoints({
     getBooksByAuthor: builder.query({
       query: ({ authorName }) =>
         `/authors?populate[0]=avatar&populate[1]=books&filters[name][$eq]=${authorName} `,
-        // ?populate[0]=avatar&populate[1]=books&filters[name][$eq]=Dr. Tim Upton III
     }),
     getBooksByPublisher: builder.query({
       query: ({ publisherName }) =>
         `/publishers?populate[0]=books&filters[name][$eq]=${publisherName} `,
+    }),
+    getCategory: builder.query({
+      query: () =>
+        `/categories?populate[0]=coverImage&pagination[pageSize]=15 `,
     }),
   }),
 });
@@ -28,4 +31,5 @@ export const {
   useGetBooksByAuthorQuery,
   useGetBooksByPublisherQuery,
   useGetBooksQuery,
+  useGetCategoryQuery
 } = booksApi;

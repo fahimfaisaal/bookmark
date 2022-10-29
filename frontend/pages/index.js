@@ -10,8 +10,10 @@ import {
   CustomLeftBtn,
   CustomRightBtn,
 } from "../components/shared/ui/CarouselBtn";
-import ProfileMenu from "../components/UserDashboard/Menu";
-import Profile from "../components/UserDashboard/Profile";
+import {
+  useGetBooksQuery,
+  useGetCategoryQuery,
+} from "../store/features/books/booksApi";
 import {
   useGetAuthorsQuery,
   useGetPublishersQuery,
@@ -51,10 +53,7 @@ const responsive = (xl, lg, md, sm, xs) => {
 };
 
 const Home = () => {
-  const loopCount = [];
-  for (let i = 0; i < 10; i++) {
-    loopCount.push(i);
-  }
+  const newArraivalDate = new Date().toISOString();
   const {
     data: authorLists,
     isLoading: isAuthorLoading,
@@ -65,7 +64,19 @@ const Home = () => {
     isLoading: isPublisherLoading,
     isError: isPublisherError,
   } = useGetPublishersQuery();
-  console.log({ lists: authorLists?.data });
+
+  const { data: popularbookLists } = useGetBooksQuery({
+    params: "filters[bestSelling][$eq]=true",
+  });
+
+  const { data: newbookLists, isLoading: isNewBooksLoading } = useGetBooksQuery(
+    {
+      params: `filters[createdAt][$lte]=${"2022-10-29T03:07:38.922Z"}&pagination[pageSize]=8`,
+    }
+  );
+  const { data: categoryLists } = useGetCategoryQuery();
+
+  console.log({ lists: categoryLists, isNewBooksLoading });
   return (
     <ContainerStyle>
       <HeroContainer>
@@ -74,11 +85,11 @@ const Home = () => {
         </Link>
       </HeroContainer>
       <SectionContainer>
-        <SectionHeaderStyle variant="h1">Popular Products</SectionHeaderStyle>
+        <SectionHeaderStyle variant="h1">Popular Books</SectionHeaderStyle>
         <Grid container spacing={3}>
-          {loopCount.map((item) => (
-            <Grid item lg={3} md={6} xs={12} key={item}>
-              <BookCard />
+          {popularbookLists?.data?.slice(0, 8).map((book) => (
+            <Grid item lg={3} md={6} xs={12} key={book?.id}>
+              <BookCard book={book?.attributes} />
             </Grid>
           ))}
         </Grid>
@@ -93,8 +104,8 @@ const Home = () => {
           customLeftArrow={<CustomLeftBtn />}
           customRightArrow={<CustomRightBtn />}
         >
-          {loopCount.map((item) => (
-            <CategoryCard key={item} />
+          {categoryLists?.data?.map((category) => (
+            <CategoryCard key={category?.id} category={category?.attributes} />
           ))}
         </Carousel>
       </SectionContainer>
@@ -102,9 +113,9 @@ const Home = () => {
       <SectionContainer>
         <SectionHeaderStyle variant="h1">New Arrival Books</SectionHeaderStyle>
         <Grid container spacing={2}>
-          {loopCount.map((item) => (
-            <Grid item lg={3} md={6} xs={12} key={item}>
-              <BookCard />
+          {newbookLists?.data?.map((book) => (
+            <Grid item lg={3} md={6} xs={12} key={book?.id}>
+              <BookCard book={book?.attributes} />
             </Grid>
           ))}
         </Grid>
@@ -158,12 +169,10 @@ const Home = () => {
               <PublicationCard key={publisher?.id} publisher={publisher} />
             ))}
 
-          {/* {loopCount.map((item) => (
-            <PublicationCard key={item} />
-          ))} */}
+          
         </Carousel>
       </SectionContainer>
-      <ProfileMenu />
+    
     </ContainerStyle>
   );
 };

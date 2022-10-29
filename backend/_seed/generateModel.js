@@ -61,6 +61,7 @@ const generateModel = {
     publishedYear: faker.date.past(),
     status: faker.helpers.arrayElement(['in_stock', 'stock_out', 'coming_soon', 'pre_order']).toUpperCase(),
     description: faker.commerce.productDescription(),
+    bestSelling: faker.helpers.arrayElement(['true', 'false']),
     totalPages: faker.datatype.number({
       min: 30,
       max: 3000
