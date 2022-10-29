@@ -6,11 +6,11 @@ import {
   Typography,
 } from '@mui/material';
 import { Box } from '@mui/system';
-import { StyledContainer } from '../Styles';
+import { StyledContainer } from './Styles';
 const ChangePassword = () => {
   return (
     <>
-      <StyledContainer>
+      <StyledContainer sx={{ boxShadow: 3 }}>
         <Typography variant="h2">Change Password</Typography>
 
         <InputLabel color="secondary" htmlFor="old-pass">

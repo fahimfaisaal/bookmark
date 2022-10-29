@@ -1,9 +1,14 @@
-const Profile = () => {
+import UserDashboard from '../../components/UserDashboard';
+import Profile from '../../components/UserDashboard/Profile';
+
+const ProfilePage = () => {
   return (
-    <div>
-      <h1>Profile Page</h1>
-    </div>
+    <>
+      <UserDashboard>
+        <Profile />
+      </UserDashboard>
+    </>
   );
 };
 
-export default Profile;
+export default ProfilePage;

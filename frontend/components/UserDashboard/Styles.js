@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { Box } from '@mui/material';
+import { Box, Grid } from '@mui/material';
 import myShadows from '../../src/theme/shadows';
 
 export const StyledContainer = styled(Box)(({ theme }) => ({
@@ -10,6 +10,9 @@ export const StyledContainer = styled(Box)(({ theme }) => ({
   border: 'none',
   borderRadius: '8px',
   padding: '30px',
-  backgroundColor: `${theme.palette.background.paper}`,
+  backgroundColor: `${theme.palette.background.default}`,
   boxShadow: myShadows.common,
+}));
+export const StyledGrid = styled(Grid)(({ theme }) => ({
+  // backgroundColor: `${theme.palette.background.default}`,
 }));

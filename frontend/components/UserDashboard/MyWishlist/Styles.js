@@ -3,8 +3,9 @@ import { Button, Stack } from '@mui/material';
 import { Box } from '@mui/system';
 
 export const StyledStack = styled(Stack)(({ theme }) => ({
-  borderBottom: `1px solid ${theme.palette.background.dark}`,
-  padding: '5px 0px 20px',
+  borderBottom: `2px solid ${theme.palette.background.paper}`,
+  backgroundColor: `${theme.palette.background.default}`,
+  padding: '5px 10px 20px',
 }));
 
 export const StyledContainer = styled(Button)(({ theme }) => ({

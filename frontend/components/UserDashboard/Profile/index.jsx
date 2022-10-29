@@ -1,8 +1,7 @@
-import { Box } from '@mui/material';
 import { Stack } from '@mui/system';
 import React from 'react';
-import ChangePassword from '../ChangePassword';
-import Address from './Address';
+import AddressCard from '../../AddressCard';
+import { StyledContainer } from '../Styles';
 import ContactCard from './ContactCard';
 import InputField from './InputField';
 
@@ -11,7 +10,9 @@ const Profile = () => {
     <Stack spacing={3}>
       <InputField />
       <ContactCard />
-      <Address />
+      <StyledContainer sx={{ boxShadow: 3 }}>
+        <AddressCard label={'Address'} />
+      </StyledContainer>
     </Stack>
   );
 };

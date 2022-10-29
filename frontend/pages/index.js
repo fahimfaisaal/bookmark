@@ -10,6 +10,8 @@ import {
   CustomLeftBtn,
   CustomRightBtn,
 } from '../components/shared/ui/CarouselBtn';
+import ProfileMenu from '../components/UserDashboard/Menu';
+import Profile from '../components/UserDashboard/Profile';
 import {
   ContainerStyle,
   HeroContainer,
@@ -140,6 +142,7 @@ const Home = () => {
           ))}
         </Carousel>
       </SectionContainer>
+      <ProfileMenu />
     </ContainerStyle>
   );
 };

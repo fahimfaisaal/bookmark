@@ -6,14 +6,10 @@ export const StyledBox = styled(Box)(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
   gap: '5px',
-  // minHeight: '430px',
   justifyContent: 'space-between',
   height: '100%',
-  // width: '280px',
   border: '1px solid #E5E7EB',
-  boxShadow: `${theme.myShadows}`,
   borderRadius: '6px',
-  // padding: '8px',
   position: 'relative',
 }));
 
