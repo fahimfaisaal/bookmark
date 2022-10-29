@@ -6,12 +6,13 @@ import { ContainerStyle, LinkContainer, LogoContainer } from './Styles';
 
 const PublicationCard = ({ publisher }) => {
   const {attributes: {name, logo, banner}} = publisher
-  const url = logo?.data && logo?.data[0]?.attributes?.url || "/images/publisher-logo.png";
+  const logoUrl = logo?.data && `http://localhost:1337${ logo?.data[0]?.attributes?.url}` || "/images/publisher-logo.png";
+  const bannerUrl = banner?.data && `http://localhost:1337${banner?.data[0]?.attributes?.url}` || "/images/publisher-logo.png";
   return (
     <Stack direction={'row'}>
       <ContainerStyle>
         <LogoContainer>
-          <CustomImage src={url} alt={name} />
+          <CustomImage src={logoUrl} alt={name} />
         </LogoContainer>
         <Box>
           <CardTitle title={name} variant={'h2'} />

@@ -11,28 +11,21 @@ const AuthorItem = () => {
   console.log({ q: router.query.slug });
   const { data } = useGetBooksByAuthorQuery({ authorName: router.query.slug });
   const authorData = data?.data[0]?.attributes;
-  const { name, bio, birth, avatar, books } = authorData;
-  console.log({ authorData });
-  const loopCount = [];
-  for (let i = 0; i < 10; i++) {
-    loopCount.push(i);
-  }
+  // const { name, bio, birth, avatar, books } = authorData;
+  console.log({ name:authorData?.name });
+  
   return (
     <Box>
-      <AuthorProfile />
+      <AuthorProfile authorInfo={authorData} />
       <SectionHeaderStyle variant="h1">Author Books</SectionHeaderStyle>
       <Box>
         <Grid container spacing={2}>
-          {books?.data?.map((book) => (
+          {authorData?.books?.data?.map((book) => (
             <Grid item lg={3} md={6} xs={12} key={book?.id}>
               <BookCard book={book?.attributes}/>
             </Grid>
           ))}
-          {/* {loopCount.map((item) => (
-            <Grid item lg={3} md={6} xs={12} key={item}>
-              <BookCard />
-            </Grid>
-          ))} */}
+          
         </Grid>
         <Stack direction={"row"} justifyContent={"center"} my={5}>
           <Button variant="contained" size="large" disableElevation={true}>

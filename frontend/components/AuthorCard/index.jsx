@@ -5,7 +5,7 @@ import { ImgContainerStyle } from './Styles';
 
 const AuthorCard = ({author}) => {
   const {attributes: {name, avatar}} = author
-  const url = avatar?.data?.attributes?.url || "/images/author-dummy.png";
+  const url = `http://localhost:1337${avatar?.data?.attributes?.url}` || "/images/author-dummy.png";
   return (
     <Stack direction={'row'}>
       <Stack direction={'column'} alignItems={'center'}>

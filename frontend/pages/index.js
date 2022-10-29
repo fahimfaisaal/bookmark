@@ -131,7 +131,7 @@ const Home = () => {
         >
           {authorLists?.data?.length > 0 &&
             authorLists?.data?.map((author) => (
-              <AuthorCard key={author.id} author={author} />
+              <AuthorCard key={author?.id} author={author} />
             ))}
         </Carousel>
       </SectionContainer>
