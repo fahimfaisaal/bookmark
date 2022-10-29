@@ -195,7 +195,7 @@ class DbService {
           const exactPath = resolve(process.cwd(), ...path.split("/"));
           const files = getFiles(exactPath);
 
-          for (const { basename, filename, ext } of files) {
+          for (const { basename, ext } of files) {
             const uploadFile = await this.strapiService.uploadFile({
               data: {
                 refId: faker.datatype.number({ min: 1, max: 1e5 }), // random id
@@ -204,7 +204,7 @@ class DbService {
               },
               file: {
                 path: resolve(exactPath, basename),
-                name: filename,
+                name: basename,
                 type: `${type ? type + "/" : ""}${ext}`,
               },
             });

@@ -22,7 +22,7 @@ class StrapiCRUDService {
 
   async uploadFile({ data, file }) {
     const { refId, ref, field } = data;
-    const { name, path, type } = file;
+    const { name, path, type, extension } = file;
 
     const fileStat = statSync(path);
 
@@ -37,6 +37,7 @@ class StrapiCRUDService {
           path,
           name,
           type,
+          extension,
           size: fileStat.size,
         },
       });
