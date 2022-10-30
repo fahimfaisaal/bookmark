@@ -1,5 +1,6 @@
-import { Button, Grid, Link } from '@mui/material';
+import { Box, Button, Grid } from '@mui/material';
 import { Stack } from '@mui/system';
+import Link from 'next/link';
 import React from 'react';
 import Carousel from 'react-multi-carousel';
 import AuthorCard from '../components/AuthorCard';
@@ -11,7 +12,6 @@ import {
   CustomRightBtn,
 } from '../components/shared/ui/CarouselBtn';
 import ProfileMenu from '../components/UserDashboard/Menu';
-import Profile from '../components/UserDashboard/Profile';
 import {
   ContainerStyle,
   HeroContainer,
@@ -54,8 +54,10 @@ const Home = () => {
   return (
     <ContainerStyle>
       <HeroContainer>
-        <Link sx={{ cursor: 'pointer' }}>
-          <img src="/images/Cover.png" />
+        <Link href={'/books'}>
+          <Box sx={{ cursor: 'pointer' }}>
+            <img src="/images/Cover.png" />
+          </Box>
         </Link>
       </HeroContainer>
       <SectionContainer>
@@ -107,7 +109,9 @@ const Home = () => {
           justifyContent={'space-between'}
         >
           <SectionHeaderStyle variant="h1">Top Authors</SectionHeaderStyle>
-          <SeeAllLinkStyle href="/authors">See All</SeeAllLinkStyle>
+          <Link href="/authors">
+            <SeeAllLinkStyle>See All</SeeAllLinkStyle>
+          </Link>
         </Stack>
         <Carousel
           responsive={responsive(8, 6, 3, 2, 1)}
@@ -129,7 +133,9 @@ const Home = () => {
           <SectionHeaderStyle variant="h1" sx={{ margin: 0 }}>
             Top Publishers
           </SectionHeaderStyle>
-          <SeeAllLinkStyle href="/publishers">See All</SeeAllLinkStyle>
+          <Link href="/publishers">
+            <SeeAllLinkStyle>See All</SeeAllLinkStyle>
+          </Link>
         </Stack>
 
         <Carousel

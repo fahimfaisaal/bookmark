@@ -49,7 +49,6 @@ import {
   MobileBarContainer,
   MobileMenuContainer,
   MobMenuItemContainer,
-  ThemeSwitch,
   ThemeSwitchStyle,
 } from './Styles';
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
@@ -82,11 +81,11 @@ const profileMenuItems = [
     text: 'Profile',
   },
   {
-    link: 'profile/orders',
+    link: '/profile/my-orders',
     text: 'My Orders',
   },
   {
-    link: 'profile/wishlists',
+    link: '/profile/my-wishlist',
     text: 'My Wishlists',
   },
   {
@@ -94,7 +93,7 @@ const profileMenuItems = [
     text: 'Checkout',
   },
   {
-    link: 'profile/change-password',
+    link: '/profile/change-password',
     text: 'Change Password',
   },
   {
@@ -314,7 +313,6 @@ const NavBar = () => {
           )}
           <SearchBar normal={true} />
           <IconContainer onClick={handleChangeMode}>
-            {/* <ThemeSwitch onChange={handleChangeMode} /> */}
             <ThemeSwitchStyle>
               {theme.palette.mode === 'light' ? <RiMoonLine /> : <BsSunFill />}
             </ThemeSwitchStyle>
@@ -324,12 +322,13 @@ const NavBar = () => {
               <HiOutlineShoppingBag />
             </Badge>
           </IconContainer>
-          <IconContainer fontSize={'32px'}>
-            <Badge badgeContent={2} color="primary">
-              {/* <MdFavorite /> */}
-              <MdOutlineFavoriteBorder />
-            </Badge>
-          </IconContainer>
+          <Link href={'/profile/my-wishlist'}>
+            <IconContainer fontSize={'32px'}>
+              <Badge badgeContent={2} color="primary">
+                <MdOutlineFavoriteBorder />
+              </Badge>
+            </IconContainer>
+          </Link>
 
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
@@ -355,11 +354,13 @@ const NavBar = () => {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {settings.map((setting) => (
-                <MenuItemContainer key={setting}>
-                  <MenuItem onClick={handleCloseUserMenu}>
-                    <Typography textAlign="center">{setting}</Typography>
-                  </MenuItem>
+              {profileMenuItems.map((item) => (
+                <MenuItemContainer key={item.text}>
+                  <Link href={item.link}>
+                    <MenuItem onClick={handleCloseUserMenu}>
+                      <Typography textAlign="center">{item.text}</Typography>
+                    </MenuItem>
+                  </Link>
                 </MenuItemContainer>
               ))}
             </Menu>
@@ -421,7 +422,7 @@ const NavBar = () => {
             <Divider />
           </CartContainer>
           <Box
-            mb={5}
+            pb={5}
             px={3}
             sx={{ background: `${theme.palette.background.default}` }}
           >
@@ -467,9 +468,11 @@ const NavBar = () => {
               </Typography>
             </Button>
           </Box>
-          <Box>
-            <ThemeSwitch onChange={handleChangeMode} />
-          </Box>
+          <IconContainer onClick={handleChangeMode}>
+            <ThemeSwitchStyle>
+              {theme.palette.mode === 'light' ? <RiMoonLine /> : <BsSunFill />}
+            </ThemeSwitchStyle>
+          </IconContainer>
         </Stack>
 
         <Drawer

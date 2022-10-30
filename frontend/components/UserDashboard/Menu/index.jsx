@@ -1,5 +1,6 @@
-import { Button, Divider, List, ListItem } from '@mui/material';
+import { List } from '@mui/material';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { StyledContainer, StyledLink, StyledListItem } from './Styles';
 
 const profileMenu = [
@@ -16,22 +17,22 @@ const profileMenu = [
     label: 'My Orders',
   },
   {
-    path: '/profile/my-whishlist',
+    path: '/profile/my-wishlist',
     label: 'My Wishlist',
   },
 ];
 
 const ProfileMenu = () => {
+  const router = useRouter();
   return (
-    <StyledContainer
-      marginTop={2}
-      sx={{ boxShadow: 5, '&:hover': { boxShadow: 2 } }}
-    >
+    <StyledContainer marginTop={2} sx={{ boxShadow: 2 }}>
       <List>
         {profileMenu.map((item) => (
-          <StyledListItem>
+          <StyledListItem active={router.pathname === item.path}>
             <Link href={item.path}>
-              <StyledLink>{item.label}</StyledLink>
+              <StyledLink active={router.pathname === item.path}>
+                {item.label}
+              </StyledLink>
             </Link>
           </StyledListItem>
         ))}
