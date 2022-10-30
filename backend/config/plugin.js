@@ -5,7 +5,6 @@ module.exports = ({ env }) => ({
       jwt: {
         expiresIn: "7d",
       },
-      hash: false,
     },
   },
   // ...
