@@ -2,7 +2,7 @@ import { TextField } from '@mui/material';
 import React from 'react';
 import { InputLabelStyle } from './Styles';
 
-const InputGroup = ({ label, type }) => {
+const InputGroup = ({ label, type, field }) => {
   const name = String(label).toLowerCase();
   return (
     <>
