@@ -71,7 +71,7 @@
     },
     "firstName": {
       "type": "string",
-      "required": true,
+      "required": false,
       "maxLength": 30,
       "minLength": 2
     },
@@ -79,7 +79,7 @@
       "type": "string",
       "maxLength": 30,
       "minLength": 3,
-      "required": true
+      "required": false
     },
     "gender": {
       "type": "enumeration",
@@ -88,7 +88,7 @@
         "FEMALE",
         "OTHERS"
       ],
-      "required": true
+      "required": false
     },
     "birthDate": {
       "type": "date"
