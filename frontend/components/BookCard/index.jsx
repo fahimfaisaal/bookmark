@@ -18,15 +18,14 @@ import {
   WriterLinkStyle,
 } from "./Styles";
 
-const BookCard = ({ book }) => {
+const BookCard = ({ book, bookId }) => {
+ 
   const [favorite, setFavorite] = React.useState(false);
-  const { authors, images, variants } = book;
-  // const { price, discount} = variants?.data[0]
-  // console.log({ book: variants?.data[0]?.attributes?.discount, variants });
+  const { authors, images, variants } = book || {};
   const bookImage =
     (images?.data &&
       `http://localhost:1337${images?.data[0]?.attributes?.url}`) ||
-    "/images/author-dummy.png";
+    "/images/product-dummy.png";
 
   const handleFavorite = () => {
     if (favorite) {
@@ -38,10 +37,10 @@ const BookCard = ({ book }) => {
 
   return (
     <StyledBox>
-      <Link href="/books/123" sx={{ cursor: 'pointer' }}>
+      <Link href={`/books/${bookId}`} sx={{ cursor: 'pointer' }}>
         <Box sx={{ cursor: 'pointer' }}>
           <CustomImage
-            src="/Comic-Books.jpg"
+            src={bookImage}
             height="350px"
             title="comic-book"
             width="250px"
@@ -52,7 +51,7 @@ const BookCard = ({ book }) => {
         <TitleStyle>
           <Link href={'/books/123'}>
             <Typography variant="h3" color="text.primary" py={'5px'}>
-              Superhero & Aliens Superhero Aliens
+            {book?.name}
             </Typography>
           </Link>
         </TitleStyle>
@@ -61,7 +60,7 @@ const BookCard = ({ book }) => {
           <Typography variant="caption">by</Typography>
           <Link href={'/authors/123'}>
             <WriterLinkStyle>
-              <Typography variant="body2">Brandon T.Trigg</Typography>
+              <Typography variant="body2">{authors?.data[0]?.attributes?.name}</Typography>
             </WriterLinkStyle>
           </Link>
 

@@ -5,13 +5,14 @@ import { FiFilter } from 'react-icons/fi';
 import { MdClose } from 'react-icons/md';
 import BookCard from '../../components/BookCard';
 import Filter from '../../components/Filter';
+import { useGetBooksQuery } from '../../store/features/books/booksApi';
 import { FilterButtonContainer } from '../publishers/Style';
 
 const Books = () => {
-  const loopCount = [];
-  for (let i = 0; i < 15; i++) {
-    loopCount.push(i);
-  }
+  const { data: bookLists } = useGetBooksQuery({
+    params: "",
+  });
+ 
   const [filterTrig, setFilterTrig] = useState(false);
 
   const handleFilter = () => {
@@ -42,11 +43,12 @@ const Books = () => {
           </FilterButtonContainer>
 
           <Grid container spacing={3}>
-            {loopCount.map((item) => (
-              <Grid item lg={filterTrig ? 4 : 3} md={6} xs={12} key={item}>
-                <BookCard />
-              </Grid>
-            ))}
+          {bookLists?.data?.slice(0, 8).map((book) => (
+            <Grid item  md={6} lg={filterTrig ? 4 : 3} xs={12}  key={book?.id}>
+              <BookCard book={book?.attributes} bookId={book?.id}/>
+            </Grid>
+          ))}
+           
           </Grid>
           <Stack direction={'row'} justifyContent={'center'} my={5}>
             <Button variant="contained" size="large" disableElevation={true}>

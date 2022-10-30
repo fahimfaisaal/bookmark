@@ -18,7 +18,7 @@ const PublicationCard = ({ publisher }) => {
         <Box>
           <Link href={'/publishers/123'}>
             <Box>
-              <CardTitle title={'Too cool publication'} variant={'h2'} />
+            <CardTitle title={name} variant={'h2'} />
             </Box>
           </Link>
           <Stack direction={'row'} spacing={1}>

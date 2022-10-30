@@ -13,9 +13,9 @@ const AuthorCard = ({author}) => {
         <ImgContainerStyle>,
           <img src={url } alt={name} />
         </ImgContainerStyle>
-        <Link href={'/authors/123'}>
+        <Link href={`/authors/${author?.attributes?.name}`}>
           <Box>
-            <CardTitle title={'Brandon T. Trigg'} variant={'h3'} />
+          <CardTitle title={name} variant={'h3'} />
           </Box>
         </Link>
       </Stack>

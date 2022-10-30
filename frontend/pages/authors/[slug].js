@@ -8,11 +8,11 @@ import { SectionHeaderStyle } from "./Styles";
 
 const AuthorItem = () => {
   const router = useRouter();
-  console.log({ q: router.query.slug });
+  // console.log({ q: router.query.slug });
   const { data } = useGetBooksByAuthorQuery({ authorName: router.query.slug });
   const authorData = data?.data[0]?.attributes;
   // const { name, bio, birth, avatar, books } = authorData;
-  console.log({ name:authorData?.name });
+  // console.log({ name:authorData?.name });
   
   return (
     <Box>
@@ -22,7 +22,7 @@ const AuthorItem = () => {
         <Grid container spacing={2}>
           {authorData?.books?.data?.map((book) => (
             <Grid item lg={3} md={6} xs={12} key={book?.id}>
-              <BookCard book={book?.attributes}/>
+             <BookCard book={book?.attributes} bookId={book?.id}/>
             </Grid>
           ))}
           

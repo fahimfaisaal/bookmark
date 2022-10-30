@@ -11,7 +11,8 @@ import {
   CustomLeftBtn,
   CustomRightBtn,
 } from '../components/shared/ui/CarouselBtn';
-import ProfileMenu from '../components/UserDashboard/Menu';
+import { useGetCategoryQuery, useGetBooksQuery } from '../store/features/books/booksApi';
+import { useGetAuthorsQuery, useGetPublishersQuery } from '../store/features/user/userApi';
 
 import {
   ContainerStyle,
@@ -66,12 +67,12 @@ const Home = () => {
 
   const { data: newbookLists, isLoading: isNewBooksLoading } = useGetBooksQuery(
     {
-      params: `filters[createdAt][$lte]=${"2022-10-29T03:07:38.922Z"}&pagination[pageSize]=8`,
+      params: `filters[createdAt][$gte]=${"2022-10-29T03:07:38.922Z"}&pagination[pageSize]=8`,
     }
   );
   const { data: categoryLists } = useGetCategoryQuery();
 
-  console.log({ lists: categoryLists, isNewBooksLoading });
+  console.log({ lists: popularbookLists, isNewBooksLoading });
   return (
     <ContainerStyle>
       <HeroContainer>
@@ -86,7 +87,7 @@ const Home = () => {
         <Grid container spacing={3}>
           {popularbookLists?.data?.slice(0, 8).map((book) => (
             <Grid item lg={3} md={6} xs={12} key={book?.id}>
-              <BookCard book={book?.attributes} />
+              <BookCard book={book?.attributes} bookId={book?.id}/>
             </Grid>
           ))}
         </Grid>
@@ -101,7 +102,7 @@ const Home = () => {
           customLeftArrow={<CustomLeftBtn />}
           customRightArrow={<CustomRightBtn />}
         >
-          {categoryLists?.data?.map((category) => (
+          {categoryLists?.data?.length > 0 && categoryLists?.data?.map((category) => (
             <CategoryCard key={category?.id} category={category?.attributes} />
           ))}
         </Carousel>
@@ -112,7 +113,7 @@ const Home = () => {
         <Grid container spacing={2}>
           {newbookLists?.data?.map((book) => (
             <Grid item lg={3} md={6} xs={12} key={book?.id}>
-              <BookCard book={book?.attributes} />
+              <BookCard book={book?.attributes} bookId={book?.id}/>
             </Grid>
           ))}
         </Grid>
