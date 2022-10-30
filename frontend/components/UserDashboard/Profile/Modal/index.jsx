@@ -5,9 +5,6 @@ import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
-import { InputLabel } from '@mui/material';
-
-// #D1D5DB
 
 export default function Modal({ btnText }) {
   const [open, setOpen] = React.useState(false);
@@ -23,15 +20,27 @@ export default function Modal({ btnText }) {
   return (
     <>
       <Button onClick={handleClickOpen}>{btnText}</Button>
-      <Dialog open={open} onClose={handleClose}>
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        fullWidth={true}
+        maxWidth={'sm'}
+      >
         <DialogTitle>Contact Number</DialogTitle>
         <DialogContent>
-          <InputLabel htmlFor="contact" color="secondary">
-            <TextField size="small" placeholder="+8801..." id="contact" />
-          </InputLabel>
+          <TextField
+            size="small"
+            fullWidth
+            placeholder="+8801..."
+            id="contact"
+          />
         </DialogContent>
-        <DialogActions>
-          <Button variant="btnGreen" onClick={handleClose}>
+        <DialogActions
+          sx={{
+            padding: '10px 25px 20px',
+          }}
+        >
+          <Button variant="btnLogin" onClick={handleClose}>
             Update
           </Button>
         </DialogActions>

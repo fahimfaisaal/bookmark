@@ -4,24 +4,27 @@ import {
   Box,
   Button,
   Divider,
-  Link,
   ListItem,
   Menu,
   MenuItem,
   SwipeableDrawer,
   Tooltip,
   Typography,
+  useTheme,
 } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 import { Stack } from '@mui/system';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { AiOutlineFilter } from 'react-icons/ai';
 import { BiSearch, BiUser } from 'react-icons/bi';
+import { BsSunFill } from 'react-icons/bs';
 import { CgMenuLeft, CgShoppingBag } from 'react-icons/cg';
 import { HiOutlineShoppingBag, HiShoppingBag } from 'react-icons/hi';
 import { IoIosClose } from 'react-icons/io';
 import { MdOutlineFavoriteBorder } from 'react-icons/md';
+import { RiMoonLine } from 'react-icons/ri';
 import { VscHome } from 'react-icons/vsc';
 import { UseThemeContext } from '../../../context/ThemeContext';
 import CartItem from '../../CartItem';
@@ -46,7 +49,7 @@ import {
   MobileBarContainer,
   MobileMenuContainer,
   MobMenuItemContainer,
-  ThemeSwitch,
+  ThemeSwitchStyle,
 } from './Styles';
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 const menuItems = [
@@ -78,11 +81,11 @@ const profileMenuItems = [
     text: 'Profile',
   },
   {
-    link: '/orders',
+    link: '/profile/my-orders',
     text: 'My Orders',
   },
   {
-    link: '/wishlists',
+    link: '/profile/my-wishlist',
     text: 'My Wishlists',
   },
   {
@@ -90,11 +93,11 @@ const profileMenuItems = [
     text: 'Checkout',
   },
   {
-    link: '/change-password',
+    link: '/profile/change-password',
     text: 'Change Password',
   },
   {
-    link: '',
+    link: '/logout',
     text: 'Logout',
   },
 ];
@@ -126,41 +129,8 @@ const categoreyItems = [
   },
 ];
 
-// const SearchBar = ({
-//   normal = false,
-//   placeholder = 'Search Books (at least 3 char)',
-//   width,
-// }) => {
-//   const theme = useTheme();
-//   const [focus, setFocus] = useState(false);
-//   const handleOnFocus = () => {
-//     setFocus(true);
-//   };
-//   const handleOnBlur = () => {
-//     setFocus(false);
-//   };
-
-//   return (
-//     <SearchContainer
-//       sx={
-//         focus
-//           ? { border: `1px solid ${theme.palette.primary.main}` }
-//           : { border: `1px solid ${theme.palette.background.dark}` }
-//       }
-//       normal={normal}
-//       width={width}
-//     >
-//       <BiSearch />
-//       <InputBase
-//         placeholder={placeholder}
-//         onFocus={handleOnFocus}
-//         onBlur={handleOnBlur}
-//       />
-//     </SearchContainer>
-//   );
-// };
-
 const Drawer = ({ anchor, data, open, toggle }) => {
+  const router = useRouter();
   return (
     <SwipeableDrawer
       anchor={anchor}
@@ -189,10 +159,12 @@ const Drawer = ({ anchor, data, open, toggle }) => {
 
         <MenuListContainer>
           {data.map((item) => (
-            <ListItem key={item.text}>
-              <MenuLinkContainer href={item.link}>
-                {item.text}
-              </MenuLinkContainer>
+            <ListItem key={item.text} onClick={toggle(false)}>
+              <Link href={item.link}>
+                <MenuLinkContainer active={router.pathname.includes(item.link)}>
+                  {item.text}
+                </MenuLinkContainer>
+              </Link>
             </ListItem>
           ))}
         </MenuListContainer>
@@ -202,6 +174,7 @@ const Drawer = ({ anchor, data, open, toggle }) => {
 };
 
 const NavBar = () => {
+  const theme = useTheme();
   const [anchorElUser, setAnchorElUser] = useState(null);
   const { handleChangeMode } = UseThemeContext();
 
@@ -322,9 +295,14 @@ const NavBar = () => {
           {!serachTrig ? (
             <Stack direction={'row'} spacing={2} alignItems="center">
               {menuItems.map((item) => (
-                <LinkContainer href={item.link} key={item.text}>
-                  {item.text}
-                </LinkContainer>
+                <Link href={item.link}>
+                  <LinkContainer
+                    key={item.text}
+                    active={router.pathname.includes(item.link)}
+                  >
+                    {item.text}
+                  </LinkContainer>
+                </Link>
               ))}
               <LinkContainer additional={true} onClick={toggleSearch}>
                 Search
@@ -334,20 +312,23 @@ const NavBar = () => {
             <SearchBar normal={false} />
           )}
           <SearchBar normal={true} />
-          <IconContainer>
-            <ThemeSwitch onChange={handleChangeMode} />
+          <IconContainer onClick={handleChangeMode}>
+            <ThemeSwitchStyle>
+              {theme.palette.mode === 'light' ? <RiMoonLine /> : <BsSunFill />}
+            </ThemeSwitchStyle>
           </IconContainer>
           <IconContainer fontSize={'28px'} onClick={toggleDrawer(true)}>
             <Badge badgeContent={4} color="primary">
               <HiOutlineShoppingBag />
             </Badge>
           </IconContainer>
-          <IconContainer fontSize={'32px'}>
-            <Badge badgeContent={2} color="primary">
-              {/* <MdFavorite /> */}
-              <MdOutlineFavoriteBorder />
-            </Badge>
-          </IconContainer>
+          <Link href={'/profile/my-wishlist'}>
+            <IconContainer fontSize={'32px'}>
+              <Badge badgeContent={2} color="primary">
+                <MdOutlineFavoriteBorder />
+              </Badge>
+            </IconContainer>
+          </Link>
 
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
@@ -373,11 +354,13 @@ const NavBar = () => {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {settings.map((setting) => (
-                <MenuItemContainer key={setting}>
-                  <MenuItem onClick={handleCloseUserMenu}>
-                    <Typography textAlign="center">{setting}</Typography>
-                  </MenuItem>
+              {profileMenuItems.map((item) => (
+                <MenuItemContainer key={item.text}>
+                  <Link href={item.link}>
+                    <MenuItem onClick={handleCloseUserMenu}>
+                      <Typography textAlign="center">{item.text}</Typography>
+                    </MenuItem>
+                  </Link>
                 </MenuItemContainer>
               ))}
             </Menu>
@@ -429,7 +412,27 @@ const NavBar = () => {
               <CartItem />
             </CartItemContainer>
             <Divider />
+            <CartItemContainer>
+              <CartItem />
+            </CartItemContainer>
+            <Divider />
+            <CartItemContainer>
+              <CartItem />
+            </CartItemContainer>
+            <Divider />
           </CartContainer>
+          <Box
+            pb={5}
+            px={3}
+            sx={{ background: `${theme.palette.background.default}` }}
+          >
+            <Typography variant="h2" py={3}>
+              Total: 200$
+            </Typography>
+            <Button variant="contained" fullWidth={true} size={'large'}>
+              Checkout
+            </Button>
+          </Box>
         </SwipeableDrawer>
       </AppBarContainer>
 
@@ -465,9 +468,11 @@ const NavBar = () => {
               </Typography>
             </Button>
           </Box>
-          <Box>
-            <ThemeSwitch onChange={handleChangeMode} />
-          </Box>
+          <IconContainer onClick={handleChangeMode}>
+            <ThemeSwitchStyle>
+              {theme.palette.mode === 'light' ? <RiMoonLine /> : <BsSunFill />}
+            </ThemeSwitchStyle>
+          </IconContainer>
         </Stack>
 
         <Drawer

@@ -42,16 +42,17 @@ export const MobileMenuContainer = styled(Box)(({ theme }) => ({
 }));
 
 export const LogoContainer = styled(Box)(({ theme }) => ({
+  cursor: 'pointer',
   img: {
     width: '180px',
     height: '30px',
   },
 }));
 
-export const LinkContainer = styled(Link)(({ theme, additional }) => ({
+export const LinkContainer = styled(Link)(({ theme, additional, active }) => ({
   margin: 0,
   padding: 0,
-  color: `${theme.palette.text.primary}`,
+  color: `${active ? theme.palette.action.hover : theme.palette.text.primary}`,
   fontSize: '17px',
   fontWeight: '450',
   cursor: 'pointer',
@@ -92,6 +93,14 @@ export const SearchContainer = styled(Box)(({ theme, normal, width }) => ({
   },
 }));
 
+export const ThemeSwitchStyle = styled(Box)(({ theme }) => ({
+  marginTop: '5px',
+  svg: {
+    fontSize: '28px',
+    color: `${theme.palette.mode === 'dark' ? '#FFF' : ''}`,
+  },
+}));
+
 export const IconContainer = styled(Box)(({ theme, fontSize }) => ({
   color: `${theme.palette.text.primary}`,
   // fontSize: "28px",
@@ -106,9 +115,10 @@ export const MenuItemContainer = styled(Typography)(() => ({
 }));
 
 export const CartContainer = styled(Box)(({ theme }) => ({
-  width: '470px',
+  width: '500px',
   background: `${theme.palette.background.default}`,
-  height: '100%',
+  maxHeight: '100vh',
+  overflow: 'auto',
   [theme.breakpoints.down('sm')]: {
     width: '100%',
   },
@@ -209,9 +219,9 @@ export const MenuListContainer = styled(List)(() => ({
   padding: '15px 25px',
 }));
 
-export const MenuLinkContainer = styled(Link)(({ theme }) => ({
+export const MenuLinkContainer = styled(Link)(({ theme, active }) => ({
   cursor: 'pointer',
-  color: `${theme.palette.text.primary}`,
+  color: `${active ? theme.palette.action.hover : theme.palette.text.primary}`,
   fontSize: '16px',
   fontWeight: '450',
   textDecoration: 'none',

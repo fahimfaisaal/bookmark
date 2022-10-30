@@ -2,9 +2,9 @@ import styled from '@emotion/styled';
 import { Button, TableCell, TableContainer, Typography } from '@mui/material';
 
 export const StyledTableContainer = styled(TableContainer)(({ theme }) => ({
-  backgroundColor: `${theme.palette.background.default}`,
+  backgroundColor: `${theme.palette.background.paper}`,
   cursor: 'pointer',
-  border: `2px solid ${theme.palette.background.default}`,
+  border: `2px solid ${theme.palette.background.paper}`,
   borderRadius: '5px',
   marginTop: '15px',
   '&:hover': {

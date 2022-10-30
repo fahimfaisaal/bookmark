@@ -1,4 +1,5 @@
 import { Box, Stack } from '@mui/system';
+import Link from 'next/link';
 import { BsFacebook, BsInstagram, BsYoutube } from 'react-icons/bs';
 import CustomImage from '../CustomImage';
 import CardTitle from './CardTitle';
@@ -15,7 +16,11 @@ const PublicationCard = ({ publisher }) => {
           <CustomImage src={logoUrl} alt={name} />
         </LogoContainer>
         <Box>
-          <CardTitle title={name} variant={'h2'} />
+          <Link href={'/publishers/123'}>
+            <Box>
+              <CardTitle title={'Too cool publication'} variant={'h2'} />
+            </Box>
+          </Link>
           <Stack direction={'row'} spacing={1}>
             <LinkContainer>
               <BsFacebook />

@@ -2,10 +2,10 @@ import * as React from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
-import { Box, Grid, InputLabel } from '@mui/material';
+import { Grid, InputLabel } from '@mui/material';
 import { Stack } from '@mui/system';
 import Modal from './Modal';
-const AddressCard = ({ billingAddress }) => {
+const AddressCard = ({ billingAddress, label }) => {
   return (
     <>
       <Stack
@@ -14,7 +14,7 @@ const AddressCard = ({ billingAddress }) => {
         alignItems="center"
         flexWrap={'wrap'}
       >
-        <InputLabel color="secondary">Addresses</InputLabel>
+        <InputLabel color="secondary"> {label}</InputLabel>
         <>
           <Modal btnText="+ Update" />
         </>
