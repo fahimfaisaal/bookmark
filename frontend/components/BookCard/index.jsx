@@ -1,10 +1,11 @@
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
-import { Stack, Typography } from "@mui/material";
+import { Rating, Stack, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import Link from "next/link";
-import * as React from "react";
+import { useState } from "react";
 import { FaShoppingCart } from "react-icons/fa";
+import { useSelector } from "react-redux";
 
 import CustomImage from "../CustomImage";
 
@@ -42,7 +43,7 @@ const BookCard = ({ book, bookId }) => {
   }, 0);
   const authUser = useSelector((state) => state?.auth?.user);
   let [min, max] = variants?.data?.reduce(([prevMin,prevMax], {attributes})=>
-   [Math.min(prevMin, attributes?.price), Math.max(prevMax, attributes?.price)], [Infinity, -Infinity]);
+   [Math.min(prevMin, attributes?.price), Math.max(prevMax, attributes?.price)], [Infinity, -Infinity]) ?? [];
   
   return (
     <StyledBox>
