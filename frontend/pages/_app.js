@@ -6,7 +6,8 @@ import * as React from 'react';
 import 'react-multi-carousel/lib/styles.css';
 import Layout from '../components/Layout';
 import UserDashboard from '../components/UserDashboard';
-
+import { Provider } from 'react-redux';
+import {store} from "../store";
 import { ThemeContext } from '../context/ThemeContext';
 import createEmotionCache from '../src/createEmotionCache';
 // Client-side cache, shared for the whole session of the user in the browser.
@@ -16,6 +17,7 @@ export default function MyApp(props) {
   const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
 
   return (
+    <Provider store={store}>
     <CacheProvider value={emotionCache}>
       <Head>
         <meta name="viewport" content="initial-scale=1, width=device-width" />
@@ -37,6 +39,7 @@ export default function MyApp(props) {
         </Layout>
       </ThemeContext>
     </CacheProvider>
+    </Provider>
   );
 }
 

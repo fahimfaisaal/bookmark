@@ -4,15 +4,18 @@ import CustomImage from '../CustomImage';
 import CardTitle from './CardTitle';
 import { ContainerStyle, LinkContainer, LogoContainer } from './Styles';
 
-const PublicationCard = ({ img, title, slug }) => {
+const PublicationCard = ({ publisher }) => {
+  const {attributes: {name, logo, banner}} = publisher
+  const logoUrl = logo?.data && `http://localhost:1337${ logo?.data[0]?.attributes?.url}` || "/images/publisher-logo.png";
+  const bannerUrl = banner?.data && `http://localhost:1337${banner?.data[0]?.attributes?.url}` || "/images/publisher-logo.png";
   return (
     <Stack direction={'row'}>
       <ContainerStyle>
         <LogoContainer>
-          <CustomImage src="/images/publisher-logo.png" alt="" />
+          <CustomImage src={logoUrl} alt={name} />
         </LogoContainer>
         <Box>
-          <CardTitle title={'Too cool publication'} variant={'h2'} />
+          <CardTitle title={name} variant={'h2'} />
           <Stack direction={'row'} spacing={1}>
             <LinkContainer>
               <BsFacebook />
