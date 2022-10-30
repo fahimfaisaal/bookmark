@@ -2,6 +2,9 @@ import { Dialog, Divider, Link, TextField, Typography } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { Stack } from '@mui/system';
+import { useEffect, useState } from 'react';
+import { Controller, useForm } from 'react-hook-form';
+import { useSignupMutation } from '../../../store/features/auth/authApi';
 import CloseBtn from './CloseBtn';
 import FormBtn from './FormBtn';
 import Header from './Header';
@@ -10,16 +13,14 @@ import {
   ContainerStyle,
   FormContainer,
   InputContainer,
-  InputLabelStyle,
+  InputLabelStyle
 } from './Styles';
-import { useForm, Controller } from 'react-hook-form';
-import { useSignupMutation } from '../../../store/features/auth/authApi';
-import { useState, useEffect } from 'react';
+
 
 const Register = ({ open, handleClickOpen, handleClose }) => {
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
-  const [signup, { data, isLoading,isSuccess, error: responseError }] = useSignupMutation()
+  const [signup, { data, isLoading, error: responseError }] = useSignupMutation()
   const [error, setError] = useState("");
   // console.log({data,isLoading,isSuccess,responseError, error})
   const toggleLogin = () => {
@@ -54,14 +55,17 @@ const Register = ({ open, handleClickOpen, handleClose }) => {
     mode: 'onBlur',
     defaultValues: { username: '', email: '', password: '', phone: '' },
   });
+
   const onSubmit = (data) => {
-    signup({data})
-    if(isSuccess){
+    signup({ data })
+    if (isSuccess) {
       reset();
       handleClose();
-    } 
-    
+    }
+
   };
+  console.log('[Errors]', errors);
+  // console.log('[Touched]', touchedFields);
   //Handle Form =========================
 
   return (
@@ -75,7 +79,6 @@ const Register = ({ open, handleClickOpen, handleClose }) => {
       <ContainerStyle>
         <Header subtitle={'By signing up, you agree to our terms & policy'} />
         <FormContainer>
-
           <form onSubmit={handleSubmit(onSubmit)}>
             <Controller
               name="username"
@@ -90,27 +93,6 @@ const Register = ({ open, handleClickOpen, handleClose }) => {
                     error={Boolean(errors.username)}
                     {...register('username', { required: 'Username is required' })}
                     helperText={errors.username?.message}
-                    type={'text'}
-                    {...field}
-                  />
-                </InputContainer>
-              )}
-            />
-            <Controller
-              name="email"
-              control={control}
-              render={({ field }) => (
-                <InputContainer>
-                  <InputLabelStyle variant="h4">Email</InputLabelStyle>
-                  <TextField
-                    fullWidth
-                    name="email"
-                    label={'Email'}
-                    type={'email'}
-                    {...field}
-                    error={Boolean(errors.email)}
-                    {...register('email', { required: 'Email is required' })}
-                    helperText={errors.email?.message}
                   />
                 </InputContainer>
               )}
@@ -159,7 +141,6 @@ const Register = ({ open, handleClickOpen, handleClose }) => {
               <FormBtn disabled={isLoading}>Register</FormBtn>
             </InputContainer>
           </form>
-
         </FormContainer>
         <Divider>Or</Divider>
         <Stack
