@@ -1,14 +1,17 @@
-import { apiSlice } from "../api/apiSlice";
+import { apiSlice } from '../api/apiSlice';
 
 export const booksApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getBooks: builder.query({
       query: ({ params }) => `/books?populate=*&${params}`,
-      providesTags: ['books']
+      providesTags: ['books'],
     }),
     getBook: builder.query({
-      query: ({ bookId }) => `/books/${bookId}?populate=*`,
-      providesTags: (result, error, arg) => [{ type: "book", id: arg }],
+      query: (bookId) => {
+        console.log({ bookId });
+        return `/books/${bookId}?populate=*`;
+      },
+      providesTags: (result, error, arg) => [{ type: 'book', id: arg }],
     }),
 
     getBooksByAuthor: builder.query({
@@ -31,5 +34,5 @@ export const {
   useGetBooksByAuthorQuery,
   useGetBooksByPublisherQuery,
   useGetBooksQuery,
-  useGetCategoryQuery
+  useGetCategoryQuery,
 } = booksApi;

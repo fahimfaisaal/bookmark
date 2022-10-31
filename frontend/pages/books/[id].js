@@ -9,6 +9,7 @@ import {
 } from '@mui/material';
 import { Stack } from '@mui/system';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
 import BookCard from '../../components/BookCard';
@@ -17,6 +18,7 @@ import {
   LeftBtnStyle,
   RightBtnStyle,
 } from '../../components/shared/ui/CarouselBtn/Styles';
+import { useGetBookQuery } from '../../store/features/books/booksApi';
 import ReviewForm from './ReviewForm';
 import ReviewItem from './ReviewItem';
 import {
@@ -80,6 +82,17 @@ const BookItem = () => {
     setActiveImg(index);
   };
 
+  const router = useRouter();
+  const { id } = router.query;
+
+  const {
+    data: book,
+    isLoading,
+    isError,
+    error,
+    isSuccess,
+  } = useGetBookQuery(id);
+
   return (
     <Box>
       <BookInfoContainer>
@@ -114,7 +127,7 @@ const BookItem = () => {
                 justifyContent={'space-between'}
                 mb={2}
               >
-                <BookTitleStyle variant="h1">Superhero & Aliens</BookTitleStyle>
+                <BookTitleStyle variant="h1">{'adfadga'}</BookTitleStyle>
                 <FavIconStyle>
                   <FavoriteBorderIcon />
                 </FavIconStyle>
@@ -161,11 +174,7 @@ const BookItem = () => {
                 </Stack>
               </Stack>
               <Box pt={3}>
-                <Typography variant="body1">
-                  A comic book, also called ridiculous book, ridiculous magazine
-                  or simply ridiculous, is a publication that consists of comics
-                  art in the form of succe...
-                </Typography>
+                <Typography variant="body1">{'dfjaohfo'}</Typography>
                 <MuiLink href="#details">See more</MuiLink>
               </Box>
               <Stack direction={'row'} alignItems={'center'} gap={3} my={3}>
@@ -221,32 +230,41 @@ const BookItem = () => {
         <Typography variant="h1" my={2} fontWeight={700}>
           Details
         </Typography>
-        <Typography variant="body2">
-          A comic book, also called ridiculous book, ridiculous magazine or
-          simply ridiculous, is a publication that consists of comics art in the
-          form of successional adjoining panels that represent individual
-          scenes.
-        </Typography>
+        <Typography variant="body2">{'dafoa'}</Typography>
         <Box my={4}>
-          <Stack direction={'row'} gap={2} mb={1}>
+          <Stack direction={'row'} gap={2} mb={1} alignItems={'center'}>
             <Typography variant="h3">Title :</Typography>
-            <Typography variant="body2">Superhero & Aliens</Typography>
+            <Typography variant="h5">{'adfjao'}</Typography>
           </Stack>
-          <Stack direction={'row'} gap={2} mb={1}>
+          <Stack direction={'row'} gap={2} mb={1} alignItems={'center'}>
             <Typography variant="h3">Author :</Typography>
-            <Link href={'/authors'}>
-              <AuthorLinkStyle variant="body2">
-                Brandon T. Trigg
-              </AuthorLinkStyle>
-            </Link>
+            {/* {authors.map((author) => (
+              <Link href={`/authors/${author.id}`}>
+                <AuthorLinkStyle variant="h5">
+                  {author.attributes.name}
+                </AuthorLinkStyle>
+              </Link>
+            ))} */}
           </Stack>
-          <Stack direction={'row'} gap={2} mb={1}>
+          <Stack direction={'row'} gap={2} mb={1} alignItems={'center'}>
             <Typography variant="h3">Publisher :</Typography>
             <Link href={'/publishers'}>
-              <AuthorLinkStyle variant="body2">
+              <AuthorLinkStyle variant="h5">
                 Jeremy Publications
               </AuthorLinkStyle>
             </Link>
+          </Stack>
+          <Stack direction={'row'} gap={2} mb={1} alignItems={'center'}>
+            <Typography variant="h3">Number of Pages :</Typography>
+            <Typography variant="h5">245</Typography>
+          </Stack>
+          <Stack direction={'row'} gap={2} mb={1} alignItems={'center'}>
+            <Typography variant="h3">Language :</Typography>
+            <Typography variant="h5">Bangla</Typography>
+          </Stack>
+          <Stack direction={'row'} gap={2} mb={1} alignItems={'center'}>
+            <Typography variant="h3">Edition :</Typography>
+            <Typography variant="h5">1st Edition, 2022</Typography>
           </Stack>
         </Box>
       </Box>
