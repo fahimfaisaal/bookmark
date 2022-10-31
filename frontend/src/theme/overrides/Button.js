@@ -91,6 +91,15 @@ const Button = (theme) => {
           },
         },
         {
+          props: { variant: 'btnLoginDisabled' },
+          style: {
+            ...repeatStyleGreen(theme),
+            width: '100%',
+            backgroundColor: '#D1D5DB',
+            color: `${theme.palette.divider}`,
+          },
+        },
+        {
           props: { variant: 'btnAskSeller' },
           style: {
             ...repeatStyleGreen(theme),

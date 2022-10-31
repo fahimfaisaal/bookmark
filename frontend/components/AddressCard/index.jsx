@@ -4,8 +4,15 @@ import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import { Grid, InputLabel } from '@mui/material';
 import { Stack } from '@mui/system';
-import Modal from './Modal';
+import AddressModal from '../shared/Modals/AddressModal';
 const AddressCard = ({ billingAddress, label }) => {
+  const [formValue, setFormValue] = React.useState('');
+
+  //state lifting starts==========
+  const getData = (data) => {
+    setFormValue(data);
+  };
+  //state lifting ends==========
   return (
     <>
       <Stack
@@ -16,7 +23,7 @@ const AddressCard = ({ billingAddress, label }) => {
       >
         <InputLabel color="secondary"> {label}</InputLabel>
         <>
-          <Modal btnText="+ Update" />
+          <AddressModal getData={getData} btnText="+ Update" />
         </>
       </Stack>
       <Grid container>
@@ -24,10 +31,12 @@ const AddressCard = ({ billingAddress, label }) => {
           <Card sx={{ backgroundColor: 'background.default' }}>
             <CardContent>
               <Typography variant="h3" component="div">
-                Billing
+                {formValue.title ? formValue.title : 'Billing'}
               </Typography>
               <Typography variant="caption">
-                2231 Kidd Avenue, Ak, Kipnuk, 99614, United States
+                {formValue.address
+                  ? formValue.address
+                  : '2231 Kidd Avenue, Ak, Kipnuk, 99614, United States'}
               </Typography>
             </CardContent>
           </Card>

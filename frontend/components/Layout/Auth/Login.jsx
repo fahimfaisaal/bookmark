@@ -31,10 +31,10 @@ const Login = ({ open, handleClickOpen, handleClose }) => {
   const {
     handleSubmit,
     control,
-    formState: { touchedFields, errors },
+    formState: { errors },
     register,
     reset,
-  } = useForm();
+  } = useForm({ mode: 'onBlur' });
   const onSubmit = (data) => {
     console.log(data);
     reset();
@@ -66,8 +66,9 @@ const Login = ({ open, handleClickOpen, handleClose }) => {
                     label={'Email'}
                     type={'email'}
                     {...field}
-                    error={errors.email}
-                    {...register('email', { required: true })}
+                    error={Boolean(errors.email)}
+                    {...register('email', { required: 'Email is required' })}
+                    helperText={errors.email?.message}
                   />
                 </InputContainer>
               )}
@@ -83,9 +84,12 @@ const Login = ({ open, handleClickOpen, handleClose }) => {
                     name="password"
                     label={'Password'}
                     type={'password'}
-                    error={errors.password}
-                    {...register('password', { required: true })}
+                    error={Boolean(errors.password)}
+                    {...register('password', {
+                      required: 'Password is required',
+                    })}
                     {...field}
+                    helperText={errors.password?.message}
                   />
                 </InputContainer>
               )}

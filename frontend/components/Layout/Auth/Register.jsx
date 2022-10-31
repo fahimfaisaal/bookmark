@@ -28,19 +28,17 @@ const Register = ({ open, handleClickOpen, handleClose }) => {
   const {
     handleSubmit,
     control,
-    formState: { touchedFields, errors },
+    formState: { errors },
     register,
     reset,
   } = useForm({
-    mode: 'onSubmit',
+    mode: 'onBlur',
     defaultValues: { name: '', email: '', password: '' },
   });
   const onSubmit = (data) => {
     console.log(data);
     reset();
   };
-  console.log('[Errors]', errors);
-  // console.log('[Touched]', touchedFields);
   //Handle Form =========================
 
   return (
@@ -55,13 +53,6 @@ const Register = ({ open, handleClickOpen, handleClose }) => {
         <Header subtitle={'By signing up, you agree to our terms & policy'} />
         <FormContainer>
           <form onSubmit={handleSubmit(onSubmit)}>
-            {/* <input
-              {...register('firstName', { required: true })}
-              aria-invalid={errors.firstName ? 'true' : 'false'}
-            />
-            {errors.firstName?.type === 'required' && (
-              <p role="alert">First name is required</p>
-            )} */}
             <Controller
               name="name"
               control={control}
@@ -72,8 +63,9 @@ const Register = ({ open, handleClickOpen, handleClose }) => {
                     fullWidth
                     name="name"
                     label={'Name'}
-                    error={errors.name}
-                    {...register('name', { required: true })}
+                    error={Boolean(errors.name)}
+                    {...register('name', { required: 'Name is required' })}
+                    helperText={errors.name?.message}
                     type={'text'}
                     {...field}
                   />
@@ -92,8 +84,9 @@ const Register = ({ open, handleClickOpen, handleClose }) => {
                     label={'Email'}
                     type={'email'}
                     {...field}
-                    error={errors.email}
-                    {...register('email', { required: true })}
+                    error={Boolean(errors.email)}
+                    {...register('email', { required: 'Email is required' })}
+                    helperText={errors.email?.message}
                   />
                 </InputContainer>
               )}
@@ -109,9 +102,12 @@ const Register = ({ open, handleClickOpen, handleClose }) => {
                     name="password"
                     label={'Password'}
                     type={'password'}
-                    error={errors.password}
-                    {...register('password', { required: true })}
+                    error={Boolean(errors.password)}
+                    {...register('password', {
+                      required: 'Password is required',
+                    })}
                     {...field}
+                    helperText={errors.password?.message}
                   />
                 </InputContainer>
               )}
