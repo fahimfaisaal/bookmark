@@ -4,36 +4,107 @@ import TextField from '@mui/material/TextField';
 import { Button, InputLabel } from '@mui/material';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import { StyledBox, StyledInput, StyledLabel } from './Styles';
-import { Stack } from '@mui/system';
 import { StyledContainer } from '../../Styles';
+import { useForm, Controller } from 'react-hook-form';
 
 const InputField = () => {
+  //Handle Form =========================
+  const {
+    handleSubmit,
+    control,
+    formState: { errors },
+    register,
+    reset,
+  } = useForm({
+    mode: 'onBlur',
+    defaultValues: { name: '', bio: '' },
+  });
+  const onValid = (data) => {
+    console.log(data);
+    reset();
+  };
+  //Handle Form =========================
+
   return (
     <StyledContainer sx={{ boxShadow: 3 }}>
-      <Stack direction={'column'} spacing={2}>
-        <StyledBox>
-          <StyledLabel>
+      <form onSubmit={handleSubmit(onValid)}>
+        <Controller
+          name="file"
+          control={control}
+          render={({ field }) => (
+            <StyledBox>
+              <StyledLabel>
+                <Box>
+                  <CloudUploadIcon color="disabled" fontSize="large" />
+                </Box>
+                <StyledInput type="file" /> Upload an image
+              </StyledLabel>
+            </StyledBox>
+          )}
+        />
+        <Controller
+          name="name"
+          control={control}
+          render={({ field }) => (
             <Box>
-              <CloudUploadIcon color="disabled" fontSize="large" />
+              <InputLabel
+                color="secondary"
+                htmlFor="name"
+                sx={{ marginTop: 2, paddingBottom: 1 }}
+              >
+                Name
+              </InputLabel>
+              <TextField
+                sx={{ marginBottom: 1.6 }}
+                id="name"
+                fullWidth
+                name="name"
+                label={'Name'}
+                error={Boolean(errors.name)}
+                {...register('name', { required: 'Name is required' })}
+                helperText={errors.name?.message}
+                type={'text'}
+                {...field}
+              />
             </Box>
-            <StyledInput type="file" /> Upload an image
-          </StyledLabel>
-        </StyledBox>
-
-        <InputLabel color="secondary" htmlFor="name">
-          Name
-        </InputLabel>
-        <TextField fullWidth placeholder="Name" id="name" />
-
-        <InputLabel color="secondary" htmlFor="bio">
-          Bio
-        </InputLabel>
-        <TextField fullWidth id="bio" placeholder="Bio" rows={4} multiline />
+          )}
+        />
+        <Controller
+          name="bio"
+          control={control}
+          render={({ field }) => (
+            <Box>
+              <InputLabel
+                color="secondary"
+                htmlFor="bio"
+                sx={{ marginTop: 2, paddingBottom: 1 }}
+              >
+                Bio
+              </InputLabel>
+              <TextField
+                sx={{ marginBottom: 1.6 }}
+                id="bio"
+                fullWidth
+                name="bio"
+                label={'Bio'}
+                error={Boolean(errors.bio)}
+                rows={4}
+                multiline
+                {...register('bio', { required: 'Bio is required' })}
+                helperText={errors.bio?.message}
+                type={'text'}
+                {...field}
+              />
+            </Box>
+          )}
+        />
 
         <Box textAlign={'right'}>
-          <Button variant="btnGreen">Save</Button>
+          <Button type="submit" variant="btnGreen">
+            Save
+          </Button>
         </Box>
-      </Stack>
+      </form>
     </StyledContainer>
   );
 };

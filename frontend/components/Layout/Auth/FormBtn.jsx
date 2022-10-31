@@ -9,6 +9,7 @@ const FormBtn = ({ children, color }) => {
       fullWidth={true}
       disableElevation={true}
       color={color}
+      type="submit"
       sx={{
         padding: '12px 5px',
         margin: '5px 0',

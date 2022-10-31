@@ -1,4 +1,4 @@
-import { Divider, Link, Stack, Typography } from '@mui/material';
+import { Divider, Link, Stack, TextField, Typography } from '@mui/material';
 import Dialog from '@mui/material/Dialog';
 
 import { useTheme } from '@mui/material/styles';
@@ -9,14 +9,15 @@ import { FaFacebookF } from 'react-icons/fa';
 import CloseBtn from './CloseBtn';
 import FormBtn from './FormBtn';
 import Header from './Header';
-import InputGroup from './InputGroup';
 import {
   CloseContainer,
   ContainerStyle,
   FormContainer,
   IconContainer,
   InputContainer,
+  InputLabelStyle,
 } from './Styles';
+import { useForm, Controller } from 'react-hook-form';
 
 const Login = ({ open, handleClickOpen, handleClose }) => {
   const theme = useTheme();
@@ -26,6 +27,19 @@ const Login = ({ open, handleClickOpen, handleClose }) => {
     handleClose();
     handleClickOpen();
   };
+  //Handle Form =========================
+  const {
+    handleSubmit,
+    control,
+    formState: { errors },
+    register,
+    reset,
+  } = useForm({ mode: 'onBlur' });
+  const onSubmit = (data) => {
+    console.log(data);
+    reset();
+  };
+  //Handle Form =========================
 
   return (
     <Dialog
@@ -37,18 +51,53 @@ const Login = ({ open, handleClickOpen, handleClose }) => {
     >
       <ContainerStyle>
         <Header subtitle={'Login with your email & password'} />
+
         <FormContainer>
-          <InputContainer>
-            <InputGroup label={'Email'} type={'email'} />
-          </InputContainer>
-
-          <InputContainer>
-            <InputGroup label={'Password'} type={'password'} />
-          </InputContainer>
-
-          <InputContainer>
-            <FormBtn>Login</FormBtn>
-          </InputContainer>
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <Controller
+              name="email"
+              control={control}
+              render={({ field }) => (
+                <InputContainer>
+                  <InputLabelStyle variant="h4">Email</InputLabelStyle>
+                  <TextField
+                    fullWidth
+                    name="email"
+                    label={'Email'}
+                    type={'email'}
+                    {...field}
+                    error={Boolean(errors.email)}
+                    {...register('email', { required: 'Email is required' })}
+                    helperText={errors.email?.message}
+                  />
+                </InputContainer>
+              )}
+            />
+            <Controller
+              name="password"
+              control={control}
+              render={({ field }) => (
+                <InputContainer>
+                  <InputLabelStyle variant="h4">Password</InputLabelStyle>
+                  <TextField
+                    fullWidth
+                    name="password"
+                    label={'Password'}
+                    type={'password'}
+                    error={Boolean(errors.password)}
+                    {...register('password', {
+                      required: 'Password is required',
+                    })}
+                    {...field}
+                    helperText={errors.password?.message}
+                  />
+                </InputContainer>
+              )}
+            />
+            <InputContainer>
+              <FormBtn>Login</FormBtn>
+            </InputContainer>
+          </form>
         </FormContainer>
         <Divider>Or</Divider>
         <InputContainer>
