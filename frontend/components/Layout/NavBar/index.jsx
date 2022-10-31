@@ -26,7 +26,7 @@ import { IoIosClose } from 'react-icons/io';
 import { MdOutlineFavoriteBorder } from 'react-icons/md';
 import { RiMoonLine } from 'react-icons/ri';
 import { VscHome } from 'react-icons/vsc';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { BOOKMARK_AUTH } from '../../../constant';
 import { UseThemeContext } from '../../../context/ThemeContext';
 import useAuthCheck from '../../../hooks/useAuthCheck';
@@ -54,82 +54,55 @@ import {
   MobileMenuContainer,
   MobMenuItemContainer,
   ThemeSwitchStyle,
-} from './Styles';
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+} from "./Styles";
+const settings = ["Profile", "Account", "Dashboard", "Logout"];
 const menuItems = [
   {
-    link: '/books',
-    text: 'Books',
+    link: "/books",
+    text: "Books",
   },
   {
-    link: '/authors',
-    text: 'Authors',
+    link: "/authors",
+    text: "Authors",
   },
   {
-    link: '/publishers',
-    text: 'Publishers',
+    link: "/publishers",
+    text: "Publishers",
   },
   {
-    link: '/contact',
-    text: 'Contact',
+    link: "/contact",
+    text: "Contact",
   },
   {
-    link: '/about',
-    text: 'About Us',
-  },
-];
-
-const profileMenuItems = [
-  {
-    link: '/profile',
-    text: 'Profile',
-  },
-  {
-    link: '/profile/my-orders',
-    text: 'My Orders',
-  },
-  {
-    link: '/profile/my-wishlist',
-    text: 'My Wishlists',
-  },
-  {
-    link: '/checkout',
-    text: 'Checkout',
-  },
-  {
-    link: '/profile/change-password',
-    text: 'Change Password',
-  },
-  {
-    link: '/logout',
-    text: 'Logout',
+    link: "/about",
+    text: "About Us",
   },
 ];
 
 const categoreyItems = [
   {
-    link: '',
-    text: 'Comic books',
+    link: "",
+    text: "Comic books",
   },
   {
-    link: '',
-    text: ' Science Fiction',
+    link: "",
+    text: " Science Fiction",
   },
   {
-    link: '',
-    text: 'Literature',
+    link: "",
+    text: "Literature",
   },
   {
-    link: '',
-    text: 'Childrens',
+    link: "",
+    text: "Childrens",
   },
   {
-    link: '',
-    text: 'Literature',
+    link: "",
+    text: "Literature",
   },
   {
-    link: '',
-    text: 'Horror Fiction',
+    link: "",
+    text: "Horror Fiction",
   },
 ];
 
@@ -145,9 +118,9 @@ const Drawer = ({ anchor, data, open, toggle }) => {
       <MenuContainer role="presentation">
         <MenuHeaderContiner>
           <Stack
-            direction={'row'}
-            justifyContent={'space-between'}
-            alignItems={'center'}
+            direction={"row"}
+            justifyContent={"space-between"}
+            alignItems={"center"}
           >
             <Link href="/">
               <img src="/images/logo-1.png" alt="" width={180} height={30} />
@@ -180,9 +153,14 @@ const Drawer = ({ anchor, data, open, toggle }) => {
 const NavBar = () => {
   const theme = useTheme();
   const dispatch = useDispatch();
-  const authChecked = useAuthCheck()
+  const authChecked = useAuthCheck();
   const [anchorElUser, setAnchorElUser] = useState(null);
   const { handleChangeMode } = UseThemeContext();
+  const router = useRouter();
+  const isAuthenticated = useSelector(state => state?.auth)
+
+
+  // console.log({isAuthenticat: !!isAuthenticated.accessToken, isAuthenticated });
 
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
@@ -193,20 +171,21 @@ const NavBar = () => {
   };
 
   const logoutUser = () => {
-    dispatch(userLoggedOut())
-    localStorage.removeItem(BOOKMARK_AUTH)
-    console.log("logout user")
+    dispatch(userLoggedOut());
+    localStorage.removeItem(BOOKMARK_AUTH);
+    console.log("logout user");
+    router.push("/");
   };
 
-  console.log({navabr:authChecked})
-  
+  // console.log({ navabr: authChecked });
+
   const [cartModalTrg, setCartModalTrig] = useState(false);
 
   const toggleDrawer = (open) => (event) => {
     if (
       event &&
-      event.type === 'keydown' &&
-      (event.key === 'Tab' || event.key === 'Shift')
+      event.type === "keydown" &&
+      (event.key === "Tab" || event.key === "Shift")
     ) {
       return;
     }
@@ -224,8 +203,8 @@ const NavBar = () => {
   const toggleMenuDraw = (open) => (event) => {
     if (
       event &&
-      event.type === 'keydown' &&
-      (event.key === 'Tab' || event.key === 'Shift')
+      event.type === "keydown" &&
+      (event.key === "Tab" || event.key === "Shift")
     ) {
       return;
     }
@@ -236,8 +215,8 @@ const NavBar = () => {
   const toggleProfileDraw = (open) => (event) => {
     if (
       event &&
-      event.type === 'keydown' &&
-      (event.key === 'Tab' || event.key === 'Shift')
+      event.type === "keydown" &&
+      (event.key === "Tab" || event.key === "Shift")
     ) {
       return;
     }
@@ -248,8 +227,8 @@ const NavBar = () => {
   const toggleFilterDraw = (open) => (event) => {
     if (
       event &&
-      event.type === 'keydown' &&
-      (event.key === 'Tab' || event.key === 'Shift')
+      event.type === "keydown" &&
+      (event.key === "Tab" || event.key === "Shift")
     ) {
       return;
     }
@@ -266,10 +245,36 @@ const NavBar = () => {
     }
   };
 
-  const router = useRouter();
+  const profileMenuItems = [
+    {
+      link: "/profile",
+      text: "Profile",
+    },
+    {
+      link: "/profile/my-orders",
+      text: "My Orders",
+    },
+    {
+      link: "/profile/my-wishlist",
+      text: "My Wishlists",
+    },
+    {
+      link: "/checkout",
+      text: "Checkout",
+    },
+    {
+      link: "/profile/change-password",
+      text: "Change Password",
+    },
+    {
+      link: "/logout",
+      text: "Logout",
+      onClickHandler: logoutUser,
+    },
+  ];
 
   const handleHome = () => {
-    router.push('/');
+    router.push("/");
   };
 
   const [openLogin, setOpenLogin] = useState(false);
@@ -296,18 +301,18 @@ const NavBar = () => {
     <>
       <AppBarContainer position="fixed">
         <Stack
-          direction={'row'}
+          direction={"row"}
           spacing={2}
           alignItems="center"
-          justifyContent={'space-between'}
+          justifyContent={"space-between"}
         >
           <Link href="/">
-            <LogoContainer marginTop={'8px'}>
+            <LogoContainer marginTop={"8px"}>
               <img src="/images/logo-1.png" alt="" />
             </LogoContainer>
           </Link>
           {!serachTrig ? (
-            <Stack direction={'row'} spacing={2} alignItems="center">
+            <Stack direction={"row"} spacing={2} alignItems="center">
               {menuItems.map((item) => (
                 <Link href={item.link}>
                   <LinkContainer
@@ -328,79 +333,88 @@ const NavBar = () => {
           <SearchBar normal={true} />
           <IconContainer onClick={handleChangeMode}>
             <ThemeSwitchStyle>
-              {theme.palette.mode === 'light' ? <RiMoonLine /> : <BsSunFill />}
+              {theme.palette.mode === "light" ? <RiMoonLine /> : <BsSunFill />}
             </ThemeSwitchStyle>
           </IconContainer>
-          <IconContainer fontSize={'28px'} onClick={toggleDrawer(true)}>
+          <IconContainer fontSize={"28px"} onClick={toggleDrawer(true)}>
             <Badge badgeContent={4} color="primary">
               <HiOutlineShoppingBag />
             </Badge>
           </IconContainer>
-          <Link href={'/profile/my-wishlist'}>
-            <IconContainer fontSize={'32px'}>
+          <Link href={"/profile/my-wishlist"}>
+            <IconContainer fontSize={"32px"}>
               <Badge badgeContent={2} color="primary">
                 <MdOutlineFavoriteBorder />
               </Badge>
             </IconContainer>
           </Link>
 
-          <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-              </IconButton>
-            </Tooltip>
-            <Menu
-              sx={{
-                mt: '45px',
-              }}
-              id="menu-appbar"
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
-            >
-              {profileMenuItems.map((item) => (
-                <MenuItemContainer key={item.text}>
-                  <Link href={item.link}>
-                    <MenuItem onClick={handleCloseUserMenu}>
-                      <Typography textAlign="center">{item.text}</Typography>
-                    </MenuItem>
-                  </Link>
-                </MenuItemContainer>
-              ))}
-            </Menu>
-          </Box>
-          {authChecked ? 
-          <Box>
-            <Button
-              variant="contained"
-              disableElevation={true}
-              onClick={()=>logoutUser()}
-            >
-              Logout
-            </Button>
-          </Box> : <Box>
-            <Button
-              variant="contained"
-              disableElevation={true}
-              onClick={handleClickOpenLogin}
-            >
-              Join
-            </Button>
-          </Box>}
+          {!!isAuthenticated?.accessToken ? (
+            <Box sx={{ flexGrow: 0 }}>
+              <Tooltip title="Open settings">
+                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                  <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                </IconButton>
+              </Tooltip>
+              <Menu
+                sx={{
+                  mt: "45px",
+                }}
+                id="menu-appbar"
+                anchorEl={anchorElUser}
+                anchorOrigin={{
+                  vertical: "top",
+                  horizontal: "right",
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: "top",
+                  horizontal: "right",
+                }}
+                open={Boolean(anchorElUser)}
+                onClose={handleCloseUserMenu}
+              >
+                {profileMenuItems.map((item) =>
+                  item?.onClickHandler ? (
+                    <MenuItemContainer key={item.text}>
+                      <MenuItem onClick={handleCloseUserMenu}>
+                        <Typography
+                          textAlign="center"
+                          onClick={item?.onClickHandler}
+                        >
+                          {item.text}
+                        </Typography>
+                      </MenuItem>
+                    </MenuItemContainer>
+                  ) : (
+                    <MenuItemContainer key={item.text}>
+                      <Link href={item.link}>
+                        <MenuItem onClick={handleCloseUserMenu}>
+                          <Typography textAlign="center">
+                            {item.text}
+                          </Typography>
+                        </MenuItem>
+                      </Link>
+                    </MenuItemContainer>
+                  )
+                )}
+              </Menu>
+            </Box>
+          ) : (
+            <Box>
+              <Button
+                variant="contained"
+                disableElevation={true}
+                onClick={handleClickOpenLogin}
+              >
+                Join
+              </Button>
+            </Box>
+          )}
         </Stack>
 
         <SwipeableDrawer
-          anchor={'right'}
+          anchor={"right"}
           open={cartModalTrg}
           onClose={toggleDrawer(false)}
           onOpen={toggleDrawer(true)}
@@ -408,13 +422,13 @@ const NavBar = () => {
           <CartContainer role="presentation">
             <CartHeaderContainer>
               <Stack
-                direction={'row'}
-                justifyContent={'space-between'}
-                alignItems={'center'}
+                direction={"row"}
+                justifyContent={"space-between"}
+                alignItems={"center"}
               >
-                <Stack direction={'row'} alignItems={'center'}>
-                  <HiShoppingBag fontSize={'24px'} />
-                  <Typography variant="h4" fontSize={'18px'} px={'10px'}>
+                <Stack direction={"row"} alignItems={"center"}>
+                  <HiShoppingBag fontSize={"24px"} />
+                  <Typography variant="h4" fontSize={"18px"} px={"10px"}>
                     2 Item
                   </Typography>
                 </Stack>
@@ -452,7 +466,7 @@ const NavBar = () => {
             <Typography variant="h2" py={3}>
               Total: 200$
             </Typography>
-            <Button variant="contained" fullWidth={true} size={'large'}>
+            <Button variant="contained" fullWidth={true} size={"large"}>
               Checkout
             </Button>
           </Box>
@@ -461,16 +475,16 @@ const NavBar = () => {
 
       <MobileBarContainer position="fixed">
         <Stack
-          direction={'row'}
+          direction={"row"}
           spacing={2}
           alignItems="center"
-          justifyContent={'center'}
+          justifyContent={"center"}
         >
           {mobSearchTrig ? (
             <SearchBar normal={false} />
           ) : (
             <Link href="/">
-              <LogoContainer marginTop={'8px'}>
+              <LogoContainer marginTop={"8px"}>
                 <img src="/images/logo-1.png" alt="" />
               </LogoContainer>
             </Link>
@@ -479,27 +493,27 @@ const NavBar = () => {
       </MobileBarContainer>
       <MiniTopBarContainer>
         <Stack
-          direction={'row'}
-          justifyContent={'space-between'}
-          alignItems={'center'}
+          direction={"row"}
+          justifyContent={"space-between"}
+          alignItems={"center"}
         >
           <Box>
             <Button variant="outlined" onClick={toggleFilterDraw(true)}>
               <AiOutlineFilter />
-              <Typography variant="h4" marginLeft={'5px'}>
+              <Typography variant="h4" marginLeft={"5px"}>
                 Filter
               </Typography>
             </Button>
           </Box>
           <IconContainer onClick={handleChangeMode}>
             <ThemeSwitchStyle>
-              {theme.palette.mode === 'light' ? <RiMoonLine /> : <BsSunFill />}
+              {theme.palette.mode === "light" ? <RiMoonLine /> : <BsSunFill />}
             </ThemeSwitchStyle>
           </IconContainer>
         </Stack>
 
         <Drawer
-          anchor={'left'}
+          anchor={"left"}
           open={filterMenuTrig}
           toggle={toggleFilterDraw}
           data={categoreyItems}
@@ -508,10 +522,10 @@ const NavBar = () => {
 
       <MobileMenuContainer position="fexed">
         <Stack
-          direction={'row'}
+          direction={"row"}
           spacing={2}
           alignItems="center"
-          justifyContent={'space-between'}
+          justifyContent={"space-between"}
         >
           <MobMenuItemContainer onClick={toggleMenuDraw(true)}>
             <CgMenuLeft />
@@ -537,13 +551,13 @@ const NavBar = () => {
         </Stack>
 
         <Drawer
-          anchor={'left'}
+          anchor={"left"}
           open={mobMenuTrig}
           toggle={toggleMenuDraw}
           data={menuItems}
         />
         <Drawer
-          anchor={'right'}
+          anchor={"right"}
           open={profileMenuTrig}
           toggle={toggleProfileDraw}
           data={profileMenuItems}
