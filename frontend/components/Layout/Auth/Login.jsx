@@ -56,7 +56,7 @@ const Login = ({ open, handleClickOpen, handleClose }) => {
     register,
     reset,
   } = useForm({ mode: 'onBlur' });
-  
+
   const onSubmit = (data) => {
     login({data})
     reset();
@@ -91,6 +91,7 @@ const Login = ({ open, handleClickOpen, handleClose }) => {
                     error={Boolean(errors.identifier)}
                     {...register('identifier', { required: 'identifier is required' })}
                     helperText={errors.identifier?.message}
+
                   />
                 </InputContainer>
               )}

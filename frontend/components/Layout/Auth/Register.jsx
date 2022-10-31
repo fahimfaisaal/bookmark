@@ -64,8 +64,6 @@ const Register = ({ open, handleClickOpen, handleClose }) => {
     }
 
   };
-  console.log('[Errors]', errors);
-  // console.log('[Touched]', touchedFields);
   //Handle Form =========================
 
   return (
