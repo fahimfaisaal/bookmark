@@ -1,5 +1,6 @@
-import { Button, Grid, Link } from '@mui/material';
+import { Box, Button, Grid } from '@mui/material';
 import { Stack } from '@mui/system';
+import Link from 'next/link';
 import React from 'react';
 import Carousel from 'react-multi-carousel';
 import AuthorCard from '../components/AuthorCard';
@@ -10,15 +11,16 @@ import {
   CustomLeftBtn,
   CustomRightBtn,
 } from '../components/shared/ui/CarouselBtn';
-import ProfileMenu from '../components/UserDashboard/Menu';
-import Profile from '../components/UserDashboard/Profile';
+import { useGetCategoryQuery, useGetBooksQuery } from '../store/features/books/booksApi';
+import { useGetAuthorsQuery, useGetPublishersQuery } from '../store/features/user/userApi';
+
 import {
   ContainerStyle,
   HeroContainer,
   SectionContainer,
   SectionHeaderStyle,
   SeeAllLinkStyle,
-} from './Styles';
+} from "./Styles";
 
 const responsive = (xl, lg, md, sm, xs) => {
   return {
@@ -47,23 +49,45 @@ const responsive = (xl, lg, md, sm, xs) => {
 };
 
 const Home = () => {
-  const loopCount = [];
-  for (let i = 0; i < 10; i++) {
-    loopCount.push(i);
-  }
+  const newArraivalDate = new Date().toISOString();
+  const {
+    data: authorLists,
+    isLoading: isAuthorLoading,
+    isError: isAuthorError,
+  } = useGetAuthorsQuery();
+  const {
+    data: publisherLists,
+    isLoading: isPublisherLoading,
+    isError: isPublisherError,
+  } = useGetPublishersQuery();
+
+  const { data: popularbookLists } = useGetBooksQuery({
+    params: "filters[bestSelling][$eq]=true",
+  });
+
+  const { data: newbookLists, isLoading: isNewBooksLoading } = useGetBooksQuery(
+    {
+      params: `filters[createdAt][$gte]=${"2022-10-29T03:07:38.922Z"}&pagination[pageSize]=8`,
+    }
+  );
+  const { data: categoryLists } = useGetCategoryQuery();
+
+  console.log({ lists: popularbookLists, isNewBooksLoading });
   return (
     <ContainerStyle>
       <HeroContainer>
-        <Link sx={{ cursor: 'pointer' }}>
-          <img src="/images/Cover.png" />
+        <Link href={'/books'}>
+          <Box sx={{ cursor: 'pointer' }}>
+            <img src="/images/Cover.png" />
+          </Box>
         </Link>
       </HeroContainer>
       <SectionContainer>
-        <SectionHeaderStyle variant="h1">Popular Products</SectionHeaderStyle>
+        <SectionHeaderStyle variant="h1">Popular Books</SectionHeaderStyle>
         <Grid container spacing={3}>
-          {loopCount.map((item) => (
-            <Grid item lg={3} md={6} xs={12} key={item}>
-              <BookCard />
+          {popularbookLists?.data?.slice(0, 8).map((book) => (
+            <Grid item lg={3} md={6} xs={12} key={book?.id}>
+              <BookCard book={book?.attributes} bookId={book?.id}/>
             </Grid>
           ))}
         </Grid>
@@ -78,8 +102,8 @@ const Home = () => {
           customLeftArrow={<CustomLeftBtn />}
           customRightArrow={<CustomRightBtn />}
         >
-          {loopCount.map((item) => (
-            <CategoryCard key={item} />
+          {categoryLists?.data?.length > 0 && categoryLists?.data?.map((category) => (
+            <CategoryCard key={category?.id} category={category?.attributes} />
           ))}
         </Carousel>
       </SectionContainer>
@@ -87,13 +111,13 @@ const Home = () => {
       <SectionContainer>
         <SectionHeaderStyle variant="h1">New Arrival Books</SectionHeaderStyle>
         <Grid container spacing={2}>
-          {loopCount.map((item) => (
-            <Grid item lg={3} md={6} xs={12} key={item}>
-              <BookCard />
+          {newbookLists?.data?.map((book) => (
+            <Grid item lg={3} md={6} xs={12} key={book?.id}>
+              <BookCard book={book?.attributes} bookId={book?.id}/>
             </Grid>
           ))}
         </Grid>
-        <Stack direction={'row'} justifyContent={'center'} my={5}>
+        <Stack direction={"row"} justifyContent={"center"} my={5}>
           <Button variant="contained" size="large" disableElevation={true}>
             Load More
           </Button>
@@ -102,34 +126,39 @@ const Home = () => {
 
       <SectionContainer>
         <Stack
-          direction={'row'}
-          alignItems={'center'}
-          justifyContent={'space-between'}
+          direction={"row"}
+          alignItems={"center"}
+          justifyContent={"space-between"}
         >
           <SectionHeaderStyle variant="h1">Top Authors</SectionHeaderStyle>
-          <SeeAllLinkStyle href="/authors">See All</SeeAllLinkStyle>
+          <Link href="/authors">
+            <SeeAllLinkStyle>See All</SeeAllLinkStyle>
+          </Link>
         </Stack>
         <Carousel
           responsive={responsive(8, 6, 3, 2, 1)}
           customLeftArrow={<CustomLeftBtn />}
           customRightArrow={<CustomRightBtn />}
         >
-          {loopCount.map((item) => (
-            <AuthorCard key={item} />
-          ))}
+          {authorLists?.data?.length > 0 &&
+            authorLists?.data?.map((author) => (
+              <AuthorCard key={author?.id} author={author} />
+            ))}
         </Carousel>
       </SectionContainer>
 
       <SectionContainer>
         <Stack
-          direction={'row'}
-          alignItems={'center'}
-          justifyContent={'space-between'}
+          direction={"row"}
+          alignItems={"center"}
+          justifyContent={"space-between"}
         >
           <SectionHeaderStyle variant="h1" sx={{ margin: 0 }}>
             Top Publishers
           </SectionHeaderStyle>
-          <SeeAllLinkStyle href="/publishers">See All</SeeAllLinkStyle>
+          <Link href="/publishers">
+            <SeeAllLinkStyle>See All</SeeAllLinkStyle>
+          </Link>
         </Stack>
 
         <Carousel
@@ -137,12 +166,15 @@ const Home = () => {
           customLeftArrow={<CustomLeftBtn />}
           customRightArrow={<CustomRightBtn />}
         >
-          {loopCount.map((item) => (
-            <PublicationCard key={item} />
-          ))}
+          {publisherLists?.data?.length > 0 &&
+            publisherLists?.data?.map((publisher) => (
+              <PublicationCard key={publisher?.id} publisher={publisher} />
+            ))}
+
+          
         </Carousel>
       </SectionContainer>
-      <ProfileMenu />
+    
     </ContainerStyle>
   );
 };

@@ -52,6 +52,7 @@ const Register = ({ open, handleClickOpen, handleClose }) => {
       <ContainerStyle>
         <Header subtitle={'By signing up, you agree to our terms & policy'} />
         <FormContainer>
+
           <form onSubmit={handleSubmit(onSubmit)}>
             <Controller
               name="name"
@@ -116,6 +117,7 @@ const Register = ({ open, handleClickOpen, handleClose }) => {
               <FormBtn>Register</FormBtn>
             </InputContainer>
           </form>
+
         </FormContainer>
         <Divider>Or</Divider>
         <Stack

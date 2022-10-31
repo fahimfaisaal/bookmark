@@ -1,5 +1,5 @@
 const { statSync } = require("fs");
-const { join } = require("path");
+
 class StrapiCRUDService {
   /**
    * @type {import("@strapi/strapi").Strapi}
@@ -22,7 +22,7 @@ class StrapiCRUDService {
 
   async uploadFile({ data, file }) {
     const { refId, ref, field } = data;
-    const { name, path, type } = file;
+    const { name, path, type, extension } = file;
 
     const fileStat = statSync(path);
 
@@ -37,6 +37,7 @@ class StrapiCRUDService {
           path,
           name,
           type,
+          extension,
           size: fileStat.size,
         },
       });
@@ -46,9 +47,8 @@ class StrapiCRUDService {
 
   async createMany(modelName, models) {
     return this.strapi.db.query(this.modelUIDs[modelName]).createMany({
-      data: models
-      }
-    )
+      data: models,
+    });
   }
 
   async findMany(modelName, parameters) {
@@ -65,11 +65,10 @@ class StrapiCRUDService {
       { data: model }
     );
   }
-  
+
   async deleteMany(modelName, filter = {}) {
-    return this.strapi.db.query(this.modelUIDs[modelName]).deleteMany(filter)
+    return this.strapi.db.query(this.modelUIDs[modelName]).deleteMany(filter);
   }
 }
 
 module.exports = StrapiCRUDService;
-

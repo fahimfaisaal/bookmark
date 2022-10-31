@@ -65,6 +65,10 @@
 
 - modelName: author
   count: 25
+  medias:
+    - fieldName: avatar
+      path: _seed/images/author
+      type: image
   relations:
     - relateWith: publisher
       type: m2m
