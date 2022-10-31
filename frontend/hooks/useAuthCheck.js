@@ -14,8 +14,6 @@ export default function useAuthCheck() {
     setLocalAuth(localStorage?.getItem(BOOKMARK_AUTH))
 
     if (localAuth) {
-      console.log("login")
-
       const auth = JSON.parse(localAuth);
       if (auth?.accessToken && auth?.user) {
         dispatch(
@@ -28,9 +26,7 @@ export default function useAuthCheck() {
       }
     }else{
       setAuthChecked(false);
-      console.log("logout")
     }
-    console.log("outside")
     
   }, [dispatch, setAuthChecked, authChecked, localAuth]);
 

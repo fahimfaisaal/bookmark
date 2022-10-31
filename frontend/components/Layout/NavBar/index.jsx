@@ -10,38 +10,35 @@ import {
   SwipeableDrawer,
   Tooltip,
   Typography,
-  useTheme,
-} from '@mui/material';
-import IconButton from '@mui/material/IconButton';
-import { Stack } from '@mui/system';
-import Link from 'next/link';
-import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
-import { AiOutlineFilter } from 'react-icons/ai';
-import { BiSearch, BiUser } from 'react-icons/bi';
-import { BsSunFill } from 'react-icons/bs';
-import { CgMenuLeft, CgShoppingBag } from 'react-icons/cg';
-import { HiOutlineShoppingBag, HiShoppingBag } from 'react-icons/hi';
-import { IoIosClose } from 'react-icons/io';
-import { MdOutlineFavoriteBorder } from 'react-icons/md';
-import { RiMoonLine } from 'react-icons/ri';
-import { VscHome } from 'react-icons/vsc';
-import { useDispatch, useSelector } from 'react-redux';
-import { BOOKMARK_AUTH } from '../../../constant';
-import { UseThemeContext } from '../../../context/ThemeContext';
-import useAuthCheck from '../../../hooks/useAuthCheck';
-import { userLoggedOut } from '../../../store/features/auth/authSlice';
-import { useGetBooksQuery } from '../../../store/features/books/booksApi';
-import { useGetCartsByUserQuery } from '../../../store/features/carts/cartsApi';
-import SearchBar from '../../shared/SearchBar';
-import Login from '../Auth/Login';
-import Register from '../Auth/Register';
-import CartItemComponent from './CartItemComponent';
+  useTheme
+} from "@mui/material";
+import IconButton from "@mui/material/IconButton";
+import { Stack } from "@mui/system";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import { AiOutlineFilter } from "react-icons/ai";
+import { BiSearch, BiUser } from "react-icons/bi";
+import { BsSunFill } from "react-icons/bs";
+import { CgMenuLeft, CgShoppingBag } from "react-icons/cg";
+import { HiOutlineShoppingBag } from "react-icons/hi";
+import { IoIosClose } from "react-icons/io";
+import { MdOutlineFavoriteBorder } from "react-icons/md";
+import { RiMoonLine } from "react-icons/ri";
+import { VscHome } from "react-icons/vsc";
+import { useDispatch, useSelector } from "react-redux";
+import { BOOKMARK_AUTH } from "../../../constant";
+import { UseThemeContext } from "../../../context/ThemeContext";
+import useAuthCheck from "../../../hooks/useAuthCheck";
+import { userLoggedOut } from "../../../store/features/auth/authSlice";
+import { useGetBooksQuery } from "../../../store/features/books/booksApi";
+import { useGetCartsByUserQuery } from "../../../store/features/carts/cartsApi";
+import SearchBar from "../../shared/SearchBar";
+import Login from "../Auth/Login";
+import Register from "../Auth/Register";
+import CartItemComponent from "./CartItemComponent";
 import {
   AppBarContainer,
-  CartContainer,
-  CartHeaderContainer,
-  CartItemContainer,
   CloseBtnContaner,
   IconContainer,
   LinkContainer,
@@ -55,7 +52,7 @@ import {
   MobileBarContainer,
   MobileMenuContainer,
   MobMenuItemContainer,
-  ThemeSwitchStyle,
+  ThemeSwitchStyle
 } from "./Styles";
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 const menuItems = [
@@ -159,31 +156,51 @@ const NavBar = () => {
   const [anchorElUser, setAnchorElUser] = useState(null);
   const { handleChangeMode } = UseThemeContext();
   const router = useRouter();
-  const isAuthenticated = useSelector(state => state?.auth)
-  const authUser = isAuthenticated?.user || {}
-  const [cartBookFilter, setCartBookFilter] = useState()
+  const isAuthenticated = useSelector((state) => state?.auth);
+  const authUser = isAuthenticated?.user || {};
+  const [cartBookFilter, setCartBookFilter] = useState();
   const { data: cartLists } = useGetCartsByUserQuery({ userId: authUser?.id });
-  const {data: cartBooks} = useGetBooksQuery(cartBookFilter)
+  const { data: cartBooks } = useGetBooksQuery(cartBookFilter);
+  const [cartListsWithImage, setCartListsWithImage] = useState()
 
-  useEffect(()=> {
-    setCartBookFilter({params: "populate[0]=images&filters[id][$in][0]=1197&filters[id][$in][1]=1237"})
-  }, [cartLists])
+  useEffect(() => {
+    setCartBookFilter({
+      params:
+        "populate[0]=images&filters[id][$in][0]=1197&filters[id][$in][1]=1237",
+    });
+  }, [cartLists]);
 
-  useEffect(()=>{
-    if(cartLists?.data && cartBooks?.data){
-      // let cartBookItem = 
-      cartLists?.data?.map((item,ind)=>{
-        // let isBook = 
-        // if(item?.attributes?.book?.data?.id == )
-      })
+  useEffect(() => {
+    if (cartLists?.data && cartBooks?.data) {
+      let cartBookItem = cartBooks?.data?.reduce(
+        (acc, curr) => ({
+          ...acc,
+          [curr.id]: curr?.attributes?.images?.data[0]?.attributes?.url,
+        }),
+        {}
+      );
+
+      //@LATER cart image not insert
+      let cartWithImage = cartLists?.data?.map((item, ind) => {
+        return {
+          ...item.attributes,
+          cartImage: cartBookItem[item?.attributes?.book?.data?.id],
+        };
+      });
+      setCartListsWithImage(cartWithImage)
+      // console.log({ c: cartImage, cartBookItem, cartBooks });
     }
-  }, [])
+  }, [cartLists?.data, cartBooks?.data]);
+
+  // console.log({ cart: cartLists?.data });
 
   const totalAmount = cartLists?.data?.reduce(
-    (acc, curr) => acc + (curr?.attributes?.variant?.data?.attributes?.price * curr?.attributes?.quantity),
+    (acc, curr) =>
+      acc +
+      curr?.attributes?.variant?.data?.attributes?.price *
+      curr?.attributes?.quantity,
     0
   );
-  console.log({c: cartLists?.data, cartBooks });
 
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
@@ -196,7 +213,6 @@ const NavBar = () => {
   const logoutUser = () => {
     dispatch(userLoggedOut());
     localStorage.removeItem(BOOKMARK_AUTH);
-    console.log("logout user");
     router.push("/");
   };
 
@@ -436,7 +452,13 @@ const NavBar = () => {
           )}
         </Stack>
 
-        <CartItemComponent cartModalTrg={cartModalTrg} toggleDrawer={toggleDrawer} theme={theme} cartLists={cartLists} totalAmount={totalAmount} />
+        <CartItemComponent
+          cartModalTrg={cartModalTrg}
+          toggleDrawer={toggleDrawer}
+          theme={theme}
+          cartLists={cartListsWithImage}
+          totalAmount={totalAmount}
+        />
       </AppBarContainer>
 
       <MobileBarContainer position="fixed">
