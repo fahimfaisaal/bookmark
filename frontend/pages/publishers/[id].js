@@ -1,51 +1,41 @@
-import { Box, Button, Grid } from '@mui/material';
-import { Stack } from '@mui/system';
+import { Button, Grid, Stack } from '@mui/material';
+import { Box } from '@mui/system';
 import { useRouter } from 'next/router';
+import AuthorProfile from '../../components/AuthorProfile';
 import BookCard from '../../components/BookCard';
-import Filter from '../../components/Filter';
-import PublicationCover from '../../components/PublicationCover';
-import { useGetBooksByPublisherQuery } from '../../store/features/books/booksApi';
-import { useGetPublisherQuery } from '../../store/features/publishers/publishersApi';
-import { BooksContainer, TitleStyle } from './Style';
+import { useGetAuthorQuery } from '../../store/features/authors/authorsApi';
+import { useGetBooksByAuthorQuery } from '../../store/features/books/booksApi';
+import { SectionHeaderStyle } from './Styles';
 
-const PublicationItem = () => {
+const AuthorItem = () => {
   const router = useRouter();
-  const { data } = useGetPublisherQuery(router.query.id);
-
-  const publisherData = data?.data?.attributes;
-
-  const { data: publisherBooks } = useGetBooksByPublisherQuery(
-    publisherData?.name
-  );
-  console.log({ publisherData });
+  // console.log({ q: router.query.slug });
+  const { data } = useGetAuthorQuery(router.query.id);
+  const authorData = data?.data?.attributes;
+  // const { name, bio, birth, avatar, books } = authorData;
+  // console.log({ name:authorData?.name });
+  const { data: authorBooks } = useGetBooksByAuthorQuery(authorData?.name);
 
   return (
     <Box>
-      <Grid container spacing={'10px'}>
-        <Grid item lg={3.5}>
-          <Filter />
-        </Grid>
-        <Grid item lg={8.5}>
-          <PublicationCover publisherData={publisherData} />
-          <BooksContainer>
-            <TitleStyle variant="h1">Books</TitleStyle>
-            <Grid container spacing={3}>
-              {publisherBooks?.data?.map((book) => (
-                <Grid item lg={4} md={6} xs={12} key={book?.id}>
-                  <BookCard book={book?.attributes} bookId={book?.id} />
-                </Grid>
-              ))}
+      <AuthorProfile authorInfo={authorData} />
+      <SectionHeaderStyle variant="h1">Author Books</SectionHeaderStyle>
+      <Box>
+        <Grid container spacing={2}>
+          {authorBooks?.data?.map((book) => (
+            <Grid item lg={3} md={6} xs={12} key={book?.id}>
+              <BookCard book={book?.attributes} bookId={book?.id} />
             </Grid>
-            <Stack direction={'row'} justifyContent={'center'} my={5}>
-              <Button variant="contained" size="large" disableElevation={true}>
-                Load More
-              </Button>
-            </Stack>
-          </BooksContainer>
+          ))}
         </Grid>
-      </Grid>
+        <Stack direction={'row'} justifyContent={'center'} my={5}>
+          <Button variant="contained" size="large" disableElevation={true}>
+            Load More
+          </Button>
+        </Stack>
+      </Box>
     </Box>
   );
 };
 
-export default PublicationItem;
+export default AuthorItem;

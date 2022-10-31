@@ -1,13 +1,10 @@
 import qs from "qs";
 import { apiSlice } from "../api/apiSlice";
 
-
-
 export const booksApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getBooks: builder.query({
       query: ({ query } = {}) => {
-        console.log(query);
         return `/books?${qs.stringify(query, { encode: false })}`;
       },
       providesTags: ["books"],

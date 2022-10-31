@@ -5,7 +5,7 @@ import {
   Divider,
   Grid,
   Link as MuiLink,
-  Typography,
+  Typography
 } from "@mui/material";
 import Rating from "@mui/material/Rating";
 import { Stack } from "@mui/system";
@@ -13,17 +13,22 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
+import { useSelector } from "react-redux";
 import BookCard from "../../components/BookCard";
 import CustomImage from "../../components/CustomImage";
 import {
   LeftBtnStyle,
-  RightBtnStyle,
+  RightBtnStyle
 } from "../../components/shared/ui/CarouselBtn/Styles";
 import {
   useGetBookQuery,
   useGetBooksByTagsQuery,
-  useGetNestedBookItemQuery,
+  useGetNestedBookItemQuery
 } from "../../store/features/books/booksApi";
+import {
+  useAddToCartMutation, useGetCartByUserBookQuery,
+  useUpdateCartMutation
+} from "../../store/features/carts/cartsApi";
 import ReviewForm from "./ReviewForm";
 import ReviewItem from "./ReviewItem";
 import {
@@ -40,14 +45,8 @@ import {
   Qty,
   QtyBtnLeft,
   QtyBtnRight,
-  VariantBtnStyle,
+  VariantBtnStyle
 } from "./Styles";
-import { useSelector } from "react-redux";
-import {
-  useGetCartByUserBookQuery,
-  useUpdateCartMutation,
-  useAddToCartMutation,
-} from "../../store/features/carts/cartsApi";
 
 const BookItem = () => {
   const [openReview, setOpenReview] = useState(false);
@@ -189,7 +188,7 @@ const BookItem = () => {
     } else {
       // cart add
       data = { data };
-      console.log({add:data});
+      console.log({ add: data });
       addToCart(data);
     }
     setCartQty(1);
@@ -293,7 +292,6 @@ const BookItem = () => {
               <Typography variant="h3" pb={5} pt={1}>
                 {bookData?.status}
               </Typography>
-
               <Stack direction={"row"} alignItems={"center"} spacing={2} mb={3}>
                 <Typography variant="h3">Language :</Typography>
                 <Stack direction={"row"} alignItems={"center"} spacing={2}>
