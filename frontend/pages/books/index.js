@@ -1,18 +1,64 @@
-import { Box, Button, Grid, Typography } from '@mui/material';
-import { Stack } from '@mui/system';
-import React, { useState } from 'react';
-import { FiFilter } from 'react-icons/fi';
-import { MdClose } from 'react-icons/md';
-import BookCard from '../../components/BookCard';
-import Filter from '../../components/Filter';
-import { useGetBooksQuery } from '../../store/features/books/booksApi';
-import { FilterButtonContainer } from '../publishers/Style';
+import { Box, Button, Grid, Typography } from "@mui/material";
+import { Stack } from "@mui/system";
+import React, { useState } from "react";
+import { FiFilter } from "react-icons/fi";
+import { MdClose } from "react-icons/md";
+import { useSelector } from "react-redux";
+import BookCard from "../../components/BookCard";
+import Filter from "../../components/Filter";
+import { useGetBooksQuery } from "../../store/features/books/booksApi";
+import {
+  getCategories,
+  getPriceRange,
+  getSearchText,
+  getTags,
+} from "../../store/features/filter/filterSlice";
+import { FilterButtonContainer } from "../publishers/Style";
+
+const generateQuery = ({
+  tags,
+  categories,
+  priceRange: [min, max] = [],
+  searchText,
+}) => ({
+  populate: "*",
+  filters: {
+    name: {
+      $containsi: searchText,
+    },
+    variants: {
+      price: {
+        $gte: min,
+        $lte: max,
+      },
+    },
+    tags: {
+      type: {
+        $in: tags,
+      },
+    },
+    categories: {
+      type: {
+        $in: categories,
+      },
+    },
+  },
+});
 
 const Books = () => {
+  const tags = useSelector(getTags);
+  const categories = useSelector(getCategories);
+  const priceRange = useSelector(getPriceRange);
+  const searchText = useSelector(getSearchText);
   const { data: bookLists } = useGetBooksQuery({
-    params: "",
+    query: generateQuery({
+      tags,
+      categories,
+      priceRange,
+      searchText,
+    }),
   });
- 
+
   const [filterTrig, setFilterTrig] = useState(false);
 
   const handleFilter = () => {
@@ -43,17 +89,18 @@ const Books = () => {
           </FilterButtonContainer>
 
           <Grid container spacing={3}>
-          {bookLists?.data?.slice(0, 8).map((book) => (
-            <Grid item  md={6} lg={filterTrig ? 4 : 3} xs={12}  key={book?.id}>
-              <BookCard book={book?.attributes} bookId={book?.id}/>
-            </Grid>
-          ))}
-           
+            {bookLists?.data?.map((book) => (
+              <Grid item md={6} lg={filterTrig ? 4 : 3} xs={12} key={book?.id}>
+                <BookCard book={book?.attributes} bookId={book?.id} />
+              </Grid>
+            ))}
           </Grid>
-          <Stack direction={'row'} justifyContent={'center'} my={5}>
-            <Button variant="contained" size="large" disableElevation={true}>
-              Load More
-            </Button>
+          <Stack direction={"row"} justifyContent={"center"} my={5}>
+            {bookLists?.data?.length === 25 && (
+              <Button variant="contained" size="large" disableElevation={true}>
+                Load More
+              </Button>
+            )}
           </Stack>
         </Grid>
       </Grid>

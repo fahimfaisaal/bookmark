@@ -17,7 +17,7 @@ export const cartsApi = apiSlice.injectEndpoints({
         method: "POST",
         body: data,
       }),
-      invalidatesTags: ['carts']
+      invalidatesTags: ["carts"],
     }),
 
     updateCart: builder.mutation({
@@ -26,17 +26,18 @@ export const cartsApi = apiSlice.injectEndpoints({
         method: "PUT",
         body: data,
       }),
-      invalidatesTags:(result, error, arg) => [{ type: "cart", id: arg }]
+      invalidatesTags: (result, error, arg) => [{ type: "cart", id: arg }],
     }),
     deleteCart: builder.mutation({
       query: ({ cartId }) => ({
         url: `/carts/${cartId}`,
         method: "DELETE",
       }),
-      invalidatesTags: ['carts']
+      invalidatesTags: ["carts"],
     }),
   }),
 });
+
 export const {
   useGetCartsByUserQuery,
   useGetCartQuery,

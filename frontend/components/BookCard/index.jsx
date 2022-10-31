@@ -1,11 +1,11 @@
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-import { Stack, Typography } from '@mui/material';
-import { Box } from '@mui/system';
-import Link from 'next/link';
-import * as React from 'react';
-import { FaShoppingCart } from 'react-icons/fa';
-import CustomImage from '../CustomImage';
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import { Stack, Typography } from "@mui/material";
+import { Box } from "@mui/system";
+import Link from "next/link";
+import * as React from "react";
+import { FaShoppingCart } from "react-icons/fa";
+import CustomImage from "../CustomImage";
 
 import {
   CartBtnStyle,
@@ -19,7 +19,6 @@ import {
 } from "./Styles";
 
 const BookCard = ({ book, bookId }) => {
- 
   const [favorite, setFavorite] = React.useState(false);
   const { authors, images, variants } = book || {};
   const bookImage =
@@ -37,8 +36,8 @@ const BookCard = ({ book, bookId }) => {
 
   return (
     <StyledBox>
-      <Link href={`/books/${bookId}`} sx={{ cursor: 'pointer' }}>
-        <Box sx={{ cursor: 'pointer' }}>
+      <Link href={`/books/${bookId}`} sx={{ cursor: "pointer" }}>
+        <Box sx={{ cursor: "pointer" }}>
           <CustomImage
             src={bookImage}
             height="350px"
@@ -49,21 +48,22 @@ const BookCard = ({ book, bookId }) => {
       </Link>
       <ContentContainerStyle>
         <TitleStyle>
-          <Link href={'/books/123'}>
-            <Typography variant="h3" color="text.primary" py={'5px'}>
-            {book?.name}
+          <Link href={"/books/123"}>
+            <Typography variant="h3" color="text.primary" py={"5px"}>
+              {book?.name}
             </Typography>
           </Link>
         </TitleStyle>
 
         <Stack direction="row" spacing={1} alignItems="center">
           <Typography variant="caption">by</Typography>
-          <Link href={'/authors/123'}>
+          <Link href={"/authors/123"}>
             <WriterLinkStyle>
-              <Typography variant="body2">{authors?.data[0]?.attributes?.name}</Typography>
+              <Typography variant="body2">
+                {authors?.data[0]?.attributes?.name}
+              </Typography>
             </WriterLinkStyle>
           </Link>
-
         </Stack>
         <Typography
           variant="caption"
@@ -73,9 +73,7 @@ const BookCard = ({ book, bookId }) => {
         </Typography>
         <PriceStyle direction={"row"} alignItems={"center"}>
           {variants?.data[0]?.attributes?.price == null ? (
-            <Typography variant="h4">
-              Free
-            </Typography>
+            <Typography variant="h4">Free</Typography>
           ) : (
             <Typography variant="h4">
               ${variants?.data[0]?.attributes?.price}

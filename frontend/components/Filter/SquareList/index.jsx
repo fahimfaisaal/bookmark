@@ -1,42 +1,52 @@
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { FormControlLabel, FormGroup } from '@mui/material';
-import Accordion from '@mui/material/Accordion';
-import AccordionDetails from '@mui/material/AccordionDetails';
-import AccordionSummary from '@mui/material/AccordionSummary';
-import Checkbox from '@mui/material/Checkbox';
-import React, { useState } from 'react';
-import { FilterTitleStyle } from '../style';
-import { ListContainerStyle } from './style';
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import { FormControlLabel, FormGroup } from "@mui/material";
+import Accordion from "@mui/material/Accordion";
+import AccordionDetails from "@mui/material/AccordionDetails";
+import AccordionSummary from "@mui/material/AccordionSummary";
+import Checkbox from "@mui/material/Checkbox";
+import React, { useState } from "react";
+import { FilterTitleStyle } from "../style";
+import { ListContainerStyle } from "./style";
 
-export default function CheckboxList({ title, data }) {
+export default function CheckboxList({ title, data, selectItems, setItem }) {
   const [expanded, setExpanded] = useState(true);
 
   const handleChange = () => {
     setExpanded(!expanded);
   };
 
+  const handleCheckChange = (e) => {
+    setItem(e.target.name.split(":"));
+  };
+
   return (
     <Accordion
       expanded={expanded}
       onChange={handleChange}
-      sx={{ boxShadow: 'none', backgroundColor: 'inherit' }}
+      sx={{ boxShadow: "none", backgroundColor: "inherit" }}
     >
       <AccordionSummary
         expandIcon={<ExpandMoreIcon />}
         aria-controls="panel1bh-content"
         id="panel1bh-header"
-        sx={{ padding: '0' }}
+        sx={{ padding: "0" }}
       >
         <FilterTitleStyle variant="h3">{title}</FilterTitleStyle>
       </AccordionSummary>
-      <AccordionDetails sx={{ padding: '0' }}>
+      <AccordionDetails sx={{ padding: "0" }}>
         <ListContainerStyle>
           <FormGroup>
-            {data.map((item, index) => (
+            {data?.map((item) => (
               <FormControlLabel
-                control={<Checkbox defaultChecked={index === 0} />}
-                label={item}
-                name={item.toLowerCase()}
+                key={item.id}
+                control={
+                  <Checkbox
+                    checked={selectItems.has(item.name)}
+                    onChange={handleCheckChange}
+                  />
+                }
+                label={item.name}
+                name={`${item.id}:${item.name}`}
               />
             ))}
           </FormGroup>
