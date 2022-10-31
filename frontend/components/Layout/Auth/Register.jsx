@@ -2,7 +2,6 @@ import { Dialog, Divider, Link, TextField, Typography } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { Stack } from '@mui/system';
-import React from 'react';
 import CloseBtn from './CloseBtn';
 import FormBtn from './FormBtn';
 import Header from './Header';
@@ -14,15 +13,35 @@ import {
   InputLabelStyle,
 } from './Styles';
 import { useForm, Controller } from 'react-hook-form';
+import { useSignupMutation } from '../../../store/features/auth/authApi';
+import { useState, useEffect } from 'react';
 
 const Register = ({ open, handleClickOpen, handleClose }) => {
+  const theme = useTheme();
+  const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
+  const [signup, { data, isLoading,isSuccess, error: responseError }] = useSignupMutation()
+  const [error, setError] = useState("");
+  console.log({data,isLoading,isSuccess,responseError, error})
   const toggleLogin = () => {
     handleClose();
     handleClickOpen();
   };
 
-  const theme = useTheme();
-  const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
+  useEffect(() => {
+    if (responseError?.data) {
+        setError(responseError?.data?.error?.message);
+        alert(responseError?.data?.error?.message)
+    }
+    if (data?.jwt && data?.user) {
+       
+       /**
+        * TODO: later redirect home page
+        */
+        alert("Successfully Registered")
+        handleClose();
+
+    }
+}, [data, responseError]);
 
   //Handle Form =========================
   const {
@@ -33,11 +52,16 @@ const Register = ({ open, handleClickOpen, handleClose }) => {
     reset,
   } = useForm({
     mode: 'onBlur',
-    defaultValues: { name: '', email: '', password: '' },
+    defaultValues: { username: '', email: '', password: '', phone: '' },
   });
   const onSubmit = (data) => {
+    signup({data})
     console.log(data);
-    reset();
+    if(isSuccess){
+      reset();
+      handleClose();
+    } 
+    
   };
   //Handle Form =========================
 
@@ -55,18 +79,18 @@ const Register = ({ open, handleClickOpen, handleClose }) => {
 
           <form onSubmit={handleSubmit(onSubmit)}>
             <Controller
-              name="name"
+              name="username"
               control={control}
               render={({ field }) => (
                 <InputContainer>
-                  <InputLabelStyle variant="h4">Name</InputLabelStyle>
+                  <InputLabelStyle variant="h4">Username</InputLabelStyle>
                   <TextField
                     fullWidth
-                    name="name"
-                    label={'Name'}
-                    error={Boolean(errors.name)}
-                    {...register('name', { required: 'Name is required' })}
-                    helperText={errors.name?.message}
+                    name="username"
+                    label={'Username'}
+                    error={Boolean(errors.username)}
+                    {...register('username', { required: 'Username is required' })}
+                    helperText={errors.username?.message}
                     type={'text'}
                     {...field}
                   />
@@ -93,6 +117,25 @@ const Register = ({ open, handleClickOpen, handleClose }) => {
               )}
             />
             <Controller
+              name="phone"
+              control={control}
+              render={({ field }) => (
+                <InputContainer>
+                  <InputLabelStyle variant="h4">Phone</InputLabelStyle>
+                  <TextField
+                    fullWidth
+                    name="phone"
+                    label={'phone'}
+                    error={Boolean(errors.phone)}
+                    {...register('phone', { required: 'phone is required' })}
+                    helperText={errors.phone?.message}
+                    type={'text'}
+                    {...field}
+                  />
+                </InputContainer>
+              )}
+            />
+            <Controller
               name="password"
               control={control}
               render={({ field }) => (
@@ -114,7 +157,7 @@ const Register = ({ open, handleClickOpen, handleClose }) => {
               )}
             />
             <InputContainer>
-              <FormBtn>Register</FormBtn>
+              <FormBtn disabled={isLoading}>Register</FormBtn>
             </InputContainer>
           </form>
 
