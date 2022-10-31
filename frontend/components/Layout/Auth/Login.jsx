@@ -18,15 +18,37 @@ import {
   InputLabelStyle,
 } from './Styles';
 import { useForm, Controller } from 'react-hook-form';
+import { useLoginMutation } from '../../../store/features/auth/authApi';
+import { useState, useEffect } from 'react';
 
 const Login = ({ open, handleClickOpen, handleClose }) => {
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
+  const [login, { data, isLoading,isSuccess, error: responseError }] = useLoginMutation()
+  const [error, setError] = useState("");
+  console.log({data,isLoading,isSuccess,responseError, error})
 
   const toggleRegister = () => {
     handleClose();
     handleClickOpen();
   };
+
+  useEffect(() => {
+    if (responseError?.data) {
+        setError(responseError?.data?.error?.message);
+        alert(responseError?.data?.error?.message)
+    }
+    if (data?.jwt && data?.user) {
+       
+       /**
+        * TODO: later redirect home page
+        */
+        alert("Successfully Registered")
+        handleClose();
+
+    }
+}, [data, responseError]);
+
   //Handle Form =========================
   const {
     handleSubmit,
@@ -36,6 +58,7 @@ const Login = ({ open, handleClickOpen, handleClose }) => {
     reset,
   } = useForm({ mode: 'onBlur' });
   const onSubmit = (data) => {
+    login({data})
     console.log(data);
     reset();
   };
@@ -55,20 +78,20 @@ const Login = ({ open, handleClickOpen, handleClose }) => {
         <FormContainer>
           <form onSubmit={handleSubmit(onSubmit)}>
             <Controller
-              name="email"
+              name="identifier"
               control={control}
               render={({ field }) => (
                 <InputContainer>
-                  <InputLabelStyle variant="h4">Email</InputLabelStyle>
+                  <InputLabelStyle variant="h4">Email/Username</InputLabelStyle>
                   <TextField
                     fullWidth
-                    name="email"
-                    label={'Email'}
-                    type={'email'}
+                    name="identifier"
+                    label={'Email/Username'}
+                    type={'text'}
                     {...field}
-                    error={Boolean(errors.email)}
-                    {...register('email', { required: 'Email is required' })}
-                    helperText={errors.email?.message}
+                    error={Boolean(errors.identifier)}
+                    {...register('identifier', { required: 'identifier is required' })}
+                    helperText={errors.identifier?.message}
                   />
                 </InputContainer>
               )}

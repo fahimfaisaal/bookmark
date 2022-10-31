@@ -16,7 +16,7 @@ import IconButton from '@mui/material/IconButton';
 import { Stack } from '@mui/system';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { AiOutlineFilter } from 'react-icons/ai';
 import { BiSearch, BiUser } from 'react-icons/bi';
 import { BsSunFill } from 'react-icons/bs';
@@ -26,7 +26,11 @@ import { IoIosClose } from 'react-icons/io';
 import { MdOutlineFavoriteBorder } from 'react-icons/md';
 import { RiMoonLine } from 'react-icons/ri';
 import { VscHome } from 'react-icons/vsc';
+import { useDispatch } from 'react-redux';
+import { BOOKMARK_AUTH } from '../../../constant';
 import { UseThemeContext } from '../../../context/ThemeContext';
+import useAuthCheck from '../../../hooks/useAuthCheck';
+import { userLoggedOut } from '../../../store/features/auth/authSlice';
 import CartItem from '../../CartItem';
 import SearchBar from '../../shared/SearchBar';
 import Login from '../Auth/Login';
@@ -175,6 +179,8 @@ const Drawer = ({ anchor, data, open, toggle }) => {
 
 const NavBar = () => {
   const theme = useTheme();
+  const dispatch = useDispatch();
+  const authChecked = useAuthCheck()
   const [anchorElUser, setAnchorElUser] = useState(null);
   const { handleChangeMode } = UseThemeContext();
 
@@ -186,6 +192,14 @@ const NavBar = () => {
     setAnchorElUser(null);
   };
 
+  const logoutUser = () => {
+    dispatch(userLoggedOut())
+    localStorage.removeItem(BOOKMARK_AUTH)
+    console.log("logout user")
+  };
+
+  console.log({navabr:authChecked})
+  
   const [cartModalTrg, setCartModalTrig] = useState(false);
 
   const toggleDrawer = (open) => (event) => {
@@ -365,7 +379,16 @@ const NavBar = () => {
               ))}
             </Menu>
           </Box>
+          {authChecked ? 
           <Box>
+            <Button
+              variant="contained"
+              disableElevation={true}
+              onClick={()=>logoutUser()}
+            >
+              Logout
+            </Button>
+          </Box> : <Box>
             <Button
               variant="contained"
               disableElevation={true}
@@ -373,7 +396,7 @@ const NavBar = () => {
             >
               Join
             </Button>
-          </Box>
+          </Box>}
         </Stack>
 
         <SwipeableDrawer

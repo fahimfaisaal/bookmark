@@ -1,9 +1,10 @@
+import { BOOKMARK_AUTH } from "../../../constant";
 import { apiSlice } from "../api/apiSlice";
 import { userLoggedIn } from "./authSlice";
 
 export const authApi = apiSlice.injectEndpoints({
     endpoints: (builder) => ({
-        register: builder.mutation({
+        signup: builder.mutation({
             query: ({data}) => ({
                 url: "/auth/local/register",
                 method: "POST",
@@ -14,16 +15,16 @@ export const authApi = apiSlice.injectEndpoints({
                     const result = await queryFulfilled;
 
                     localStorage.setItem(
-                        "auth",
+                        BOOKMARK_AUTH,
                         JSON.stringify({
-                            accessToken: result.data.accessToken,
+                            accessToken: result.data.jwt,
                             user: result.data.user,
                         })
                     );
 
                     dispatch(
                         userLoggedIn({
-                            accessToken: result.data.accessToken,
+                            accessToken: result.data.jwt,
                             user: result.data.user,
                         })
                     );
@@ -44,16 +45,16 @@ export const authApi = apiSlice.injectEndpoints({
                     const result = await queryFulfilled;
 
                     localStorage.setItem(
-                        "auth",
+                        BOOKMARK_AUTH,
                         JSON.stringify({
-                            accessToken: result.data.accessToken,
+                            accessToken: result.data.jwt,
                             user: result.data.user,
                         })
                     );
 
                     dispatch(
                         userLoggedIn({
-                            accessToken: result.data.accessToken,
+                            accessToken: result.data.jwt,
                             user: result.data.user,
                         })
                     );
@@ -65,4 +66,4 @@ export const authApi = apiSlice.injectEndpoints({
     }),
 });
 
-export const { useLoginMutation, useRegisterMutation } = authApi;
+export const { useLoginMutation, useSignupMutation } = authApi;
