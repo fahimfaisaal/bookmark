@@ -10,7 +10,8 @@ import {
   TotalPriceContainerStyle,
 } from './Styles';
 import VerticalQuantityBtn from './VerticalQuntityBtn';
-const CartItem = ({ quantity, price, title }) => {
+const CartItem = ({ cart }) => {
+  console.log({cart});
   return (
     <ItemContainerStyle
       direction={'row'}

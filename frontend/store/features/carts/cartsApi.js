@@ -3,7 +3,7 @@ import { apiSlice } from "../api/apiSlice";
 export const cartsApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getCartsByUser: builder.query({
-      query: ({ userId }) => `/carts?populate[0]=${userId}`,
+      query: ({ userId }) => `/carts?populate=*&filters[userId][id][$eq]=${userId}`,
       providesTags: ["carts"],
     }),
 

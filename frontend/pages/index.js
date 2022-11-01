@@ -3,6 +3,7 @@ import { Stack } from '@mui/system';
 import Link from 'next/link';
 import React from 'react';
 import Carousel from 'react-multi-carousel';
+import { useSelector } from 'react-redux';
 import AuthorCard from '../components/AuthorCard';
 import BookCard from '../components/BookCard';
 import CategoryCard from '../components/CategoryCard';
@@ -12,6 +13,7 @@ import {
   CustomRightBtn,
 } from '../components/shared/ui/CarouselBtn';
 import { useGetCategoryQuery, useGetBooksQuery } from '../store/features/books/booksApi';
+import { useGetCartsByUserQuery } from '../store/features/carts/cartsApi';
 import { useGetAuthorsQuery, useGetPublishersQuery } from '../store/features/user/userApi';
 
 import {
@@ -50,6 +52,8 @@ const responsive = (xl, lg, md, sm, xs) => {
 
 const Home = () => {
   const newArraivalDate = new Date().toISOString();
+  
+  
   const {
     data: authorLists,
     isLoading: isAuthorLoading,
@@ -71,6 +75,7 @@ const Home = () => {
     }
   );
   const { data: categoryLists } = useGetCategoryQuery();
+  
 
   console.log({ lists: popularbookLists, isNewBooksLoading });
   return (

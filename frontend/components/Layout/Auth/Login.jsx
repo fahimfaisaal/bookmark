@@ -26,7 +26,7 @@ const Login = ({ open, handleClickOpen, handleClose }) => {
   const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
   const [login, { data, isLoading,isSuccess, error: responseError }] = useLoginMutation()
   const [error, setError] = useState("");
-  console.log({data,isLoading,isSuccess,responseError, error})
+  // console.log({data,isLoading,isSuccess,responseError, error})
 
   const toggleRegister = () => {
     handleClose();
@@ -59,7 +59,6 @@ const Login = ({ open, handleClickOpen, handleClose }) => {
   } = useForm({ mode: 'onBlur' });
   const onSubmit = (data) => {
     login({data})
-    console.log(data);
     reset();
   };
   //Handle Form =========================

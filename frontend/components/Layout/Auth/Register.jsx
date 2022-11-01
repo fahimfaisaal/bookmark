@@ -21,7 +21,7 @@ const Register = ({ open, handleClickOpen, handleClose }) => {
   const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
   const [signup, { data, isLoading,isSuccess, error: responseError }] = useSignupMutation()
   const [error, setError] = useState("");
-  console.log({data,isLoading,isSuccess,responseError, error})
+  // console.log({data,isLoading,isSuccess,responseError, error})
   const toggleLogin = () => {
     handleClose();
     handleClickOpen();
@@ -56,7 +56,6 @@ const Register = ({ open, handleClickOpen, handleClose }) => {
   });
   const onSubmit = (data) => {
     signup({data})
-    console.log(data);
     if(isSuccess){
       reset();
       handleClose();
