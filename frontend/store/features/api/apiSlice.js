@@ -1,5 +1,5 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { userLoggedOut } from "../auth/authSlice";
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { userLoggedOut } from '../auth/authSlice';
 
 // NEXT_PUBLIC_API_URL=http://localhost:1337/api
 
@@ -8,7 +8,7 @@ const baseQuery = fetchBaseQuery({
   prepareHeaders: async (headers, { getState, endpoint }) => {
     const token = getState()?.auth?.accessToken;
     if (token) {
-      headers.set("Authorization", `Bearer ${token}`);
+      headers.set('Authorization', `Bearer ${token}`);
     }
     // headers.set("mode", "no-cors");
     return headers;
@@ -16,7 +16,7 @@ const baseQuery = fetchBaseQuery({
 });
 
 export const apiSlice = createApi({
-  reducerPath: "api",
+  reducerPath: 'api',
   baseQuery: async (args, api, extraOptions) => {
     let result = await baseQuery(args, api, extraOptions);
 
@@ -26,7 +26,23 @@ export const apiSlice = createApi({
     }
     return result;
   },
-  tagTypes: ['books', 'book', 'carts', 'cart', 'orders', 'order','ratings', 'tags', 'user', 'favourites'],
+  tagTypes: [
+    'books',
+    'book',
+    'carts',
+    'cart',
+    'orders',
+    'order',
+    'ratings',
+    'nestedBook',
+    'tags',
+    'user',
+    'favourites',
+    'authors',
+    'author',
+    'publishers',
+    'publisher',
+  ],
   keepUnusedDataFor: 3600,
   endpoints: (builder) => ({}),
 });
