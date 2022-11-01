@@ -14,6 +14,11 @@ export const booksApi = apiSlice.injectEndpoints({
       providesTags: (result, error, arg) => [{ type: 'book', id: arg }],
     }),
 
+    getNestedBookItem: builder.query({
+      query: (params) => `books/${params}`,
+      providesTags: ['nestedBook'],
+    }),
+
     getBooksByAuthor: builder.query({
       query: ({ authorName }) =>
         `/authors?populate[0]=avatar&populate[1]=books&filters[name][$eq]=${authorName} `,
@@ -35,4 +40,5 @@ export const {
   useGetBooksByPublisherQuery,
   useGetBooksQuery,
   useGetCategoryQuery,
+  useGetNestedBookItemQuery,
 } = booksApi;

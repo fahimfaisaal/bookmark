@@ -34,6 +34,7 @@ export const apiSlice = createApi({
     'orders',
     'order',
     'ratings',
+    'nestedBook',
     'tags',
     'user',
     'favourites',
