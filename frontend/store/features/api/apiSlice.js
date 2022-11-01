@@ -34,7 +34,7 @@ export const apiSlice = createApi({
     "ratings",
     "tags",
     "user",
-    "favourites",
+    "publishers",
     "categories",
   ],
   keepUnusedDataFor: 3600,

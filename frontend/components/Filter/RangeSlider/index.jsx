@@ -1,5 +1,5 @@
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import { debounce, Typography, useTheme } from "@mui/material";
+import { Typography, useTheme } from "@mui/material";
 import Accordion from "@mui/material/Accordion";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import AccordionSummary from "@mui/material/AccordionSummary";
@@ -23,16 +23,14 @@ export default function RangeSlider() {
   };
 
   const [value, setValue] = React.useState([10, 5000]);
-  const defferedValue = React.useDeferredValue(value);
-
-  React.useEffect(() => {
-    dispatch(updatePriceRange({ range: defferedValue }));
-    console.log({ defferedValue });
-  }, [defferedValue]);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+
+  const changeCommittedHandler = () => {
+    dispatch(updatePriceRange({ range: value }));
+  }
 
   return (
     <Accordion
@@ -54,6 +52,7 @@ export default function RangeSlider() {
             getAriaLabel={() => "Price range"}
             value={value}
             onChange={handleChange}
+            onChangeCommitted={changeCommittedHandler}
             valueLabelDisplay="auto"
             step={10}
             min={10}

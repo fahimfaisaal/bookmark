@@ -9,7 +9,7 @@ import { FilterTitleStyle } from "../style";
 import { ListContainerStyle } from "./style";
 
 export default function CheckboxList({ title, data, selectItems, setItem }) {
-  const [expanded, setExpanded] = useState(true);
+  const [expanded, setExpanded] = useState(false);
 
   const handleChange = () => {
     setExpanded(!expanded);
@@ -36,17 +36,17 @@ export default function CheckboxList({ title, data, selectItems, setItem }) {
       <AccordionDetails sx={{ padding: "0" }}>
         <ListContainerStyle>
           <FormGroup>
-            {data?.map((item) => (
+            {data?.map((item, index) => (
               <FormControlLabel
-                key={item.id}
+                key={item?.id ?? index}
                 control={
                   <Checkbox
-                    checked={selectItems.has(item.name)}
+                    checked={selectItems.has(String(item.id ?? item))}
                     onChange={handleCheckChange}
                   />
                 }
-                label={item.name}
-                name={`${item.id}:${item.name}`}
+                label={item.name ?? item}
+                name={item?.id ? `${item.id}:${item.name}` : item}
               />
             ))}
           </FormGroup>

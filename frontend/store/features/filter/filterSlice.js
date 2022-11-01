@@ -4,14 +4,24 @@ const initialState = {
   searchText: "",
   tags: {},
   categories: {},
-  priceRange: [10, 5000],
-  sortAs: "asc",
+  publishers: {},
+  price: [],
+  sort: "",
+  availabilities: []
 };
 
 const filterSlice = createSlice({
   name: "filter",
   initialState,
   reducers: {
+    setStateFromQuery(state, { payload }) {
+      console.log({ payload })
+      for (const key in payload) {
+        const value = payload[key]
+        state[key] = value.includes(',') ? value.split(',') : value
+        
+      }
+    },
     clearFilter: (state) => {
       for (const key in initialState) {
         state[key] = initialState[key];
@@ -19,7 +29,6 @@ const filterSlice = createSlice({
     },
     addSearch(state, { payload }) {
       state.searchText = payload;
-      console.log({ payload });
     },
     addRemoveTags(state, { payload }) {
       const { id, name } = payload;
@@ -40,32 +49,84 @@ const filterSlice = createSlice({
         state.categories[id] = name;
       }
     },
+    addRemovePublishers(state, { payload }) {
+      const { id, name } = payload;
+      console.log({ payload });
+
+      if (id in state.publishers) {
+        delete state.publishers[id];
+      } else {
+        state.publishers[id] = name;
+      }
+    },
+    addRemoveAvailability(state, { payload: {status} }) {
+      if (state.availabilities.includes(status)) {
+        state.availabilities = state.availabilities.filter(curStatus => curStatus !== status)
+      } else {
+        state.availabilities.push(status)
+      }
+    },
     updatePriceRange(state, { payload }) {
-      state.priceRange = payload.range;
+      state.price = payload.range;
     },
-    updateSort(state, { paylod }) {
-      state.sortAs = paylod;
-    },
+    updateSort(state, { payload }) {
+      state.sort = payload;
+    }
   },
 });
 
 export const {
+  setStateFromQuery,
   addSearch,
   clearFilter,
   addRemoveTags,
   addRemoveCategories,
+  addRemovePublishers,
+  addRemoveAvailability,
   updatePriceRange,
   updateSort,
 } = filterSlice.actions;
 
-export const getTags = (state) => Object.values(state.filter.tags);
+export const getTags = (state) => Object.keys(state.filter.tags)
+
+export const getPublishers = (state) => Object.keys(state.filter.publishers)
 
 export const getSearchText = (state) => state.filter.searchText;
 
-export const getCategories = (state) => Object.values(state.filter.categories);
+export const getCategories = (state) => Object.keys(state.filter.categories)
 
-export const getPriceRange = (state) => state.filter.priceRange;
+export const getPriceRange = (state) => state.filter.price;
 
-export const getSortAs = (state) => state.filter.sortAs;
+export const getSort = (state) => state.filter.sort;
+
+export const getAvailabilities = (state) => state.filter.availabilities;
+
+export const getQuery = ({ filter }) => {
+  const query = {
+    search: filter.searchText,
+    tags: Object.keys(filter.tags),
+    categories: Object.keys(filter.categories),
+    publishers: Object.keys(filter.publishers),
+    price: filter.price,
+    sort: filter.sort,
+    availabilities: filter.availabilities
+  }
+
+  for (let key in query) {
+    const value = query[key]
+    if (
+      (Array.isArray(value) && value.length === 0) ||
+      !value
+    ) {
+      delete query[key]
+    }
+
+    if (!query[key]) {
+      delete query[key]
+    }
+  }
+
+  return new URLSearchParams().toString()
+}
 
 export default filterSlice.reducer;

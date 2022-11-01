@@ -1,6 +1,7 @@
 import { Box, Button, Grid, Typography } from "@mui/material";
 import { Stack } from "@mui/system";
-import React, { useState } from "react";
+import { useRouter } from "next/router";
+import React, { useEffect, useState } from "react";
 import { FiFilter } from "react-icons/fi";
 import { MdClose } from "react-icons/md";
 import { useSelector } from "react-redux";
@@ -8,10 +9,11 @@ import BookCard from "../../components/BookCard";
 import Filter from "../../components/Filter";
 import { useGetBooksQuery } from "../../store/features/books/booksApi";
 import {
+  getAvailabilities,
   getCategories,
-  getPriceRange,
+  getPriceRange, getPublishers, getQuery,
   getSearchText,
-  getTags,
+  getTags
 } from "../../store/features/filter/filterSlice";
 import { FilterButtonContainer } from "../publishers/Style";
 
@@ -19,7 +21,9 @@ const generateQuery = ({
   tags,
   categories,
   priceRange: [min, max] = [],
+  publishers,
   searchText,
+  availabilities,
 }) => ({
   populate: "*",
   filters: {
@@ -33,31 +37,53 @@ const generateQuery = ({
       },
     },
     tags: {
-      type: {
+      id: {
         $in: tags,
       },
     },
     categories: {
-      type: {
+      id: {
         $in: categories,
       },
     },
+    publisherId: {
+      id: {
+        $in: publishers
+      }
+    },
+    status: {
+      $in: availabilities
+    }
   },
 });
 
 const Books = () => {
   const tags = useSelector(getTags);
   const categories = useSelector(getCategories);
+  const publishers = useSelector(getPublishers);
   const priceRange = useSelector(getPriceRange);
   const searchText = useSelector(getSearchText);
+  const availabilities = useSelector(getAvailabilities)
+  const router = useRouter()
+  console.log({ publishers, availabilities })
+  const query = useSelector(getQuery)
+
   const { data: bookLists } = useGetBooksQuery({
     query: generateQuery({
       tags,
       categories,
+      publishers,
       priceRange,
       searchText,
+      availabilities,
     }),
   });
+
+  useEffect(() => {
+    if (query) {
+      router.push(`?${query}`)
+    }
+  }, [query])
 
   const [filterTrig, setFilterTrig] = useState(false);
 
