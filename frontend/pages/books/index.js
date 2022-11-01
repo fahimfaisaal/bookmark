@@ -24,8 +24,12 @@ const generateQuery = ({
   publishers,
   searchText,
   availabilities,
+  page,
 }) => ({
   populate: "*",
+  pagination: {
+    page
+  },
   filters: {
     name: {
       $containsi: searchText,
@@ -65,11 +69,14 @@ const Books = () => {
   const searchText = useSelector(getSearchText);
   const availabilities = useSelector(getAvailabilities)
   const router = useRouter()
-  console.log({ publishers, availabilities })
   const query = useSelector(getQuery)
+  const [page, setPage] = useState(1)
+
+  const paginationHandler = () => setPage(page + 1)
 
   const { data: bookLists } = useGetBooksQuery({
     query: generateQuery({
+      page,
       tags,
       categories,
       publishers,
@@ -82,6 +89,7 @@ const Books = () => {
   useEffect(() => {
     if (query) {
       router.push(`?${query}`)
+      setPage(1)
     }
   }, [query])
 
@@ -123,7 +131,7 @@ const Books = () => {
           </Grid>
           <Stack direction={"row"} justifyContent={"center"} my={5}>
             {bookLists?.data?.length === 25 && (
-              <Button variant="contained" size="large" disableElevation={true}>
+              <Button variant="contained" size="large" disableElevation={true} onClick={paginationHandler}>
                 Load More
               </Button>
             )}
