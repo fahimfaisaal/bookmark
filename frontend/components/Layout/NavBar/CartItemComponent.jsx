@@ -1,24 +1,21 @@
-import {useState, useEffect} from "react";
 import {
   Box,
   Button,
   Divider,
   SwipeableDrawer,
-  Typography,
+  Typography
 } from "@mui/material";
+import { Stack } from "@mui/system";
+import { useRouter } from "next/router";
+import { HiShoppingBag } from "react-icons/hi";
+import { IoIosClose } from "react-icons/io";
 import CartItem from "../../CartItem";
 import {
   CartContainer,
   CartHeaderContainer,
   CartItemContainer,
-  CloseBtnContaner,
+  CloseBtnContaner
 } from "./Styles";
-import { Stack } from "@mui/system";
-import { HiShoppingBag } from "react-icons/hi";
-import { IoIosClose } from "react-icons/io";
-import { useSelector } from "react-redux";
-import { useGetCartsByUserQuery } from "../../../store/features/carts/cartsApi";
-import {useRouter} from "next/router"
 
 export default function CartItemComponent({
   cartModalTrg,
@@ -28,15 +25,15 @@ export default function CartItemComponent({
   totalAmount
 }) {
   const router = useRouter()
-  
+
   const navigateCheckout = () => {
     toggleDrawer(false)
-    router.push("/checkout") 
-    
+    router.push("/checkout")
+
   }
 
 
-  // console.log({ cartLists, totalAmount });
+  console.log({ cartLists, totalAmount });
   return (
     <SwipeableDrawer
       anchor={"right"}
@@ -69,7 +66,7 @@ export default function CartItemComponent({
 
         {cartLists?.data?.map((cart) => (
           <CartItemContainer>
-            <CartItem cart={cart?.attributes} cartId={cart?.id} key={cart?.id}  />
+            <CartItem cart={cart?.attributes} cartId={cart?.id} key={cart?.id} />
           </CartItemContainer>
         ))}
       </CartContainer>
