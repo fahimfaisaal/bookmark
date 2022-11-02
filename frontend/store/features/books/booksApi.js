@@ -20,16 +20,22 @@ export const booksApi = apiSlice.injectEndpoints({
     }),
 
     getBooksByAuthor: builder.query({
-      query: ({ authorName }) =>
-        `/authors?populate[0]=avatar&populate[1]=books&filters[name][$eq]=${authorName} `,
+      query: (authorName) =>
+        `/books?populate=*&filters[authors][name][$eq]=${authorName}`,
+      providesTags: ['books'],
     }),
     getBooksByPublisher: builder.query({
-      query: ({ publisherName }) =>
-        `/publishers?populate[0]=books&filters[name][$eq]=${publisherName} `,
+      query: (publisherName) =>
+        `/books?populate=*&filters[publisherId][name][$eq]=${publisherName}`,
+      providesTags: ['books'],
     }),
     getCategory: builder.query({
       query: () =>
         `/categories?populate[0]=coverImage&pagination[pageSize]=15 `,
+    }),
+    getBooksByTags: builder.query({
+      query: (query) => `/books?populate=*${query}`,
+      providesTags: ['books'],
     }),
   }),
 });
@@ -41,4 +47,5 @@ export const {
   useGetBooksQuery,
   useGetCategoryQuery,
   useGetNestedBookItemQuery,
+  useGetBooksByTagsQuery,
 } = booksApi;

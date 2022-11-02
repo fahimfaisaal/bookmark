@@ -1,13 +1,14 @@
 import { Box, Stack } from '@mui/system';
 import Link from 'next/link';
-import { BsFacebook, BsInstagram, BsYoutube } from 'react-icons/bs';
+import { BsFacebook, BsLinkedin, BsTwitter } from 'react-icons/bs';
+
 import CustomImage from '../CustomImage';
 import CardTitle from './CardTitle';
 import { ContainerStyle, LinkContainer, LogoContainer } from './Styles';
 
 const PublicationCard = ({ publisher }) => {
   const {
-    attributes: { name, logo, banner },
+    attributes: { name, logo, banner, socials },
   } = publisher;
   const logoUrl =
     (logo?.data && `http://localhost:1337${logo?.data[0]?.attributes?.url}`) ||
@@ -29,14 +30,14 @@ const PublicationCard = ({ publisher }) => {
             </Box>
           </Link>
           <Stack direction={'row'} spacing={1}>
-            <LinkContainer>
+            <LinkContainer target={'_blank'} href={socials.split(',')[0]}>
               <BsFacebook />
             </LinkContainer>
-            <LinkContainer>
-              <BsYoutube />
+            <LinkContainer target={'_blank'} href={socials.split(',')[1]}>
+              <BsTwitter />
             </LinkContainer>
-            <LinkContainer>
-              <BsInstagram />
+            <LinkContainer target={'_blank'} href={socials.split(',')[2]}>
+              <BsLinkedin />
             </LinkContainer>
           </Stack>
         </Box>
