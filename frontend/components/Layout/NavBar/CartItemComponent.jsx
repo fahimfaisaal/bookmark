@@ -17,6 +17,9 @@ import {
   CloseBtnContaner
 } from "./Styles";
 
+import { useSelector } from "react-redux";
+import { useGetCartsByUserQuery } from "../../../store/features/carts/cartsApi";
+
 export default function CartItemComponent({
   cartModalTrg,
   toggleDrawer,
@@ -26,13 +29,18 @@ export default function CartItemComponent({
 }) {
   const router = useRouter()
 
+  const authUser = useSelector((state) => state?.auth?.user);
+  const { data: cartLists } = useGetCartsByUserQuery({ userId: authUser?.id });
+
+  const totalAmount = cartLists?.data?.reduce(
+    (acc, curr) => acc + curr?.attributes?.variant?.data?.attributes?.price,
+    0
+  );
   const navigateCheckout = () => {
     toggleDrawer(false)
-    router.push("/checkout")
-
+    router.push("/checkout") 
+    
   }
-
-
   console.log({ cartLists, totalAmount });
   return (
     <SwipeableDrawer

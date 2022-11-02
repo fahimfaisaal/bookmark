@@ -6,6 +6,7 @@ const VerticalQuantityBtn = ({itemIncrement, itemDecrement, cartQty}) => {
       <BtnContainerStyle variant="button" onClick={itemIncrement} >+</BtnContainerStyle>
       <QntContainerStyle variant="button">{cartQty}</QntContainerStyle>
       <BtnContainerStyle variant="button" onClick={itemDecrement} >-</BtnContainerStyle>
+
     </ContainerStyle>
   );
 };
