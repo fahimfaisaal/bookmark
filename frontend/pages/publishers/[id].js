@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 import BookCard from '../../components/BookCard';
 import Filter from '../../components/Filter';
 import PublicationCover from '../../components/PublicationCover';
+import { useGetBooksByPublisherQuery } from '../../store/features/books/booksApi';
 import { useGetPublisherQuery } from '../../store/features/publishers/publishersApi';
 import { BooksContainer, TitleStyle } from './Style';
 
@@ -12,7 +13,11 @@ const PublicationItem = () => {
   const { data } = useGetPublisherQuery(router.query.id);
 
   const publisherData = data?.data?.attributes;
-  console.log({ data });
+
+  const { data: publisherBooks } = useGetBooksByPublisherQuery(
+    publisherData?.name
+  );
+  console.log({ publisherData });
 
   return (
     <Box>
@@ -21,11 +26,11 @@ const PublicationItem = () => {
           <Filter />
         </Grid>
         <Grid item lg={8.5}>
-          <PublicationCover />
+          <PublicationCover publisherData={publisherData} />
           <BooksContainer>
             <TitleStyle variant="h1">Books</TitleStyle>
             <Grid container spacing={3}>
-              {publisherData?.books?.data?.map((book) => (
+              {publisherBooks?.data?.map((book) => (
                 <Grid item lg={4} md={6} xs={12} key={book?.id}>
                   <BookCard book={book?.attributes} bookId={book?.id} />
                 </Grid>

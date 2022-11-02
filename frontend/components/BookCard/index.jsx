@@ -62,7 +62,7 @@ const BookCard = ({ book, bookId }) => {
 
         <Stack direction="row" spacing={1} alignItems="center">
           <Typography variant="caption">by</Typography>
-          <Link href={'/authors/123'}>
+          <Link href={`/authors/${authors?.data[0]?.id}`}>
             <WriterLinkStyle>
               <Typography variant="body2">
                 {authors?.data[0]?.attributes?.name}
