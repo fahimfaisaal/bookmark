@@ -21,6 +21,7 @@ import {
 } from '../../components/shared/ui/CarouselBtn/Styles';
 import {
   useGetBookQuery,
+  useGetBooksByTagsQuery,
   useGetNestedBookItemQuery,
 } from '../../store/features/books/booksApi';
 import ReviewForm from './ReviewForm';
@@ -67,6 +68,7 @@ const BookItem = () => {
     error,
     isSuccess,
   } = useGetBookQuery(id);
+  const bookData = book?.data?.attributes || {};
 
   const { data: bookRatings } = useGetNestedBookItemQuery(
     `${id}?populate[ratings][populate][0]=userId`
@@ -74,6 +76,18 @@ const BookItem = () => {
   const { data: bookVariants } = useGetNestedBookItemQuery(
     `${id}?populate[variants][populate][0]=languageId`
   );
+
+  const relatedBooksQuery = [];
+  //tag.attributes.type
+  bookData?.categories?.data.map((cat) =>
+    relatedBooksQuery.push(
+      `&filters[categories][type][$eq]=${cat.attributes.type}`
+    )
+  );
+  const { data: relatedBooks } = useGetBooksByTagsQuery(
+    relatedBooksQuery.join()
+  );
+  console.log({ relatedBooks });
 
   const handleSelectVariant = (ind) => {
     setActiveVariant(ind);
@@ -115,7 +129,7 @@ const BookItem = () => {
     Number(variants.discounts[activeVariant]);
   const newPrice = Number(variants.prices[activeVariant]) - saveAmount;
 
-  const imgLastInd = book?.data?.attributes?.images?.data.length - 1;
+  const imgLastInd = bookData?.images?.data.length - 1;
 
   const handleOpenReview = () => {
     setOpenReview(true);
@@ -159,7 +173,7 @@ const BookItem = () => {
           <Grid item lg={6} md={12}>
             <BookImagesContainer>
               <CustomImage
-                src={`http://localhost:1337${book?.data?.attributes?.images?.data[activeImg].attributes.url}`}
+                src={`http://localhost:1337${bookData?.images?.data[activeImg].attributes.url}`}
               />
               <LeftBtnStyle onClick={handleImgPrev}>
                 <FiChevronLeft />
@@ -169,7 +183,7 @@ const BookItem = () => {
               </RightBtnStyle>
             </BookImagesContainer>
             <ImgListContainer py={5}>
-              {book?.data?.attributes?.images?.data.map((img, ind) => (
+              {bookData?.images?.data.map((img, ind) => (
                 <ImgListItem
                   active={activeImg === ind}
                   key={ind}
@@ -190,22 +204,19 @@ const BookItem = () => {
                 justifyContent={'space-between'}
                 mb={2}
               >
-                <BookTitleStyle variant="h1">
-                  {book?.data?.attributes?.name}
-                </BookTitleStyle>
+                <BookTitleStyle variant="h1">{bookData?.name}</BookTitleStyle>
                 <FavIconStyle>
                   <FavoriteBorderIcon />
                 </FavIconStyle>
               </Stack>
               <Stack direction={'row'} alignItems={'center'} spacing={1}>
                 <Typography variant="body2">By (Author)</Typography>
-                {book?.data?.attributes?.authors?.data.map((author, index) => (
+                {bookData?.authors?.data.map((author, index) => (
                   <Link href={`/authors/${author.id}`}>
                     <AuthorLinkStyle variant="h3">
                       {author.attributes.name}
-                      {book?.data?.attributes?.authors?.data.length > 1 &&
-                        book?.data?.attributes?.authors?.data.length - 1 !==
-                          index &&
+                      {bookData?.authors?.data.length > 1 &&
+                        bookData?.authors?.data.length - 1 !== index &&
                         ','}
                     </AuthorLinkStyle>
                   </Link>
@@ -224,21 +235,27 @@ const BookItem = () => {
                 </Stack>
               )}
 
-              <Stack direction={'row'} alignItems={'center'} gap={2} pt={5}>
-                <OldBookPriceStyle variant="h1">
-                  {variants.prices[activeVariant]}$
-                </OldBookPriceStyle>
+              {variants.prices.length ? (
+                <Stack direction={'row'} alignItems={'center'} gap={2} pt={5}>
+                  <OldBookPriceStyle variant="h1">
+                    {variants.prices[activeVariant]}$
+                  </OldBookPriceStyle>
 
-                <BookPriceStyle variant="h1">
-                  {Math.round(newPrice)}$
+                  <BookPriceStyle variant="h1">
+                    {Math.round(newPrice)}$
+                  </BookPriceStyle>
+                  <Typography variant="body1">
+                    You Save {Math.round(saveAmount)}$ (
+                    {variants.discounts[activeVariant]}%)
+                  </Typography>
+                </Stack>
+              ) : (
+                <BookPriceStyle variant="h1" py={2}>
+                  FREE
                 </BookPriceStyle>
-                <Typography variant="body1">
-                  You Save {Math.round(saveAmount)}$ (
-                  {variants.discounts[activeVariant]}%)
-                </Typography>
-              </Stack>
+              )}
               <Typography variant="h3" pb={5} pt={1}>
-                {book?.data?.attributes?.status}
+                {bookData?.status}
               </Typography>
 
               <Stack direction={'row'} alignItems={'center'} spacing={2} mb={3}>
@@ -303,9 +320,7 @@ const BookItem = () => {
                 </Stack>
               </Stack>
               <Box pt={3}>
-                <Typography variant="body1">
-                  {book?.data?.attributes?.description}
-                </Typography>
+                <Typography variant="body1">{bookData?.description}</Typography>
                 <MuiLink href="#details">See more</MuiLink>
               </Box>
               {/* add to cart btn */}
@@ -339,7 +354,7 @@ const BookItem = () => {
                   Categories
                 </Typography>
                 <Typography variant="body2">
-                  {book?.data?.attributes?.categories?.data.map(
+                  {bookData?.categories?.data.map(
                     (cat) => `${cat.attributes.type}, `
                   )}
                 </Typography>
@@ -349,7 +364,7 @@ const BookItem = () => {
                   Tags
                 </Typography>
                 <Typography variant="body2">
-                  {book?.data?.attributes?.tags?.data.map(
+                  {bookData?.tags?.data.map(
                     (tag) => `${tag.attributes.type}, `
                   )}
                 </Typography>
@@ -363,23 +378,20 @@ const BookItem = () => {
         <Typography variant="h1" my={2} fontWeight={700}>
           Details
         </Typography>
-        <Typography variant="body2">
-          {book?.data?.attributes?.description}
-        </Typography>
+        <Typography variant="body2">{bookData?.description}</Typography>
         <Box my={4}>
           <Stack direction={'row'} gap={2} mb={1} alignItems={'center'}>
             <Typography variant="h3">Title :</Typography>
-            <Typography variant="h5">{book?.data?.attributes?.name}</Typography>
+            <Typography variant="h5">{bookData?.name}</Typography>
           </Stack>
           <Stack direction={'row'} gap={2} mb={1} alignItems={'center'}>
             <Typography variant="h3">Author :</Typography>
-            {book?.data?.attributes?.authors?.data.map((author, index) => (
+            {bookData?.authors?.data.map((author, index) => (
               <Link href={`/authors/${author.id}`}>
                 <AuthorLinkStyle variant="h5">
                   {author.attributes.name}
-                  {book?.data?.attributes?.authors?.data.length > 1 &&
-                    book?.data?.attributes?.authors?.data.length - 1 !==
-                      index &&
+                  {bookData?.authors?.data.length > 1 &&
+                    bookData?.authors?.data.length - 1 !== index &&
                     ','}
                 </AuthorLinkStyle>
               </Link>
@@ -387,19 +399,15 @@ const BookItem = () => {
           </Stack>
           <Stack direction={'row'} gap={2} mb={1} alignItems={'center'}>
             <Typography variant="h3">Publisher :</Typography>
-            <Link
-              href={`/publishers/${book?.data?.attributes?.publisherId.data.id}`}
-            >
+            <Link href={`/publishers/${bookData?.publisherId?.data?.id}`}>
               <AuthorLinkStyle variant="h5">
-                {book?.data?.attributes?.publisherId?.data?.attributes?.name}
+                {bookData?.publisherId?.data?.attributes?.name}
               </AuthorLinkStyle>
             </Link>
           </Stack>
           <Stack direction={'row'} gap={2} mb={1} alignItems={'center'}>
             <Typography variant="h3">Number of Pages :</Typography>
-            <Typography variant="h5">
-              {book?.data?.attributes?.totalPages}
-            </Typography>
+            <Typography variant="h5">{bookData?.totalPages}</Typography>
           </Stack>
           <Stack direction={'row'} gap={2} mb={1} alignItems={'center'}>
             <Typography variant="h3">Language :</Typography>
@@ -453,9 +461,9 @@ const BookItem = () => {
           Related Books
         </Typography>
         <Grid container spacing={3} py={2}>
-          {loopCount.map((item) => (
-            <Grid item lg={3} md={6} xs={12} key={item}>
-              <BookCard />
+          {relatedBooks?.data?.map((book) => (
+            <Grid item lg={3} md={6} xs={12} key={book?.id}>
+              <BookCard book={book?.attributes} bookId={book?.id} />
             </Grid>
           ))}
         </Grid>

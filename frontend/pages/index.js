@@ -173,7 +173,7 @@ const Home = () => {
         </Stack>
 
         <Carousel
-          responsive={responsive(5, 4, 2, 1, 1)}
+          responsive={responsive(7, 5, 3, 2, 1)}
           customLeftArrow={<CustomLeftBtn />}
           customRightArrow={<CustomRightBtn />}
         >

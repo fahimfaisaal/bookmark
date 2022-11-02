@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 import AuthorProfile from '../../components/AuthorProfile';
 import BookCard from '../../components/BookCard';
 import { useGetAuthorQuery } from '../../store/features/authors/authorsApi';
+import { useGetBooksByAuthorQuery } from '../../store/features/books/booksApi';
 import { SectionHeaderStyle } from './Styles';
 
 const AuthorItem = () => {
@@ -13,6 +14,7 @@ const AuthorItem = () => {
   const authorData = data?.data?.attributes;
   // const { name, bio, birth, avatar, books } = authorData;
   // console.log({ name:authorData?.name });
+  const { data: authorBooks } = useGetBooksByAuthorQuery(authorData?.name);
 
   return (
     <Box>
@@ -20,7 +22,7 @@ const AuthorItem = () => {
       <SectionHeaderStyle variant="h1">Author Books</SectionHeaderStyle>
       <Box>
         <Grid container spacing={2}>
-          {authorData?.books?.data?.map((book) => (
+          {authorBooks?.data?.map((book) => (
             <Grid item lg={3} md={6} xs={12} key={book?.id}>
               <BookCard book={book?.attributes} bookId={book?.id} />
             </Grid>
