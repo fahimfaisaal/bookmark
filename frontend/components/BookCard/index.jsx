@@ -1,11 +1,12 @@
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
-import { Stack, Typography } from "@mui/material";
-import { Box } from "@mui/system";
-import Link from "next/link";
-import * as React from "react";
-import { FaShoppingCart } from "react-icons/fa";
-import CustomImage from "../CustomImage";
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import { Stack, Typography } from '@mui/material';
+import Rating from '@mui/material/Rating';
+import { Box } from '@mui/system';
+import Link from 'next/link';
+import * as React from 'react';
+import { FaShoppingCart } from 'react-icons/fa';
+import CustomImage from '../CustomImage';
 
 import {
   CartBtnStyle,
@@ -16,15 +17,15 @@ import {
   StyledFav,
   TitleStyle,
   WriterLinkStyle,
-} from "./Styles";
+} from './Styles';
 
 const BookCard = ({ book, bookId }) => {
   const [favorite, setFavorite] = React.useState(false);
-  const { authors, images, variants } = book || {};
+  const { authors, images, variants, status, ratings } = book || {};
   const bookImage =
     (images?.data &&
       `http://localhost:1337${images?.data[0]?.attributes?.url}`) ||
-    "/images/product-dummy.png";
+    '/images/product-dummy.png';
 
   const handleFavorite = () => {
     if (favorite) {
@@ -33,6 +34,10 @@ const BookCard = ({ book, bookId }) => {
       setFavorite(true);
     }
   };
+  const avarageReview = ratings?.data?.reduce((acc, cur) => {
+    acc += Number(cur.attributes.rate);
+    return acc;
+  }, 0);
 
   return (
     <StyledBox>
@@ -48,8 +53,8 @@ const BookCard = ({ book, bookId }) => {
       </Link>
       <ContentContainerStyle>
         <TitleStyle>
-          <Link href={"/books/123"}>
-            <Typography variant="h3" color="text.primary" py={"5px"}>
+          <Link href={`/books/${bookId}`}>
+            <Typography variant="h3" color="text.primary" py={'5px'}>
               {book?.name}
             </Typography>
           </Link>
@@ -65,13 +70,25 @@ const BookCard = ({ book, bookId }) => {
             </WriterLinkStyle>
           </Link>
         </Stack>
+        {ratings?.data?.length > 0 && (
+          <Stack direction={'row'} alignItems={'center'} pb={1}>
+            <Rating
+              defaultValue={avarageReview}
+              precision={0.5}
+              readOnly
+              size="small"
+            />
+            <Typography variant="body2">({ratings?.data?.length})</Typography>
+          </Stack>
+        )}
+
         <Typography
           variant="caption"
-          sx={{ color: "text.secondary", margin: "5px 0" }}
+          sx={{ color: 'text.secondary', margin: '5px 0' }}
         >
-          Stock: 25 pcs left
+          {status}
         </Typography>
-        <PriceStyle direction={"row"} alignItems={"center"}>
+        <PriceStyle direction={'row'} alignItems={'center'}>
           {variants?.data[0]?.attributes?.price == null ? (
             <Typography variant="h4">Free</Typography>
           ) : (

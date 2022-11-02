@@ -12,9 +12,12 @@ import {
   CustomLeftBtn,
   CustomRightBtn,
 } from '../components/shared/ui/CarouselBtn';
-import { useGetCategoryQuery, useGetBooksQuery } from '../store/features/books/booksApi';
-import { useGetCartsByUserQuery } from '../store/features/carts/cartsApi';
-import { useGetAuthorsQuery, useGetPublishersQuery } from '../store/features/user/userApi';
+import { useGetAuthorsQuery } from '../store/features/authors/authorsApi';
+import {
+  useGetBooksQuery,
+  useGetCategoryQuery,
+} from '../store/features/books/booksApi';
+import { useGetPublishersQuery } from '../store/features/publishers/publishersApi';
 
 import {
   ContainerStyle,
@@ -22,7 +25,7 @@ import {
   SectionContainer,
   SectionHeaderStyle,
   SeeAllLinkStyle,
-} from "./Styles";
+} from './Styles';
 
 const responsive = (xl, lg, md, sm, xs) => {
   return {
@@ -66,16 +69,15 @@ const Home = () => {
   } = useGetPublishersQuery();
 
   const { data: popularbookLists } = useGetBooksQuery({
-    params: "filters[bestSelling][$eq]=true",
+    params: 'filters[bestSelling][$eq]=true',
   });
 
   const { data: newbookLists, isLoading: isNewBooksLoading } = useGetBooksQuery(
     {
-      params: `filters[createdAt][$gte]=${"2022-10-29T03:07:38.922Z"}&pagination[pageSize]=8`,
+      params: `filters[createdAt][$gte]=${'2022-10-29T03:07:38.922Z'}&pagination[pageSize]=8`,
     }
   );
   const { data: categoryLists } = useGetCategoryQuery();
-  
 
   console.log({ lists: popularbookLists, isNewBooksLoading });
   return (
@@ -92,7 +94,7 @@ const Home = () => {
         <Grid container spacing={3}>
           {popularbookLists?.data?.slice(0, 8).map((book) => (
             <Grid item lg={3} md={6} xs={12} key={book?.id}>
-              <BookCard book={book?.attributes} bookId={book?.id}/>
+              <BookCard book={book?.attributes} bookId={book?.id} />
             </Grid>
           ))}
         </Grid>
@@ -107,9 +109,13 @@ const Home = () => {
           customLeftArrow={<CustomLeftBtn />}
           customRightArrow={<CustomRightBtn />}
         >
-          {categoryLists?.data?.length > 0 && categoryLists?.data?.map((category) => (
-            <CategoryCard key={category?.id} category={category?.attributes} />
-          ))}
+          {categoryLists?.data?.length > 0 &&
+            categoryLists?.data?.map((category) => (
+              <CategoryCard
+                key={category?.id}
+                category={category?.attributes}
+              />
+            ))}
         </Carousel>
       </SectionContainer>
 
@@ -118,11 +124,11 @@ const Home = () => {
         <Grid container spacing={2}>
           {newbookLists?.data?.map((book) => (
             <Grid item lg={3} md={6} xs={12} key={book?.id}>
-              <BookCard book={book?.attributes} bookId={book?.id}/>
+              <BookCard book={book?.attributes} bookId={book?.id} />
             </Grid>
           ))}
         </Grid>
-        <Stack direction={"row"} justifyContent={"center"} my={5}>
+        <Stack direction={'row'} justifyContent={'center'} my={5}>
           <Button variant="contained" size="large" disableElevation={true}>
             Load More
           </Button>
@@ -131,9 +137,9 @@ const Home = () => {
 
       <SectionContainer>
         <Stack
-          direction={"row"}
-          alignItems={"center"}
-          justifyContent={"space-between"}
+          direction={'row'}
+          alignItems={'center'}
+          justifyContent={'space-between'}
         >
           <SectionHeaderStyle variant="h1">Top Authors</SectionHeaderStyle>
           <Link href="/authors">
@@ -154,9 +160,9 @@ const Home = () => {
 
       <SectionContainer>
         <Stack
-          direction={"row"}
-          alignItems={"center"}
-          justifyContent={"space-between"}
+          direction={'row'}
+          alignItems={'center'}
+          justifyContent={'space-between'}
         >
           <SectionHeaderStyle variant="h1" sx={{ margin: 0 }}>
             Top Publishers
@@ -175,11 +181,8 @@ const Home = () => {
             publisherLists?.data?.map((publisher) => (
               <PublicationCard key={publisher?.id} publisher={publisher} />
             ))}
-
-          
         </Carousel>
       </SectionContainer>
-    
     </ContainerStyle>
   );
 };
