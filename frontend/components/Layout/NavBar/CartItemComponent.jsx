@@ -18,12 +18,14 @@ import { HiShoppingBag } from "react-icons/hi";
 import { IoIosClose } from "react-icons/io";
 import { useSelector } from "react-redux";
 import { useGetCartsByUserQuery } from "../../../store/features/carts/cartsApi";
+import {useRouter} from "next/router"
 
 export default function CartItemComponent({
   cartModalTrg,
   toggleDrawer,
   theme,
 }) {
+  const router = useRouter()
   const authUser = useSelector((state) => state?.auth?.user);
   const { data: cartLists } = useGetCartsByUserQuery({ userId: authUser?.id });
 
@@ -31,6 +33,11 @@ export default function CartItemComponent({
     (acc, curr) => acc + curr?.attributes?.variant?.data?.attributes?.price,
     0
   );
+  const navigateCheckout = () => {
+    toggleDrawer(false)
+    router.push("/checkout") 
+    
+  }
   console.log({ cartLists, totalAmount });
   return (
     <SwipeableDrawer
@@ -77,7 +84,7 @@ export default function CartItemComponent({
           <Typography variant="h2" py={3}>
             Total: {totalAmount}$
           </Typography>
-          <Button variant="contained" fullWidth={true} size={"large"}>
+          <Button variant="contained" fullWidth={true} size={"large"} onClick={navigateCheckout}>
             Checkout
           </Button>
         </Box>

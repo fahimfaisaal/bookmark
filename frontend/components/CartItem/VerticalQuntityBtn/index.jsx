@@ -1,10 +1,10 @@
 import { BtnContainerStyle, ContainerStyle, QntContainerStyle } from "./Styles";
 
-const VerticalQuantityBtn = () => {
+const VerticalQuantityBtn = ({quantity}) => {
   return (
     <ContainerStyle>
       <BtnContainerStyle variant="button">+</BtnContainerStyle>
-      <QntContainerStyle variant="button">1</QntContainerStyle>
+      <QntContainerStyle variant="button">{quantity}</QntContainerStyle>
       <BtnContainerStyle variant="button">-</BtnContainerStyle>
     </ContainerStyle>
   );

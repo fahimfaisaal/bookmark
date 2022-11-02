@@ -57,6 +57,7 @@ const BookItem = () => {
   const [openReview, setOpenReview] = useState(false);
   const [activeImg, setActiveImg] = useState(0);
   const [activeVariant, setActiveVariant] = useState(0);
+  const [cartQty, setCartQty] = useState(1);
   const router = useRouter();
   const { id } = router.query;
   const {
@@ -97,7 +98,7 @@ const BookItem = () => {
     languages: [],
   };
 
-  console.log({ book, bookRatings, bookVariants });
+  console.log({ book, bookRatings, bookVariants, activeVariant });
   bookVariants?.data?.attributes?.variants?.data.map((variant) => {
     variants.ids.push(variant?.id);
     variants.formates.push(variant?.attributes?.formate);
@@ -143,6 +144,13 @@ const BookItem = () => {
   const handleImgCurrent = (index) => {
     setActiveImg(index);
   };
+
+  const addToCartBook = () => {
+    const data = {}
+    data.book = book?.data?.id
+
+    console.log({data});
+  }
 
   return (
     <Box>
@@ -300,6 +308,7 @@ const BookItem = () => {
                 </Typography>
                 <MuiLink href="#details">See more</MuiLink>
               </Box>
+              {/* add to cart btn */}
               <Stack direction={'row'} alignItems={'center'} gap={3} my={3}>
                 <Stack direction={'row'} alignItems={'center'}>
                   <QtyBtnLeft>-</QtyBtnLeft>
@@ -312,6 +321,7 @@ const BookItem = () => {
                   disableElevation={true}
                   size={'large'}
                   sx={{ padding: '12px' }}
+                  onClick={addToCartBook}
                 >
                   Add To Cart
                 </Button>
