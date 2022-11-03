@@ -31,10 +31,10 @@ import { BOOKMARK_AUTH } from '../../../constant';
 import { UseThemeContext } from '../../../context/ThemeContext';
 import useAuthCheck from '../../../hooks/useAuthCheck';
 import { userLoggedOut } from '../../../store/features/auth/authSlice';
-import CartItem from '../../CartItem';
 import SearchBar from '../../shared/SearchBar';
 import Login from '../Auth/Login';
 import Register from '../Auth/Register';
+import CartItemComponent from './CartItemComponent';
 import {
   AppBarContainer,
   CartContainer,
@@ -413,64 +413,7 @@ const NavBar = () => {
           )}
         </Stack>
 
-        <SwipeableDrawer
-          anchor={"right"}
-          open={cartModalTrg}
-          onClose={toggleDrawer(false)}
-          onOpen={toggleDrawer(true)}
-        >
-          <CartContainer role="presentation">
-            <CartHeaderContainer>
-              <Stack
-                direction={"row"}
-                justifyContent={"space-between"}
-                alignItems={"center"}
-              >
-                <Stack direction={"row"} alignItems={"center"}>
-                  <HiShoppingBag fontSize={"24px"} />
-                  <Typography variant="h4" fontSize={"18px"} px={"10px"}>
-                    2 Item
-                  </Typography>
-                </Stack>
-                <Box>
-                  <CloseBtnContaner onClick={toggleDrawer(false)}>
-                    <IoIosClose />
-                  </CloseBtnContaner>
-                </Box>
-              </Stack>
-            </CartHeaderContainer>
-            <Divider />
-
-            <CartItemContainer>
-              <CartItem />
-            </CartItemContainer>
-            <Divider />
-            <CartItemContainer>
-              <CartItem />
-            </CartItemContainer>
-            <Divider />
-            <CartItemContainer>
-              <CartItem />
-            </CartItemContainer>
-            <Divider />
-            <CartItemContainer>
-              <CartItem />
-            </CartItemContainer>
-            <Divider />
-          </CartContainer>
-          <Box
-            pb={5}
-            px={3}
-            sx={{ background: `${theme.palette.background.default}` }}
-          >
-            <Typography variant="h2" py={3}>
-              Total: 200$
-            </Typography>
-            <Button variant="contained" fullWidth={true} size={"large"}>
-              Checkout
-            </Button>
-          </Box>
-        </SwipeableDrawer>
+        <CartItemComponent cartModalTrg={cartModalTrg} toggleDrawer={toggleDrawer} theme={theme}/>
       </AppBarContainer>
 
       <MobileBarContainer position="fixed">

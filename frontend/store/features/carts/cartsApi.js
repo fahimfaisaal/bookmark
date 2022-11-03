@@ -3,12 +3,16 @@ import { apiSlice } from "../api/apiSlice";
 export const cartsApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getCartsByUser: builder.query({
-      query: ({ userId }) => `/carts?populate[0]=${userId}`,
+      query: ({ userId }) => `/carts?populate=*&filters[userId][id][$eq]=${userId}`,
       providesTags: ["carts"],
     }),
 
     getCart: builder.query({
       query: ({ cartId }) => `/carts/${cartId}`,
+      providesTags: (result, error, arg) => [{ type: "cart", id: arg }],
+    }),
+    getCartByUserBook: builder.query({
+      query: ({ params }) => `/carts?${params}`,
       providesTags: (result, error, arg) => [{ type: "cart", id: arg }],
     }),
     addToCart: builder.mutation({
@@ -43,4 +47,5 @@ export const {
   useAddToCartMutaion,
   useUpdateCartMutation,
   useDeleteCartMutation,
+  useGetCartByUserBookQuery
 } = cartsApi;

@@ -1,12 +1,13 @@
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-import { Stack, Typography } from '@mui/material';
-import Rating from '@mui/material/Rating';
-import { Box } from '@mui/system';
-import Link from 'next/link';
-import * as React from 'react';
-import { FaShoppingCart } from 'react-icons/fa';
-import CustomImage from '../CustomImage';
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import { Stack, Typography } from "@mui/material";
+import Rating from "@mui/material/Rating";
+import { Box } from "@mui/system";
+import Link from "next/link";
+import { useState } from "react";
+import { FaShoppingCart } from "react-icons/fa";
+import { useSelector } from "react-redux";
+import CustomImage from "../CustomImage";
 
 import {
   CartBtnStyle,
@@ -17,15 +18,16 @@ import {
   StyledFav,
   TitleStyle,
   WriterLinkStyle,
-} from './Styles';
+} from "./Styles";
 
 const BookCard = ({ book, bookId }) => {
-  const [favorite, setFavorite] = React.useState(false);
+  const [favorite, setFavorite] = useState(false);
   const { authors, images, variants, status, ratings } = book || {};
   const bookImage =
     (images?.data &&
       `http://localhost:1337${images?.data[0]?.attributes?.url}`) ||
-    '/images/product-dummy.png';
+    "/images/product-dummy.png";
+    const authorId = authors?.data[0]?.id
 
   const handleFavorite = () => {
     if (favorite) {
@@ -38,11 +40,15 @@ const BookCard = ({ book, bookId }) => {
     acc += Number(cur.attributes.rate);
     return acc;
   }, 0);
-
+  const authUser = useSelector((state) => state?.auth?.user);
+  // console.log({authorId })
   return (
     <StyledBox>
-      <Link href={`/books/${bookId}`} sx={{ cursor: 'pointer' }}>
-        <Box sx={{ cursor: 'pointer' }}>
+      <Link
+        href={`${authUser ? `/books/${bookId}` : ""}`}
+        sx={{ cursor: "pointer" }}
+      >
+        <Box sx={{ cursor: "pointer" }}>
           <CustomImage
             src={bookImage}
             height="350px"
@@ -53,8 +59,8 @@ const BookCard = ({ book, bookId }) => {
       </Link>
       <ContentContainerStyle>
         <TitleStyle>
-          <Link href={`/books/${bookId}`}>
-            <Typography variant="h3" color="text.primary" py={'5px'}>
+          <Link  href={`${authUser ? `/books/${bookId}` : ""}`}>
+            <Typography variant="h3" color="text.primary" py={"5px"}>
               {book?.name}
             </Typography>
           </Link>
@@ -71,7 +77,7 @@ const BookCard = ({ book, bookId }) => {
           </Link>
         </Stack>
         {ratings?.data?.length > 0 && (
-          <Stack direction={'row'} alignItems={'center'} pb={1}>
+          <Stack direction={"row"} alignItems={"center"} pb={1}>
             <Rating
               defaultValue={avarageReview}
               precision={0.5}
@@ -84,11 +90,11 @@ const BookCard = ({ book, bookId }) => {
 
         <Typography
           variant="caption"
-          sx={{ color: 'text.secondary', margin: '5px 0' }}
+          sx={{ color: "text.secondary", margin: "5px 0" }}
         >
           {status}
         </Typography>
-        <PriceStyle direction={'row'} alignItems={'center'}>
+        <PriceStyle direction={"row"} alignItems={"center"}>
           {variants?.data[0]?.attributes?.price == null ? (
             <Typography variant="h4">Free</Typography>
           ) : (
@@ -103,15 +109,19 @@ const BookCard = ({ book, bookId }) => {
             </Typography>
           )}
         </PriceStyle>
+
         <Stack
           direction="row"
           spacing={2}
           alignItems="center"
           justifyContent="space-between"
         >
-          <CartBtnStyle>
-            <FaShoppingCart /> Cart
-          </CartBtnStyle>
+          <Link href={`/books/${bookId}`} sx={{ cursor: "pointer" }}>
+            <CartBtnStyle>
+              <FaShoppingCart /> Cart
+            </CartBtnStyle>
+          </Link>
+
           <StyledFav onClick={handleFavorite}>
             {favorite ? <FavoriteIcon /> : <FavoriteBorderIcon />}
           </StyledFav>

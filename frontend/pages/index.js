@@ -3,6 +3,7 @@ import { Stack } from '@mui/system';
 import Link from 'next/link';
 import React from 'react';
 import Carousel from 'react-multi-carousel';
+import { useSelector } from 'react-redux';
 import AuthorCard from '../components/AuthorCard';
 import BookCard from '../components/BookCard';
 import CategoryCard from '../components/CategoryCard';
@@ -54,6 +55,8 @@ const responsive = (xl, lg, md, sm, xs) => {
 
 const Home = () => {
   const newArraivalDate = new Date().toISOString();
+  
+  
   const {
     data: authorLists,
     isLoading: isAuthorLoading,
