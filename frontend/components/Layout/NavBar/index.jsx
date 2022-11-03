@@ -31,6 +31,7 @@ import { BOOKMARK_AUTH } from '../../../constant';
 import { UseThemeContext } from '../../../context/ThemeContext';
 import useAuthCheck from '../../../hooks/useAuthCheck';
 import { userLoggedOut } from '../../../store/features/auth/authSlice';
+import { useGetCartsByUserQuery } from '../../../store/features/carts/cartsApi';
 import SearchBar from '../../shared/SearchBar';
 import Login from '../Auth/Login';
 import Register from '../Auth/Register';
@@ -158,8 +159,13 @@ const NavBar = () => {
   const { handleChangeMode } = UseThemeContext();
   const router = useRouter();
   const isAuthenticated = useSelector(state => state?.auth)
+  const authUser = isAuthenticated?.user || {}
+  const { data: cartLists } = useGetCartsByUserQuery({ userId: authUser?.id });
 
-
+  const totalAmount = cartLists?.data?.reduce(
+    (acc, curr) => acc + (curr?.attributes?.variant?.data?.attributes?.price * curr?.attributes?.quantity),
+    0
+  );
   // console.log({isAuthenticat: !!isAuthenticated.accessToken, isAuthenticated });
 
   const handleOpenUserMenu = (event) => {
@@ -337,7 +343,7 @@ const NavBar = () => {
             </ThemeSwitchStyle>
           </IconContainer>
           <IconContainer fontSize={"28px"} onClick={toggleDrawer(true)}>
-            <Badge badgeContent={4} color="primary">
+            <Badge badgeContent={cartLists?.data?.length} color="primary">
               <HiOutlineShoppingBag />
             </Badge>
           </IconContainer>
@@ -413,7 +419,7 @@ const NavBar = () => {
           )}
         </Stack>
 
-        <CartItemComponent cartModalTrg={cartModalTrg} toggleDrawer={toggleDrawer} theme={theme}/>
+        <CartItemComponent cartModalTrg={cartModalTrg} toggleDrawer={toggleDrawer} theme={theme} cartLists={cartLists} totalAmount={totalAmount} />
       </AppBarContainer>
 
       <MobileBarContainer position="fixed">

@@ -27,7 +27,7 @@ const BookCard = ({ book, bookId }) => {
     (images?.data &&
       `http://localhost:1337${images?.data[0]?.attributes?.url}`) ||
     "/images/product-dummy.png";
-    const authorId = authors?.data[0]?.id
+  const authorId = authors?.data[0]?.id;
 
   const handleFavorite = () => {
     if (favorite) {
@@ -44,10 +44,7 @@ const BookCard = ({ book, bookId }) => {
   // console.log({authorId })
   return (
     <StyledBox>
-      <Link
-        href={`${authUser ? `/books/${bookId}` : ""}`}
-        sx={{ cursor: "pointer" }}
-      >
+      <Link href={`/books/${bookId}`} sx={{ cursor: "pointer" }}>
         <Box sx={{ cursor: "pointer" }}>
           <CustomImage
             src={bookImage}
@@ -59,7 +56,7 @@ const BookCard = ({ book, bookId }) => {
       </Link>
       <ContentContainerStyle>
         <TitleStyle>
-          <Link  href={`${authUser ? `/books/${bookId}` : ""}`}>
+          <Link href={`/books/${bookId}`}>
             <Typography variant="h3" color="text.primary" py={"5px"}>
               {book?.name}
             </Typography>
@@ -116,7 +113,10 @@ const BookCard = ({ book, bookId }) => {
           alignItems="center"
           justifyContent="space-between"
         >
-          <Link href={`/books/${bookId}`} sx={{ cursor: "pointer" }}>
+          <Link
+            href={`${authUser ? `/books/${bookId}` : ""}`}
+            sx={{ cursor: "pointer" }}
+          >
             <CartBtnStyle>
               <FaShoppingCart /> Cart
             </CartBtnStyle>

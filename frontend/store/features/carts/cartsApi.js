@@ -3,7 +3,8 @@ import { apiSlice } from "../api/apiSlice";
 export const cartsApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getCartsByUser: builder.query({
-      query: ({ userId }) => `/carts?populate=*&filters[userId][id][$eq]=${userId}`,
+      query: ({ userId }) =>
+        `/carts?populate=*&filters[userId][id][$eq]=${userId}`,
       providesTags: ["carts"],
     }),
 
@@ -13,39 +14,48 @@ export const cartsApi = apiSlice.injectEndpoints({
     }),
     getCartByUserBook: builder.query({
       query: ({ params }) => `/carts?${params}`,
-      providesTags: (result, error, arg) => [{ type: "cart", id: arg }],
+      providesTags: (result, error, arg) => [
+        { type: "cart", id: arg },
+        "carts",
+      ],
     }),
     addToCart: builder.mutation({
       query: ({ data }) => ({
         url: "/carts",
         method: "POST",
-        body: data,
+        body: { data },
       }),
-      invalidatesTags: ['carts']
+      invalidatesTags: ["carts"],
     }),
 
     updateCart: builder.mutation({
-      query: ({ data, cartId }) => ({
-        url: `/carts/${cartId}`,
-        method: "PUT",
-        body: data,
-      }),
-      invalidatesTags:(result, error, arg) => [{ type: "cart", id: arg }]
+      query: ({ cartId, data }) => {
+        console.log({ api: cartId, data });
+        return {
+          url: `/carts/${cartId}`,
+          method: "PUT",
+          body: { data },
+        };
+      },
+      invalidatesTags: (result, error, arg) => [
+        { type: "cart", id: arg },
+        "carts",
+      ],
     }),
     deleteCart: builder.mutation({
       query: ({ cartId }) => ({
         url: `/carts/${cartId}`,
         method: "DELETE",
       }),
-      invalidatesTags: ['carts']
+      invalidatesTags: ["carts"],
     }),
   }),
 });
 export const {
   useGetCartsByUserQuery,
   useGetCartQuery,
-  useAddToCartMutaion,
+  useAddToCartMutation,
   useUpdateCartMutation,
   useDeleteCartMutation,
-  useGetCartByUserBookQuery
+  useGetCartByUserBookQuery,
 } = cartsApi;

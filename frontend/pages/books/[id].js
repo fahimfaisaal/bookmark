@@ -43,7 +43,11 @@ import {
   VariantBtnStyle,
 } from "./Styles";
 import { useSelector } from "react-redux";
-import { useGetCartByUserBookQuery } from "../../store/features/carts/cartsApi";
+import {
+  useGetCartByUserBookQuery,
+  useUpdateCartMutation,
+  useAddToCartMutation,
+} from "../../store/features/carts/cartsApi";
 
 const BookItem = () => {
   const [openReview, setOpenReview] = useState(false);
@@ -83,6 +87,11 @@ const BookItem = () => {
     params: `filters[book][id]=${book?.data?.id}&filters[userId][id]=${authUser?.id}&populate[0]=variant`,
   });
 
+  const [updateCart, { data: updateCartData, error: updateCartError }] =
+    useUpdateCartMutation();
+  const [addToCart, { data: addtoCartData, error: addtoCartError }] =
+    useAddToCartMutation();
+
   const handleSelectVariant = (ind) => {
     setActiveVariant(ind);
   };
@@ -106,7 +115,7 @@ const BookItem = () => {
     languages: [],
   };
 
-  console.log({ book, bookRatings, bookVariants, cartBook });
+  // console.log({ book, bookRatings, bookVariants, cartBook });
   bookVariants?.data?.attributes?.variants?.data.map((variant) => {
     variants.ids.push(variant?.id);
     variants.formates.push(variant?.attributes?.formate);
@@ -162,25 +171,35 @@ const BookItem = () => {
   };
 
   const addToCartBook = () => {
-    const data = {};
+    let data = {};
     data.book = book?.data?.id;
     data.userId = authUser?.id;
     data.variant =
-      bookVariants?.data?.attributes?.variants?.data[activeVariant].id;
+      bookVariants?.data?.attributes?.variants?.data[activeVariant]?.id;
     data.quantity = cartQty;
-    console.log({vc: cartBook?.data[0]?.attributes?.variant?.data?.id, dd:data?.variant, id:cartBook?.data[0]?.id });
+
     if (
       cartBook?.data[0]?.id &&
       cartBook?.data[0]?.attributes?.variant?.data?.id === data?.variant
     ) {
       // cart update
-      console.log("product update");
+      data.quantity = cartQty + cartBook?.data[0]?.attributes?.quantity;
+      // console.log({update:data});
+      updateCart({ cartId: cartBook?.data[0]?.id, data });
     } else {
       // cart add
-      console.log("product add");
+      data = { data };
+      console.log({add:data});
+      addToCart(data);
     }
-
-    console.log({ data });
+    setCartQty(1);
+    console.log({
+      cart: cartBook?.data[0],
+      data,
+      isCart:
+        cartBook?.data[0]?.id &&
+        cartBook?.data[0]?.attributes?.variant?.data?.id === data?.variant,
+    });
   };
 
   return (
@@ -281,7 +300,7 @@ const BookItem = () => {
                   {variants.languages.map((lang, ind) => (
                     <VariantBtnStyle
                       variant="outlined"
-                      key={lang}
+                      key={ind}
                       onClick={() => handleSelectVariant(ind)}
                       active={ind === activeVariant}
                     >
@@ -297,7 +316,7 @@ const BookItem = () => {
                   {variants.formates.map((formate, ind) => (
                     <VariantBtnStyle
                       variant="outlined"
-                      key={formate}
+                      key={ind}
                       onClick={() => handleSelectVariant(ind)}
                       active={ind === activeVariant}
                     >
@@ -312,7 +331,7 @@ const BookItem = () => {
                   {variants.pageQualities.map((qal, ind) => (
                     <VariantBtnStyle
                       variant="outlined"
-                      key={qal}
+                      key={ind}
                       onClick={() => handleSelectVariant(ind)}
                       active={ind === activeVariant}
                     >
@@ -327,7 +346,7 @@ const BookItem = () => {
                   {variants.pageFormates.map((form, ind) => (
                     <VariantBtnStyle
                       variant="outlined"
-                      key={form}
+                      key={ind}
                       onClick={() => handleSelectVariant(ind)}
                       active={ind === activeVariant}
                     >
@@ -356,6 +375,8 @@ const BookItem = () => {
                   size={"large"}
                   sx={{ padding: "12px" }}
                   onClick={addToCartBook}
+                  disabled={bookVariants?.data?.attributes?.variants?.data?.length == 0}
+
                 >
                   Add To Cart
                 </Button>
