@@ -8,7 +8,6 @@ export const booksApi = apiSlice.injectEndpoints({
     }),
     getBook: builder.query({
       query: (bookId) => {
-        console.log({ bookId });
         return `/books/${bookId}?populate=*`;
       },
       providesTags: (result, error, arg) => [{ type: 'book', id: arg }],

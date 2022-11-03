@@ -24,21 +24,18 @@ export default function CartItemComponent({
   cartModalTrg,
   toggleDrawer,
   theme,
+  cartLists,
+  totalAmount
 }) {
   const router = useRouter()
-  const authUser = useSelector((state) => state?.auth?.user);
-  const { data: cartLists } = useGetCartsByUserQuery({ userId: authUser?.id });
-
-  const totalAmount = cartLists?.data?.reduce(
-    (acc, curr) => acc + curr?.attributes?.variant?.data?.attributes?.price,
-    0
-  );
+  
+  
   const navigateCheckout = () => {
     toggleDrawer(false)
     router.push("/checkout") 
     
   }
-  console.log({ cartLists, totalAmount });
+  // console.log({ cartLists, totalAmount });
   return (
     <SwipeableDrawer
       anchor={"right"}
