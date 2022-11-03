@@ -11,6 +11,8 @@ export const HeroContainer = styled(Box)(({ theme }) => ({
   img: {
     width: '100%',
     height: '100%',
+    backgroundSize: 'cover',
+    backgroundRepeat: 'no-repeat',
     borderRadius: '15px',
   },
 }));

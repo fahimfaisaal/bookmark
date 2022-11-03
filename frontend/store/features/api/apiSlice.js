@@ -8,7 +8,7 @@ const baseQuery = fetchBaseQuery({
   prepareHeaders: async (headers, { getState, endpoint }) => {
     const token = getState()?.auth?.accessToken;
     if (token) {
-      headers.set('authorization', `Bearer ${token}`)
+      headers.set('authorization', `Bearer ${token}`);
     }
     return headers;
   },
@@ -41,6 +41,7 @@ export const apiSlice = createApi({
     'author',
     'publishers',
     'publisher',
+    'banner',
   ],
   keepUnusedDataFor: 3600,
   endpoints: (builder) => ({}),

@@ -1,24 +1,26 @@
-import { Box, Button, Grid } from '@mui/material';
+import { Box, Button, Grid, Skeleton } from '@mui/material';
 import { Stack } from '@mui/system';
 import Link from 'next/link';
 import React from 'react';
 import Carousel from 'react-multi-carousel';
-import { useSelector } from 'react-redux';
 import AuthorCard from '../components/AuthorCard';
+import AuthorSkeleton from '../components/AuthorSkeleton';
 import BookCard from '../components/BookCard';
+import BookSkeleton from '../components/BookSkeleton';
 import CategoryCard from '../components/CategoryCard';
 import PublicationCard from '../components/PublicationCard';
+import PublisherSkeleton from '../components/PublisherSkeleton';
 import {
   CustomLeftBtn,
   CustomRightBtn,
 } from '../components/shared/ui/CarouselBtn';
 import { useGetAuthorsQuery } from '../store/features/authors/authorsApi';
+import { useGetBannersQuery } from '../store/features/banner/bannerApi';
 import {
   useGetBooksQuery,
   useGetCategoryQuery,
 } from '../store/features/books/booksApi';
 import { useGetPublishersQuery } from '../store/features/publishers/publishersApi';
-
 import {
   ContainerStyle,
   HeroContainer,
@@ -55,8 +57,7 @@ const responsive = (xl, lg, md, sm, xs) => {
 
 const Home = () => {
   const newArraivalDate = new Date().toISOString();
-  
-  
+
   const {
     data: authorLists,
     isLoading: isAuthorLoading,
@@ -67,36 +68,57 @@ const Home = () => {
     isLoading: isPublisherLoading,
     isError: isPublisherError,
   } = useGetPublishersQuery();
+  const { data: banners } = useGetBannersQuery();
+  const bannerImg =
+    (banners?.data &&
+      `http://localhost:1337${banners?.data?.attributes?.images?.data[0]?.attributes?.url}`) ||
+    '/images/Cover.png';
 
-  const { data: popularbookLists } = useGetBooksQuery({
-    params: 'filters[bestSelling][$eq]=true',
-  });
+  const { data: popularbookLists, isLoading: isPopularBookLoading } =
+    useGetBooksQuery({
+      params: 'filters[bestSelling][$eq]=true',
+    });
 
   const { data: newbookLists, isLoading: isNewBooksLoading } = useGetBooksQuery(
     {
       params: `filters[createdAt][$gte]=${'2022-10-29T03:07:38.922Z'}&pagination[pageSize]=8`,
     }
   );
-  const { data: categoryLists } = useGetCategoryQuery();
+  const { data: categoryLists, isLoading: isCategoryListLoading } =
+    useGetCategoryQuery();
 
-  console.log({ lists: popularbookLists, isNewBooksLoading });
+  const fakeArr = (length) => {
+    const arr = [];
+    for (let i = 0; i < length; i++) {
+      arr.push(i);
+    }
+    return arr;
+  };
+
   return (
     <ContainerStyle>
       <HeroContainer>
-        <Link href={'/books'}>
+        <Link href={`/books/${banners?.data?.attributes?.book?.data?.id}`}>
           <Box sx={{ cursor: 'pointer' }}>
-            <img src="/images/Cover.png" />
+            <img src={bannerImg} />
           </Box>
         </Link>
       </HeroContainer>
       <SectionContainer>
         <SectionHeaderStyle variant="h1">Popular Books</SectionHeaderStyle>
+
         <Grid container spacing={3}>
-          {popularbookLists?.data?.slice(0, 8).map((book) => (
-            <Grid item lg={3} md={6} xs={12} key={book?.id}>
-              <BookCard book={book?.attributes} bookId={book?.id} />
-            </Grid>
-          ))}
+          {isPopularBookLoading
+            ? fakeArr(8).map((item) => (
+                <Grid item lg={3} md={6} xs={12} key={item}>
+                  <BookSkeleton />
+                </Grid>
+              ))
+            : popularbookLists?.data?.slice(0, 8).map((book) => (
+                <Grid item lg={3} md={6} xs={12} key={book?.id}>
+                  <BookCard book={book?.attributes} bookId={book?.id} />
+                </Grid>
+              ))}
         </Grid>
       </SectionContainer>
 
@@ -104,29 +126,50 @@ const Home = () => {
         <SectionHeaderStyle variant="h1">
           Which Book You Like to See?
         </SectionHeaderStyle>
-        <Carousel
-          responsive={responsive(10, 7, 5, 3, 2)}
-          customLeftArrow={<CustomLeftBtn />}
-          customRightArrow={<CustomRightBtn />}
-        >
-          {categoryLists?.data?.length > 0 &&
-            categoryLists?.data?.map((category) => (
-              <CategoryCard
-                key={category?.id}
-                category={category?.attributes}
-              />
+        {isCategoryListLoading ? (
+          <Carousel
+            responsive={responsive(10, 7, 5, 3, 2)}
+            customLeftArrow={<CustomLeftBtn />}
+            customRightArrow={<CustomRightBtn />}
+          >
+            {fakeArr(12).map((item) => (
+              <Box key={item} px={2}>
+                <Skeleton width={'100%'} height={150} variant={'rounded'} />
+                <Skeleton width={'50%'} height={15} variant={'text'} />
+              </Box>
             ))}
-        </Carousel>
+          </Carousel>
+        ) : (
+          <Carousel
+            responsive={responsive(10, 7, 5, 3, 2)}
+            customLeftArrow={<CustomLeftBtn />}
+            customRightArrow={<CustomRightBtn />}
+          >
+            {categoryLists?.data?.length > 0 &&
+              categoryLists?.data?.map((category) => (
+                <CategoryCard
+                  key={category?.id}
+                  category={category?.attributes}
+                />
+              ))}
+          </Carousel>
+        )}
       </SectionContainer>
 
       <SectionContainer>
         <SectionHeaderStyle variant="h1">New Arrival Books</SectionHeaderStyle>
         <Grid container spacing={2}>
-          {newbookLists?.data?.map((book) => (
-            <Grid item lg={3} md={6} xs={12} key={book?.id}>
-              <BookCard book={book?.attributes} bookId={book?.id} />
-            </Grid>
-          ))}
+          {isNewBooksLoading
+            ? fakeArr(12).map((item) => (
+                <Grid item lg={3} md={6} xs={12} key={item}>
+                  <BookSkeleton />
+                </Grid>
+              ))
+            : newbookLists?.data?.map((book) => (
+                <Grid item lg={3} md={6} xs={12} key={book?.id}>
+                  <BookCard book={book?.attributes} bookId={book?.id} />
+                </Grid>
+              ))}
         </Grid>
         <Stack direction={'row'} justifyContent={'center'} my={5}>
           <Button variant="contained" size="large" disableElevation={true}>
@@ -146,16 +189,28 @@ const Home = () => {
             <SeeAllLinkStyle>See All</SeeAllLinkStyle>
           </Link>
         </Stack>
-        <Carousel
-          responsive={responsive(8, 6, 3, 2, 1)}
-          customLeftArrow={<CustomLeftBtn />}
-          customRightArrow={<CustomRightBtn />}
-        >
-          {authorLists?.data?.length > 0 &&
-            authorLists?.data?.map((author) => (
-              <AuthorCard key={author?.id} author={author} />
+        {isAuthorLoading ? (
+          <Carousel
+            responsive={responsive(8, 6, 3, 2, 1)}
+            customLeftArrow={<CustomLeftBtn />}
+            customRightArrow={<CustomRightBtn />}
+          >
+            {fakeArr(12).map((item) => (
+              <AuthorSkeleton key={item} />
             ))}
-        </Carousel>
+          </Carousel>
+        ) : (
+          <Carousel
+            responsive={responsive(8, 6, 3, 2, 1)}
+            customLeftArrow={<CustomLeftBtn />}
+            customRightArrow={<CustomRightBtn />}
+          >
+            {authorLists?.data?.length > 0 &&
+              authorLists?.data?.map((author) => (
+                <AuthorCard key={author?.id} author={author} />
+              ))}
+          </Carousel>
+        )}
       </SectionContainer>
 
       <SectionContainer>
@@ -171,17 +226,28 @@ const Home = () => {
             <SeeAllLinkStyle>See All</SeeAllLinkStyle>
           </Link>
         </Stack>
-
-        <Carousel
-          responsive={responsive(7, 5, 3, 2, 1)}
-          customLeftArrow={<CustomLeftBtn />}
-          customRightArrow={<CustomRightBtn />}
-        >
-          {publisherLists?.data?.length > 0 &&
-            publisherLists?.data?.map((publisher) => (
-              <PublicationCard key={publisher?.id} publisher={publisher} />
+        {isPublisherLoading ? (
+          <Carousel
+            responsive={responsive(7, 5, 3, 2, 1)}
+            customLeftArrow={<CustomLeftBtn />}
+            customRightArrow={<CustomRightBtn />}
+          >
+            {fakeArr(12).map((item) => (
+              <PublisherSkeleton key={item} />
             ))}
-        </Carousel>
+          </Carousel>
+        ) : (
+          <Carousel
+            responsive={responsive(7, 5, 3, 2, 1)}
+            customLeftArrow={<CustomLeftBtn />}
+            customRightArrow={<CustomRightBtn />}
+          >
+            {publisherLists?.data?.length > 0 &&
+              publisherLists?.data?.map((publisher) => (
+                <PublicationCard key={publisher?.id} publisher={publisher} />
+              ))}
+          </Carousel>
+        )}
       </SectionContainer>
     </ContainerStyle>
   );

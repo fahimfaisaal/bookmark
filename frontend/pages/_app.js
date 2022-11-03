@@ -1,15 +1,16 @@
-import { CacheProvider } from "@emotion/react";
-import CssBaseline from "@mui/material/CssBaseline";
-import Head from "next/head";
-import PropTypes from "prop-types";
-import * as React from "react";
-import "react-multi-carousel/lib/styles.css";
-import Layout from "../components/Layout";
-import { Provider } from "react-redux";
-import { store } from "../store";
-import { ThemeContext } from "../context/ThemeContext";
-import createEmotionCache from "../src/createEmotionCache";
-import useAuthCheck from "../hooks/useAuthCheck";
+import { CacheProvider } from '@emotion/react';
+import CssBaseline from '@mui/material/CssBaseline';
+import Head from 'next/head';
+import NextNProgress from 'nextjs-progressbar';
+import PropTypes from 'prop-types';
+import * as React from 'react';
+import 'react-multi-carousel/lib/styles.css';
+import { Provider } from 'react-redux';
+import Layout from '../components/Layout';
+import { ThemeContext } from '../context/ThemeContext';
+import useAuthCheck from '../hooks/useAuthCheck';
+import createEmotionCache from '../src/createEmotionCache';
+import { store } from '../store';
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
 
@@ -25,7 +26,7 @@ export default function MyApp(props) {
           <link
             rel="preconnect"
             href="https://fonts.gstatic.com"
-            crossOrigin={"true"}
+            crossOrigin={'true'}
           />
           <link
             href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&family=Poppins:wght@100;200;300;400;500;600;700&display=swap"
@@ -35,7 +36,8 @@ export default function MyApp(props) {
         <ThemeContext>
           <CssBaseline />
           <Layout>
-          <Component {...pageProps} />
+            <NextNProgress />
+            <Component {...pageProps} />
           </Layout>
         </ThemeContext>
       </CacheProvider>
@@ -49,7 +51,7 @@ const AuthCheckComponent = ({ Component, pageProps }) => {
   const LayoutAnt = Component.layout || NoLayout;
   const authChecked = useAuthCheck();
   return !authChecked ? (
-    "Loading from appjs..."
+    'Loading from appjs...'
   ) : (
     <LayoutAnt>
       <Component {...pageProps} />

@@ -4,15 +4,16 @@ import React, { useState } from 'react';
 import { FiFilter } from 'react-icons/fi';
 import { MdClose } from 'react-icons/md';
 import BookCard from '../../components/BookCard';
+import BookSkeleton from '../../components/BookSkeleton';
 import Filter from '../../components/Filter';
 import { useGetBooksQuery } from '../../store/features/books/booksApi';
 import { FilterButtonContainer } from '../publishers/Style';
 
 const Books = () => {
-  const { data: bookLists } = useGetBooksQuery({
-    params: "",
+  const { data: bookLists, isLoading } = useGetBooksQuery({
+    params: '',
   });
- 
+
   const [filterTrig, setFilterTrig] = useState(false);
 
   const handleFilter = () => {
@@ -43,12 +44,23 @@ const Books = () => {
           </FilterButtonContainer>
 
           <Grid container spacing={3}>
-          {bookLists?.data?.slice(0, 8).map((book) => (
-            <Grid item  md={6} lg={filterTrig ? 4 : 3} xs={12}  key={book?.id}>
-              <BookCard book={book?.attributes} bookId={book?.id}/>
-            </Grid>
-          ))}
-           
+            {isLoading
+              ? [1, 2, 3, 4, 5, 6, 7, 8].map((item) => (
+                  <Grid item md={6} lg={filterTrig ? 4 : 3} xs={12} key={item}>
+                    <BookSkeleton />
+                  </Grid>
+                ))
+              : bookLists?.data?.slice(0, 8).map((book) => (
+                  <Grid
+                    item
+                    md={6}
+                    lg={filterTrig ? 4 : 3}
+                    xs={12}
+                    key={book?.id}
+                  >
+                    <BookCard book={book?.attributes} bookId={book?.id} />
+                  </Grid>
+                ))}
           </Grid>
           <Stack direction={'row'} justifyContent={'center'} my={5}>
             <Button variant="contained" size="large" disableElevation={true}>
