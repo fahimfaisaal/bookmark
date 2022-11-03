@@ -1,4 +1,4 @@
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import {
   Box,
   Button,
@@ -6,26 +6,26 @@ import {
   Grid,
   Link as MuiLink,
   Typography,
-} from '@mui/material';
-import Rating from '@mui/material/Rating';
-import { Stack } from '@mui/system';
-import Link from 'next/link';
-import { useRouter } from 'next/router';
-import { useState } from 'react';
-import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
-import BookCard from '../../components/BookCard';
-import CustomImage from '../../components/CustomImage';
+} from "@mui/material";
+import Rating from "@mui/material/Rating";
+import { Stack } from "@mui/system";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import { useState } from "react";
+import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
+import BookCard from "../../components/BookCard";
+import CustomImage from "../../components/CustomImage";
 import {
   LeftBtnStyle,
   RightBtnStyle,
-} from '../../components/shared/ui/CarouselBtn/Styles';
+} from "../../components/shared/ui/CarouselBtn/Styles";
 import {
   useGetBookQuery,
   useGetBooksByTagsQuery,
   useGetNestedBookItemQuery,
-} from '../../store/features/books/booksApi';
-import ReviewForm from './ReviewForm';
-import ReviewItem from './ReviewItem';
+} from "../../store/features/books/booksApi";
+import ReviewForm from "./ReviewForm";
+import ReviewItem from "./ReviewItem";
 import {
   AuthorLinkStyle,
   BookDetailsContainer,
@@ -41,18 +41,9 @@ import {
   QtyBtnLeft,
   QtyBtnRight,
   VariantBtnStyle,
-} from './Styles';
-
-// const images = [
-//   '/images/book-1.jpg',
-//   '/images/book-2.jpg',
-//   '/images/book-3.jpg',
-// ];
-
-const loopCount = [];
-for (let i = 0; i < 4; i++) {
-  loopCount.push(i);
-}
+} from "./Styles";
+import { useSelector } from "react-redux";
+import { useGetCartByUserBookQuery } from "../../store/features/carts/cartsApi";
 
 const BookItem = () => {
   const [openReview, setOpenReview] = useState(false);
@@ -61,6 +52,7 @@ const BookItem = () => {
   const [cartQty, setCartQty] = useState(1);
   const router = useRouter();
   const { id } = router.query;
+  const authUser = useSelector((state) => state?.auth?.user);
   const {
     data: book,
     isLoading,
@@ -87,7 +79,9 @@ const BookItem = () => {
   const { data: relatedBooks } = useGetBooksByTagsQuery(
     relatedBooksQuery.join()
   );
-  console.log({ relatedBooks });
+  const { data: cartBook } = useGetCartByUserBookQuery({
+    params: `filters[book][id]=${book?.data?.id}&filters[userId][id]=${authUser?.id}&populate[0]=variant`,
+  });
 
   const handleSelectVariant = (ind) => {
     setActiveVariant(ind);
@@ -112,7 +106,7 @@ const BookItem = () => {
     languages: [],
   };
 
-  console.log({ book, bookRatings, bookVariants, activeVariant });
+  console.log({ book, bookRatings, bookVariants, cartBook });
   bookVariants?.data?.attributes?.variants?.data.map((variant) => {
     variants.ids.push(variant?.id);
     variants.formates.push(variant?.attributes?.formate);
@@ -159,17 +153,40 @@ const BookItem = () => {
     setActiveImg(index);
   };
 
-  const addToCartBook = () => {
-    const data = {}
-    data.book = book?.data?.id
+  const itemIncrement = () => {
+    // based on stock
+    setCartQty((prev) => prev + 1);
+  };
+  const itemDecrement = () => {
+    if (cartQty > 1) setCartQty((prev) => prev - 1);
+  };
 
-    console.log({data});
-  }
+  const addToCartBook = () => {
+    const data = {};
+    data.book = book?.data?.id;
+    data.userId = authUser?.id;
+    data.variant =
+      bookVariants?.data?.attributes?.variants?.data[activeVariant].id;
+    data.quantity = cartQty;
+    console.log({vc: cartBook?.data[0]?.attributes?.variant?.data?.id, dd:data?.variant, id:cartBook?.data[0]?.id });
+    if (
+      cartBook?.data[0]?.id &&
+      cartBook?.data[0]?.attributes?.variant?.data?.id === data?.variant
+    ) {
+      // cart update
+      console.log("product update");
+    } else {
+      // cart add
+      console.log("product add");
+    }
+
+    console.log({ data });
+  };
 
   return (
     <Box>
       <BookInfoContainer>
-        <Grid container spacing={'50px'}>
+        <Grid container spacing={"50px"}>
           <Grid item lg={6} md={12}>
             <BookImagesContainer>
               <CustomImage
@@ -199,9 +216,9 @@ const BookItem = () => {
           <Grid item lg={6} md={12}>
             <BookDetailsContainer>
               <Stack
-                direction={'row'}
-                alignItems={'center'}
-                justifyContent={'space-between'}
+                direction={"row"}
+                alignItems={"center"}
+                justifyContent={"space-between"}
                 mb={2}
               >
                 <BookTitleStyle variant="h1">{bookData?.name}</BookTitleStyle>
@@ -209,7 +226,7 @@ const BookItem = () => {
                   <FavoriteBorderIcon />
                 </FavIconStyle>
               </Stack>
-              <Stack direction={'row'} alignItems={'center'} spacing={1}>
+              <Stack direction={"row"} alignItems={"center"} spacing={1}>
                 <Typography variant="body2">By (Author)</Typography>
                 {bookData?.authors?.data.map((author, index) => (
                   <Link href={`/authors/${author.id}`}>
@@ -217,13 +234,13 @@ const BookItem = () => {
                       {author.attributes.name}
                       {bookData?.authors?.data.length > 1 &&
                         bookData?.authors?.data.length - 1 !== index &&
-                        ','}
+                        ","}
                     </AuthorLinkStyle>
                   </Link>
                 ))}
               </Stack>
               {numberOfReview > 0 && (
-                <Stack pt={2} direction={'row'} alignItems={'center'}>
+                <Stack pt={2} direction={"row"} alignItems={"center"}>
                   <Rating
                     defaultValue={avarageReview / numberOfReview}
                     precision={0.5}
@@ -236,7 +253,7 @@ const BookItem = () => {
               )}
 
               {variants.prices.length ? (
-                <Stack direction={'row'} alignItems={'center'} gap={2} pt={5}>
+                <Stack direction={"row"} alignItems={"center"} gap={2} pt={5}>
                   <OldBookPriceStyle variant="h1">
                     {variants.prices[activeVariant]}$
                   </OldBookPriceStyle>
@@ -258,9 +275,9 @@ const BookItem = () => {
                 {bookData?.status}
               </Typography>
 
-              <Stack direction={'row'} alignItems={'center'} spacing={2} mb={3}>
+              <Stack direction={"row"} alignItems={"center"} spacing={2} mb={3}>
                 <Typography variant="h3">Language :</Typography>
-                <Stack direction={'row'} alignItems={'center'} spacing={2}>
+                <Stack direction={"row"} alignItems={"center"} spacing={2}>
                   {variants.languages.map((lang, ind) => (
                     <VariantBtnStyle
                       variant="outlined"
@@ -274,9 +291,9 @@ const BookItem = () => {
                 </Stack>
               </Stack>
               <Divider />
-              <Stack direction={'row'} alignItems={'center'} spacing={2} my={3}>
+              <Stack direction={"row"} alignItems={"center"} spacing={2} my={3}>
                 <Typography variant="h3">Book Type :</Typography>
-                <Stack direction={'row'} alignItems={'center'} spacing={2}>
+                <Stack direction={"row"} alignItems={"center"} spacing={2}>
                   {variants.formates.map((formate, ind) => (
                     <VariantBtnStyle
                       variant="outlined"
@@ -289,9 +306,9 @@ const BookItem = () => {
                   ))}
                 </Stack>
               </Stack>
-              <Stack direction={'row'} alignItems={'center'} spacing={2} my={3}>
+              <Stack direction={"row"} alignItems={"center"} spacing={2} my={3}>
                 <Typography variant="h3">Page Quality :</Typography>
-                <Stack direction={'row'} alignItems={'center'} spacing={2}>
+                <Stack direction={"row"} alignItems={"center"} spacing={2}>
                   {variants.pageQualities.map((qal, ind) => (
                     <VariantBtnStyle
                       variant="outlined"
@@ -304,9 +321,9 @@ const BookItem = () => {
                   ))}
                 </Stack>
               </Stack>
-              <Stack direction={'row'} alignItems={'center'} spacing={2} my={3}>
+              <Stack direction={"row"} alignItems={"center"} spacing={2} my={3}>
                 <Typography variant="h3">Page Formate :</Typography>
-                <Stack direction={'row'} alignItems={'center'} spacing={2}>
+                <Stack direction={"row"} alignItems={"center"} spacing={2}>
                   {variants.pageFormates.map((form, ind) => (
                     <VariantBtnStyle
                       variant="outlined"
@@ -324,18 +341,20 @@ const BookItem = () => {
                 <MuiLink href="#details">See more</MuiLink>
               </Box>
               {/* add to cart btn */}
-              <Stack direction={'row'} alignItems={'center'} gap={3} my={3}>
-                <Stack direction={'row'} alignItems={'center'}>
-                  <QtyBtnLeft>-</QtyBtnLeft>
-                  <Qty>1</Qty>
-                  <QtyBtnRight>+</QtyBtnRight>
+              <Stack direction={"row"} alignItems={"center"} gap={3} my={3}>
+                <Stack direction={"row"} alignItems={"center"}>
+                  <QtyBtnLeft onClick={itemDecrement} disabled={true}>
+                    -
+                  </QtyBtnLeft>
+                  <Qty>{cartQty}</Qty>
+                  <QtyBtnRight onClick={itemIncrement}>+</QtyBtnRight>
                 </Stack>
                 <Button
                   variant="contained"
                   fullWidth={true}
                   disableElevation={true}
-                  size={'large'}
-                  sx={{ padding: '12px' }}
+                  size={"large"}
+                  sx={{ padding: "12px" }}
                   onClick={addToCartBook}
                 >
                   Add To Cart
@@ -344,10 +363,10 @@ const BookItem = () => {
             </BookDetailsContainer>
             <Divider />
             <Stack
-              direction={'row'}
-              alignItems={'center'}
+              direction={"row"}
+              alignItems={"center"}
               my={5}
-              justifyContent={'space-between'}
+              justifyContent={"space-between"}
             >
               <Box>
                 <Typography variant="h3" mb={2}>
@@ -374,17 +393,17 @@ const BookItem = () => {
         </Grid>
       </BookInfoContainer>
       <Divider />
-      <Box mt={5} id={'details'}>
+      <Box mt={5} id={"details"}>
         <Typography variant="h1" my={2} fontWeight={700}>
           Details
         </Typography>
         <Typography variant="body2">{bookData?.description}</Typography>
         <Box my={4}>
-          <Stack direction={'row'} gap={2} mb={1} alignItems={'center'}>
+          <Stack direction={"row"} gap={2} mb={1} alignItems={"center"}>
             <Typography variant="h3">Title :</Typography>
             <Typography variant="h5">{bookData?.name}</Typography>
           </Stack>
-          <Stack direction={'row'} gap={2} mb={1} alignItems={'center'}>
+          <Stack direction={"row"} gap={2} mb={1} alignItems={"center"}>
             <Typography variant="h3">Author :</Typography>
             {bookData?.authors?.data.map((author, index) => (
               <Link href={`/authors/${author.id}`}>
@@ -392,12 +411,12 @@ const BookItem = () => {
                   {author.attributes.name}
                   {bookData?.authors?.data.length > 1 &&
                     bookData?.authors?.data.length - 1 !== index &&
-                    ','}
+                    ","}
                 </AuthorLinkStyle>
               </Link>
             ))}
           </Stack>
-          <Stack direction={'row'} gap={2} mb={1} alignItems={'center'}>
+          <Stack direction={"row"} gap={2} mb={1} alignItems={"center"}>
             <Typography variant="h3">Publisher :</Typography>
             <Link href={`/publishers/${bookData?.publisherId?.data?.id}`}>
               <AuthorLinkStyle variant="h5">
@@ -405,22 +424,22 @@ const BookItem = () => {
               </AuthorLinkStyle>
             </Link>
           </Stack>
-          <Stack direction={'row'} gap={2} mb={1} alignItems={'center'}>
+          <Stack direction={"row"} gap={2} mb={1} alignItems={"center"}>
             <Typography variant="h3">Number of Pages :</Typography>
             <Typography variant="h5">{bookData?.totalPages}</Typography>
           </Stack>
-          <Stack direction={'row'} gap={2} mb={1} alignItems={'center'}>
+          <Stack direction={"row"} gap={2} mb={1} alignItems={"center"}>
             <Typography variant="h3">Language :</Typography>
             {variants.languages.map((lang, ind) => (
               <Typography variant="h5" key={ind}>
                 {lang}
                 {variants.languages.length > 0 &&
                   ind !== variants.languages.length - ind &&
-                  ','}
+                  ","}
               </Typography>
             ))}
           </Stack>
-          <Stack direction={'row'} gap={2} mb={1} alignItems={'center'}>
+          <Stack direction={"row"} gap={2} mb={1} alignItems={"center"}>
             <Typography variant="h3">Edition :</Typography>
             <Typography variant="h5">1st Edition, 2022</Typography>
           </Stack>
@@ -430,9 +449,9 @@ const BookItem = () => {
       <Box my={5}>
         <Divider />
         <Stack
-          direction={'row'}
-          justifyContent={'space-between'}
-          alignItems={'center'}
+          direction={"row"}
+          justifyContent={"space-between"}
+          alignItems={"center"}
         >
           <Typography variant="h2" py={3}>
             Reviews ({numberOfReview})
