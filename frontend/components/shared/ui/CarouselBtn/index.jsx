@@ -21,7 +21,7 @@ const ButtonCarousel = ({ onClick, side }) => {
 export const CustomRightBtn = ({ onClick, ...rest }) => {
   const {
     onMove,
-    carouselState: { currentSlide, deviceType },
+    carouselState: { currentSlide, deviceType }
   } = rest;
   // onMove means if dragging or swiping in progress.
   return <ButtonCarousel onClick={() => onClick()} side="right" />;
@@ -29,7 +29,7 @@ export const CustomRightBtn = ({ onClick, ...rest }) => {
 export const CustomLeftBtn = ({ onClick, ...rest }) => {
   const {
     onMove,
-    carouselState: { currentSlide, deviceType },
+    carouselState: { currentSlide, deviceType }
   } = rest;
   // onMove means if dragging or swiping in progress.
   return <ButtonCarousel onClick={() => onClick()} side="left" />;

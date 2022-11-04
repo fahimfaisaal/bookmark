@@ -36,7 +36,7 @@ const Address = ({ billingAddress, label, text }) => {
           <Card
             sx={{
               backgroundColor: 'background.default',
-              border: '1px solid #009F7F',
+              border: '1px solid #009F7F'
             }}
           >
             <CardContent>

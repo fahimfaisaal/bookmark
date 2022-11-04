@@ -8,7 +8,7 @@ const steps = [
   'Order Received',
   'Order Processing',
   'Order Dispatched',
-  'At Local Facility',
+  'At Local Facility'
 ];
 
 const ProgressBar = () => {

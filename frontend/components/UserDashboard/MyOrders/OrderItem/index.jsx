@@ -6,7 +6,7 @@ import {
   TableCell,
   TableHead,
   TableRow,
-  Typography,
+  Typography
 } from '@mui/material';
 import { StyledOrder, StyledTableCell, StyledTableContainer } from './Styles';
 

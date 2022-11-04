@@ -3,7 +3,7 @@ import {
   FormControl,
   InputLabel,
   TextField,
-  Typography,
+  Typography
 } from '@mui/material';
 import { Box } from '@mui/system';
 import { StyledContainer } from './Styles';
@@ -16,10 +16,10 @@ const ChangePassword = () => {
     control,
     formState: { errors },
     register,
-    reset,
+    reset
   } = useForm({
     mode: 'onBlur',
-    defaultValues: { oldPassword: '', newPassword: '', confirmPassword: '' },
+    defaultValues: { oldPassword: '', newPassword: '', confirmPassword: '' }
   });
   const onSubmit = (data) => {
     console.log(data);
@@ -53,7 +53,7 @@ const ChangePassword = () => {
                   id="old-pass"
                   error={Boolean(errors.oldPassword)}
                   {...register('oldPassword', {
-                    required: 'Old Password is required',
+                    required: 'Old Password is required'
                   })}
                   helperText={errors.oldPassword?.message}
                   type={'password'}
@@ -83,7 +83,7 @@ const ChangePassword = () => {
                   id="newPassword"
                   error={Boolean(errors.newPassword)}
                   {...register('newPassword', {
-                    required: 'New Password is required',
+                    required: 'New Password is required'
                   })}
                   helperText={errors.newPassword?.message}
                   type={'password'}
@@ -113,7 +113,7 @@ const ChangePassword = () => {
                   id="confirmPassword"
                   error={Boolean(errors.confirmPassword)}
                   {...register('confirmPassword', {
-                    required: 'Confirm Password is required',
+                    required: 'Confirm Password is required'
                   })}
                   helperText={errors.confirmPassword?.message}
                   type={'password'}

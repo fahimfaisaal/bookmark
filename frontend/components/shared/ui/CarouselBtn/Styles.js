@@ -22,8 +22,8 @@ const commonStyle = (theme) => {
     outline: 'none',
     boxShadow: `rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;`,
     '&:hover': {
-      color: `${theme.palette.text.third}`,
-    },
+      color: `${theme.palette.text.third}`
+    }
   };
 };
 
@@ -32,8 +32,8 @@ export const LeftBtnStyle = styled('button')(({ theme }) => ({
   left: '0',
   svg: {
     marginTop: '3px',
-    marginLeft: '-3px',
-  },
+    marginLeft: '-3px'
+  }
 }));
 
 export const RightBtnStyle = styled('button')(({ theme }) => ({
@@ -41,6 +41,6 @@ export const RightBtnStyle = styled('button')(({ theme }) => ({
   right: '2px',
   svg: {
     marginTop: '2px',
-    marginRight: '-3px',
-  },
+    marginRight: '-3px'
+  }
 }));

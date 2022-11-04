@@ -7,7 +7,7 @@ import {
   StyledContainer,
   StyledImage,
   StyledRemove,
-  StyledStack,
+  StyledStack
 } from './Styles';
 
 const MyWishlist = () => {

@@ -31,24 +31,24 @@ const responsive = (xl, lg, md, sm, xs) => {
     superLargeDesktop: {
       // the naming can be any, depends on you.
       breakpoint: { max: 4000, min: 3000 },
-      items: xl,
+      items: xl
     },
     desktop: {
       breakpoint: { max: 3000, min: 1025 },
-      items: lg,
+      items: lg
     },
     laptop: {
       breakpoint: { max: 1024, min: 769 },
-      items: md,
+      items: md
     },
     tablet: {
       breakpoint: { max: 768, min: 481 },
-      items: sm,
+      items: sm
     },
     mobile: {
       breakpoint: { max: 480, min: 0 },
-      items: xs,
-    },
+      items: xs
+    }
   };
 };
 
@@ -56,42 +56,39 @@ const Home = () => {
   const {
     data: authorLists,
     isLoading: isAuthorLoading,
-    isError: isAuthorError,
+    isError: isAuthorError
   } = useGetAuthorsQuery();
   const {
     data: publisherLists,
     isLoading: isPublisherLoading,
-    isError: isPublisherError,
+    isError: isPublisherError
   } = useGetPublishersQuery();
   // TODO: this query need to fix
-  const { data: newBooks, isSuccess } = useGetBooksQuery(
-    {
-      query: {
-        populate: '*',
-        pagination: {
-          pageSize: 8
-        },
-        filters: {
-          createdAt: {
-            $lte: new Date().toISOString()
-          }
-        }
+  const { data: newBooks, isSuccess } = useGetBooksQuery({
+    query: {
+      populate: '*',
+      pagination: {
+        pageSize: 8
       },
+      filters: {
+        createdAt: {
+          $lte: new Date().toISOString()
+        }
+      }
     }
-  );
+  });
   const { data: popularBooks } = useGetBooksQuery({
     query: {
       populate: '*',
       filters: {
         bestSelling: true
       }
-    },
+    }
   });
 
   const { data: categoryLists } = useGetCategoryQuery();
-  
-  
-  console.log({ newBooks, isSuccess, popularBooks, categoryLists })
+
+  console.log({ newBooks, isSuccess, popularBooks, categoryLists });
   return (
     <ContainerStyle>
       <HeroContainer>

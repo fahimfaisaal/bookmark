@@ -4,10 +4,10 @@ const nextConfig = {
   swcMinify: true,
   rewrites: async () => [
     {
-      source: "/api/:slug*",
-      destination: `${process.env.NEXT_PUBLIC_API_URL}/:slug*`,
-    },
-  ],
+      source: '/api/:slug*',
+      destination: `${process.env.NEXT_PUBLIC_API_URL}/:slug*`
+    }
+  ]
 };
 
 module.exports = nextConfig;

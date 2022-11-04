@@ -6,7 +6,7 @@ import { ImgContainerStyle } from './Styles';
 
 const AuthorCard = ({ author }) => {
   const {
-    attributes: { name, avatar },
+    attributes: { name, avatar }
   } = author;
   const url =
     `http://localhost:1337${avatar?.data?.attributes?.url}` ||

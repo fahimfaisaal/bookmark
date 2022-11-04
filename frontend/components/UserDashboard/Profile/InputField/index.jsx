@@ -14,10 +14,10 @@ const InputField = () => {
     control,
     formState: { errors },
     register,
-    reset,
+    reset
   } = useForm({
     mode: 'onBlur',
-    defaultValues: { name: '', bio: '' },
+    defaultValues: { name: '', bio: '' }
   });
   const onValid = (data) => {
     console.log(data);

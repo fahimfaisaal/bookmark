@@ -16,12 +16,12 @@ import {
   InputLabelStyle
 } from './Styles';
 
-
 const Register = ({ open, handleClickOpen, handleClose }) => {
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
-  const [signup, { data, isLoading, error: responseError }] = useSignupMutation()
-  const [error, setError] = useState("");
+  const [signup, { data, isLoading, error: responseError }] =
+    useSignupMutation();
+  const [error, setError] = useState('');
   // console.log({data,isLoading,isSuccess,responseError, error})
   const toggleLogin = () => {
     handleClose();
@@ -30,19 +30,17 @@ const Register = ({ open, handleClickOpen, handleClose }) => {
 
   useEffect(() => {
     if (responseError?.data) {
-        setError(responseError?.data?.error?.message);
-        alert(responseError?.data?.error?.message)
+      setError(responseError?.data?.error?.message);
+      alert(responseError?.data?.error?.message);
     }
     if (data?.jwt && data?.user) {
-       
-       /**
-        * TODO: later redirect home page
-        */
-        alert("Successfully Registered")
-        handleClose();
-
+      /**
+       * TODO: later redirect home page
+       */
+      alert('Successfully Registered');
+      handleClose();
     }
-}, [data, responseError]);
+  }, [data, responseError]);
 
   //Handle Form =========================
   const {
@@ -50,19 +48,18 @@ const Register = ({ open, handleClickOpen, handleClose }) => {
     control,
     formState: { errors },
     register,
-    reset,
+    reset
   } = useForm({
     mode: 'onBlur',
-    defaultValues: { username: '', email: '', password: '', phone: '' },
+    defaultValues: { username: '', email: '', password: '', phone: '' }
   });
 
   const onSubmit = (data) => {
-    signup({ data })
+    signup({ data });
     if (isSuccess) {
       reset();
       handleClose();
     }
-
   };
   //Handle Form =========================
 
@@ -89,7 +86,9 @@ const Register = ({ open, handleClickOpen, handleClose }) => {
                     name="username"
                     label={'Username'}
                     error={Boolean(errors.username)}
-                    {...register('username', { required: 'Username is required' })}
+                    {...register('username', {
+                      required: 'Username is required'
+                    })}
                     helperText={errors.username?.message}
                   />
                 </InputContainer>
@@ -127,7 +126,7 @@ const Register = ({ open, handleClickOpen, handleClose }) => {
                     type={'password'}
                     error={Boolean(errors.password)}
                     {...register('password', {
-                      required: 'Password is required',
+                      required: 'Password is required'
                     })}
                     {...field}
                     helperText={errors.password?.message}

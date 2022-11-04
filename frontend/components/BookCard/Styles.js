@@ -10,7 +10,7 @@ export const StyledBox = styled(Box)(({ theme }) => ({
   height: '100%',
   border: '1px solid #E5E7EB',
   borderRadius: '6px',
-  position: 'relative',
+  position: 'relative'
 }));
 
 export const CartBtnStyle = styled(Button)(({ theme }) => ({
@@ -23,15 +23,15 @@ export const CartBtnStyle = styled(Button)(({ theme }) => ({
   padding: '6px 20px',
   '&:hover': {
     backgroundColor: `${theme.palette.primary.dark}`,
-    color: `${theme.palette.common.white}`,
-  },
+    color: `${theme.palette.common.white}`
+  }
 }));
 
 export const StyledFav = styled(Box)(({ theme }) => ({
   color: `${theme.palette.text.third}`,
   fontSize: '20px',
   cursor: 'pointer',
-  padding: '0 10px',
+  padding: '0 10px'
 }));
 
 export const DiscountLabelStyle = styled(Box)(({ theme }) => ({
@@ -44,7 +44,7 @@ export const DiscountLabelStyle = styled(Box)(({ theme }) => ({
   borderRadius: '15px',
   textAlign: 'center',
   boxShadow: `${theme.shadows[1]}`,
-  zIndex: '9',
+  zIndex: '9'
 }));
 
 export const FavIconStyle = styled(Box)(({ theme }) => ({
@@ -55,11 +55,11 @@ export const FavIconStyle = styled(Box)(({ theme }) => ({
   fontSize: '20px',
   zIndex: '9',
   cursor: 'pointer',
-  boxShadow: `${theme.shadows[1]}`,
+  boxShadow: `${theme.shadows[1]}`
 }));
 
 export const ContentContainerStyle = styled(Box)(() => ({
-  padding: '0px 12px 10px',
+  padding: '0px 12px 10px'
 }));
 
 export const TitleStyle = styled(Link)(({ theme }) => ({
@@ -69,9 +69,9 @@ export const TitleStyle = styled(Link)(({ theme }) => ({
     transition: 'all 0.4s',
     fontSize: '17px',
     '&:hover': {
-      color: `${theme.palette.text.third}`,
-    },
-  },
+      color: `${theme.palette.text.third}`
+    }
+  }
 }));
 
 export const WriterLinkStyle = styled(Link)(({ theme }) => ({
@@ -83,9 +83,9 @@ export const WriterLinkStyle = styled(Link)(({ theme }) => ({
     fontSize: '15px',
     padding: '5px 0',
     '&:hover': {
-      color: `${theme.palette.text.third}`,
-    },
-  },
+      color: `${theme.palette.text.third}`
+    }
+  }
 }));
 
 export const PriceStyle = styled(Stack)(({ theme }) => ({
@@ -93,11 +93,11 @@ export const PriceStyle = styled(Stack)(({ theme }) => ({
   h4: {
     fontSize: '18px',
     color: `${theme.palette.primary.main}`,
-    marginRight: '15px',
+    marginRight: '15px'
   },
   h5: {
     fontSize: '16px',
     textDecoration: 'line-through',
-    color: `${theme.palette.text.secondary}`,
-  },
+    color: `${theme.palette.text.secondary}`
+  }
 }));

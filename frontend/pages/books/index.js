@@ -1,19 +1,23 @@
-import { Box, Button, Grid, Typography } from "@mui/material";
-import { Stack } from "@mui/system";
-import React, { useEffect, useLayoutEffect, useState } from "react";
-import { FiFilter } from "react-icons/fi";
-import { MdClose } from "react-icons/md";
-import { useDispatch, useSelector } from "react-redux";
-import BookCard from "../../components/BookCard";
-import Filter from "../../components/Filter";
-import { useGetBooksQuery } from "../../store/features/books/booksApi";
+import { Box, Button, Grid, Typography } from '@mui/material';
+import { Stack } from '@mui/system';
+import React, { useEffect, useLayoutEffect, useState } from 'react';
+import { FiFilter } from 'react-icons/fi';
+import { MdClose } from 'react-icons/md';
+import { useDispatch, useSelector } from 'react-redux';
+import BookCard from '../../components/BookCard';
+import Filter from '../../components/Filter';
+import { useGetBooksQuery } from '../../store/features/books/booksApi';
 import {
   getAvailabilities,
   getCategories,
-  getPriceRange, getPublishers, getRatingRange, getSearchText,
-  getTags, setFilterFromQuery
-} from "../../store/features/filter/filterSlice";
-import { FilterButtonContainer } from "../publishers/Style";
+  getPriceRange,
+  getPublishers,
+  getRatingRange,
+  getSearchText,
+  getTags,
+  setFilterFromQuery
+} from '../../store/features/filter/filterSlice';
+import { FilterButtonContainer } from '../publishers/Style';
 
 const generateQuery = ({
   tags,
@@ -23,35 +27,35 @@ const generateQuery = ({
   publishers,
   searchText,
   availabilities,
-  page,
+  page
 }) => ({
-  populate: "*",
+  populate: '*',
   pagination: {
     page
   },
   filters: {
     name: {
-      $containsi: searchText,
+      $containsi: searchText
     },
     rating: {
       $gte: ratingRange.at(0),
-      $lte: ratingRange.at(1),
+      $lte: ratingRange.at(1)
     },
     variants: {
       price: {
         $gte: priceRange.at(0),
-        $lte: priceRange.at(1),
-      },
+        $lte: priceRange.at(1)
+      }
     },
     tags: {
       id: {
-        $in: tags,
-      },
+        $in: tags
+      }
     },
     categories: {
       id: {
-        $in: categories,
-      },
+        $in: categories
+      }
     },
     publisherId: {
       id: {
@@ -61,22 +65,22 @@ const generateQuery = ({
     status: {
       $in: availabilities
     }
-  },
+  }
 });
 
 const Books = () => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const tags = useSelector(getTags);
   const categories = useSelector(getCategories);
   const publishers = useSelector(getPublishers);
   const priceRange = useSelector(getPriceRange);
   const ratingRange = useSelector(getRatingRange);
   const searchText = useSelector(getSearchText);
-  const availabilities = useSelector(getAvailabilities)
+  const availabilities = useSelector(getAvailabilities);
 
-  console.log({ priceRange, ratingRange })
-  const [page, setPage] = useState(1)
-  const [books, setBooks] = useState([])
+  console.log({ priceRange, ratingRange });
+  const [page, setPage] = useState(1);
+  const [books, setBooks] = useState([]);
   const [filterTrig, setFilterTrig] = useState(false);
   const { data: bookLists, isSuccess } = useGetBooksQuery({
     query: generateQuery({
@@ -87,29 +91,29 @@ const Books = () => {
       priceRange,
       ratingRange,
       searchText,
-      availabilities,
-    }),
+      availabilities
+    })
   });
 
   useEffect(() => {
-    const query = new URLSearchParams(window.location.search)
+    const query = new URLSearchParams(window.location.search);
     if (query.toString().length) {
-      setFilterTrig(true)
-      dispatch(setFilterFromQuery(Object.fromEntries(query)))
+      setFilterTrig(true);
+      dispatch(setFilterFromQuery(Object.fromEntries(query)));
     }
-  }, [])
+  }, []);
 
   useLayoutEffect(() => {
     if (isSuccess) {
-      setBooks(prev => [].concat(bookLists?.data ?? []))
-      console.log({ effect: bookLists?.data, meta: bookLists?.meta })
+      setBooks((prev) => [].concat(bookLists?.data ?? []));
+      console.log({ effect: bookLists?.data, meta: bookLists?.meta });
     }
-  }, [bookLists?.data])
+  }, [bookLists?.data]);
 
-  const paginationHandler = () => setPage(page + 1)
+  const paginationHandler = () => setPage(page + 1);
 
   const handleFilter = () => {
-    setFilterTrig(prev => !prev);
+    setFilterTrig((prev) => !prev);
   };
 
   return (
@@ -142,9 +146,14 @@ const Books = () => {
               </Grid>
             ))}
           </Grid>
-          <Stack direction={"row"} justifyContent={"center"} my={5}>
+          <Stack direction={'row'} justifyContent={'center'} my={5}>
             {bookLists?.meta?.pageCount > page && (
-              <Button variant="contained" size="large" disableElevation={true} onClick={paginationHandler}>
+              <Button
+                variant="contained"
+                size="large"
+                disableElevation={true}
+                onClick={paginationHandler}
+              >
                 Load More
               </Button>
             )}
@@ -155,4 +164,4 @@ const Books = () => {
   );
 };
 
-export default Books
+export default Books;

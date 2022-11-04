@@ -6,21 +6,21 @@ export const ContainerStyle = styled(Box)(({ theme }) => ({
   borderRadius: '5px',
   display: 'flex',
   width: '100%',
-  justifyContent: 'space-between',
+  justifyContent: 'space-between'
 }));
 
 export const ProfileContainerStyle = styled(Stack)(({ theme }) => ({
-  width: '30%',
+  width: '30%'
 }));
 
 export const DetailsContainerStyle = styled(Box)(({ theme }) => ({
-  textAlign: 'center',
+  textAlign: 'center'
 }));
 
 export const BannerContainerStyle = styled(Box)(({ theme }) => ({
   width: '70%',
   background: `${theme.palette.background.paper}`,
-  padding: '50px 0',
+  padding: '50px 0'
 }));
 
 export const LogoContainer = styled(Box)(() => ({
@@ -29,8 +29,8 @@ export const LogoContainer = styled(Box)(() => ({
   img: {
     width: '130px',
     height: '130px',
-    borderRadius: '50%',
-  },
+    borderRadius: '50%'
+  }
 }));
 
 export const LinkContainer = styled(Link)(({ theme, style }) => ({
@@ -42,13 +42,13 @@ export const LinkContainer = styled(Link)(({ theme, style }) => ({
   // TODO: Need an optimal solution for this padding issue.
   color: `${theme.palette.text.secondary}`,
   '&:hover': {
-    color: `${theme.palette.primary.main}`,
+    color: `${theme.palette.primary.main}`
   },
-  ...style,
+  ...style
 }));
 
 export const TitleStyle = styled(Typography)(() => ({
   padding: '20px',
   fontSize: '22px',
-  fontWeight: '700',
+  fontWeight: '700'
 }));
