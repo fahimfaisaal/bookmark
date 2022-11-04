@@ -3,7 +3,8 @@ import { apiSlice } from "../api/apiSlice";
 export const cartsApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getCartsByUser: builder.query({
-      query: ({ userId }) => `/carts?populate[0]=${userId}`,
+      query: ({ userId }) =>
+        `/carts?populate=*&filters[userId][id][$eq]=${userId}`,
       providesTags: ["carts"],
     }),
 
@@ -11,22 +12,35 @@ export const cartsApi = apiSlice.injectEndpoints({
       query: ({ cartId }) => `/carts/${cartId}`,
       providesTags: (result, error, arg) => [{ type: "cart", id: arg }],
     }),
+    getCartByUserBook: builder.query({
+      query: ({ params }) => `/carts?${params}`,
+      providesTags: (result, error, arg) => [
+        { type: "cart", id: arg },
+        "carts",
+      ],
+    }),
     addToCart: builder.mutation({
       query: ({ data }) => ({
         url: "/carts",
         method: "POST",
-        body: data,
+        body: { data },
       }),
       invalidatesTags: ["carts"],
     }),
 
     updateCart: builder.mutation({
-      query: ({ data, cartId }) => ({
-        url: `/carts/${cartId}`,
-        method: "PUT",
-        body: data,
-      }),
-      invalidatesTags: (result, error, arg) => [{ type: "cart", id: arg }],
+      query: ({ cartId, data }) => {
+        console.log({ api: cartId, data });
+        return {
+          url: `/carts/${cartId}`,
+          method: "PUT",
+          body: { data },
+        };
+      },
+      invalidatesTags: (result, error, arg) => [
+        { type: "cart", id: arg },
+        "carts",
+      ],
     }),
     deleteCart: builder.mutation({
       query: ({ cartId }) => ({
@@ -41,7 +55,8 @@ export const cartsApi = apiSlice.injectEndpoints({
 export const {
   useGetCartsByUserQuery,
   useGetCartQuery,
-  useAddToCartMutaion,
+  useAddToCartMutation,
   useUpdateCartMutation,
   useDeleteCartMutation,
+  useGetCartByUserBookQuery,
 } = cartsApi;

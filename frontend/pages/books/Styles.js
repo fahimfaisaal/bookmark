@@ -59,13 +59,22 @@ export const AuthorLinkStyle = styled(Typography)(({ theme }) => ({
 
 export const BookPriceStyle = styled(Typography)(({ theme }) => ({
   color: `${theme.palette.primary.main}`,
-  padding: '30px 0',
+  // padding: '30px 0',
+}));
+export const OldBookPriceStyle = styled(Typography)(({ theme }) => ({
+  color: `${theme.palette.grey[600]}`,
+  textDecoration: 'line-through',
 }));
 
-export const VariantBtnStyle = styled(Button)(({ theme }) => ({
+export const VariantBtnStyle = styled(Button)(({ theme, active }) => ({
   backgroundColor: `${theme.palette.background.dark}`,
-  border: `1px solid ${theme.palette.grey[300]}`,
+  border: active
+    ? `2px solid ${theme.palette.primary.main}`
+    : `2px solid ${theme.palette.grey[300]}`,
   color: `${theme.palette.text.primary}`,
+  '&:hover': {
+    border: `2px solid ${theme.palette.primary.main}`,
+  },
 }));
 
 const commonStyles = (theme) => ({

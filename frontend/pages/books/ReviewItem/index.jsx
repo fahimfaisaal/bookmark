@@ -4,7 +4,7 @@ import React from 'react';
 import { AiFillCheckCircle, AiFillStar, AiOutlineMore } from 'react-icons/ai';
 import { IconMenuContainer, ReviewPointStyle } from './Styles';
 
-const ReviewItem = () => {
+const ReviewItem = (rating) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -13,16 +13,18 @@ const ReviewItem = () => {
   const handleClose = () => {
     setAnchorEl(null);
   };
+  const date = new Date(rating?.rating?.attributes?.createdAt);
   return (
     <Box my={2} mb={5}>
       <ReviewPointStyle>
-        <Typography variant="h2">3</Typography>
+        <Typography variant="h2">{rating?.rating?.attributes?.rate}</Typography>
         <Typography variant="h3">
           <AiFillStar />
         </Typography>
       </ReviewPointStyle>
       <Typography variant="body2" py={2}>
-        by Customer2 <AiFillCheckCircle />
+        by {rating?.rating?.attributes?.userId?.data?.attributes?.username}{' '}
+        <AiFillCheckCircle />
       </Typography>
       <Stack
         direction={'row'}
@@ -30,19 +32,21 @@ const ReviewItem = () => {
         justifyContent={'space-between'}
       >
         <Typography variant="h2" fontWeight={'400'} mb={3}>
-          Okay with the price but wood is not of good quality
+          {rating?.rating?.attributes?.comment}
         </Typography>
-        <IconMenuContainer
-          variant="h2"
-          aria-label="more"
-          id="long-button"
-          aria-controls={open ? 'long-menu' : undefined}
-          aria-expanded={open ? 'true' : undefined}
-          aria-haspopup="true"
-          onClick={handleClick}
-        >
-          <AiOutlineMore />
-        </IconMenuContainer>
+        {false && (
+          <IconMenuContainer
+            variant="h2"
+            aria-label="more"
+            id="long-button"
+            aria-controls={open ? 'long-menu' : undefined}
+            aria-expanded={open ? 'true' : undefined}
+            aria-haspopup="true"
+            onClick={handleClick}
+          >
+            <AiOutlineMore />
+          </IconMenuContainer>
+        )}
         <Menu
           id="long-menu"
           MenuListProps={{
@@ -61,7 +65,7 @@ const ReviewItem = () => {
         </Menu>
       </Stack>
 
-      <Typography variant="body2">Date: 16 December, 2020</Typography>
+      <Typography variant="body2">{date.toUTCString()}</Typography>
     </Box>
   );
 };

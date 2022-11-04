@@ -1,10 +1,18 @@
 import { InputLabel, TextField } from '@mui/material';
 import { Stack } from '@mui/system';
-import React from 'react';
+import { useState } from 'react';
+import ContactModal from '../../../shared/Modals/ContactModal';
 import { StyledContainer } from '../../Styles';
-import Modal from '../Modal';
 
 const ContactCard = () => {
+  const [formValue, setFormValue] = useState('');
+
+  //state lifting starts==========
+  const getData = (data) => {
+    setFormValue(data);
+  };
+  //state lifting ends==========
+
   return (
     <StyledContainer sx={{ boxShadow: 3 }}>
       <Stack
@@ -13,13 +21,23 @@ const ContactCard = () => {
         alignItems="center"
         flexWrap={'wrap'}
       >
-        <InputLabel color="secondary">Contact Number</InputLabel>
+        <InputLabel htmlFor="contact" color="secondary">
+          Contact Number
+        </InputLabel>
 
         <>
-          <Modal btnText="+ Update" />
+          <ContactModal getData={getData} btnText="+ Update" />
         </>
       </Stack>
-      <TextField fullWidth placeholder="+8801..." id="fullWidth" />
+      <TextField
+        sx={{ marginBottom: 1.6 }}
+        value={formValue}
+        id="contact"
+        fullWidth
+        placeholder="+8801..."
+        name="contact"
+        disabled
+      />
     </StyledContainer>
   );
 };

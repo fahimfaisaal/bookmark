@@ -5,6 +5,7 @@ import { Box } from "@mui/system";
 import Link from "next/link";
 import * as React from "react";
 import { FaShoppingCart } from "react-icons/fa";
+
 import CustomImage from "../CustomImage";
 
 import {
@@ -15,16 +16,18 @@ import {
   StyledBox,
   StyledFav,
   TitleStyle,
-  WriterLinkStyle,
+  WriterLinkStyle
 } from "./Styles";
 
 const BookCard = ({ book, bookId }) => {
-  const [favorite, setFavorite] = React.useState(false);
-  const { authors, images, variants } = book || {};
+  const [favorite, setFavorite] = useState(false);
+  const { authors, images, variants, status, ratings } = book || {};
+
   const bookImage =
     (images?.data &&
       `http://localhost:1337${images?.data[0]?.attributes?.url}`) ||
     "/images/product-dummy.png";
+  const authorId = authors?.data[0]?.id;
 
   const handleFavorite = () => {
     if (favorite) {
@@ -33,7 +36,14 @@ const BookCard = ({ book, bookId }) => {
       setFavorite(true);
     }
   };
-
+  const avarageReview = ratings?.data?.reduce((acc, cur) => {
+    acc += Number(cur.attributes.rate);
+    return acc;
+  }, 0);
+  const authUser = useSelector((state) => state?.auth?.user);
+  let [min, max] = variants?.data?.reduce(([prevMin,prevMax], {attributes})=>
+   [Math.min(prevMin, attributes?.price), Math.max(prevMax, attributes?.price)], [Infinity, -Infinity]);
+  
   return (
     <StyledBox>
       <Link href={`/books/${bookId}`} sx={{ cursor: "pointer" }}>
@@ -48,7 +58,7 @@ const BookCard = ({ book, bookId }) => {
       </Link>
       <ContentContainerStyle>
         <TitleStyle>
-          <Link href={"/books/123"}>
+          <Link href={`/books/${bookId}`}>
             <Typography variant="h3" color="text.primary" py={"5px"}>
               {book?.name}
             </Typography>
@@ -57,7 +67,7 @@ const BookCard = ({ book, bookId }) => {
 
         <Stack direction="row" spacing={1} alignItems="center">
           <Typography variant="caption">by</Typography>
-          <Link href={"/authors/123"}>
+          <Link href={`/authors/${authors?.data[0]?.id}`}>
             <WriterLinkStyle>
               <Typography variant="body2">
                 {authors?.data[0]?.attributes?.name}
@@ -65,18 +75,30 @@ const BookCard = ({ book, bookId }) => {
             </WriterLinkStyle>
           </Link>
         </Stack>
+        {ratings?.data?.length > 0 && (
+          <Stack direction={"row"} alignItems={"center"} pb={1}>
+            <Rating
+              defaultValue={avarageReview}
+              precision={0.5}
+              readOnly
+              size="small"
+            />
+            <Typography variant="body2">({ratings?.data?.length})</Typography>
+          </Stack>
+        )}
+
         <Typography
           variant="caption"
           sx={{ color: "text.secondary", margin: "5px 0" }}
         >
-          Stock: 25 pcs left
+          {status}
         </Typography>
         <PriceStyle direction={"row"} alignItems={"center"}>
           {variants?.data[0]?.attributes?.price == null ? (
             <Typography variant="h4">Free</Typography>
           ) : (
             <Typography variant="h4">
-              ${variants?.data[0]?.attributes?.price}
+              ${min} - ${max}
             </Typography>
           )}
 
@@ -86,15 +108,22 @@ const BookCard = ({ book, bookId }) => {
             </Typography>
           )}
         </PriceStyle>
+
         <Stack
           direction="row"
           spacing={2}
           alignItems="center"
           justifyContent="space-between"
         >
-          <CartBtnStyle>
-            <FaShoppingCart /> Cart
-          </CartBtnStyle>
+          <Link
+            href={`${authUser ? `/books/${bookId}` : ""}`}
+            sx={{ cursor: "pointer" }}
+          >
+            <CartBtnStyle>
+              <FaShoppingCart /> Cart
+            </CartBtnStyle>
+          </Link>
+
           <StyledFav onClick={handleFavorite}>
             {favorite ? <FavoriteIcon /> : <FavoriteBorderIcon />}
           </StyledFav>

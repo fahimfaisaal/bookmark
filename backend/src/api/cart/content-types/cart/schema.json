@@ -16,11 +16,6 @@
       "type": "integer",
       "required": true
     },
-    "userId": {
-      "type": "relation",
-      "relation": "oneToOne",
-      "target": "plugin::users-permissions.user"
-    },
     "orderId": {
       "type": "string"
     },
@@ -33,6 +28,12 @@
       "type": "relation",
       "relation": "oneToOne",
       "target": "api::book.book"
+    },
+    "userId": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "carts"
     }
   }
 }

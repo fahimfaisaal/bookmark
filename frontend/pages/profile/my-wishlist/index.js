@@ -1,6 +1,7 @@
 import { Box } from '@mui/system';
 import UserDashboard from '../../../components/UserDashboard';
 import MyWishlist from '../../../components/UserDashboard/MyWishlist';
+import withAuth from '../../../hoc/PrivateAuth';
 
 const MyFavList = () => {
   return (
@@ -14,4 +15,4 @@ const MyFavList = () => {
   );
 };
 
-export default MyFavList;
+export default withAuth(MyFavList);

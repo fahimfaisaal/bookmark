@@ -1,10 +1,18 @@
 import { InputLabel, TextField, Typography } from '@mui/material';
 import { Stack } from '@mui/system';
-import Modal from '../../../components/UserDashboard/Profile/Modal';
+import { useState } from 'react';
+import ContactModal from '../../../components/shared/Modals/ContactModal';
 import { StyledContainer } from '../../../components/UserDashboard/Styles';
 import { StyledTypo } from './Styles';
 
 const Contact = ({ text }) => {
+  const [formValue, setFormValue] = useState('');
+
+  //state lifting starts==========
+  const getData = (data) => {
+    setFormValue(data);
+  };
+  //state lifting ends==========
   return (
     <StyledContainer sx={{ boxShadow: 5 }}>
       <Stack
@@ -19,10 +27,19 @@ const Contact = ({ text }) => {
         </InputLabel>
 
         <>
-          <Modal btnText="+ Update" />
+          <ContactModal getData={getData} btnText="+ Update" />
         </>
       </Stack>
-      <TextField size="small" fullWidth placeholder="+8801..." id="fullWidth" />
+      <TextField
+        sx={{ marginBottom: 1.6 }}
+        value={formValue}
+        id="contact"
+        fullWidth
+        size="small"
+        placeholder="+8801..."
+        name="contact"
+        disabled
+      />
     </StyledContainer>
   );
 };

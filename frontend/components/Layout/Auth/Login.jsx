@@ -1,4 +1,4 @@
-import { Divider, Link, Stack, Typography } from '@mui/material';
+import { Divider, Link, Stack, TextField, Typography } from '@mui/material';
 import Dialog from '@mui/material/Dialog';
 
 import { useTheme } from '@mui/material/styles';
@@ -9,23 +9,59 @@ import { FaFacebookF } from 'react-icons/fa';
 import CloseBtn from './CloseBtn';
 import FormBtn from './FormBtn';
 import Header from './Header';
-import InputGroup from './InputGroup';
 import {
   CloseContainer,
   ContainerStyle,
   FormContainer,
   IconContainer,
   InputContainer,
+  InputLabelStyle,
 } from './Styles';
+import { useForm, Controller } from 'react-hook-form';
+import { useLoginMutation } from '../../../store/features/auth/authApi';
+import { useState, useEffect } from 'react';
 
 const Login = ({ open, handleClickOpen, handleClose }) => {
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
+  const [login, { data, isLoading,isSuccess, error: responseError }] = useLoginMutation()
+  const [error, setError] = useState("");
+  // console.log({data,isLoading,isSuccess,responseError, error})
 
   const toggleRegister = () => {
     handleClose();
     handleClickOpen();
   };
+
+  useEffect(() => {
+    if (responseError?.data) {
+        setError(responseError?.data?.error?.message);
+        alert(responseError?.data?.error?.message)
+    }
+    if (data?.jwt && data?.user) {
+       
+       /**
+        * TODO: later redirect home page
+        */
+        alert("Successfully Registered")
+        handleClose();
+
+    }
+}, [data, responseError]);
+
+  //Handle Form =========================
+  const {
+    handleSubmit,
+    control,
+    formState: { errors },
+    register,
+    reset,
+  } = useForm({ mode: 'onBlur' });
+  const onSubmit = (data) => {
+    login({data})
+    reset();
+  };
+  //Handle Form =========================
 
   return (
     <Dialog
@@ -37,18 +73,53 @@ const Login = ({ open, handleClickOpen, handleClose }) => {
     >
       <ContainerStyle>
         <Header subtitle={'Login with your email & password'} />
+
         <FormContainer>
-          <InputContainer>
-            <InputGroup label={'Email'} type={'email'} />
-          </InputContainer>
-
-          <InputContainer>
-            <InputGroup label={'Password'} type={'password'} />
-          </InputContainer>
-
-          <InputContainer>
-            <FormBtn>Login</FormBtn>
-          </InputContainer>
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <Controller
+              name="identifier"
+              control={control}
+              render={({ field }) => (
+                <InputContainer>
+                  <InputLabelStyle variant="h4">Email/Username</InputLabelStyle>
+                  <TextField
+                    fullWidth
+                    name="identifier"
+                    label={'Email/Username'}
+                    type={'text'}
+                    {...field}
+                    error={Boolean(errors.identifier)}
+                    {...register('identifier', { required: 'identifier is required' })}
+                    helperText={errors.identifier?.message}
+                  />
+                </InputContainer>
+              )}
+            />
+            <Controller
+              name="password"
+              control={control}
+              render={({ field }) => (
+                <InputContainer>
+                  <InputLabelStyle variant="h4">Password</InputLabelStyle>
+                  <TextField
+                    fullWidth
+                    name="password"
+                    label={'Password'}
+                    type={'password'}
+                    error={Boolean(errors.password)}
+                    {...register('password', {
+                      required: 'Password is required',
+                    })}
+                    {...field}
+                    helperText={errors.password?.message}
+                  />
+                </InputContainer>
+              )}
+            />
+            <InputContainer>
+              <FormBtn>Login</FormBtn>
+            </InputContainer>
+          </form>
         </FormContainer>
         <Divider>Or</Divider>
         <InputContainer>

@@ -56,7 +56,7 @@ const typography = {
     // ...responsiveFontSizes({ sm: 26, md: 30, lg: 32 }),
   },
   h5: {
-    fontWeight: 600,
+    fontWeight: 400,
     lineHeight: 1.5,
     fontSize: pxToRem(14),
     // ...responsiveFontSizes({ sm: 26, md: 30, lg: 32 }),
