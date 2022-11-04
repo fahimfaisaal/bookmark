@@ -1,26 +1,25 @@
 import { Box, Button, Grid, Typography } from "@mui/material";
 import { Stack } from "@mui/system";
-import { useRouter } from "next/router";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 import { FiFilter } from "react-icons/fi";
 import { MdClose } from "react-icons/md";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import BookCard from "../../components/BookCard";
 import Filter from "../../components/Filter";
 import { useGetBooksQuery } from "../../store/features/books/booksApi";
 import {
   getAvailabilities,
   getCategories,
-  getPriceRange, getPublishers, getQuery,
-  getSearchText,
-  getTags
+  getPriceRange, getPublishers, getRatingRange, getSearchText,
+  getTags, setFilterFromQuery
 } from "../../store/features/filter/filterSlice";
 import { FilterButtonContainer } from "../publishers/Style";
 
 const generateQuery = ({
   tags,
   categories,
-  priceRange: [min, max] = [],
+  priceRange = [],
+  ratingRange = [],
   publishers,
   searchText,
   availabilities,
@@ -34,10 +33,14 @@ const generateQuery = ({
     name: {
       $containsi: searchText,
     },
+    rating: {
+      $gte: ratingRange.at(0),
+      $lte: ratingRange.at(1),
+    },
     variants: {
       price: {
-        $gte: min,
-        $lte: max,
+        $gte: priceRange.at(0),
+        $lte: priceRange.at(1),
       },
     },
     tags: {
@@ -62,41 +65,51 @@ const generateQuery = ({
 });
 
 const Books = () => {
+  const dispatch = useDispatch()
   const tags = useSelector(getTags);
   const categories = useSelector(getCategories);
   const publishers = useSelector(getPublishers);
   const priceRange = useSelector(getPriceRange);
+  const ratingRange = useSelector(getRatingRange);
   const searchText = useSelector(getSearchText);
   const availabilities = useSelector(getAvailabilities)
-  const router = useRouter()
-  const query = useSelector(getQuery)
+
+  console.log({ priceRange, ratingRange })
   const [page, setPage] = useState(1)
-
-  const paginationHandler = () => setPage(page + 1)
-
-  const { data: bookLists } = useGetBooksQuery({
+  const [books, setBooks] = useState([])
+  const [filterTrig, setFilterTrig] = useState(false);
+  const { data: bookLists, isSuccess } = useGetBooksQuery({
     query: generateQuery({
       page,
       tags,
       categories,
       publishers,
       priceRange,
+      ratingRange,
       searchText,
       availabilities,
     }),
   });
 
   useEffect(() => {
-    if (query) {
-      router.push(`?${query}`)
-      setPage(1)
+    const query = new URLSearchParams(window.location.search)
+    if (query.toString().length) {
+      setFilterTrig(true)
+      dispatch(setFilterFromQuery(Object.fromEntries(query)))
     }
-  }, [query])
+  }, [])
 
-  const [filterTrig, setFilterTrig] = useState(false);
+  useLayoutEffect(() => {
+    if (isSuccess) {
+      setBooks(prev => [].concat(bookLists?.data ?? []))
+      console.log({ effect: bookLists?.data, meta: bookLists?.meta })
+    }
+  }, [bookLists?.data])
+
+  const paginationHandler = () => setPage(page + 1)
 
   const handleFilter = () => {
-    setFilterTrig(!filterTrig);
+    setFilterTrig(prev => !prev);
   };
 
   return (
@@ -123,14 +136,14 @@ const Books = () => {
           </FilterButtonContainer>
 
           <Grid container spacing={3}>
-            {bookLists?.data?.map((book) => (
+            {books?.map((book) => (
               <Grid item md={6} lg={filterTrig ? 4 : 3} xs={12} key={book?.id}>
                 <BookCard book={book?.attributes} bookId={book?.id} />
               </Grid>
             ))}
           </Grid>
           <Stack direction={"row"} justifyContent={"center"} my={5}>
-            {bookLists?.data?.length === 25 && (
+            {bookLists?.meta?.pageCount > page && (
               <Button variant="contained" size="large" disableElevation={true} onClick={paginationHandler}>
                 Load More
               </Button>
@@ -142,4 +155,4 @@ const Books = () => {
   );
 };
 
-export default Books;
+export default Books

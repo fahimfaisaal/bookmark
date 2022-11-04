@@ -8,28 +8,28 @@ import Slider from "@mui/material/Slider";
 import { Stack } from "@mui/system";
 import * as React from "react";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { updatePriceRange } from "../../../store/features/filter/filterSlice";
 import { FilterTitleStyle } from "../style";
 import { PriceRangeContainer } from "./style";
 
-export default function RangeSlider() {
+export default function RangeSlider({ title, commitHandler, initialState, min, max, step }) {
   const theme = useTheme();
   const [expanded, setExpanded] = useState(true);
-  const dispatch = useDispatch();
+  const [value, setValue] = useState([0, 0]);
+
+  React.useEffect(() => {
+    setValue(initialState)
+  }, [initialState])
 
   const handleAccordion = () => {
     setExpanded(!expanded);
   };
-
-  const [value, setValue] = React.useState([10, 5000]);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
   const changeCommittedHandler = () => {
-    dispatch(updatePriceRange({ range: value }));
+    commitHandler(value)
   }
 
   return (
@@ -44,19 +44,19 @@ export default function RangeSlider() {
         id="panel1bh-header"
         sx={{ padding: "0" }}
       >
-        <FilterTitleStyle variant="h2">Sort By Price</FilterTitleStyle>
+        <FilterTitleStyle variant="h2">{title}</FilterTitleStyle>
       </AccordionSummary>
       <AccordionDetails sx={{ padding: "0" }}>
         <Box>
           <Slider
-            getAriaLabel={() => "Price range"}
+            getAriaLabel={() => title}
             value={value}
             onChange={handleChange}
             onChangeCommitted={changeCommittedHandler}
             valueLabelDisplay="auto"
-            step={10}
-            min={10}
-            max={2000}
+            step={step}
+            min={min}
+            max={max}
           />
 
           <Stack

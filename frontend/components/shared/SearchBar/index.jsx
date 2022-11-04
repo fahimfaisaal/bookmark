@@ -1,23 +1,26 @@
 import { InputBase, useTheme } from "@mui/material";
 import { useDeferredValue, useEffect, useState } from "react";
 import { BiSearch } from "react-icons/bi";
-import { useDispatch } from "react-redux";
-import { addSearch } from "../../../store/features/filter/filterSlice";
 import { SearchContainer } from "./Styles";
 
 const SearchBar = ({
-  normal,
+  searchHandler,
+  normal = true,
+  initialState = "",
   placeholder = "Search Books (at least 3 char)",
 }) => {
   const theme = useTheme();
   const [focus, setFocus] = useState(false);
-  const [searchText, setSearchText] = useState("");
-  const dispatch = useDispatch();
+  const [searchText, setSearchText] = useState(initialState);
   const deferredText = useDeferredValue(searchText);
 
   useEffect(() => {
-    dispatch(addSearch(deferredText));
-  }, [deferredText]);
+    searchHandler && searchHandler(deferredText)
+  }, [deferredText])
+
+  useEffect(() => {
+    setSearchText(initialState)
+  }, [initialState])
 
   const changeHandler = (e) => setSearchText(e.target.value);
 
@@ -40,7 +43,6 @@ const SearchBar = ({
           : { border: `1px solid ${theme.palette.background.dark}` }
       }
       normal={normal}
-      // width={width}
     >
       <BiSearch />
       <InputBase

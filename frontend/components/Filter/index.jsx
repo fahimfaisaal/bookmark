@@ -11,7 +11,7 @@ import {
   addRemoveTags,
   clearFilter,
   getAvailabilities,
-  getCategories, getPublishers, getTags, setStateFromQuery
+  getCategories, getPriceRange, getPublishers, getQueries, getRatingRange, getTags, updatePriceRange, updateRatingRange
 } from "../../store/features/filter/filterSlice";
 import { useGetPublishersQuery } from "../../store/features/publishers/publisherApi";
 import { useGetTagsQuery } from "../../store/features/tags/tagsApi";
@@ -32,17 +32,23 @@ const Filter = () => {
     'COMING_SOON',
     'PRE_ORDER',
   ]
-
   const dispatch = useDispatch();
   const filterTags = useSelector(getTags);
   const filterCategories = useSelector(getCategories);
   const filterPublishers = useSelector(getPublishers);
-  const filterAvailabilities = useSelector(getAvailabilities)
+  const filterAvailabilities = useSelector(getAvailabilities);
+  const queries = useSelector(getQueries)
+  const filterPriceRange = useSelector(getPriceRange)
+  const filterRatingRange = useSelector(getRatingRange)
 
   useEffect(() => {
-    console.log({ query: router.query })
-    dispatch(setStateFromQuery(router.query))
-  }, [JSON.stringify(router.query)])
+    router.push({
+      pathname: router.pathname,
+      query: queries
+    }, '', {
+      scroll: false
+    })
+  }, [queries])
 
   const setCategory = ([id, name]) => {
     dispatch(addRemoveCategories({ id, name }));
@@ -58,6 +64,14 @@ const Filter = () => {
 
   const setAvailabilities = ([status]) => {
     dispatch(addRemoveAvailability({ status: status.toUpperCase().replace(/\s/g, '_') }))
+  }
+
+  const priceCommitHandler = (value) => {
+    dispatch(updatePriceRange({ range: value }));
+  }
+
+  const ratingCommitHandler = (value) => {
+    dispatch(updateRatingRange({ range: value }));
   }
 
   const clear = () => dispatch(clearFilter());
@@ -84,6 +98,7 @@ const Filter = () => {
 
       <InnerContainerStyle>
         <SearchBarComp />
+        
         <Divider />
         <RadioBoxList />
         <CheckboxList
@@ -93,7 +108,22 @@ const Filter = () => {
           selectItems={new Set(filterCategories)}
         />
         <Divider />
-        <RangeSlider />
+        <RangeSlider
+          title={"Price range"}
+          commitHandler={priceCommitHandler}
+          initialState={filterPriceRange.length === 0 ? [0, 5000] : filterPriceRange}
+          min={10}
+          max={5000}
+          step={10}
+        />
+        <RangeSlider
+          title={"Rating range"}
+          commitHandler={ratingCommitHandler}
+          initialState={filterRatingRange.length === 0 ? [0, 5] : filterRatingRange}
+          min={0}
+          max={5}
+          step={0.1}
+        />
         <Divider />
         <CheckboxList
           setItem={setTag}
@@ -113,7 +143,7 @@ const Filter = () => {
           setItem={setAvailabilities}
           title={"Availability"}
           data={status.map(stat => stat.toLowerCase().replace(/_/g, ' '))}
-          selectItems={new Set(filterAvailabilities.map(stat => stat?.toLowerCase().replace(/_/g, ' ')))}
+          selectItems={new Set(filterAvailabilities?.map(stat => stat?.toLowerCase().replace(/_/g, ' ')))}
         />
       </InnerContainerStyle>
     </ContainerStyle>
