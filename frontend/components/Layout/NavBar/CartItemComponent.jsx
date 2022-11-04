@@ -1,4 +1,4 @@
-import React from "react";
+import {useState, useEffect} from "react";
 import {
   Box,
   Button,
@@ -29,12 +29,13 @@ export default function CartItemComponent({
 }) {
   const router = useRouter()
   
-  
   const navigateCheckout = () => {
     toggleDrawer(false)
     router.push("/checkout") 
     
   }
+
+
   // console.log({ cartLists, totalAmount });
   return (
     <SwipeableDrawer
@@ -68,7 +69,7 @@ export default function CartItemComponent({
 
         {cartLists?.data?.map((cart) => (
           <CartItemContainer>
-            <CartItem cart={cart?.attributes} key={cart?.id}  />
+            <CartItem cart={cart?.attributes} cartId={cart?.id} key={cart?.id}  />
           </CartItemContainer>
         ))}
       </CartContainer>

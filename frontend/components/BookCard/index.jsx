@@ -41,7 +41,9 @@ const BookCard = ({ book, bookId }) => {
     return acc;
   }, 0);
   const authUser = useSelector((state) => state?.auth?.user);
-  // console.log({authorId })
+  let [min, max] = variants?.data?.reduce(([prevMin,prevMax], {attributes})=>
+   [Math.min(prevMin, attributes?.price), Math.max(prevMax, attributes?.price)], [Infinity, -Infinity]);
+  
   return (
     <StyledBox>
       <Link href={`/books/${bookId}`} sx={{ cursor: "pointer" }}>
@@ -96,7 +98,7 @@ const BookCard = ({ book, bookId }) => {
             <Typography variant="h4">Free</Typography>
           ) : (
             <Typography variant="h4">
-              ${variants?.data[0]?.attributes?.price}
+              ${min} - ${max}
             </Typography>
           )}
 

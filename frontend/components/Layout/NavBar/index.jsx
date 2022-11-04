@@ -31,6 +31,7 @@ import { BOOKMARK_AUTH } from '../../../constant';
 import { UseThemeContext } from '../../../context/ThemeContext';
 import useAuthCheck from '../../../hooks/useAuthCheck';
 import { userLoggedOut } from '../../../store/features/auth/authSlice';
+import { useGetBooksQuery } from '../../../store/features/books/booksApi';
 import { useGetCartsByUserQuery } from '../../../store/features/carts/cartsApi';
 import SearchBar from '../../shared/SearchBar';
 import Login from '../Auth/Login';
@@ -160,13 +161,29 @@ const NavBar = () => {
   const router = useRouter();
   const isAuthenticated = useSelector(state => state?.auth)
   const authUser = isAuthenticated?.user || {}
+  const [cartBookFilter, setCartBookFilter] = useState()
   const { data: cartLists } = useGetCartsByUserQuery({ userId: authUser?.id });
+  const {data: cartBooks} = useGetBooksQuery(cartBookFilter)
+
+  useEffect(()=> {
+    setCartBookFilter({params: "populate[0]=images&filters[id][$in][0]=1197&filters[id][$in][1]=1237"})
+  }, [cartLists])
+
+  useEffect(()=>{
+    if(cartLists?.data && cartBooks?.data){
+      // let cartBookItem = 
+      cartLists?.data?.map((item,ind)=>{
+        // let isBook = 
+        // if(item?.attributes?.book?.data?.id == )
+      })
+    }
+  }, [])
 
   const totalAmount = cartLists?.data?.reduce(
     (acc, curr) => acc + (curr?.attributes?.variant?.data?.attributes?.price * curr?.attributes?.quantity),
     0
   );
-  // console.log({isAuthenticat: !!isAuthenticated.accessToken, isAuthenticated });
+  console.log({c: cartLists?.data, cartBooks });
 
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
