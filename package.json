@@ -1,0 +1,17 @@
+{
+  "devDependencies": {
+    "eslint": "^8.26.0",
+    "husky": "^8.0.0",
+    "lint-staged": "^13.0.3",
+    "prettier": "^2.7.1"
+  },
+  "scripts": {
+    "format": "prettier --config .prettierrc './**/**/*.{js,jsx}' --write",
+    "prepare": "husky install"
+  },
+  "lint-staged": {
+    "./**/**/*.{js,jsx}": [
+      "yarn format"
+    ]
+  }
+}

@@ -1,11 +1,11 @@
 module.exports = ({ env }) => ({
   // ...
-  "users-permissions": {
+  'users-permissions': {
     config: {
       jwt: {
-        expiresIn: "7d",
-      },
-    },
-  },
+        expiresIn: '7d'
+      }
+    }
+  }
   // ...
 });

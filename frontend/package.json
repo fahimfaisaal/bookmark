@@ -6,8 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
-    "format": "prettier --config .prettierrc './**/**/*.{js,jsx}' --write"
+    "lint": "next lint"
   },
   "dependencies": {
     "@emotion/css": "^11.10.0",

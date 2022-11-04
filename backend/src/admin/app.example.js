@@ -26,7 +26,7 @@ const config = {
     // 'vi',
     // 'zh-Hans',
     // 'zh',
-  ],
+  ]
 };
 
 const bootstrap = (app) => {
@@ -35,5 +35,5 @@ const bootstrap = (app) => {
 
 export default {
   config,
-  bootstrap,
+  bootstrap
 };

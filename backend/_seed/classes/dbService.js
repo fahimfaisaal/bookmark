@@ -1,9 +1,9 @@
-const generateModel = require("../generateModel");
-const { faker } = require("@faker-js/faker");
-const StrapiCRUDService = require("./strapiService");
-const { getFiles } = require("../helpers");
-const { resolve } = require("path");
-const fs = require("fs");
+const generateModel = require('../generateModel');
+const { faker } = require('@faker-js/faker');
+const StrapiCRUDService = require('./strapiService');
+const { getFiles } = require('../helpers');
+const { resolve } = require('path');
+const fs = require('fs');
 
 class DbService {
   /**
@@ -36,7 +36,7 @@ class DbService {
     while (modelCount--) {
       models.push({
         ...generateModel[modelName](this.strapi),
-        publishedAt: new Date(),
+        publishedAt: new Date()
       });
     }
 
@@ -58,20 +58,20 @@ class DbService {
       relateWith,
       max,
       min,
-      labels: [label1, label2],
+      labels: [label1, label2]
     } = relateInfo;
     const memoizeLabel2 = {};
 
     for (const modelId of this.modelIdMap[modelName]) {
       const relationCount = faker.datatype.number({
         max,
-        min,
+        min
       });
       const shuffle = faker.helpers.shuffle(this.modelIdMap[relateWith]);
       const relateModels = shuffle.slice(0, relationCount);
 
       await this.strapiService.update(modelName, modelId, {
-        [label1]: relateModels,
+        [label1]: relateModels
       });
 
       for (const relateId of relateModels) {
@@ -85,7 +85,7 @@ class DbService {
 
     for (const relateId in memoizeLabel2) {
       await this.strapiService.update(relateWith, relateId, {
-        [label2]: memoizeLabel2[relateId],
+        [label2]: memoizeLabel2[relateId]
       });
     }
   }
@@ -99,22 +99,25 @@ class DbService {
    * @param {ModelInfoO2M} relationInfo
    */
   async #relateOneToMany(modelName, relationInfo) {
-    const { relateWith, label, max = 0,  min = 0, } = relationInfo;
+    const { relateWith, label, max = 0, min = 0 } = relationInfo;
     const relationModelIds = [...this.modelIdMap[relateWith]];
 
     for (const modelId of this.modelIdMap[modelName]) {
       if (max || min) {
-        const shuffleArray = faker.helpers.shuffle(relationModelIds)
-        const randIndex = faker.datatype.number({ min, max: Math.min(max, relationModelIds.length)})
+        const shuffleArray = faker.helpers.shuffle(relationModelIds);
+        const randIndex = faker.datatype.number({
+          min,
+          max: Math.min(max, relationModelIds.length)
+        });
 
         await this.strapiService.update(modelName, modelId, {
-          [label]: shuffleArray.slice(0, randIndex),
+          [label]: shuffleArray.slice(0, randIndex)
         });
       } else {
         const relateIndex = Math.floor(Math.random() * relationModelIds.length);
 
         await this.strapiService.update(modelName, modelId, {
-          [label]: relationModelIds.at(relateIndex),
+          [label]: relationModelIds.at(relateIndex)
         });
       }
     }
@@ -122,11 +125,11 @@ class DbService {
 
   async seedModels() {
     try {
-      console.info("🚀 start seeding");
+      console.info('🚀 start seeding');
       for (const { modelName, count } of this.models) {
         await this.#createModels(modelName, count);
       }
-      console.error("✅ seed completed");
+      console.error('✅ seed completed');
     } catch (e) {
       console.log(e.message);
     } finally {
@@ -139,12 +142,12 @@ class DbService {
    */
   async relateModels() {
     try {
-      console.info("⌛️ start creating relation");
+      console.info('⌛️ start creating relation');
 
       for (const modelName in this.modelIdMap) {
         this.modelIdMap[modelName] = (
           await this.strapiService.findMany(modelName, {
-            fields: ["id"],
+            fields: ['id']
           })
         ).map(({ id }) => id);
       }
@@ -156,16 +159,16 @@ class DbService {
           );
 
           switch (relationInfo.type) {
-            case "m2m":
+            case 'm2m':
               await this.#relateManyToMany(modelName, relationInfo);
               break;
-            case "o2m":
+            case 'o2m':
               await this.#relateOneToMany(modelName, relationInfo);
           }
         }
       }
 
-      console.info("✅ relation completed");
+      console.info('✅ relation completed');
     } catch (e) {
       console.error(e.message);
     } finally {
@@ -175,7 +178,7 @@ class DbService {
 
   async resetModels() {
     try {
-      console.info("⌛️ resetting models");
+      console.info('⌛️ resetting models');
 
       for (const { modelName } of this.models) {
         console.info(`⌛️ deleting ${modelName}`);
@@ -194,13 +197,13 @@ class DbService {
   async seedMedias() {
     try {
       const mediaMap = new Map();
-      console.info("⌛️ uploading medias");
+      console.info('⌛️ uploading medias');
       for (const { modelName, medias } of this.models.filter(
         (model) => model.medias
       )) {
         for (const media of medias) {
           const { fieldName, path, type, multi } = media;
-          const exactPath = resolve(process.cwd(), ...path.split("/"));
+          const exactPath = resolve(process.cwd(), ...path.split('/'));
           const files = getFiles(exactPath);
 
           for (const { basename, ext } of files) {
@@ -208,13 +211,13 @@ class DbService {
               data: {
                 refId: faker.datatype.number({ min: 1, max: 1e5 }), // random id
                 ref: this.strapiService.modelUIDs[modelName], // pointing any model
-                field: fieldName,
+                field: fieldName
               },
               file: {
                 path: resolve(exactPath, basename),
                 name: basename,
-                type: `${type ? type + "/" : ""}${ext}`,
-              },
+                type: `${type ? type + '/' : ''}${ext}`
+              }
             });
             const modelKey = `${modelName}:${fieldName}`;
 
@@ -232,11 +235,11 @@ class DbService {
           }
         }
       }
-      console.info("✅ upload media successfully");
+      console.info('✅ upload media successfully');
 
-      console.info("⌛️ relating medias");
+      console.info('⌛️ relating medias');
       for (const [mediakey, { max, min, ids }] of mediaMap) {
-        const [modelName, fieldName] = mediakey.split(":");
+        const [modelName, fieldName] = mediakey.split(':');
         const modelIds = (await this.strapiService.findMany(modelName)).map(
           ({ id }) => id
         );
@@ -247,16 +250,16 @@ class DbService {
               [fieldName]: faker.helpers.arrayElements(
                 ids,
                 faker.datatype.number({ max, min })
-              ),
+              )
             });
           } else {
             await this.strapiService.update(modelName, id, {
-              [fieldName]: faker.helpers.arrayElement(ids),
+              [fieldName]: faker.helpers.arrayElement(ids)
             });
           }
         }
       }
-      console.info("✅ releate medias completed");
+      console.info('✅ releate medias completed');
     } catch (e) {
       console.log(e.message);
     } finally {
@@ -266,7 +269,7 @@ class DbService {
 
   async resetMedias() {
     try {
-      console.info("⌛️ start resetting medias");
+      console.info('⌛️ start resetting medias');
       const ids = await strapi.plugins.upload.services.upload.findMany();
 
       for (const { id } of ids) {
@@ -274,16 +277,16 @@ class DbService {
       }
       console.info(`✅ reset media successfully`);
 
-      console.info("⌛️ deleting uploaded medias");
-      const uploadFilePath = resolve(process.cwd(), "public", "uploads");
+      console.info('⌛️ deleting uploaded medias');
+      const uploadFilePath = resolve(process.cwd(), 'public', 'uploads');
       const uploadFiles = getFiles(uploadFilePath);
 
       for (const file of uploadFiles) {
-        if (file.basename !== ".gitkeep") {
+        if (file.basename !== '.gitkeep') {
           fs.unlinkSync(resolve(uploadFilePath, file.basename));
         }
       }
-      console.info("✅ delete uploaded medias");
+      console.info('✅ delete uploaded medias');
     } catch (e) {
       console.log(e);
     } finally {
