@@ -53,9 +53,6 @@ const responsive = (xl, lg, md, sm, xs) => {
 };
 
 const Home = () => {
-  const newArraivalDate = new Date().toISOString();
-  
-  
   const {
     data: authorLists,
     isLoading: isAuthorLoading,
@@ -66,20 +63,35 @@ const Home = () => {
     isLoading: isPublisherLoading,
     isError: isPublisherError,
   } = useGetPublishersQuery();
-
-  const { data: popularbookLists } = useGetBooksQuery({
-    params: 'filters[bestSelling][$eq]=true',
-  });
-
-  const { data: newbookLists, isLoading: isNewBooksLoading } = useGetBooksQuery(
+  // TODO: this query need to fix
+  const { data: newBooks, isSuccess } = useGetBooksQuery(
     {
-      params: `filters[createdAt][$gte]=${'2022-10-29T03:07:38.922Z'}&pagination[pageSize]=8`,
+      query: {
+        populate: '*',
+        pagination: {
+          pageSize: 8
+        },
+        filters: {
+          createdAt: {
+            $lte: new Date().toISOString()
+          }
+        }
+      },
     }
   );
+  const { data: popularBooks } = useGetBooksQuery({
+    query: {
+      populate: '*',
+      filters: {
+        bestSelling: true
+      }
+    },
+  });
+
   const { data: categoryLists } = useGetCategoryQuery();
   
-
-  console.log({ lists: popularbookLists, isNewBooksLoading });
+  
+  console.log({ newBooks, isSuccess, popularBooks, categoryLists })
   return (
     <ContainerStyle>
       <HeroContainer>
@@ -92,7 +104,7 @@ const Home = () => {
       <SectionContainer>
         <SectionHeaderStyle variant="h1">Popular Books</SectionHeaderStyle>
         <Grid container spacing={3}>
-          {popularbookLists?.data?.slice(0, 8).map((book) => (
+          {popularBooks?.data?.slice(0, 8).map((book) => (
             <Grid item lg={3} md={6} xs={12} key={book?.id}>
               <BookCard book={book?.attributes} bookId={book?.id} />
             </Grid>
@@ -121,13 +133,16 @@ const Home = () => {
 
       <SectionContainer>
         <SectionHeaderStyle variant="h1">New Arrival Books</SectionHeaderStyle>
-        <Grid container spacing={2}>
-          {newbookLists?.data?.map((book) => (
-            <Grid item lg={3} md={6} xs={12} key={book?.id}>
-              <BookCard book={book?.attributes} bookId={book?.id} />
-            </Grid>
-          ))}
-        </Grid>
+        {isSuccess && (
+          <Grid container spacing={2}>
+            {newBooks?.data?.map((book) => (
+              <Grid item lg={3} md={6} xs={12} key={book?.id}>
+                <BookCard book={book?.attributes} bookId={book?.id} />
+              </Grid>
+            ))}
+          </Grid>
+        )}
+
         <Stack direction={'row'} justifyContent={'center'} my={5}>
           <Button variant="contained" size="large" disableElevation={true}>
             Load More
