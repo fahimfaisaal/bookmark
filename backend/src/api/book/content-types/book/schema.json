@@ -112,6 +112,11 @@
       "relation": "oneToMany",
       "target": "api::rating.rating",
       "mappedBy": "bookId"
+    },
+    "rating": {
+      "type": "decimal",
+      "max": 5,
+      "min": 0
     }
   }
 }

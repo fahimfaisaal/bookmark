@@ -74,6 +74,12 @@ const generateModel = {
       .toUpperCase(),
     description: faker.commerce.productDescription(),
     bestSelling: faker.helpers.arrayElement(['true', 'false']),
+    rating: faker.datatype
+      .float({
+        min: 0,
+        max: 5,
+      })
+      .toFixed(1),
     totalPages: faker.datatype.number({
       min: 30,
       max: 3000,

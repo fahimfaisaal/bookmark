@@ -99,15 +99,24 @@ class DbService {
    * @param {ModelInfoO2M} relationInfo
    */
   async #relateOneToMany(modelName, relationInfo) {
-    const { relateWith, label } = relationInfo;
+    const { relateWith, label, max = 0,  min = 0, } = relationInfo;
     const relationModelIds = [...this.modelIdMap[relateWith]];
 
     for (const modelId of this.modelIdMap[modelName]) {
-      const relateIndex = Math.floor(Math.random() * relationModelIds.length);
+      if (max || min) {
+        const shuffleArray = faker.helpers.shuffle(relationModelIds)
+        const randIndex = faker.datatype.number({ min, max: Math.min(max, relationModelIds.length)})
 
-      await this.strapiService.update(modelName, modelId, {
-        [label]: relationModelIds.at(relateIndex),
-      });
+        await this.strapiService.update(modelName, modelId, {
+          [label]: shuffleArray.slice(0, randIndex),
+        });
+      } else {
+        const relateIndex = Math.floor(Math.random() * relationModelIds.length);
+
+        await this.strapiService.update(modelName, modelId, {
+          [label]: relationModelIds.at(relateIndex),
+        });
+      }
     }
   }
 

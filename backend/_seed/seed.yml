@@ -51,6 +51,12 @@
       type: o2m
       label: publisherId
 
+    - relateWith: book
+      type: o2m
+      label: editions
+      max: 3
+      min: 0
+
 - modelName: category
   count: 50
   medias:
