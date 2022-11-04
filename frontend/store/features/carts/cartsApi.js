@@ -51,6 +51,7 @@ export const cartsApi = apiSlice.injectEndpoints({
     }),
   }),
 });
+
 export const {
   useGetCartsByUserQuery,
   useGetCartQuery,

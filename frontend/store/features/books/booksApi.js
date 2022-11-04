@@ -1,10 +1,17 @@
-import { apiSlice } from '../api/apiSlice';
+import qs from "qs";
+import { apiSlice } from "../api/apiSlice";
+
+
 
 export const booksApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getBooks: builder.query({
-      query: ({ params }) => `/books?populate=*&${params}`,
-      providesTags: ['books'],
+      query: ({ query } = {}) => {
+        console.log(query);
+        return `/books?${qs.stringify(query, { encode: false })}`;
+      },
+      providesTags: ["books"],
+
     }),
     getBook: builder.query({
       query: (bookId) => {
@@ -17,11 +24,9 @@ export const booksApi = apiSlice.injectEndpoints({
       query: (params) => `books/${params}`,
       providesTags: ['nestedBook'],
     }),
-
     getBooksByAuthor: builder.query({
-      query: (authorName) =>
-        `/books?populate=*&filters[authors][name][$eq]=${authorName}`,
-      providesTags: ['books'],
+      query: ({ authorName }) =>
+        `/authors?populate[0]=avatar&populate[1]=books&filters[name][$eq]=${authorName}`,
     }),
     getBooksByPublisher: builder.query({
       query: (publisherName) =>

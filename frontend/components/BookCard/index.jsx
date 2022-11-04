@@ -1,12 +1,11 @@
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import { Stack, Typography } from "@mui/material";
-import Rating from "@mui/material/Rating";
 import { Box } from "@mui/system";
 import Link from "next/link";
-import { useState } from "react";
+import * as React from "react";
 import { FaShoppingCart } from "react-icons/fa";
-import { useSelector } from "react-redux";
+
 import CustomImage from "../CustomImage";
 
 import {
@@ -17,12 +16,13 @@ import {
   StyledBox,
   StyledFav,
   TitleStyle,
-  WriterLinkStyle,
+  WriterLinkStyle
 } from "./Styles";
 
 const BookCard = ({ book, bookId }) => {
   const [favorite, setFavorite] = useState(false);
   const { authors, images, variants, status, ratings } = book || {};
+
   const bookImage =
     (images?.data &&
       `http://localhost:1337${images?.data[0]?.attributes?.url}`) ||
