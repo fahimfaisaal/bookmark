@@ -3,7 +3,7 @@ import {
   Button,
   InputAdornment,
   TextField,
-  Typography,
+  Typography
 } from '@mui/material';
 import { Stack } from '@mui/system';
 import { StyledBtn } from './Styles';
@@ -24,7 +24,7 @@ const Payment = () => {
               <InputAdornment position="start">
                 <AddCardIcon />
               </InputAdornment>
-            ),
+            )
           }}
           variant="standard"
           placeholder="card no"
@@ -36,7 +36,7 @@ const Payment = () => {
               <InputAdornment position="start">
                 <CalendarMonthIcon />
               </InputAdornment>
-            ),
+            )
           }}
           variant="standard"
           placeholder="mm/yy CVC"

@@ -1,24 +1,24 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  search: "",
+  search: '',
   tags: [],
   categories: [],
   publishers: [],
   price: [],
   rating: [],
-  sort: "",
+  sort: '',
   availabilities: []
 };
 
 const filterSlice = createSlice({
-  name: "filter",
+  name: 'filter',
   initialState,
   reducers: {
     setFilterFromQuery(state, { payload }) {
       for (const key in payload) {
-        const value = payload[key]
-        state[key] = Array.isArray(state[key]) ? value.split(/,|-/) : value
+        const value = payload[key];
+        state[key] = Array.isArray(state[key]) ? value.split(/,|-/) : value;
       }
     },
     clearFilter: (state) => {
@@ -33,34 +33,36 @@ const filterSlice = createSlice({
       const { id } = payload;
 
       if (state.tags.includes(id)) {
-        state.tags = state.tags.filter(curId => curId !== id);
+        state.tags = state.tags.filter((curId) => curId !== id);
       } else {
-        state.tags.push(id)
+        state.tags.push(id);
       }
     },
     addRemoveCategories(state, { payload }) {
       const { id } = payload;
 
       if (state.categories.includes(id)) {
-        state.categories = state.categories.filter(curId => curId !== id);
+        state.categories = state.categories.filter((curId) => curId !== id);
       } else {
-        state.categories.push(id)
+        state.categories.push(id);
       }
     },
     addRemovePublishers(state, { payload }) {
       const { id } = payload;
 
       if (state.publishers.includes(id)) {
-        state.publishers = state.publishers.filter(curId => curId !== id);
+        state.publishers = state.publishers.filter((curId) => curId !== id);
       } else {
-        state.publishers.push(id)
+        state.publishers.push(id);
       }
     },
-    addRemoveAvailability(state, { payload: {status} }) {
+    addRemoveAvailability(state, { payload: { status } }) {
       if (state.availabilities.includes(status)) {
-        state.availabilities = state.availabilities.filter(curStatus => curStatus !== status)
+        state.availabilities = state.availabilities.filter(
+          (curStatus) => curStatus !== status
+        );
       } else {
-        state.availabilities.push(status)
+        state.availabilities.push(status);
       }
     },
     updatePriceRange(state, { payload }) {
@@ -72,7 +74,7 @@ const filterSlice = createSlice({
     updateSort(state, { payload }) {
       state.sort = payload;
     }
-  },
+  }
 });
 
 export const {
@@ -85,20 +87,20 @@ export const {
   addRemoveAvailability,
   updatePriceRange,
   updateRatingRange,
-  updateSort,
+  updateSort
 } = filterSlice.actions;
 
-export const getTags = (state) => state.filter.tags
+export const getTags = (state) => state.filter.tags;
 
-export const getPublishers = (state) => state.filter.publishers
+export const getPublishers = (state) => state.filter.publishers;
 
 export const getSearchText = (state) => state.filter.search;
 
-export const getCategories = (state) => state.filter.categories
+export const getCategories = (state) => state.filter.categories;
 
 export const getPriceRange = (state) => state.filter.price;
 
-export const getRatingRange = (state) => state.filter.rating
+export const getRatingRange = (state) => state.filter.rating;
 
 export const getSort = (state) => state.filter.sort;
 
@@ -114,21 +116,18 @@ export const getQueries = ({ filter }) => {
     rating: filter.rating.join('-'),
     sort: filter.sort,
     availabilities: filter.availabilities.join(',')
-  }
+  };
 
-  console.log({ own: query })
+  console.log({ own: query });
 
   for (let key in query) {
-    const value = query[key]
-    if (
-      (Array.isArray(value) && value.length === 0) ||
-      !value
-    ) {
-      delete query[key]
+    const value = query[key];
+    if ((Array.isArray(value) && value.length === 0) || !value) {
+      delete query[key];
     }
   }
 
-  return query
-}
+  return query;
+};
 
 export default filterSlice.reducer;

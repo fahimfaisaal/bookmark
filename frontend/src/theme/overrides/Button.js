@@ -5,8 +5,8 @@ const repeatStyleGreen = (theme) => ({
   padding: '8px 12px',
   border: 'none',
   '&:hover': {
-    backgroundColor: `${theme.palette.primary.dark}`,
-  },
+    backgroundColor: `${theme.palette.primary.dark}`
+  }
 });
 
 const repeatStyleCart = (theme) => ({
@@ -20,8 +20,8 @@ const repeatStyleCart = (theme) => ({
   fontSize: '1rem',
   fontWeight: 600,
   '&:hover': {
-    color: `${theme.palette.text.primary}`,
-  },
+    color: `${theme.palette.text.primary}`
+  }
 });
 //=============Reusable Styles========
 
@@ -29,7 +29,7 @@ const Button = (theme) => {
   return {
     MuiButton: {
       defaultProps: {
-        disableRipple: true,
+        disableRipple: true
       },
       styleOverrides: {
         root: {
@@ -37,8 +37,8 @@ const Button = (theme) => {
           fontWeight: 600,
           borderRadius: '5px',
           textTransform: 'initial',
-          fontFamily: 'Open sans',
-        },
+          fontFamily: 'Open sans'
+        }
       },
       variants: [
         {
@@ -52,21 +52,21 @@ const Button = (theme) => {
             fontSize: '0.856rem',
             fontWeight: 600,
             '&:hover': {
-              color: `${theme.palette.text.primary}`,
-            },
-          },
+              color: `${theme.palette.text.primary}`
+            }
+          }
         },
         {
           props: { variant: 'btnCart' },
           style: {
-            ...repeatStyleCart(theme),
-          },
+            ...repeatStyleCart(theme)
+          }
         },
         {
           props: { variant: 'btnGreen' },
           style: {
-            ...repeatStyleGreen(theme),
-          },
+            ...repeatStyleGreen(theme)
+          }
         },
         {
           props: { variant: 'btnGreenLight' },
@@ -74,21 +74,21 @@ const Button = (theme) => {
             ...repeatStyleGreen(theme),
             backgroundColor: `${theme.palette.primary.light}`,
             borderRadius: '20px',
-            fontSize: '.7rem',
-          },
+            fontSize: '.7rem'
+          }
         },
         {
           props: { variant: 'btnGreen' },
           style: {
-            ...repeatStyleGreen(theme),
-          },
+            ...repeatStyleGreen(theme)
+          }
         },
         {
           props: { variant: 'btnLogin' },
           style: {
             ...repeatStyleGreen(theme),
-            width: '100%',
-          },
+            width: '100%'
+          }
         },
         {
           props: { variant: 'btnLoginDisabled' },
@@ -96,16 +96,16 @@ const Button = (theme) => {
             ...repeatStyleGreen(theme),
             width: '100%',
             backgroundColor: '#D1D5DB',
-            color: `${theme.palette.divider}`,
-          },
+            color: `${theme.palette.divider}`
+          }
         },
         {
           props: { variant: 'btnAskSeller' },
           style: {
             ...repeatStyleGreen(theme),
             borderRadius: '20px',
-            fontSize: '.7rem',
-          },
+            fontSize: '.7rem'
+          }
         },
         {
           props: { variant: 'btnGreenCart' },
@@ -115,9 +115,9 @@ const Button = (theme) => {
             color: `${theme.palette.common.white}`,
             width: '40%',
             '&:hover': {
-              backgroundColor: `${theme.palette.primary.dark}`,
-            },
-          },
+              backgroundColor: `${theme.palette.primary.dark}`
+            }
+          }
         },
         {
           props: { variant: 'btnOrder' },
@@ -130,12 +130,12 @@ const Button = (theme) => {
               borderRadius: '5px',
               backgroundColor: '#DBEAFE',
               color: '#7E8CF6',
-              fontWeight: 500,
-            },
-          },
-        },
-      ],
-    },
+              fontWeight: 500
+            }
+          }
+        }
+      ]
+    }
   };
 };
 

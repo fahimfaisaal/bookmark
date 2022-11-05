@@ -4,18 +4,18 @@ export const InnerContainerStyle = styled(Box)(({ theme }) => ({
   width: '288px',
   display: 'flex',
   flexDirection: 'column',
-  alignItems: 'center',
+  alignItems: 'center'
 }));
 
 export const ListContainerStyle = styled(Box)(() => ({
   height: '250px',
   overflow: 'auto',
   '&::-webkit-scrollbar': {
-    width: '7px',
+    width: '7px'
   },
   '&::-webkit-scrollbar-thumb': {
     backgroundColor: 'rgba(0,0,0,0.4)',
     borderRadius: '10rem',
-    border: '1px solid #fff',
-  },
+    border: '1px solid #fff'
+  }
 }));

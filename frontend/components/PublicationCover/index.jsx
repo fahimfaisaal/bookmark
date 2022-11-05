@@ -10,7 +10,7 @@ import {
   LinkContainer,
   LogoContainer,
   ProfileContainerStyle,
-  TitleStyle,
+  TitleStyle
 } from './style';
 
 const PublicationCover = ({ publisherData }) => {

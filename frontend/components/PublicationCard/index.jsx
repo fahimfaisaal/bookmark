@@ -8,7 +8,7 @@ import { ContainerStyle, LinkContainer, LogoContainer } from './Styles';
 
 const PublicationCard = ({ publisher }) => {
   const {
-    attributes: { name, logo, banner, socials },
+    attributes: { name, logo, banner, socials }
   } = publisher;
   const logoUrl =
     (logo?.data && `http://localhost:1337${logo?.data[0]?.attributes?.url}`) ||

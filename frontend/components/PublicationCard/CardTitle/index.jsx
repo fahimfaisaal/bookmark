@@ -8,8 +8,8 @@ export const TitleContainerStyle = styled(Typography)(({ theme }) => ({
   color: `${theme.palette.text.secondary}`,
   transition: 'all 0.4s',
   '&:hover': {
-    color: `${theme.palette.text.third}`,
-  },
+    color: `${theme.palette.text.third}`
+  }
 }));
 
 const CardTitle = ({ title, variant }) => {

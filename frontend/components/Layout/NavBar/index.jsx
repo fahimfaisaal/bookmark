@@ -11,32 +11,32 @@ import {
   Tooltip,
   Typography,
   useTheme
-} from "@mui/material";
-import IconButton from "@mui/material/IconButton";
-import { Stack } from "@mui/system";
-import Link from "next/link";
-import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
-import { AiOutlineFilter } from "react-icons/ai";
-import { BiSearch, BiUser } from "react-icons/bi";
-import { BsSunFill } from "react-icons/bs";
-import { CgMenuLeft, CgShoppingBag } from "react-icons/cg";
-import { HiOutlineShoppingBag } from "react-icons/hi";
-import { IoIosClose } from "react-icons/io";
-import { MdOutlineFavoriteBorder } from "react-icons/md";
-import { RiMoonLine } from "react-icons/ri";
-import { VscHome } from "react-icons/vsc";
-import { useDispatch, useSelector } from "react-redux";
-import { BOOKMARK_AUTH } from "../../../constant";
-import { UseThemeContext } from "../../../context/ThemeContext";
-import useAuthCheck from "../../../hooks/useAuthCheck";
-import { userLoggedOut } from "../../../store/features/auth/authSlice";
-import { useGetBooksQuery } from "../../../store/features/books/booksApi";
-import { useGetCartsByUserQuery } from "../../../store/features/carts/cartsApi";
-import SearchBar from "../../shared/SearchBar";
-import Login from "../Auth/Login";
-import Register from "../Auth/Register";
-import CartItemComponent from "./CartItemComponent";
+} from '@mui/material';
+import IconButton from '@mui/material/IconButton';
+import { Stack } from '@mui/system';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
+import { AiOutlineFilter } from 'react-icons/ai';
+import { BiSearch, BiUser } from 'react-icons/bi';
+import { BsSunFill } from 'react-icons/bs';
+import { CgMenuLeft, CgShoppingBag } from 'react-icons/cg';
+import { HiOutlineShoppingBag } from 'react-icons/hi';
+import { IoIosClose } from 'react-icons/io';
+import { MdOutlineFavoriteBorder } from 'react-icons/md';
+import { RiMoonLine } from 'react-icons/ri';
+import { VscHome } from 'react-icons/vsc';
+import { useDispatch, useSelector } from 'react-redux';
+import { BOOKMARK_AUTH } from '../../../constant';
+import { UseThemeContext } from '../../../context/ThemeContext';
+import useAuthCheck from '../../../hooks/useAuthCheck';
+import { userLoggedOut } from '../../../store/features/auth/authSlice';
+import { useGetBooksQuery } from '../../../store/features/books/booksApi';
+import { useGetCartsByUserQuery } from '../../../store/features/carts/cartsApi';
+import SearchBar from '../../shared/SearchBar';
+import Login from '../Auth/Login';
+import Register from '../Auth/Register';
+import CartItemComponent from './CartItemComponent';
 import {
   AppBarContainer,
   CloseBtnContaner,
@@ -53,56 +53,56 @@ import {
   MobileMenuContainer,
   MobMenuItemContainer,
   ThemeSwitchStyle
-} from "./Styles";
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
+} from './Styles';
+const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 const menuItems = [
   {
-    link: "/books",
-    text: "Books",
+    link: '/books',
+    text: 'Books'
   },
   {
-    link: "/authors",
-    text: "Authors",
+    link: '/authors',
+    text: 'Authors'
   },
   {
-    link: "/publishers",
-    text: "Publishers",
+    link: '/publishers',
+    text: 'Publishers'
   },
   {
-    link: "/contact",
-    text: "Contact",
+    link: '/contact',
+    text: 'Contact'
   },
   {
-    link: "/about",
-    text: "About Us",
-  },
+    link: '/about',
+    text: 'About Us'
+  }
 ];
 
 const categoreyItems = [
   {
-    link: "",
-    text: "Comic books",
+    link: '',
+    text: 'Comic books'
   },
   {
-    link: "",
-    text: " Science Fiction",
+    link: '',
+    text: ' Science Fiction'
   },
   {
-    link: "",
-    text: "Literature",
+    link: '',
+    text: 'Literature'
   },
   {
-    link: "",
-    text: "Childrens",
+    link: '',
+    text: 'Childrens'
   },
   {
-    link: "",
-    text: "Literature",
+    link: '',
+    text: 'Literature'
   },
   {
-    link: "",
-    text: "Horror Fiction",
-  },
+    link: '',
+    text: 'Horror Fiction'
+  }
 ];
 
 const Drawer = ({ anchor, data, open, toggle }) => {
@@ -117,9 +117,9 @@ const Drawer = ({ anchor, data, open, toggle }) => {
       <MenuContainer role="presentation">
         <MenuHeaderContiner>
           <Stack
-            direction={"row"}
-            justifyContent={"space-between"}
-            alignItems={"center"}
+            direction={'row'}
+            justifyContent={'space-between'}
+            alignItems={'center'}
           >
             <Link href="/">
               <img src="/images/logo-1.png" alt="" width={180} height={30} />
@@ -161,12 +161,12 @@ const NavBar = () => {
   const [cartBookFilter, setCartBookFilter] = useState();
   const { data: cartLists } = useGetCartsByUserQuery({ userId: authUser?.id });
   const { data: cartBooks } = useGetBooksQuery(cartBookFilter);
-  const [cartListsWithImage, setCartListsWithImage] = useState()
+  const [cartListsWithImage, setCartListsWithImage] = useState();
 
   useEffect(() => {
     setCartBookFilter({
       params:
-        "populate[0]=images&filters[id][$in][0]=1197&filters[id][$in][1]=1237",
+        'populate[0]=images&filters[id][$in][0]=1197&filters[id][$in][1]=1237'
     });
   }, [cartLists]);
 
@@ -175,7 +175,7 @@ const NavBar = () => {
       let cartBookItem = cartBooks?.data?.reduce(
         (acc, curr) => ({
           ...acc,
-          [curr.id]: curr?.attributes?.images?.data[0]?.attributes?.url,
+          [curr.id]: curr?.attributes?.images?.data[0]?.attributes?.url
         }),
         {}
       );
@@ -184,10 +184,10 @@ const NavBar = () => {
       let cartWithImage = cartLists?.data?.map((item, ind) => {
         return {
           ...item.attributes,
-          cartImage: cartBookItem[item?.attributes?.book?.data?.id],
+          cartImage: cartBookItem[item?.attributes?.book?.data?.id]
         };
       });
-      setCartListsWithImage(cartWithImage)
+      setCartListsWithImage(cartWithImage);
       // console.log({ c: cartImage, cartBookItem, cartBooks });
     }
   }, [cartLists?.data, cartBooks?.data]);
@@ -198,7 +198,7 @@ const NavBar = () => {
     (acc, curr) =>
       acc +
       curr?.attributes?.variant?.data?.attributes?.price *
-      curr?.attributes?.quantity,
+        curr?.attributes?.quantity,
     0
   );
 
@@ -213,7 +213,7 @@ const NavBar = () => {
   const logoutUser = () => {
     dispatch(userLoggedOut());
     localStorage.removeItem(BOOKMARK_AUTH);
-    router.push("/");
+    router.push('/');
   };
 
   // console.log({ navabr: authChecked });
@@ -223,8 +223,8 @@ const NavBar = () => {
   const toggleDrawer = (open) => (event) => {
     if (
       event &&
-      event.type === "keydown" &&
-      (event.key === "Tab" || event.key === "Shift")
+      event.type === 'keydown' &&
+      (event.key === 'Tab' || event.key === 'Shift')
     ) {
       return;
     }
@@ -242,8 +242,8 @@ const NavBar = () => {
   const toggleMenuDraw = (open) => (event) => {
     if (
       event &&
-      event.type === "keydown" &&
-      (event.key === "Tab" || event.key === "Shift")
+      event.type === 'keydown' &&
+      (event.key === 'Tab' || event.key === 'Shift')
     ) {
       return;
     }
@@ -254,8 +254,8 @@ const NavBar = () => {
   const toggleProfileDraw = (open) => (event) => {
     if (
       event &&
-      event.type === "keydown" &&
-      (event.key === "Tab" || event.key === "Shift")
+      event.type === 'keydown' &&
+      (event.key === 'Tab' || event.key === 'Shift')
     ) {
       return;
     }
@@ -266,8 +266,8 @@ const NavBar = () => {
   const toggleFilterDraw = (open) => (event) => {
     if (
       event &&
-      event.type === "keydown" &&
-      (event.key === "Tab" || event.key === "Shift")
+      event.type === 'keydown' &&
+      (event.key === 'Tab' || event.key === 'Shift')
     ) {
       return;
     }
@@ -286,34 +286,34 @@ const NavBar = () => {
 
   const profileMenuItems = [
     {
-      link: "/profile",
-      text: "Profile",
+      link: '/profile',
+      text: 'Profile'
     },
     {
-      link: "/profile/my-orders",
-      text: "My Orders",
+      link: '/profile/my-orders',
+      text: 'My Orders'
     },
     {
-      link: "/profile/my-wishlist",
-      text: "My Wishlists",
+      link: '/profile/my-wishlist',
+      text: 'My Wishlists'
     },
     {
-      link: "/checkout",
-      text: "Checkout",
+      link: '/checkout',
+      text: 'Checkout'
     },
     {
-      link: "/profile/change-password",
-      text: "Change Password",
+      link: '/profile/change-password',
+      text: 'Change Password'
     },
     {
-      link: "/logout",
-      text: "Logout",
-      onClickHandler: logoutUser,
-    },
+      link: '/logout',
+      text: 'Logout',
+      onClickHandler: logoutUser
+    }
   ];
 
   const handleHome = () => {
-    router.push("/");
+    router.push('/');
   };
 
   const [openLogin, setOpenLogin] = useState(false);
@@ -340,18 +340,18 @@ const NavBar = () => {
     <>
       <AppBarContainer position="fixed">
         <Stack
-          direction={"row"}
+          direction={'row'}
           spacing={2}
           alignItems="center"
-          justifyContent={"space-between"}
+          justifyContent={'space-between'}
         >
           <Link href="/">
-            <LogoContainer marginTop={"8px"}>
+            <LogoContainer marginTop={'8px'}>
               <img src="/images/logo-1.png" alt="" />
             </LogoContainer>
           </Link>
           {!serachTrig ? (
-            <Stack direction={"row"} spacing={2} alignItems="center">
+            <Stack direction={'row'} spacing={2} alignItems="center">
               {menuItems.map((item) => (
                 <Link href={item.link}>
                   <LinkContainer
@@ -372,16 +372,16 @@ const NavBar = () => {
           <SearchBar normal={true} />
           <IconContainer onClick={handleChangeMode}>
             <ThemeSwitchStyle>
-              {theme.palette.mode === "light" ? <RiMoonLine /> : <BsSunFill />}
+              {theme.palette.mode === 'light' ? <RiMoonLine /> : <BsSunFill />}
             </ThemeSwitchStyle>
           </IconContainer>
-          <IconContainer fontSize={"28px"} onClick={toggleDrawer(true)}>
+          <IconContainer fontSize={'28px'} onClick={toggleDrawer(true)}>
             <Badge badgeContent={cartLists?.data?.length} color="primary">
               <HiOutlineShoppingBag />
             </Badge>
           </IconContainer>
-          <Link href={"/profile/my-wishlist"}>
-            <IconContainer fontSize={"32px"}>
+          <Link href={'/profile/my-wishlist'}>
+            <IconContainer fontSize={'32px'}>
               <Badge badgeContent={2} color="primary">
                 <MdOutlineFavoriteBorder />
               </Badge>
@@ -397,18 +397,18 @@ const NavBar = () => {
               </Tooltip>
               <Menu
                 sx={{
-                  mt: "45px",
+                  mt: '45px'
                 }}
                 id="menu-appbar"
                 anchorEl={anchorElUser}
                 anchorOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
+                  vertical: 'top',
+                  horizontal: 'right'
                 }}
                 keepMounted
                 transformOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
+                  vertical: 'top',
+                  horizontal: 'right'
                 }}
                 open={Boolean(anchorElUser)}
                 onClose={handleCloseUserMenu}
@@ -463,16 +463,16 @@ const NavBar = () => {
 
       <MobileBarContainer position="fixed">
         <Stack
-          direction={"row"}
+          direction={'row'}
           spacing={2}
           alignItems="center"
-          justifyContent={"center"}
+          justifyContent={'center'}
         >
           {mobSearchTrig ? (
             <SearchBar normal={false} />
           ) : (
             <Link href="/">
-              <LogoContainer marginTop={"8px"}>
+              <LogoContainer marginTop={'8px'}>
                 <img src="/images/logo-1.png" alt="" />
               </LogoContainer>
             </Link>
@@ -481,27 +481,27 @@ const NavBar = () => {
       </MobileBarContainer>
       <MiniTopBarContainer>
         <Stack
-          direction={"row"}
-          justifyContent={"space-between"}
-          alignItems={"center"}
+          direction={'row'}
+          justifyContent={'space-between'}
+          alignItems={'center'}
         >
           <Box>
             <Button variant="outlined" onClick={toggleFilterDraw(true)}>
               <AiOutlineFilter />
-              <Typography variant="h4" marginLeft={"5px"}>
+              <Typography variant="h4" marginLeft={'5px'}>
                 Filter
               </Typography>
             </Button>
           </Box>
           <IconContainer onClick={handleChangeMode}>
             <ThemeSwitchStyle>
-              {theme.palette.mode === "light" ? <RiMoonLine /> : <BsSunFill />}
+              {theme.palette.mode === 'light' ? <RiMoonLine /> : <BsSunFill />}
             </ThemeSwitchStyle>
           </IconContainer>
         </Stack>
 
         <Drawer
-          anchor={"left"}
+          anchor={'left'}
           open={filterMenuTrig}
           toggle={toggleFilterDraw}
           data={categoreyItems}
@@ -510,10 +510,10 @@ const NavBar = () => {
 
       <MobileMenuContainer position="fexed">
         <Stack
-          direction={"row"}
+          direction={'row'}
           spacing={2}
           alignItems="center"
-          justifyContent={"space-between"}
+          justifyContent={'space-between'}
         >
           <MobMenuItemContainer onClick={toggleMenuDraw(true)}>
             <CgMenuLeft />
@@ -539,13 +539,13 @@ const NavBar = () => {
         </Stack>
 
         <Drawer
-          anchor={"left"}
+          anchor={'left'}
           open={mobMenuTrig}
           toggle={toggleMenuDraw}
           data={menuItems}
         />
         <Drawer
-          anchor={"right"}
+          anchor={'right'}
           open={profileMenuTrig}
           toggle={toggleProfileDraw}
           data={profileMenuItems}

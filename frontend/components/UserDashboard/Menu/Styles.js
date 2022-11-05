@@ -12,8 +12,8 @@ export const StyledLink = styled(MLink)(({ theme, active }) => ({
   lineHeight: '24px',
   cursor: 'pointer',
   '&:hover': {
-    color: `${theme.palette.primary.main}`,
-  },
+    color: `${theme.palette.primary.main}`
+  }
 }));
 
 export const StyledListItem = styled(ListItem)(({ theme, active }) => ({
@@ -25,8 +25,8 @@ export const StyledListItem = styled(ListItem)(({ theme, active }) => ({
     ? `3px solid ${theme.palette.primary.main}`
     : '3px solid transparent',
   '&:hover': {
-    borderLeft: `3px solid ${theme.palette.primary.main}`,
-  },
+    borderLeft: `3px solid ${theme.palette.primary.main}`
+  }
 }));
 export const StyledContainer = styled(Box)(({ theme }) => ({
   margin: 0,
@@ -37,5 +37,5 @@ export const StyledContainer = styled(Box)(({ theme }) => ({
   boxShadow: myShadows.common,
   [theme.breakpoints.down('md')]: {
     // position: 'fixed',
-  },
+  }
 }));

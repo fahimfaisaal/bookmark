@@ -9,7 +9,7 @@ const Authors = () => {
   const {
     data: authorLists,
     isLoading: isAuthorLoading,
-    isError: isAuthorError,
+    isError: isAuthorError
   } = useGetAuthorsQuery();
   return (
     <Box>

@@ -1,4 +1,4 @@
-const forceAction = require("../_seed");
+const forceAction = require('../_seed');
 
 module.exports = {
   /**
@@ -17,6 +17,6 @@ module.exports = {
    * run jobs, or perform some special logic.
    */
   async bootstrap({ strapi }) {
-    await forceAction(strapi)
-  },
+    await forceAction(strapi);
+  }
 };

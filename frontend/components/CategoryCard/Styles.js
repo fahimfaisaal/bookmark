@@ -4,6 +4,6 @@ export const ImageContainerStyle = styled(Box)(({ theme }) => ({
   width: '170px',
   height: '205px',
   img: {
-    borderRadius: '10px',
-  },
+    borderRadius: '10px'
+  }
 }));

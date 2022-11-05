@@ -11,21 +11,21 @@ export const HeroContainer = styled(Box)(({ theme }) => ({
   img: {
     width: '100%',
     height: '100%',
-    borderRadius: '15px',
-  },
+    borderRadius: '15px'
+  }
 }));
 
 export const SectionHeaderStyle = styled(Typography)(() => ({
   padding: '15px 0',
-  marginBottom: '15px',
+  marginBottom: '15px'
 }));
 
 export const SectionContainer = styled(Box)(() => ({
-  margin: '50px 0',
+  margin: '50px 0'
 }));
 
 export const SliderContainer = styled(Box)(() => ({
-  padding: '10px',
+  padding: '10px'
 }));
 
 export const SeeAllLinkStyle = styled(Link)(({ theme }) => ({
@@ -36,6 +36,6 @@ export const SeeAllLinkStyle = styled(Link)(({ theme }) => ({
   textDecoration: 'none',
   transition: 'all 0.4s',
   '&:hover': {
-    color: `${theme.palette.text.third}`,
-  },
+    color: `${theme.palette.text.third}`
+  }
 }));

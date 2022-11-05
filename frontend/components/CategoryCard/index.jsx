@@ -3,8 +3,10 @@ import CardTitle from '../PublicationCard/CardTitle';
 import { ImageContainerStyle } from './Styles';
 
 const CategoryCard = ({ category }) => {
-  const {coverImage, type} = category
-  const categoryImage = `http://localhost:1337${coverImage?.data?.attributes?.url}` || "/images/author-dummy.png";
+  const { coverImage, type } = category;
+  const categoryImage =
+    `http://localhost:1337${coverImage?.data?.attributes?.url}` ||
+    '/images/author-dummy.png';
   return (
     <Box>
       <ImageContainerStyle>

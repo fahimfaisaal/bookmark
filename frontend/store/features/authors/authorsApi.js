@@ -4,13 +4,13 @@ export const authorsApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getAuthors: builder.query({
       query: () => `/authors?populate=*`,
-      providesTags: ['authors'],
+      providesTags: ['authors']
     }),
     getAuthor: builder.query({
       query: (authorId) => `/authors/${authorId}/?populate=*`,
-      providesTags: ['author'],
-    }),
-  }),
+      providesTags: ['author']
+    })
+  })
 });
 
 export const { useGetAuthorQuery, useGetAuthorsQuery } = authorsApi;

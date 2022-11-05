@@ -14,7 +14,7 @@ const FormBtn = ({ children, color, disabled }) => {
       sx={{
         padding: '12px 5px',
         margin: '5px 0',
-        fontSize: '14px',
+        fontSize: '14px'
       }}
     >
       {children}

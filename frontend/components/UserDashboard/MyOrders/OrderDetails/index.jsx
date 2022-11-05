@@ -5,7 +5,7 @@ import {
   TableCell,
   TableContainer,
   TableRow,
-  Typography,
+  Typography
 } from '@mui/material';
 import { Box, Stack } from '@mui/system';
 import { StyledTableCell } from '../OrderItem/Styles';

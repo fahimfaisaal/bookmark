@@ -1,31 +1,28 @@
-import { apiSlice } from "../api/apiSlice";
+import { apiSlice } from '../api/apiSlice';
 
 export const cartsApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getCartsByUser: builder.query({
       query: ({ userId }) =>
         `/carts?populate=*&filters[userId][id][$eq]=${userId}`,
-      providesTags: ["carts"],
+      providesTags: ['carts']
     }),
 
     getCart: builder.query({
       query: ({ cartId }) => `/carts/${cartId}`,
-      providesTags: (result, error, arg) => [{ type: "cart", id: arg }],
+      providesTags: (result, error, arg) => [{ type: 'cart', id: arg }]
     }),
     getCartByUserBook: builder.query({
       query: ({ params }) => `/carts?${params}`,
-      providesTags: (result, error, arg) => [
-        { type: "cart", id: arg },
-        "carts",
-      ],
+      providesTags: (result, error, arg) => [{ type: 'cart', id: arg }, 'carts']
     }),
     addToCart: builder.mutation({
       query: ({ data }) => ({
-        url: "/carts",
-        method: "POST",
-        body: { data },
+        url: '/carts',
+        method: 'POST',
+        body: { data }
       }),
-      invalidatesTags: ["carts"],
+      invalidatesTags: ['carts']
     }),
 
     updateCart: builder.mutation({
@@ -33,23 +30,23 @@ export const cartsApi = apiSlice.injectEndpoints({
         console.log({ api: cartId, data });
         return {
           url: `/carts/${cartId}`,
-          method: "PUT",
-          body: { data },
+          method: 'PUT',
+          body: { data }
         };
       },
       invalidatesTags: (result, error, arg) => [
-        { type: "cart", id: arg },
-        "carts",
-      ],
+        { type: 'cart', id: arg },
+        'carts'
+      ]
     }),
     deleteCart: builder.mutation({
       query: ({ cartId }) => ({
         url: `/carts/${cartId}`,
-        method: "DELETE",
+        method: 'DELETE'
       }),
-      invalidatesTags: ["carts"],
-    }),
-  }),
+      invalidatesTags: ['carts']
+    })
+  })
 });
 
 export const {
@@ -58,5 +55,5 @@ export const {
   useAddToCartMutation,
   useUpdateCartMutation,
   useDeleteCartMutation,
-  useGetCartByUserBookQuery,
+  useGetCartByUserBookQuery
 } = cartsApi;

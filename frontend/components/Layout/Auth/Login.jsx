@@ -21,26 +21,24 @@ import {
   InputLabelStyle
 } from './Styles';
 
-
 const Login = ({ open, handleClickOpen, handleClose }) => {
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
-  const [login, { data, isLoading,isSuccess, error: responseError }] = useLoginMutation()
-  const [error, setError] = useState("");
+  const [login, { data, isLoading, isSuccess, error: responseError }] =
+    useLoginMutation();
+  const [error, setError] = useState('');
   // console.log({data,isLoading,isSuccess,responseError, error})
   useEffect(() => {
     if (responseError?.data) {
       setError(responseError?.data?.error?.message);
-      alert(responseError?.data?.error?.message)
+      alert(responseError?.data?.error?.message);
     }
     if (data?.jwt && data?.user) {
-
       /**
        * TODO: later redirect home page
        */
-      alert("Successfully Registered")
+      alert('Successfully Registered');
       handleClose();
-
     }
   }, [data, responseError]);
   const toggleRegister = () => {
@@ -54,11 +52,11 @@ const Login = ({ open, handleClickOpen, handleClose }) => {
     control,
     formState: { errors },
     register,
-    reset,
+    reset
   } = useForm({ mode: 'onBlur' });
 
   const onSubmit = (data) => {
-    login({data})
+    login({ data });
     reset();
   };
   //Handle Form =========================
@@ -89,9 +87,10 @@ const Login = ({ open, handleClickOpen, handleClose }) => {
                     type={'text'}
                     {...field}
                     error={Boolean(errors.identifier)}
-                    {...register('identifier', { required: 'identifier is required' })}
+                    {...register('identifier', {
+                      required: 'identifier is required'
+                    })}
                     helperText={errors.identifier?.message}
-
                   />
                 </InputContainer>
               )}
@@ -109,7 +108,7 @@ const Login = ({ open, handleClickOpen, handleClose }) => {
                     type={'password'}
                     error={Boolean(errors.password)}
                     {...register('password', {
-                      required: 'Password is required',
+                      required: 'Password is required'
                     })}
                     {...field}
                     helperText={errors.password?.message}
