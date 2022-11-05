@@ -1,4 +1,4 @@
-# Project Title: Bookmark – backend
+# Bookmark – backend
  
 ## Introduction: 
 
@@ -82,7 +82,7 @@ Strapi provides the authentication for users along with an admin panel to manipu
 * Tag
 * Variant 
 
-### Api: some endpoints
+### Api: some endpoints sample
 http://localhost:1337/api/books/7/?populate=* → get single book
 
 http://localhost:1337/api/books?populate=* → get all book
@@ -131,4 +131,4 @@ For reset all the medias run command yarn reset:medias
 ```
                         
 ### Deployment :
-
+yet to be deployed
