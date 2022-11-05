@@ -17,7 +17,7 @@ export const ContainerStyle = styled(Box)(({ theme }) => ({
     theme.mode === 'dark'
       ? `${theme.palette.background.dark}`
       : `${theme.palette.background.main}`
-  }`,
+  }`
 }));
 
 export const InnerContainerStyle = styled(Box)(({ theme, style }) => ({
@@ -27,7 +27,7 @@ export const InnerContainerStyle = styled(Box)(({ theme, style }) => ({
   //   width: '288px',
   //   margin: '0px 36px',
   //   ...style,
-  padding: '10px 20px',
+  padding: '10px 20px'
 }));
 
 export const LinkContainer = styled(Link)(({ theme }) => ({
@@ -38,11 +38,11 @@ export const LinkContainer = styled(Link)(({ theme }) => ({
   textDecoration: 'none',
   color: `${theme.palette.text.secondary}`,
   '&:hover': {
-    color: `${theme.palette.primary.main}`,
-  },
+    color: `${theme.palette.primary.main}`
+  }
 }));
 
 export const FilterTitleStyle = styled(Typography)(() => ({
   fontSize: '18px',
-  fontWeight: '700',
+  fontWeight: '700'
 }));

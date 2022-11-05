@@ -1,17 +1,16 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { userLoggedOut } from '../auth/authSlice';
 
-// NEXT_PUBLIC_API_URL=http://localhost:1337/api
-
 const baseQuery = fetchBaseQuery({
   baseUrl: process.env.NEXT_PUBLIC_API_URL,
   prepareHeaders: async (headers, { getState, endpoint }) => {
     const token = getState()?.auth?.accessToken;
     if (token) {
-      headers.set('authorization', `Bearer ${token}`)
+      headers.set('authorization', `Bearer ${token}`);
     }
+
     return headers;
-  },
+  }
 });
 
 export const apiSlice = createApi({
@@ -41,7 +40,8 @@ export const apiSlice = createApi({
     'author',
     'publishers',
     'publisher',
+    'categories'
   ],
   keepUnusedDataFor: 3600,
-  endpoints: (builder) => ({}),
+  endpoints: (builder) => ({})
 });

@@ -1,6 +1,9 @@
 {
-  "extends": [
-    "next/babel",
-    "next/core-web-vitals"
-  ]
+  "parserOptions": {
+    "ecmaFeatures": {
+      "experimentalObjectRestSpread": true,
+      "jsx": true
+    },
+    "sourceType": "module"
+  }
 }

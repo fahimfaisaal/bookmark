@@ -12,7 +12,7 @@ export const StyledTypo = styled(Typography)(({ theme }) => ({
   borderRadius: '50%',
   marginRight: '5px',
   color: 'white',
-  backgroundColor: `${theme.palette.primary.main}`,
+  backgroundColor: `${theme.palette.primary.main}`
 }));
 
 export const StyledBtn = styled(Button)(({ theme }) => ({
@@ -22,7 +22,7 @@ export const StyledBtn = styled(Button)(({ theme }) => ({
   fontSize: '1rem',
   fontWeight: 700,
   color: '#635BFF',
-  boxShadow: `${theme.shadows[5]}`,
+  boxShadow: `${theme.shadows[5]}`
 }));
 
 export const StyledContainer = styled(Box)(({ theme }) => ({
@@ -34,5 +34,5 @@ export const StyledContainer = styled(Box)(({ theme }) => ({
   borderRadius: '8px',
   padding: '30px',
   backgroundColor: `${theme.palette.background.default}`,
-  boxShadow: `${theme.shadows[1]}`,
+  boxShadow: `${theme.shadows[1]}`
 }));

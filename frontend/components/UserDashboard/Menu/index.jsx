@@ -6,20 +6,20 @@ import { StyledContainer, StyledLink, StyledListItem } from './Styles';
 const profileMenu = [
   {
     path: '/profile',
-    label: 'Profile',
+    label: 'Profile'
   },
   {
     path: '/profile/change-password',
-    label: 'Change Password',
+    label: 'Change Password'
   },
   {
     path: '/profile/my-orders',
-    label: 'My Orders',
+    label: 'My Orders'
   },
   {
     path: '/profile/my-wishlist',
-    label: 'My Wishlist',
-  },
+    label: 'My Wishlist'
+  }
 ];
 
 const ProfileMenu = () => {

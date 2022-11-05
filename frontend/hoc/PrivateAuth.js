@@ -1,6 +1,6 @@
-import { useRouter } from "next/router";
-import { useEffect } from "react";
-import useAuth from "../hooks/useAuth";
+import { useRouter } from 'next/router';
+import { useEffect } from 'react';
+import useAuth from '../hooks/useAuth';
 
 const withAuth = (Component) => {
   const Auth = (props) => {
@@ -9,11 +9,15 @@ const withAuth = (Component) => {
     const router = useRouter();
     useEffect(() => {
       if (!isLoggedIn) {
-        router.push("/");
+        router.push('/');
       }
     }, [router, isLoggedIn]);
 
-    return isLoggedIn ? <Component {...props} /> : "Loading from private auth...";
+    return isLoggedIn ? (
+      <Component {...props} />
+    ) : (
+      'Loading from private auth...'
+    );
   };
 
   // Copy getInitial props so it will run as well

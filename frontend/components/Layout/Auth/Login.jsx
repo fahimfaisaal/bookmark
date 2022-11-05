@@ -4,8 +4,11 @@ import Dialog from '@mui/material/Dialog';
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { Box } from '@mui/system';
+import { useEffect, useState } from 'react';
+import { Controller, useForm } from 'react-hook-form';
 import { BsGoogle } from 'react-icons/bs';
 import { FaFacebookF } from 'react-icons/fa';
+import { useLoginMutation } from '../../../store/features/auth/authApi';
 import CloseBtn from './CloseBtn';
 import FormBtn from './FormBtn';
 import Header from './Header';
@@ -15,39 +18,33 @@ import {
   FormContainer,
   IconContainer,
   InputContainer,
-  InputLabelStyle,
+  InputLabelStyle
 } from './Styles';
-import { useForm, Controller } from 'react-hook-form';
-import { useLoginMutation } from '../../../store/features/auth/authApi';
-import { useState, useEffect } from 'react';
 
 const Login = ({ open, handleClickOpen, handleClose }) => {
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
-  const [login, { data, isLoading,isSuccess, error: responseError }] = useLoginMutation()
-  const [error, setError] = useState("");
+  const [login, { data, isLoading, isSuccess, error: responseError }] =
+    useLoginMutation();
+  const [error, setError] = useState('');
   // console.log({data,isLoading,isSuccess,responseError, error})
-
+  useEffect(() => {
+    if (responseError?.data) {
+      setError(responseError?.data?.error?.message);
+      alert(responseError?.data?.error?.message);
+    }
+    if (data?.jwt && data?.user) {
+      /**
+       * TODO: later redirect home page
+       */
+      alert('Successfully Registered');
+      handleClose();
+    }
+  }, [data, responseError]);
   const toggleRegister = () => {
     handleClose();
     handleClickOpen();
   };
-
-  useEffect(() => {
-    if (responseError?.data) {
-        setError(responseError?.data?.error?.message);
-        alert(responseError?.data?.error?.message)
-    }
-    if (data?.jwt && data?.user) {
-       
-       /**
-        * TODO: later redirect home page
-        */
-        alert("Successfully Registered")
-        handleClose();
-
-    }
-}, [data, responseError]);
 
   //Handle Form =========================
   const {
@@ -55,10 +52,11 @@ const Login = ({ open, handleClickOpen, handleClose }) => {
     control,
     formState: { errors },
     register,
-    reset,
+    reset
   } = useForm({ mode: 'onBlur' });
+
   const onSubmit = (data) => {
-    login({data})
+    login({ data });
     reset();
   };
   //Handle Form =========================
@@ -89,7 +87,9 @@ const Login = ({ open, handleClickOpen, handleClose }) => {
                     type={'text'}
                     {...field}
                     error={Boolean(errors.identifier)}
-                    {...register('identifier', { required: 'identifier is required' })}
+                    {...register('identifier', {
+                      required: 'identifier is required'
+                    })}
                     helperText={errors.identifier?.message}
                   />
                 </InputContainer>
@@ -108,7 +108,7 @@ const Login = ({ open, handleClickOpen, handleClose }) => {
                     type={'password'}
                     error={Boolean(errors.password)}
                     {...register('password', {
-                      required: 'Password is required',
+                      required: 'Password is required'
                     })}
                     {...field}
                     helperText={errors.password?.message}

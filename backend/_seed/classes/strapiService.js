@@ -1,4 +1,4 @@
-const { statSync } = require("fs");
+const { statSync } = require('fs');
 
 class StrapiCRUDService {
   /**
@@ -31,15 +31,15 @@ class StrapiCRUDService {
         data: {
           refId,
           ref,
-          field,
+          field
         },
         files: {
           path,
           name,
           type,
           extension,
-          size: fileStat.size,
-        },
+          size: fileStat.size
+        }
       });
 
     return uploadedFile;
@@ -47,7 +47,7 @@ class StrapiCRUDService {
 
   async createMany(modelName, models) {
     return this.strapi.db.query(this.modelUIDs[modelName]).createMany({
-      data: models,
+      data: models
     });
   }
 

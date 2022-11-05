@@ -7,33 +7,33 @@ export const ContainerStyle = styled(Box)(({ theme }) => ({
   overflow: 'hidden',
   position: 'responsive',
   [theme.breakpoints.down('md')]: {
-    width: '100%',
-  },
+    width: '100%'
+  }
 }));
 
 export const FormContainer = styled(FormGroup)(() => ({
-  margin: '20px auto',
+  margin: '20px auto'
 }));
 
 export const InputContainer = styled(Box)(() => ({
-  padding: '10px 0px',
+  padding: '10px 0px'
 }));
 
 export const DialogHeader = styled(Stack)(() => ({
   direction: 'column',
   alignItems: 'center',
-  justifyContent: 'center',
+  justifyContent: 'center'
 }));
 
 export const InputLabelStyle = styled(Typography)(({ theme }) => ({
   padding: '8px 0',
   color: `${theme.palette.text.primary}`,
-  fontSize: '17px',
+  fontSize: '17px'
 }));
 
 export const IconContainer = styled(Box)(() => ({
   fontSize: '15px',
-  marginBottom: '-6px',
+  marginBottom: '-6px'
 }));
 
 export const CloseContainer = styled(Box)(({ theme }) => ({
@@ -42,6 +42,6 @@ export const CloseContainer = styled(Box)(({ theme }) => ({
   right: '10px',
   display: 'none',
   [theme.breakpoints.down('md')]: {
-    display: 'block',
-  },
+    display: 'block'
+  }
 }));

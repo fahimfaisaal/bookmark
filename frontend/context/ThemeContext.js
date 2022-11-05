@@ -19,10 +19,10 @@ export const ThemeContext = ({ children }) => {
   const theme = createTheme({
     palette: {
       mode,
-      ...(mode === 'light' ? { ...paletteLight } : { ...paletteDark }),
+      ...(mode === 'light' ? { ...paletteLight } : { ...paletteDark })
     },
     typography: {
-      ...typography,
+      ...typography
     },
     shadows: [
       'none',
@@ -31,8 +31,8 @@ export const ThemeContext = ({ children }) => {
       'rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px',
       'rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px',
       'rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px',
-      ...Array(22).fill('none'),
-    ],
+      ...Array(22).fill('none')
+    ]
   });
 
   return (

@@ -2,7 +2,7 @@ import { Button, Typography } from '@mui/material';
 import { Box, styled } from '@mui/system';
 
 export const BookInfoContainer = styled(Box)(() => ({
-  margin: '30px 0 50px',
+  margin: '30px 0 50px'
 }));
 
 export const BookImagesContainer = styled(Box)(({ theme }) => ({
@@ -10,7 +10,7 @@ export const BookImagesContainer = styled(Box)(({ theme }) => ({
   width: '100%',
   background: `${theme.palette.background.paper}`,
   padding: '12%',
-  position: 'relative',
+  position: 'relative'
 }));
 
 export const ImgListItem = styled(Box)(({ theme, active }) => ({
@@ -19,22 +19,22 @@ export const ImgListItem = styled(Box)(({ theme, active }) => ({
   backgroundColor: `${theme.palette.background.dark}`,
   padding: '10px',
   cursor: 'pointer',
-  border: `${active ? `3px solid ${theme.palette.grey[500]}` : null}`,
+  border: `${active ? `3px solid ${theme.palette.grey[500]}` : null}`
 }));
 export const ImgListContainer = styled(Box)(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
   gap: '20px',
-  overflowX: 'auto',
+  overflowX: 'auto'
 }));
 
 export const BookDetailsContainer = styled(Box)(() => ({
-  padding: '0px 10px 10px',
+  padding: '0px 10px 10px'
 }));
 
 export const BookTitleStyle = styled(Typography)(() => ({
   fontSize: '30px',
-  fontWeight: '700',
+  fontWeight: '700'
 }));
 
 export const FavIconStyle = styled(Box)(({ theme }) => ({
@@ -46,24 +46,24 @@ export const FavIconStyle = styled(Box)(({ theme }) => ({
   border: `1px solid ${theme.palette.grey[300]}`,
   borderRadius: '50%',
   cursor: 'pointer',
-  color: `${theme.palette.primary.main}`,
+  color: `${theme.palette.primary.main}`
 }));
 
 export const AuthorLinkStyle = styled(Typography)(({ theme }) => ({
   cursor: 'pointer',
   transition: 'all 0.4s',
   '&:hover': {
-    color: `${theme.palette.action.hover}`,
-  },
+    color: `${theme.palette.action.hover}`
+  }
 }));
 
 export const BookPriceStyle = styled(Typography)(({ theme }) => ({
-  color: `${theme.palette.primary.main}`,
+  color: `${theme.palette.primary.main}`
   // padding: '30px 0',
 }));
 export const OldBookPriceStyle = styled(Typography)(({ theme }) => ({
   color: `${theme.palette.grey[600]}`,
-  textDecoration: 'line-through',
+  textDecoration: 'line-through'
 }));
 
 export const VariantBtnStyle = styled(Button)(({ theme, active }) => ({
@@ -73,14 +73,14 @@ export const VariantBtnStyle = styled(Button)(({ theme, active }) => ({
     : `2px solid ${theme.palette.grey[300]}`,
   color: `${theme.palette.text.primary}`,
   '&:hover': {
-    border: `2px solid ${theme.palette.primary.main}`,
-  },
+    border: `2px solid ${theme.palette.primary.main}`
+  }
 }));
 
 const commonStyles = (theme) => ({
   border: `1px solid ${theme.palette.grey[400]}`,
   fontSize: '26px',
-  transition: 'all 0.3s',
+  transition: 'all 0.3s'
 });
 
 export const QtyBtnLeft = styled(Box)(({ theme }) => ({
@@ -89,8 +89,8 @@ export const QtyBtnLeft = styled(Box)(({ theme }) => ({
   cursor: 'pointer',
   borderRadius: '5px 0 0 5px',
   '&:hover': {
-    borderColor: `${theme.palette.primary.main}`,
-  },
+    borderColor: `${theme.palette.primary.main}`
+  }
 }));
 
 export const QtyBtnRight = styled(Box)(({ theme }) => ({
@@ -99,13 +99,13 @@ export const QtyBtnRight = styled(Box)(({ theme }) => ({
   cursor: 'pointer',
   borderRadius: '0 5px 5px 0',
   '&:hover': {
-    borderColor: `${theme.palette.primary.main}`,
-  },
+    borderColor: `${theme.palette.primary.main}`
+  }
 }));
 export const Qty = styled(Box)(({ theme }) => ({
   padding: '10px 32px',
   ...commonStyles(theme),
   fontSize: '18px',
   borderLeft: 'none',
-  borderRight: 'none',
+  borderRight: 'none'
 }));

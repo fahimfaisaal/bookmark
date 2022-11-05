@@ -9,7 +9,7 @@ const Publications = () => {
   const {
     data: publisherLists,
     isLoading: isPublisherLoading,
-    isError: isPublisherError,
+    isError: isPublisherError
   } = useGetPublishersQuery();
   return (
     <Box>

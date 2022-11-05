@@ -7,11 +7,11 @@ export const StyledBox = styled(Box)(({ theme }) => ({
   border: '0px solid #e5e7eb',
   backgroundColor: '#F3F4F6',
   minHeight: '200px',
-  textAlign: 'center',
+  textAlign: 'center'
 }));
 
 export const HeaderStyle = styled(Typography)(() => ({
   fontSize: '42px',
   fontWeight: '700',
-  textTransform: 'uppercase',
+  textTransform: 'uppercase'
 }));

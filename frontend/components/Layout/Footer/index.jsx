@@ -6,26 +6,28 @@ import FooterItem from './FooterItem';
 import {
   FooterBottomContainer,
   FooterContainer,
-  PaymentImgContainer,
+  PaymentImgContainer
 } from './Styles';
 
 const exploreData = [
   { link: '/about', text: 'About Us' },
   { link: '/books', text: 'Books' },
   { link: '/authors', text: 'Authors' },
-  { link: '/publishers', text: 'Publishers' },
+  { link: '/publishers', text: 'Publishers' }
 ];
+
 const customerServiceData = [
   { link: '/contact', text: 'Contact Us' },
   { link: '/faq', text: 'FAQ & Helps' },
   { link: '/returns', text: 'Returns' },
-  { link: '/books', text: 'Store Pickup' },
+  { link: '/books', text: 'Store Pickup' }
 ];
+
 const ourInfoData = [
   { link: '/privacy', text: 'Privacy policy update' },
   { link: '/terms', text: 'Terms & conditions' },
   { link: '/policy', text: 'Return Policy' },
-  { link: '/sitemap', text: 'Sitemap' },
+  { link: '/sitemap', text: 'Sitemap' }
 ];
 
 const Footer = () => {

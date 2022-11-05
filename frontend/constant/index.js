@@ -1,1 +1,1 @@
-export const BOOKMARK_AUTH = "BOOKMARK_AUTH"
+export const BOOKMARK_AUTH = 'BOOKMARK_AUTH';

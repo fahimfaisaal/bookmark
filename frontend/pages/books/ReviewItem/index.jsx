@@ -50,7 +50,7 @@ const ReviewItem = (rating) => {
         <Menu
           id="long-menu"
           MenuListProps={{
-            'aria-labelledby': 'long-button',
+            'aria-labelledby': 'long-button'
           }}
           anchorEl={anchorEl}
           open={open}

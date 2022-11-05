@@ -1,24 +1,21 @@
-import {useState, useEffect} from "react";
 import {
   Box,
   Button,
   Divider,
   SwipeableDrawer,
-  Typography,
-} from "@mui/material";
-import CartItem from "../../CartItem";
+  Typography
+} from '@mui/material';
+import { Stack } from '@mui/system';
+import { useRouter } from 'next/router';
+import { HiShoppingBag } from 'react-icons/hi';
+import { IoIosClose } from 'react-icons/io';
+import CartItem from '../../CartItem';
 import {
   CartContainer,
   CartHeaderContainer,
   CartItemContainer,
-  CloseBtnContaner,
-} from "./Styles";
-import { Stack } from "@mui/system";
-import { HiShoppingBag } from "react-icons/hi";
-import { IoIosClose } from "react-icons/io";
-import { useSelector } from "react-redux";
-import { useGetCartsByUserQuery } from "../../../store/features/carts/cartsApi";
-import {useRouter} from "next/router"
+  CloseBtnContaner
+} from './Styles';
 
 export default function CartItemComponent({
   cartModalTrg,
@@ -27,19 +24,16 @@ export default function CartItemComponent({
   cartLists,
   totalAmount
 }) {
-  const router = useRouter()
-  
+  const router = useRouter();
+
   const navigateCheckout = () => {
-    toggleDrawer(false)
-    router.push("/checkout") 
-    
-  }
+    toggleDrawer(false);
+    router.push('/checkout');
+  };
 
-
-  // console.log({ cartLists, totalAmount });
   return (
     <SwipeableDrawer
-      anchor={"right"}
+      anchor={'right'}
       open={cartModalTrg}
       onClose={toggleDrawer(false)}
       onOpen={toggleDrawer(true)}
@@ -47,9 +41,9 @@ export default function CartItemComponent({
       <CartContainer role="presentation">
         <CartHeaderContainer>
           <Stack
-            direction={"row"}
-            justifyContent={"space-between"}
-            alignItems={"center"}
+            direction={'row'}
+            justifyContent={'space-between'}
+            alignItems={'center'}
           >
             <Stack direction={"row"} alignItems={"center"}>
               <HiShoppingBag fontSize={"24px"} />
@@ -82,7 +76,12 @@ export default function CartItemComponent({
           <Typography variant="h2" py={3}>
             Total: {totalAmount}$
           </Typography>
-          <Button variant="contained" fullWidth={true} size={"large"} onClick={navigateCheckout}>
+          <Button
+            variant="contained"
+            fullWidth={true}
+            size={'large'}
+            onClick={navigateCheckout}
+          >
             Checkout
           </Button>
         </Box>
