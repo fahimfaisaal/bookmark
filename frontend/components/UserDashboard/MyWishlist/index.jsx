@@ -1,6 +1,6 @@
-import { Box, Button, Grid, Typography } from '@mui/material';
-import { Stack } from '@mui/system';
 import StarIcon from '@mui/icons-material/Star';
+import { Grid, Typography } from '@mui/material';
+import { Stack } from '@mui/system';
 import CustomImage from '../../CustomImage';
 import {
   StyledCart,
@@ -10,12 +10,12 @@ import {
   StyledStack
 } from './Styles';
 
-const MyWishlist = () => {
+function MyWishlist() {
   return (
-    <StyledStack direction={'row'} justifyContent="space-between">
+    <StyledStack direction="row" justifyContent="space-between">
       <Grid container>
         <Grid item sm={12} md={5} lg={6}>
-          <Stack direction={'row'} spacing={3} alignItems="center">
+          <Stack direction="row" spacing={3} alignItems="center">
             <StyledImage>
               <CustomImage src="/Comic-Books.jpg" width="70px" height="70px" />
             </StyledImage>
@@ -29,9 +29,9 @@ const MyWishlist = () => {
           </Stack>
         </Grid>
         <Grid item sm={12} md={7} lg={6}>
-          <Stack direction={'column'} textAlign={'right'} marginTop="10px">
+          <Stack direction="column" textAlign="right" marginTop="10px">
             <Typography variant="h3">$60.00</Typography>
-            <Stack direction={'row'} justifyContent="end">
+            <Stack direction="row" justifyContent="end">
               <StyledCart>Add to Cart</StyledCart>
               <StyledRemove>Remove</StyledRemove>
             </Stack>
@@ -40,6 +40,6 @@ const MyWishlist = () => {
       </Grid>
     </StyledStack>
   );
-};
+}
 
 export default MyWishlist;

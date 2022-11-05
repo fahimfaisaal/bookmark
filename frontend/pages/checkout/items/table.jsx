@@ -2,7 +2,7 @@ import { Button, Divider, Typography } from '@mui/material';
 import { Box, Container, Stack } from '@mui/system';
 import Payment from './Payment';
 
-const CheckoutTable = () => {
+function CheckoutTable() {
   return (
     <Container>
       <Typography
@@ -12,7 +12,7 @@ const CheckoutTable = () => {
         Your Order
       </Typography>
       <Stack
-        direction={'row'}
+        direction="row"
         justifyContent="space-between"
         spacing={3}
         sx={{ marginBottom: 1 }}
@@ -29,7 +29,7 @@ const CheckoutTable = () => {
 
       <Divider />
       <Stack
-        direction={'row'}
+        direction="row"
         justifyContent="space-between"
         spacing={3}
         sx={{ marginTop: 1 }}
@@ -38,7 +38,7 @@ const CheckoutTable = () => {
         <Typography variant="body2">$1.60</Typography>
       </Stack>
       <Stack
-        direction={'row'}
+        direction="row"
         justifyContent="space-between"
         spacing={3}
         sx={{ marginBottom: 5 }}
@@ -49,7 +49,7 @@ const CheckoutTable = () => {
       <Divider />
       <Divider />
       <Stack
-        direction={'row'}
+        direction="row"
         justifyContent="space-between"
         spacing={3}
         sx={{ marginBottom: 2 }}
@@ -63,6 +63,6 @@ const CheckoutTable = () => {
       </Box>
     </Container>
   );
-};
+}
 
 export default CheckoutTable;

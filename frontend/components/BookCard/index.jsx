@@ -20,7 +20,7 @@ import {
   WriterLinkStyle
 } from './Styles';
 
-const BookCard = ({ book, bookId }) => {
+function BookCard({ book, bookId }) {
   const [favorite, setFavorite] = useState(false);
   const { authors, images, variants, status, ratings } = book || {};
 
@@ -28,7 +28,6 @@ const BookCard = ({ book, bookId }) => {
     (images?.data &&
       `http://localhost:1337${images?.data[0]?.attributes?.url}`) ||
     '/images/product-dummy.png';
-  const authorId = authors?.data[0]?.id;
 
   const handleFavorite = () => {
     if (favorite) {
@@ -37,12 +36,12 @@ const BookCard = ({ book, bookId }) => {
       setFavorite(true);
     }
   };
-  const avarageReview = ratings?.data?.reduce((acc, cur) => {
-    acc += Number(cur.attributes.rate);
-    return acc;
-  }, 0);
+  const avarageReview = ratings?.data?.reduce(
+    (acc, cur) => acc + Number(cur.attributes.rate),
+    0
+  );
   const authUser = useSelector((state) => state?.auth?.user);
-  let [min, max] =
+  const [min, max] =
     variants?.data?.reduce(
       ([prevMin, prevMax], { attributes }) => [
         Math.min(prevMin, attributes?.price),
@@ -66,7 +65,7 @@ const BookCard = ({ book, bookId }) => {
       <ContentContainerStyle>
         <TitleStyle>
           <Link href={`/books/${bookId}`}>
-            <Typography variant="h3" color="text.primary" py={'5px'}>
+            <Typography variant="h3" color="text.primary" py="5px">
               {book?.name}
             </Typography>
           </Link>
@@ -83,7 +82,7 @@ const BookCard = ({ book, bookId }) => {
           </Link>
         </Stack>
         {ratings?.data?.length > 0 && (
-          <Stack direction={'row'} alignItems={'center'} pb={1}>
+          <Stack direction="row" alignItems="center" pb={1}>
             <Rating
               defaultValue={avarageReview}
               precision={0.5}
@@ -100,8 +99,8 @@ const BookCard = ({ book, bookId }) => {
         >
           {status}
         </Typography>
-        <PriceStyle direction={'row'} alignItems={'center'}>
-          {variants?.data[0]?.attributes?.price == null ? (
+        <PriceStyle direction="row" alignItems="center">
+          {variants?.data[0]?.attributes?.price === null ? (
             <Typography variant="h4">Free</Typography>
           ) : (
             <Typography variant="h4">
@@ -143,6 +142,6 @@ const BookCard = ({ book, bookId }) => {
       )}
     </StyledBox>
   );
-};
+}
 
 export default BookCard;

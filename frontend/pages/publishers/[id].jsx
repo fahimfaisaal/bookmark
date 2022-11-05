@@ -8,7 +8,7 @@ import { useGetBooksByPublisherQuery } from '../../store/features/books/booksApi
 import { useGetPublisherQuery } from '../../store/features/publishers/publishersApi';
 import { BooksContainer, TitleStyle } from './Style';
 
-const PublicationItem = () => {
+function PublicationItem() {
   const router = useRouter();
   const { data } = useGetPublisherQuery(router.query.id);
 
@@ -21,7 +21,7 @@ const PublicationItem = () => {
 
   return (
     <Box>
-      <Grid container spacing={'10px'}>
+      <Grid container spacing="10px">
         <Grid item lg={3.5}>
           <Filter />
         </Grid>
@@ -36,8 +36,8 @@ const PublicationItem = () => {
                 </Grid>
               ))}
             </Grid>
-            <Stack direction={'row'} justifyContent={'center'} my={5}>
-              <Button variant="contained" size="large" disableElevation={true}>
+            <Stack direction="row" justifyContent="center" my={5}>
+              <Button variant="contained" size="large" disableElevation>
                 Load More
               </Button>
             </Stack>
@@ -46,6 +46,6 @@ const PublicationItem = () => {
       </Grid>
     </Box>
   );
-};
+}
 
 export default PublicationItem;

@@ -1,16 +1,10 @@
-import {
-  Button,
-  FormControl,
-  InputLabel,
-  TextField,
-  Typography
-} from '@mui/material';
+import { Button, InputLabel, TextField, Typography } from '@mui/material';
 import { Box } from '@mui/system';
+import { Controller, useForm } from 'react-hook-form';
 import { StyledContainer } from './Styles';
-import { useForm, Controller } from 'react-hook-form';
 
-const ChangePassword = () => {
-  //Handle Form =========================
+function ChangePassword() {
+  // Handle Form =========================
   const {
     handleSubmit,
     control,
@@ -25,111 +19,110 @@ const ChangePassword = () => {
     console.log(data);
     reset();
   };
-  //Handle Form =========================
+  // Handle Form =========================
   return (
-    <>
-      <StyledContainer sx={{ boxShadow: 3 }}>
-        <Typography variant="h2">Change Password</Typography>
+    <StyledContainer sx={{ boxShadow: 3 }}>
+      <Typography variant="h2">Change Password</Typography>
 
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <Controller
-            name="oldPassword"
-            control={control}
-            render={({ field }) => (
-              <>
-                <InputLabel
-                  color="secondary"
-                  htmlFor="old-pass"
-                  sx={{ marginTop: 2, paddingBottom: 1 }}
-                >
-                  Old Password
-                </InputLabel>
-                <TextField
-                  sx={{ marginBottom: 1.6 }}
-                  fullWidth
-                  name="oldPassword"
-                  size="small"
-                  placeholder="*********"
-                  id="old-pass"
-                  error={Boolean(errors.oldPassword)}
-                  {...register('oldPassword', {
-                    required: 'Old Password is required'
-                  })}
-                  helperText={errors.oldPassword?.message}
-                  type={'password'}
-                  {...field}
-                />
-              </>
-            )}
-          />
-          <Controller
-            name="newPassword"
-            control={control}
-            render={({ field }) => (
-              <>
-                <InputLabel
-                  color="secondary"
-                  htmlFor="newPassword"
-                  sx={{ marginTop: 2, paddingBottom: 1 }}
-                >
-                  New Password
-                </InputLabel>
-                <TextField
-                  sx={{ marginBottom: 1.6 }}
-                  fullWidth
-                  name="newPassword"
-                  size="small"
-                  placeholder="*********"
-                  id="newPassword"
-                  error={Boolean(errors.newPassword)}
-                  {...register('newPassword', {
-                    required: 'New Password is required'
-                  })}
-                  helperText={errors.newPassword?.message}
-                  type={'password'}
-                  {...field}
-                />
-              </>
-            )}
-          />
-          <Controller
-            name="confirmPassword"
-            control={control}
-            render={({ field }) => (
-              <>
-                <InputLabel
-                  color="secondary"
-                  htmlFor="confirmPassword"
-                  sx={{ marginTop: 2, paddingBottom: 1 }}
-                >
-                  Confirm Password
-                </InputLabel>
-                <TextField
-                  sx={{ marginBottom: 1.6 }}
-                  fullWidth
-                  name="confirmPassword"
-                  size="small"
-                  placeholder="*********"
-                  id="confirmPassword"
-                  error={Boolean(errors.confirmPassword)}
-                  {...register('confirmPassword', {
-                    required: 'Confirm Password is required'
-                  })}
-                  helperText={errors.confirmPassword?.message}
-                  type={'password'}
-                  {...field}
-                />
-              </>
-            )}
-          />
-          <Box textAlign={'right'}>
-            <Button type="submit" variant="btnGreen">
-              Submit
-            </Button>
-          </Box>
-        </form>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <Controller
+          name="oldPassword"
+          control={control}
+          render={({ field }) => (
+            <>
+              <InputLabel
+                color="secondary"
+                htmlFor="old-pass"
+                sx={{ marginTop: 2, paddingBottom: 1 }}
+              >
+                Old Password
+              </InputLabel>
+              <TextField
+                sx={{ marginBottom: 1.6 }}
+                fullWidth
+                name="oldPassword"
+                size="small"
+                placeholder="*********"
+                id="old-pass"
+                error={Boolean(errors.oldPassword)}
+                {...register('oldPassword', {
+                  required: 'Old Password is required'
+                })}
+                helperText={errors.oldPassword?.message}
+                type="password"
+                {...field}
+              />
+            </>
+          )}
+        />
+        <Controller
+          name="newPassword"
+          control={control}
+          render={({ field }) => (
+            <>
+              <InputLabel
+                color="secondary"
+                htmlFor="newPassword"
+                sx={{ marginTop: 2, paddingBottom: 1 }}
+              >
+                New Password
+              </InputLabel>
+              <TextField
+                sx={{ marginBottom: 1.6 }}
+                fullWidth
+                name="newPassword"
+                size="small"
+                placeholder="*********"
+                id="newPassword"
+                error={Boolean(errors.newPassword)}
+                {...register('newPassword', {
+                  required: 'New Password is required'
+                })}
+                helperText={errors.newPassword?.message}
+                type="password"
+                {...field}
+              />
+            </>
+          )}
+        />
+        <Controller
+          name="confirmPassword"
+          control={control}
+          render={({ field }) => (
+            <>
+              <InputLabel
+                color="secondary"
+                htmlFor="confirmPassword"
+                sx={{ marginTop: 2, paddingBottom: 1 }}
+              >
+                Confirm Password
+              </InputLabel>
+              <TextField
+                sx={{ marginBottom: 1.6 }}
+                fullWidth
+                name="confirmPassword"
+                size="small"
+                placeholder="*********"
+                id="confirmPassword"
+                error={Boolean(errors.confirmPassword)}
+                {...register('confirmPassword', {
+                  required: 'Confirm Password is required'
+                })}
+                helperText={errors.confirmPassword?.message}
+                type="password"
+                {...field}
+              />
+            </>
+          )}
+        />
+        <Box textAlign="right">
+          <Button type="submit" variant="btnGreen">
+            Submit
+          </Button>
+        </Box>
+      </form>
 
-        {/* <InputLabel color="secondary" htmlFor="new-pass">
+      {/* <InputLabel color="secondary" htmlFor="new-pass">
           New Password
         </InputLabel>
         <TextField
@@ -148,9 +141,8 @@ const ChangePassword = () => {
           placeholder="*********"
           id="confirm-pass"
         /> */}
-      </StyledContainer>
-    </>
+    </StyledContainer>
   );
-};
+}
 
 export default ChangePassword;

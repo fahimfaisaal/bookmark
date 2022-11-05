@@ -68,7 +68,7 @@ const generateQuery = ({
   }
 });
 
-const Books = () => {
+function Books() {
   const dispatch = useDispatch();
   const tags = useSelector(getTags);
   const categories = useSelector(getCategories);
@@ -105,7 +105,7 @@ const Books = () => {
 
   useLayoutEffect(() => {
     if (isSuccess) {
-      setBooks((prev) => [].concat(bookLists?.data ?? []));
+      setBooks(() => [].concat(bookLists?.data ?? []));
       console.log({ effect: bookLists?.data, meta: bookLists?.meta });
     }
   }, [bookLists?.data]);
@@ -132,7 +132,7 @@ const Books = () => {
             <Button
               variant="outlined"
               startIcon={filterTrig ? <MdClose /> : <FiFilter />}
-              disableElevation={true}
+              disableElevation
               onClick={handleFilter}
             >
               Filter
@@ -146,12 +146,12 @@ const Books = () => {
               </Grid>
             ))}
           </Grid>
-          <Stack direction={'row'} justifyContent={'center'} my={5}>
+          <Stack direction="row" justifyContent="center" my={5}>
             {bookLists?.meta?.pageCount > page && (
               <Button
                 variant="contained"
                 size="large"
-                disableElevation={true}
+                disableElevation
                 onClick={paginationHandler}
               >
                 Load More
@@ -162,6 +162,6 @@ const Books = () => {
       </Grid>
     </Box>
   );
-};
+}
 
 export default Books;

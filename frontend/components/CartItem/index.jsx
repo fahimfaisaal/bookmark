@@ -1,8 +1,7 @@
 import { Typography } from '@mui/material';
 import { Stack } from '@mui/system';
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { IoIosClose } from 'react-icons/io';
-import useDebounce from '../../hooks/useDebounce';
 import {
   useDeleteCartMutation,
   useUpdateCartMutation
@@ -11,19 +10,16 @@ import {
   ImgContainerStyle,
   ItemContainerStyle,
   PriceContainerStyle,
-  RemoveBtnContanerStyle,
-  TotalPriceContainerStyle
+  RemoveBtnContanerStyle
 } from './Styles';
 import VerticalQuantityBtn from './VerticalQuntityBtn';
-const CartItem = ({ cart, cartId }) => {
+
+function CartItem({ cart, cartId }) {
   const { book, variant } = cart;
-  const debounce = useDebounce();
-  const [cartItem, setCartItem] = useState();
   const [deleteCart] = useDeleteCartMutation();
 
   const [cartQty, setCartQty] = useState(cart?.quantity);
-  const [updateCart, { data: updateCartData, error: updateCartError }] =
-    useUpdateCartMutation();
+  const [updateCart] = useUpdateCartMutation();
 
   const itemIncrement = () => {
     // based on stock
@@ -39,7 +35,7 @@ const CartItem = ({ cart, cartId }) => {
 
   useEffect(() => {
     if (cartQty !== cart?.quantity) {
-      let data = {};
+      const data = {};
       data.quantity = cartQty;
       if (data.quantity <= 0) {
         deleteCart({ cartId });
@@ -55,9 +51,9 @@ const CartItem = ({ cart, cartId }) => {
 
   return (
     <ItemContainerStyle
-      direction={'row'}
+      direction="row"
       spacing={2}
-      justifyContent={'space-between'}
+      justifyContent="space-between"
     >
       <VerticalQuantityBtn
         quantity={cart?.quantity}
@@ -73,9 +69,9 @@ const CartItem = ({ cart, cartId }) => {
           width={60}
         />
       </ImgContainerStyle>
-      <Stack direction={'column'} spacing={2}>
+      <Stack direction="column" spacing={2}>
         <Typography variant="h3">{book?.data?.attributes?.name}</Typography>
-        <Stack direction={'row'} justifyContent={'space-between'}>
+        <Stack direction="row" justifyContent="space-between">
           <PriceContainerStyle variant="body1">
             {' '}
             ${variant?.data?.attributes?.price}
@@ -91,6 +87,6 @@ const CartItem = ({ cart, cartId }) => {
       </RemoveBtnContanerStyle>
     </ItemContainerStyle>
   );
-};
+}
 
 export default CartItem;

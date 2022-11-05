@@ -19,7 +19,7 @@ export default function ContactModal({ btnText, getData }) {
     setOpen(false);
   };
 
-  //Handle Form =========================
+  // Handle Form =========================
   const {
     handleSubmit,
     control,
@@ -33,20 +33,15 @@ export default function ContactModal({ btnText, getData }) {
   });
   const onSubmit = (data) => {
     console.log(data);
-    getData(data.contact); //state lifting
+    getData(data.contact); // state lifting
     reset();
   };
-  //Handle Form =========================
+  // Handle Form =========================
 
   return (
     <>
       <Button onClick={handleClickOpen}>{btnText}</Button>
-      <Dialog
-        open={open}
-        onClose={handleClose}
-        fullWidth={true}
-        maxWidth={'sm'}
-      >
+      <Dialog open={open} onClose={handleClose} fullWidth maxWidth="sm">
         <DialogTitle>Contact Number</DialogTitle>
         <DialogContent>
           <form onSubmit={handleSubmit(onSubmit)}>
@@ -61,14 +56,14 @@ export default function ContactModal({ btnText, getData }) {
                     fullWidth
                     name="contact"
                     size="small"
-                    label={'contact'}
+                    label="contact"
                     placeholder="+01...."
                     error={Boolean(errors.contact)}
                     {...register('contact', {
                       required: 'contact is required'
                     })}
                     helperText={errors.contact?.message}
-                    type={'text'}
+                    type="text"
                     {...field}
                   />
                 </Box>

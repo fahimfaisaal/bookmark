@@ -7,18 +7,18 @@ import {
   TableRow,
   Typography
 } from '@mui/material';
-import { Box, Stack } from '@mui/system';
+import { Box } from '@mui/system';
 import { StyledTableCell } from '../OrderItem/Styles';
 import { StyledBox, StyledOrderBox } from './Styles';
 
-const OrderDetails = () => {
+function OrderDetails() {
   return (
     <>
       <Typography variant="h3">Order Details - CDDSGG445</Typography>
       <StyledOrderBox>
         <Grid container spacing={6}>
           <Grid item sm={12} md={6}>
-            <Box margin={'15px'}>
+            <Box margin="15px">
               <Typography variant="subtitle1">Billing Address</Typography>
               <Typography variant="body2">
                 2148 Straford Park, KY, Winchester, 40391, United States
@@ -59,6 +59,6 @@ const OrderDetails = () => {
       </StyledOrderBox>
     </>
   );
-};
+}
 
 export default OrderDetails;

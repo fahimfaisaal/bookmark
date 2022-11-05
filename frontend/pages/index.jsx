@@ -26,43 +26,33 @@ import {
   SeeAllLinkStyle
 } from './Styles';
 
-const responsive = (xl, lg, md, sm, xs) => {
-  return {
-    superLargeDesktop: {
-      // the naming can be any, depends on you.
-      breakpoint: { max: 4000, min: 3000 },
-      items: xl
-    },
-    desktop: {
-      breakpoint: { max: 3000, min: 1025 },
-      items: lg
-    },
-    laptop: {
-      breakpoint: { max: 1024, min: 769 },
-      items: md
-    },
-    tablet: {
-      breakpoint: { max: 768, min: 481 },
-      items: sm
-    },
-    mobile: {
-      breakpoint: { max: 480, min: 0 },
-      items: xs
-    }
-  };
-};
+const responsive = (xl, lg, md, sm, xs) => ({
+  superLargeDesktop: {
+    // the naming can be any, depends on you.
+    breakpoint: { max: 4000, min: 3000 },
+    items: xl
+  },
+  desktop: {
+    breakpoint: { max: 3000, min: 1025 },
+    items: lg
+  },
+  laptop: {
+    breakpoint: { max: 1024, min: 769 },
+    items: md
+  },
+  tablet: {
+    breakpoint: { max: 768, min: 481 },
+    items: sm
+  },
+  mobile: {
+    breakpoint: { max: 480, min: 0 },
+    items: xs
+  }
+});
 
-const Home = () => {
-  const {
-    data: authorLists,
-    isLoading: isAuthorLoading,
-    isError: isAuthorError
-  } = useGetAuthorsQuery();
-  const {
-    data: publisherLists,
-    isLoading: isPublisherLoading,
-    isError: isPublisherError
-  } = useGetPublishersQuery();
+function Home() {
+  const { data: authorLists } = useGetAuthorsQuery();
+  const { data: publisherLists } = useGetPublishersQuery();
   // TODO: this query need to fix
   const { data: newBooks, isSuccess } = useGetBooksQuery({
     query: {
@@ -88,13 +78,19 @@ const Home = () => {
 
   const { data: categoryLists } = useGetCategoryQuery();
 
-  console.log({ newBooks, isSuccess, popularBooks, categoryLists });
+  console.log({
+    newBooks,
+    isSuccess,
+    popularBooks,
+    categoryLists
+  });
   return (
     <ContainerStyle>
       <HeroContainer>
-        <Link href={'/books'}>
+        <Link href="/books">
           <Box sx={{ cursor: 'pointer' }}>
-            <img src="/images/Cover.png" />
+            {/* TODO: have to improve */}
+            <img alt="hello" src="/images/Cover.png" />
           </Box>
         </Link>
       </HeroContainer>
@@ -140,8 +136,8 @@ const Home = () => {
           </Grid>
         )}
 
-        <Stack direction={'row'} justifyContent={'center'} my={5}>
-          <Button variant="contained" size="large" disableElevation={true}>
+        <Stack direction="row" justifyContent="center" my={5}>
+          <Button variant="contained" size="large" disableElevation>
             Load More
           </Button>
         </Stack>
@@ -149,9 +145,9 @@ const Home = () => {
 
       <SectionContainer>
         <Stack
-          direction={'row'}
-          alignItems={'center'}
-          justifyContent={'space-between'}
+          direction="row"
+          alignItems="center"
+          justifyContent="space-between"
         >
           <SectionHeaderStyle variant="h1">Top Authors</SectionHeaderStyle>
           <Link href="/authors">
@@ -172,9 +168,9 @@ const Home = () => {
 
       <SectionContainer>
         <Stack
-          direction={'row'}
-          alignItems={'center'}
-          justifyContent={'space-between'}
+          direction="row"
+          alignItems="center"
+          justifyContent="space-between"
         >
           <SectionHeaderStyle variant="h1" sx={{ margin: 0 }}>
             Top Publishers
@@ -197,6 +193,6 @@ const Home = () => {
       </SectionContainer>
     </ContainerStyle>
   );
-};
+}
 
 export default Home;

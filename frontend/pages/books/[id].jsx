@@ -30,6 +30,7 @@ import {
   useGetCartByUserBookQuery,
   useUpdateCartMutation
 } from '../../store/features/carts/cartsApi';
+import { shortId } from '../../uitls';
 import ReviewForm from './ReviewForm';
 import ReviewItem from './ReviewItem';
 import {
@@ -49,7 +50,7 @@ import {
   VariantBtnStyle
 } from './Styles';
 
-const BookItem = () => {
+function BookItem() {
   const [openReview, setOpenReview] = useState(false);
   const [activeImg, setActiveImg] = useState(0);
   const [activeVariant, setActiveVariant] = useState(0);
@@ -57,13 +58,7 @@ const BookItem = () => {
   const router = useRouter();
   const { id } = router.query;
   const authUser = useSelector((state) => state?.auth?.user);
-  const {
-    data: book,
-    isLoading,
-    isError,
-    error,
-    isSuccess
-  } = useGetBookQuery(id);
+  const { data: book } = useGetBookQuery(id);
   const bookData = book?.data?.attributes || {};
 
   const { data: bookRatings } = useGetNestedBookItemQuery(
@@ -74,7 +69,7 @@ const BookItem = () => {
   );
 
   const relatedBooksQuery = [];
-  //tag.attributes.type
+  // tag.attributes.type
   bookData?.categories?.data.map((cat) =>
     relatedBooksQuery.push(
       `&filters[categories][type][$eq]=${cat.attributes.type}`
@@ -87,10 +82,8 @@ const BookItem = () => {
     params: `filters[book][id]=${book?.data?.id}&filters[userId][id]=${authUser?.id}&populate[0]=variant`
   });
 
-  const [updateCart, { data: updateCartData, error: updateCartError }] =
-    useUpdateCartMutation();
-  const [addToCart, { data: addtoCartData, error: addtoCartError }] =
-    useAddToCartMutation();
+  const [updateCart] = useUpdateCartMutation();
+  const [addToCart] = useAddToCartMutation();
 
   const handleSelectVariant = (ind) => {
     setActiveVariant(ind);
@@ -98,10 +91,7 @@ const BookItem = () => {
 
   const numberOfReview = bookRatings?.data?.attributes?.ratings?.data.length;
   const avarageReview = bookRatings?.data?.attributes?.ratings?.data.reduce(
-    (acc, cur) => {
-      acc += Number(cur.attributes.rate);
-      return acc;
-    },
+    (acc, cur) => acc + Number(cur.attributes.rate),
     0
   );
 
@@ -116,7 +106,7 @@ const BookItem = () => {
   };
 
   // console.log({ book, bookRatings, bookVariants, cartBook });
-  bookVariants?.data?.attributes?.variants?.data.map((variant) => {
+  bookVariants?.data?.attributes?.variants?.data.forEach((variant) => {
     variants.ids.push(variant?.id);
     variants.formates.push(variant?.attributes?.formate);
     variants.discounts.push(variant?.attributes?.discount);
@@ -144,7 +134,7 @@ const BookItem = () => {
 
   const handleImgNext = () => {
     if (activeImg < imgLastInd) {
-      setActiveImg((prev) => (prev += 1));
+      setActiveImg((prev) => prev + 1);
     }
     if (activeImg === imgLastInd) {
       setActiveImg(0);
@@ -152,7 +142,7 @@ const BookItem = () => {
   };
   const handleImgPrev = () => {
     if (activeImg > 0) {
-      setActiveImg((prev) => (prev -= 1));
+      setActiveImg((prev) => prev - 1);
     }
     if (activeImg === 0) {
       setActiveImg(imgLastInd);
@@ -205,7 +195,7 @@ const BookItem = () => {
   return (
     <Box>
       <BookInfoContainer>
-        <Grid container spacing={'50px'}>
+        <Grid container spacing="50px">
           <Grid item lg={6} md={12}>
             <BookImagesContainer>
               <CustomImage
@@ -222,7 +212,7 @@ const BookItem = () => {
               {bookData?.images?.data.map((img, ind) => (
                 <ImgListItem
                   active={activeImg === ind}
-                  key={ind}
+                  key={Math.random().toString(32)}
                   onClick={() => handleImgCurrent(ind)}
                 >
                   <CustomImage
@@ -235,9 +225,9 @@ const BookItem = () => {
           <Grid item lg={6} md={12}>
             <BookDetailsContainer>
               <Stack
-                direction={'row'}
-                alignItems={'center'}
-                justifyContent={'space-between'}
+                direction="row"
+                alignItems="center"
+                justifyContent="space-between"
                 mb={2}
               >
                 <BookTitleStyle variant="h1">{bookData?.name}</BookTitleStyle>
@@ -245,10 +235,10 @@ const BookItem = () => {
                   <FavoriteBorderIcon />
                 </FavIconStyle>
               </Stack>
-              <Stack direction={'row'} alignItems={'center'} spacing={1}>
+              <Stack direction="row" alignItems="center" spacing={1}>
                 <Typography variant="body2">By (Author)</Typography>
                 {bookData?.authors?.data.map((author, index) => (
-                  <Link href={`/authors/${author.id}`}>
+                  <Link key={shortId()} href={`/authors/${author.id}`}>
                     <AuthorLinkStyle variant="h3">
                       {author.attributes.name}
                       {bookData?.authors?.data.length > 1 &&
@@ -259,7 +249,7 @@ const BookItem = () => {
                 ))}
               </Stack>
               {numberOfReview > 0 && (
-                <Stack pt={2} direction={'row'} alignItems={'center'}>
+                <Stack pt={2} direction="row" alignItems="center">
                   <Rating
                     defaultValue={avarageReview / numberOfReview}
                     precision={0.5}
@@ -272,7 +262,7 @@ const BookItem = () => {
               )}
 
               {variants.prices.length ? (
-                <Stack direction={'row'} alignItems={'center'} gap={2} pt={5}>
+                <Stack direction="row" alignItems="center" gap={2} pt={5}>
                   <OldBookPriceStyle variant="h1">
                     {variants.prices[activeVariant]}$
                   </OldBookPriceStyle>
@@ -282,7 +272,8 @@ const BookItem = () => {
                   </BookPriceStyle>
                   <Typography variant="body1">
                     You Save {Math.round(saveAmount)}$ (
-                    {variants.discounts[activeVariant]}%)
+                    {variants.discounts[activeVariant]}
+                    %)
                   </Typography>
                 </Stack>
               ) : (
@@ -293,13 +284,13 @@ const BookItem = () => {
               <Typography variant="h3" pb={5} pt={1}>
                 {bookData?.status}
               </Typography>
-              <Stack direction={'row'} alignItems={'center'} spacing={2} mb={3}>
+              <Stack direction="row" alignItems="center" spacing={2} mb={3}>
                 <Typography variant="h3">Language :</Typography>
-                <Stack direction={'row'} alignItems={'center'} spacing={2}>
+                <Stack direction="row" alignItems="center" spacing={2}>
                   {variants.languages.map((lang, ind) => (
                     <VariantBtnStyle
                       variant="outlined"
-                      key={ind}
+                      key={shortId()}
                       onClick={() => handleSelectVariant(ind)}
                       active={ind === activeVariant}
                     >
@@ -309,13 +300,13 @@ const BookItem = () => {
                 </Stack>
               </Stack>
               <Divider />
-              <Stack direction={'row'} alignItems={'center'} spacing={2} my={3}>
+              <Stack direction="row" alignItems="center" spacing={2} my={3}>
                 <Typography variant="h3">Book Type :</Typography>
-                <Stack direction={'row'} alignItems={'center'} spacing={2}>
+                <Stack direction="row" alignItems="center" spacing={2}>
                   {variants.formates.map((formate, ind) => (
                     <VariantBtnStyle
                       variant="outlined"
-                      key={ind}
+                      key={shortId()}
                       onClick={() => handleSelectVariant(ind)}
                       active={ind === activeVariant}
                     >
@@ -324,13 +315,13 @@ const BookItem = () => {
                   ))}
                 </Stack>
               </Stack>
-              <Stack direction={'row'} alignItems={'center'} spacing={2} my={3}>
+              <Stack direction="row" alignItems="center" spacing={2} my={3}>
                 <Typography variant="h3">Page Quality :</Typography>
-                <Stack direction={'row'} alignItems={'center'} spacing={2}>
+                <Stack direction="row" alignItems="center" spacing={2}>
                   {variants.pageQualities.map((qal, ind) => (
                     <VariantBtnStyle
                       variant="outlined"
-                      key={ind}
+                      key={shortId()}
                       onClick={() => handleSelectVariant(ind)}
                       active={ind === activeVariant}
                     >
@@ -339,13 +330,13 @@ const BookItem = () => {
                   ))}
                 </Stack>
               </Stack>
-              <Stack direction={'row'} alignItems={'center'} spacing={2} my={3}>
+              <Stack direction="row" alignItems="center" spacing={2} my={3}>
                 <Typography variant="h3">Page Formate :</Typography>
-                <Stack direction={'row'} alignItems={'center'} spacing={2}>
+                <Stack direction="row" alignItems="center" spacing={2}>
                   {variants.pageFormates.map((form, ind) => (
                     <VariantBtnStyle
                       variant="outlined"
-                      key={ind}
+                      key={shortId()}
                       onClick={() => handleSelectVariant(ind)}
                       active={ind === activeVariant}
                     >
@@ -359,9 +350,9 @@ const BookItem = () => {
                 <MuiLink href="#details">See more</MuiLink>
               </Box>
               {/* add to cart btn */}
-              <Stack direction={'row'} alignItems={'center'} gap={3} my={3}>
-                <Stack direction={'row'} alignItems={'center'}>
-                  <QtyBtnLeft onClick={itemDecrement} disabled={true}>
+              <Stack direction="row" alignItems="center" gap={3} my={3}>
+                <Stack direction="row" alignItems="center">
+                  <QtyBtnLeft onClick={itemDecrement} disabled>
                     -
                   </QtyBtnLeft>
                   <Qty>{cartQty}</Qty>
@@ -369,13 +360,13 @@ const BookItem = () => {
                 </Stack>
                 <Button
                   variant="contained"
-                  fullWidth={true}
-                  disableElevation={true}
-                  size={'large'}
+                  fullWidth
+                  disableElevation
+                  size="large"
                   sx={{ padding: '12px' }}
                   onClick={addToCartBook}
                   disabled={
-                    bookVariants?.data?.attributes?.variants?.data?.length == 0
+                    bookVariants?.data?.attributes?.variants?.data?.length === 0
                   }
                 >
                   Add To Cart
@@ -384,10 +375,10 @@ const BookItem = () => {
             </BookDetailsContainer>
             <Divider />
             <Stack
-              direction={'row'}
-              alignItems={'center'}
+              direction="row"
+              alignItems="center"
               my={5}
-              justifyContent={'space-between'}
+              justifyContent="space-between"
             >
               <Box>
                 <Typography variant="h3" mb={2}>
@@ -414,20 +405,20 @@ const BookItem = () => {
         </Grid>
       </BookInfoContainer>
       <Divider />
-      <Box mt={5} id={'details'}>
+      <Box mt={5} id="details">
         <Typography variant="h1" my={2} fontWeight={700}>
           Details
         </Typography>
         <Typography variant="body2">{bookData?.description}</Typography>
         <Box my={4}>
-          <Stack direction={'row'} gap={2} mb={1} alignItems={'center'}>
+          <Stack direction="row" gap={2} mb={1} alignItems="center">
             <Typography variant="h3">Title :</Typography>
             <Typography variant="h5">{bookData?.name}</Typography>
           </Stack>
-          <Stack direction={'row'} gap={2} mb={1} alignItems={'center'}>
+          <Stack direction="row" gap={2} mb={1} alignItems="center">
             <Typography variant="h3">Author :</Typography>
             {bookData?.authors?.data.map((author, index) => (
-              <Link href={`/authors/${author.id}`}>
+              <Link key={shortId()} href={`/authors/${author.id}`}>
                 <AuthorLinkStyle variant="h5">
                   {author.attributes.name}
                   {bookData?.authors?.data.length > 1 &&
@@ -437,7 +428,7 @@ const BookItem = () => {
               </Link>
             ))}
           </Stack>
-          <Stack direction={'row'} gap={2} mb={1} alignItems={'center'}>
+          <Stack direction="row" gap={2} mb={1} alignItems="center">
             <Typography variant="h3">Publisher :</Typography>
             <Link href={`/publishers/${bookData?.publisherId?.data?.id}`}>
               <AuthorLinkStyle variant="h5">
@@ -445,14 +436,14 @@ const BookItem = () => {
               </AuthorLinkStyle>
             </Link>
           </Stack>
-          <Stack direction={'row'} gap={2} mb={1} alignItems={'center'}>
+          <Stack direction="row" gap={2} mb={1} alignItems="center">
             <Typography variant="h3">Number of Pages :</Typography>
             <Typography variant="h5">{bookData?.totalPages}</Typography>
           </Stack>
-          <Stack direction={'row'} gap={2} mb={1} alignItems={'center'}>
+          <Stack direction="row" gap={2} mb={1} alignItems="center">
             <Typography variant="h3">Language :</Typography>
             {variants.languages.map((lang, ind) => (
-              <Typography variant="h5" key={ind}>
+              <Typography variant="h5" key={shortId()}>
                 {lang}
                 {variants.languages.length > 0 &&
                   ind !== variants.languages.length - ind &&
@@ -460,7 +451,7 @@ const BookItem = () => {
               </Typography>
             ))}
           </Stack>
-          <Stack direction={'row'} gap={2} mb={1} alignItems={'center'}>
+          <Stack direction="row" gap={2} mb={1} alignItems="center">
             <Typography variant="h3">Edition :</Typography>
             <Typography variant="h5">1st Edition, 2022</Typography>
           </Stack>
@@ -470,9 +461,9 @@ const BookItem = () => {
       <Box my={5}>
         <Divider />
         <Stack
-          direction={'row'}
-          justifyContent={'space-between'}
-          alignItems={'center'}
+          direction="row"
+          justifyContent="space-between"
+          alignItems="center"
         >
           <Typography variant="h2" py={3}>
             Reviews ({numberOfReview})
@@ -510,6 +501,6 @@ const BookItem = () => {
       </Box>
     </Box>
   );
-};
+}
 
 export default BookItem;

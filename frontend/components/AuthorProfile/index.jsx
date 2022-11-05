@@ -3,7 +3,7 @@ import { Stack } from '@mui/system';
 import CustomImage from '../CustomImage';
 import { HeaderStyle, StyledBox } from './Styles';
 
-const AuthorProfile = ({ authorInfo }) => {
+function AuthorProfile({ authorInfo }) {
   // console.log({ profile: authorInfo });
   const avaterUrl =
     (authorInfo?.avatar?.data &&
@@ -24,13 +24,13 @@ const AuthorProfile = ({ authorInfo }) => {
 
           <Stack direction="row" alignItems="center" gap={2}>
             <Typography variant="h2">Born :</Typography>
-            <Typography variant="body1" pt={'5px'}>
+            <Typography variant="body1" pt="5px">
               24 October, 1995
             </Typography>
           </Stack>
           <Stack direction="row" alignItems="center" gap={2}>
             <Typography variant="h2">Language: </Typography>
-            <Typography variant="body1" pt={'5px'}>
+            <Typography variant="body1" pt="5px">
               English
             </Typography>
           </Stack>
@@ -38,6 +38,6 @@ const AuthorProfile = ({ authorInfo }) => {
       </Grid>
     </Grid>
   );
-};
+}
 
 export default AuthorProfile;

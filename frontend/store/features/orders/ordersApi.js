@@ -11,7 +11,7 @@ export const ordersApi = apiSlice.injectEndpoints({
       providesTags: (result, error, arg) => [{ type: 'order', id: arg }]
     }),
     cancelOrder: builder.mutation({
-      query: ({ orderId }) => ({
+      query: ({ orderId, data }) => ({
         url: `/orders/${orderId}`,
         method: 'DELETE',
         body: data

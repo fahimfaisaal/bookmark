@@ -8,6 +8,7 @@ export const BooksContainer = styled(Box)(() => ({
 export const TitleStyle = styled(Typography)(() => ({
   padding: '30px 0'
 }));
-export const FilterButtonContainer = styled(Box)(({ theme }) => ({
+
+export const FilterButtonContainer = styled(Box)(() => ({
   marginBottom: '50px'
 }));

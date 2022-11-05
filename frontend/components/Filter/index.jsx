@@ -28,7 +28,7 @@ import SearchBarComp from './Search';
 import CheckboxList from './SquareList';
 import { ContainerStyle, InnerContainerStyle, LinkContainer } from './style';
 
-const Filter = () => {
+function Filter() {
   const router = useRouter();
   const { data: tags = [] } = useGetTagsQuery();
   const { data: categories = [] } = useGetCategoriesQuery();
@@ -68,10 +68,10 @@ const Filter = () => {
     dispatch(addRemovePublishers({ id, name }));
   };
 
-  const setAvailabilities = ([status]) => {
+  const setAvailabilities = ([statusParam]) => {
     dispatch(
       addRemoveAvailability({
-        status: status.toUpperCase().replace(/\s/g, '_')
+        status: statusParam.toUpperCase().replace(/\s/g, '_')
       })
     );
   };
@@ -90,11 +90,11 @@ const Filter = () => {
     <ContainerStyle>
       <InnerContainerStyle>
         <Stack
-          direction={'row'}
-          alignItems={'center'}
-          justifyContent={'space-between'}
+          direction="row"
+          alignItems="center"
+          justifyContent="space-between"
         >
-          <Typography variant="h2" fontSize={'26px'}>
+          <Typography variant="h2" fontSize="26px">
             Filter
           </Typography>
           <LinkContainer>
@@ -113,13 +113,13 @@ const Filter = () => {
         <RadioBoxList />
         <CheckboxList
           setItem={setCategory}
-          title={'Categories'}
+          title="Categories"
           data={categories}
           selectItems={new Set(filterCategories)}
         />
         <Divider />
         <RangeSlider
-          title={'Price range'}
+          title="Price range"
           commitHandler={priceCommitHandler}
           initialState={
             filterPriceRange.length === 0 ? [0, 5000] : filterPriceRange
@@ -129,7 +129,7 @@ const Filter = () => {
           step={10}
         />
         <RangeSlider
-          title={'Rating range'}
+          title="Rating range"
           commitHandler={ratingCommitHandler}
           initialState={
             filterRatingRange.length === 0 ? [0, 5] : filterRatingRange
@@ -141,14 +141,14 @@ const Filter = () => {
         <Divider />
         <CheckboxList
           setItem={setTag}
-          title={'Tags'}
+          title="Tags"
           data={tags}
           selectItems={new Set(filterTags)}
         />
         <Divider />
         <CheckboxList
           setItem={setPublisher}
-          title={'Publishers'}
+          title="Publishers"
           data={publishers.data?.map((publisher) => ({
             id: publisher.id,
             name: publisher.attributes.name
@@ -158,7 +158,7 @@ const Filter = () => {
         <Divider />
         <CheckboxList
           setItem={setAvailabilities}
-          title={'Availability'}
+          title="Availability"
           data={status.map((stat) => stat.toLowerCase().replace(/_/g, ' '))}
           selectItems={
             new Set(
@@ -171,6 +171,6 @@ const Filter = () => {
       </InnerContainerStyle>
     </ContainerStyle>
   );
-};
+}
 
 export default Filter;

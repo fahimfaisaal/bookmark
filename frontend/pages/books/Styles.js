@@ -21,7 +21,7 @@ export const ImgListItem = styled(Box)(({ theme, active }) => ({
   cursor: 'pointer',
   border: `${active ? `3px solid ${theme.palette.grey[500]}` : null}`
 }));
-export const ImgListContainer = styled(Box)(({ theme }) => ({
+export const ImgListContainer = styled(Box)(() => ({
   display: 'flex',
   alignItems: 'center',
   gap: '20px',

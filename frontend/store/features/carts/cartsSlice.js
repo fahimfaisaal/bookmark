@@ -8,5 +8,5 @@ const cartsSlice = createSlice({
   reducers: {}
 });
 
-export const {} = cartsSlice.actions;
+// export const {} = cartsSlice.actions;
 export default cartsSlice.reducer;

@@ -30,12 +30,12 @@ const ourInfoData = [
   { link: '/sitemap', text: 'Sitemap' }
 ];
 
-const Footer = () => {
+function Footer() {
   return (
     <FooterContainer>
       <Grid container spacing={5}>
         <Grid item lg={3} md={6} xs={12}>
-          <Link href={'/'}>
+          <Link href="/">
             <LogoContainer>
               <img src="/images/logo-1.png" alt="" />
             </LogoContainer>
@@ -53,28 +53,28 @@ const Footer = () => {
           </Box>
         </Grid>
         <Grid item lg={3} md={6} xs={12}>
-          <FooterItem title={'Explore'} data={exploreData} />
+          <FooterItem title="Explore" data={exploreData} />
         </Grid>
         <Grid item lg={3} md={6} xs={12}>
-          <FooterItem title={'Customer Service'} data={customerServiceData} />
+          <FooterItem title="Customer Service" data={customerServiceData} />
         </Grid>
         <Grid item lg={3} md={6} xs={12}>
-          <FooterItem title={'Our information'} data={ourInfoData} />
+          <FooterItem title="Our information" data={ourInfoData} />
         </Grid>
       </Grid>
       <Box py={4}>
         <FooterBottomContainer
-          direction={'row'}
-          justifyContent={'space-between'}
-          alignItems={'center'}
+          direction="row"
+          justifyContent="space-between"
+          alignItems="center"
         >
           <Typography variant="body2" my={3} fontWeight={400}>
             © Copyright 2022 RedQ, Inc. All rights reserved
           </Typography>
           <Stack
-            direction={'row'}
-            justifyContent={'space-between'}
-            alignItems={'center'}
+            direction="row"
+            justifyContent="space-between"
+            alignItems="center"
           >
             <PaymentImgContainer>
               <img src="/images/payments/discover.png" alt="" />
@@ -94,6 +94,6 @@ const Footer = () => {
       </Box>
     </FooterContainer>
   );
-};
+}
 
 export default Footer;

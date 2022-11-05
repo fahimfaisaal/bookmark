@@ -120,7 +120,7 @@ export const getQueries = ({ filter }) => {
 
   console.log({ own: query });
 
-  for (let key in query) {
+  for (const key in query) {
     const value = query[key];
     if ((Array.isArray(value) && value.length === 0) || !value) {
       delete query[key];

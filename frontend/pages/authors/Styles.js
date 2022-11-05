@@ -1,5 +1,6 @@
 import { Box, Typography } from '@mui/material';
 import { styled } from '@mui/system';
+
 export const HeaderContainerStyle = styled(Box)(() => ({
   margin: '70px 0',
   textAlign: 'center'

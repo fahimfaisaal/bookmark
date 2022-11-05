@@ -2,7 +2,7 @@ import { Box } from '@mui/system';
 import CardTitle from '../PublicationCard/CardTitle';
 import { ImageContainerStyle } from './Styles';
 
-const CategoryCard = ({ category }) => {
+function CategoryCard({ category }) {
   const { coverImage, type } = category;
   const categoryImage =
     `http://localhost:1337${coverImage?.data?.attributes?.url}` ||
@@ -10,11 +10,11 @@ const CategoryCard = ({ category }) => {
   return (
     <Box>
       <ImageContainerStyle>
-        <img src={categoryImage} alt={type} width={'100%'} height={'100%'} />
+        <img src={categoryImage} alt={type} width="100%" height="100%" />
       </ImageContainerStyle>
-      <CardTitle title={type} variant={'h3'} />
+      <CardTitle title={type} variant="h3" />
     </Box>
   );
-};
+}
 
 export default CategoryCard;

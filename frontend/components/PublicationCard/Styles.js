@@ -2,9 +2,8 @@ import { Link } from '@mui/material';
 import { Box, styled } from '@mui/system';
 import myShadows from '../../src/theme/shadows';
 
-export const ContainerStyle = styled(Box)(({ theme }) => ({
+export const ContainerStyle = styled(Box)(() => ({
   boxShadow: `${myShadows.box}`,
-  boxShadow: 'rgba(0, 0, 0, 0.16) 0px 1px 4px',
   borderRadius: '5px',
   display: 'flex',
   alignItems: 'center',
@@ -18,7 +17,6 @@ export const LogoContainer = styled(Box)(() => ({
   height: '70px',
   img: {
     display: 'flex',
-    borderRadius: '50%',
     alignItems: 'center',
     borderRadius: '50%'
   }

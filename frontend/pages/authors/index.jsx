@@ -5,23 +5,19 @@ import SearchBar from '../../components/shared/SearchBar';
 import { useGetAuthorsQuery } from '../../store/features/authors/authorsApi';
 import { HeaderContainerStyle, HeaderStyle } from './Styles';
 
-const Authors = () => {
-  const {
-    data: authorLists,
-    isLoading: isAuthorLoading,
-    isError: isAuthorError
-  } = useGetAuthorsQuery();
+function Authors() {
+  const { data: authorLists } = useGetAuthorsQuery();
   return (
     <Box>
       <HeaderContainerStyle>
         <HeaderStyle>
-          <Typography variant="h1" color={'primary'}>
+          <Typography variant="h1" color="primary">
             Search Our beloved authors
           </Typography>
           <Typography variant="body1">
             Lorem ipsum dolor sit amet, consectetu eradipiscing elit.
           </Typography>
-          <Stack direction={'row'} justifyContent={'center'} my={5}>
+          <Stack direction="row" justifyContent="center" my={5}>
             <SearchBar
               placeholder="Search Your Favorite Author from here"
               width="700px"
@@ -46,6 +42,6 @@ const Authors = () => {
       </Box>
     </Box>
   );
-};
+}
 
 export default Authors;

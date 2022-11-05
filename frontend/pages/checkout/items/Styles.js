@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { Box, Button, TextField, Typography } from '@mui/material';
+import { Box, Button, Typography } from '@mui/material';
 
 export const StyledTypo = styled(Typography)(({ theme }) => ({
   display: 'inline-block',
