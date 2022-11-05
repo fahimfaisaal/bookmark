@@ -1,4 +1,4 @@
-# Title: Project Bookmark : frontend
+# Bookmark : frontend
 
 # Introduction :
 
