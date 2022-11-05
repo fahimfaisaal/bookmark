@@ -2,7 +2,6 @@ import { Typography } from '@mui/material';
 import { Stack } from '@mui/system';
 import React, { useState, useEffect } from 'react';
 import { IoIosClose } from 'react-icons/io';
-import useDebounce from '../../hooks/useDebounce';
 import {
   useDeleteCartMutation,
   useUpdateCartMutation
@@ -11,14 +10,11 @@ import {
   ImgContainerStyle,
   ItemContainerStyle,
   PriceContainerStyle,
-  RemoveBtnContanerStyle,
-  TotalPriceContainerStyle
+  RemoveBtnContanerStyle
 } from './Styles';
 import VerticalQuantityBtn from './VerticalQuntityBtn';
 const CartItem = ({ cart, cartId }) => {
   const { book, variant } = cart;
-  const debounce = useDebounce();
-  const [cartItem, setCartItem] = useState();
   const [deleteCart] = useDeleteCartMutation();
 
   const [cartQty, setCartQty] = useState(cart?.quantity);
@@ -33,8 +29,9 @@ const CartItem = ({ cart, cartId }) => {
     if (cartQty > 0) setCartQty((prev) => prev - 1);
   };
 
-  const url = `http://localhost:1337${cart?.cartImage}` || "/images/product-dummy.png";
-  console.log({cart})
+  const url =
+    `http://localhost:1337${cart?.cartImage}` || '/images/product-dummy.png';
+  // console.log({cart})
 
   useEffect(() => {
     if (cartQty !== cart?.quantity) {
@@ -65,7 +62,12 @@ const CartItem = ({ cart, cartId }) => {
         cartQty={cartQty}
       />
       <ImgContainerStyle>
-        <img src={url} alt={book?.data?.attributes?.name} height={70} width={60} />
+        <img
+          src={url}
+          alt={book?.data?.attributes?.name}
+          height={70}
+          width={60}
+        />
       </ImgContainerStyle>
       <Stack direction={'column'} spacing={2}>
         <Typography variant="h3">{book?.data?.attributes?.name}</Typography>

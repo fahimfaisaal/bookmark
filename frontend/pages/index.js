@@ -88,7 +88,7 @@ const Home = () => {
 
   const { data: categoryLists } = useGetCategoryQuery();
 
-  console.log({ newBooks, isSuccess, popularBooks, categoryLists });
+  // console.log({ newBooks, isSuccess, popularBooks, categoryLists });
   return (
     <ContainerStyle>
       <HeroContainer>

@@ -3,170 +3,87 @@ import {
   Badge,
   Box,
   Button,
-  Divider,
-  ListItem,
   Menu,
   MenuItem,
-  SwipeableDrawer,
   Tooltip,
   Typography,
-  useTheme,
-} from "@mui/material";
-import IconButton from "@mui/material/IconButton";
-import { Stack } from "@mui/system";
-import Link from "next/link";
-import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
-import { AiOutlineFilter } from "react-icons/ai";
-import { BiSearch, BiUser } from "react-icons/bi";
-import { BsSunFill } from "react-icons/bs";
-import { CgMenuLeft, CgShoppingBag } from "react-icons/cg";
-import { HiOutlineShoppingBag, HiShoppingBag } from "react-icons/hi";
-import { IoIosClose } from "react-icons/io";
-import { MdOutlineFavoriteBorder } from "react-icons/md";
-import { RiMoonLine } from "react-icons/ri";
-import { VscHome } from "react-icons/vsc";
-import { useDispatch, useSelector } from "react-redux";
-import { BOOKMARK_AUTH } from "../../../constant";
-import { UseThemeContext } from "../../../context/ThemeContext";
-import useAuthCheck from "../../../hooks/useAuthCheck";
-import { userLoggedOut } from "../../../store/features/auth/authSlice";
-import { useGetBooksQuery } from "../../../store/features/books/booksApi";
-import { useGetCartsByUserQuery } from "../../../store/features/carts/cartsApi";
-import SearchBar from "../../shared/SearchBar";
-import Login from "../Auth/Login";
-import Register from "../Auth/Register";
-import CartItemComponent from "./CartItemComponent";
+  useTheme
+} from '@mui/material';
+import IconButton from '@mui/material/IconButton';
+import { Stack } from '@mui/system';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
+import { AiOutlineFilter } from 'react-icons/ai';
+import { BiSearch, BiUser } from 'react-icons/bi';
+import { BsSunFill } from 'react-icons/bs';
+import { CgMenuLeft, CgShoppingBag } from 'react-icons/cg';
+import { HiOutlineShoppingBag } from 'react-icons/hi';
+import { MdOutlineFavoriteBorder } from 'react-icons/md';
+import { RiMoonLine } from 'react-icons/ri';
+import { VscHome } from 'react-icons/vsc';
+import { useDispatch, useSelector } from 'react-redux';
+import { BOOKMARK_AUTH } from '../../../constant';
+import { UseThemeContext } from '../../../context/ThemeContext';
+import { userLoggedOut } from '../../../store/features/auth/authSlice';
+import { useGetBooksQuery } from '../../../store/features/books/booksApi';
+import { useGetCartsByUserQuery } from '../../../store/features/carts/cartsApi';
+import Drawer from './Drawer';
+import SearchBar from '../../shared/SearchBar';
+import Login from '../Auth/Login';
+import Register from '../Auth/Register';
+import CartItemComponent from './CartItemComponent';
+import useAuthCheck from '../../../hooks/useAuthCheck';
+import { categoreyItems, menuItems } from './menuLinks';
 import {
   AppBarContainer,
-  CloseBtnContaner,
   IconContainer,
   LinkContainer,
   LogoContainer,
-  MenuContainer,
-  MenuHeaderContiner,
   MenuItemContainer,
-  MenuLinkContainer,
-  MenuListContainer,
   MiniTopBarContainer,
   MobileBarContainer,
   MobileMenuContainer,
   MobMenuItemContainer,
   ThemeSwitchStyle
 } from './Styles';
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
-const menuItems = [
-  {
-    link: '/books',
-    text: 'Books'
-  },
-  {
-    link: '/authors',
-    text: 'Authors'
-  },
-  {
-    link: '/publishers',
-    text: 'Publishers'
-  },
-  {
-    link: '/contact',
-    text: 'Contact'
-  },
-  {
-    link: '/about',
-    text: 'About Us'
-  }
-];
-
-const categoreyItems = [
-  {
-    link: '',
-    text: 'Comic books'
-  },
-  {
-    link: '',
-    text: ' Science Fiction'
-  },
-  {
-    link: '',
-    text: 'Literature'
-  },
-  {
-    link: '',
-    text: 'Childrens'
-  },
-  {
-    link: '',
-    text: 'Literature'
-  },
-  {
-    link: '',
-    text: 'Horror Fiction'
-  }
-];
-
-const Drawer = ({ anchor, data, open, toggle }) => {
-  const router = useRouter();
-  return (
-    <SwipeableDrawer
-      anchor={anchor}
-      open={open}
-      onClose={toggle(false)}
-      onOpen={toggle(true)}
-    >
-      <MenuContainer role="presentation">
-        <MenuHeaderContiner>
-          <Stack
-            direction={'row'}
-            justifyContent={'space-between'}
-            alignItems={'center'}
-          >
-            <Link href="/">
-              <img src="/images/logo-1.png" alt="" width={180} height={30} />
-            </Link>
-            <Box>
-              <CloseBtnContaner onClick={toggle(false)}>
-                <IoIosClose />
-              </CloseBtnContaner>
-            </Box>
-          </Stack>
-        </MenuHeaderContiner>
-        <Divider />
-
-        <MenuListContainer>
-          {data.map((item) => (
-            <ListItem key={item.text} onClick={toggle(false)}>
-              <Link href={item.link}>
-                <MenuLinkContainer active={router.pathname.includes(item.link)}>
-                  {item.text}
-                </MenuLinkContainer>
-              </Link>
-            </ListItem>
-          ))}
-        </MenuListContainer>
-      </MenuContainer>
-    </SwipeableDrawer>
-  );
-};
-
 const NavBar = () => {
   const theme = useTheme();
+  const authChecked = useAuthCheck(); //don't remove it
   const dispatch = useDispatch();
-  const authChecked = useAuthCheck();
   const [anchorElUser, setAnchorElUser] = useState(null);
+  const [cartBookFilter, setCartBookFilter] = useState();
+  const [serachTrig, setSearchTrig] = useState(false);
+  const [cartListsWithImage, setCartListsWithImage] = useState();
+  const [cartModalTrg, setCartModalTrig] = useState(false);
+  const [mobMenuTrig, setMobMenuTrig] = useState(false);
+  const [mobSearchTrig, setMobSearchTrig] = useState(false);
+  const [filterMenuTrig, setFilterMenuTrig] = useState(false);
+  const [profileMenuTrig, setProfileMenuTrig] = useState(false);
+  const [openLogin, setOpenLogin] = useState(false);
+  const [openRegister, setOpenRegister] = useState(false);
   const { handleChangeMode } = UseThemeContext();
   const router = useRouter();
   const isAuthenticated = useSelector((state) => state?.auth);
   const authUser = isAuthenticated?.user || {};
-  const [cartBookFilter, setCartBookFilter] = useState();
+
   const { data: cartLists } = useGetCartsByUserQuery({ userId: authUser?.id });
   const { data: cartBooks } = useGetBooksQuery(cartBookFilter);
-  const [cartListsWithImage, setCartListsWithImage] = useState()
 
   useEffect(() => {
+    const cartbookIds = cartLists?.data?.map(
+      (item) => item?.attributes?.book?.data?.id
+    );
+    let query = {
+      populate: ['images'],
+      filters: {
+        id: {
+          $in: cartbookIds
+        }
+      }
+    };
     setCartBookFilter({
-      params:
-        "populate[0]=images&filters[id][$in][0]=1197",
+      query
     });
   }, [cartLists]);
 
@@ -175,25 +92,23 @@ const NavBar = () => {
       let cartBookItem = cartBooks?.data?.reduce(
         (acc, curr) => ({
           ...acc,
-          [curr.id]: curr?.attributes?.images?.data[0]?.attributes?.url,
+          [curr.id]: curr?.attributes?.images?.data[0]?.attributes?.url
         }),
         {}
       );
 
-      //@LATER cart image not insert
-     let cartWithImage = cartLists?.data?.map((item, ind) => {
+      let cartWithImage = cartLists?.data?.map((item, ind) => {
         return {
           ...item.attributes,
           cartImage: cartBookItem[item?.attributes?.book?.data?.id],
           id: cartLists?.data[ind]?.id
         };
       });
-      setCartListsWithImage(cartWithImage)
-      console.log({ newCart: cartWithImage, cartBookItem, cartLists });
+      setCartListsWithImage(cartWithImage);
     }
   }, [cartLists?.data, cartBooks?.data]);
 
-  // console.log({ cart: cartLists?.data });
+  // console.log({ cartB: cartLists?.data });
 
   const totalAmount = cartLists?.data?.reduce(
     (acc, curr) =>
@@ -214,77 +129,10 @@ const NavBar = () => {
   const logoutUser = () => {
     dispatch(userLoggedOut());
     localStorage.removeItem(BOOKMARK_AUTH);
-    router.push("/");
+    router.push('/');
+    console.log('logout click');
   };
-
-  // console.log({ navabr: authChecked });
-
-  const [cartModalTrg, setCartModalTrig] = useState(false);
-
-  const toggleDrawer = (open) => (event) => {
-    if (
-      event &&
-      event.type === 'keydown' &&
-      (event.key === 'Tab' || event.key === 'Shift')
-    ) {
-      return;
-    }
-    setCartModalTrig(open);
-  };
-
-  const [serachTrig, setSearchTrig] = useState(false);
-
-  const toggleSearch = () => {
-    setSearchTrig(true);
-  };
-
-  const [mobMenuTrig, setMobMenuTrig] = useState(false);
-
-  const toggleMenuDraw = (open) => (event) => {
-    if (
-      event &&
-      event.type === 'keydown' &&
-      (event.key === 'Tab' || event.key === 'Shift')
-    ) {
-      return;
-    }
-    setMobMenuTrig(open);
-  };
-  const [profileMenuTrig, setProfileMenuTrig] = useState(false);
-
-  const toggleProfileDraw = (open) => (event) => {
-    if (
-      event &&
-      event.type === 'keydown' &&
-      (event.key === 'Tab' || event.key === 'Shift')
-    ) {
-      return;
-    }
-    setProfileMenuTrig(open);
-  };
-  const [filterMenuTrig, setFilterMenuTrig] = useState(false);
-
-  const toggleFilterDraw = (open) => (event) => {
-    if (
-      event &&
-      event.type === 'keydown' &&
-      (event.key === 'Tab' || event.key === 'Shift')
-    ) {
-      return;
-    }
-    setFilterMenuTrig(open);
-  };
-
-  const [mobSearchTrig, setMobSearchTrig] = useState(false);
-
-  const handleSearchToggle = () => {
-    if (mobSearchTrig) {
-      setMobSearchTrig(false);
-    } else {
-      setMobSearchTrig(true);
-    }
-  };
-
+  // have logout dependency
   const profileMenuItems = [
     {
       link: '/profile',
@@ -313,11 +161,65 @@ const NavBar = () => {
     }
   ];
 
+  const toggleDrawer = (open) => (event) => {
+    if (
+      event &&
+      event.type === 'keydown' &&
+      (event.key === 'Tab' || event.key === 'Shift')
+    ) {
+      return;
+    }
+    setCartModalTrig(open);
+  };
+
+  const toggleSearch = () => {
+    setSearchTrig(true);
+  };
+
+  const toggleMenuDraw = (open) => (event) => {
+    if (
+      event &&
+      event.type === 'keydown' &&
+      (event.key === 'Tab' || event.key === 'Shift')
+    ) {
+      return;
+    }
+    setMobMenuTrig(open);
+  };
+
+  const toggleProfileDraw = (open) => (event) => {
+    if (
+      event &&
+      event.type === 'keydown' &&
+      (event.key === 'Tab' || event.key === 'Shift')
+    ) {
+      return;
+    }
+    setProfileMenuTrig(open);
+  };
+
+  const toggleFilterDraw = (open) => (event) => {
+    if (
+      event &&
+      event.type === 'keydown' &&
+      (event.key === 'Tab' || event.key === 'Shift')
+    ) {
+      return;
+    }
+    setFilterMenuTrig(open);
+  };
+
+  const handleSearchToggle = () => {
+    if (mobSearchTrig) {
+      setMobSearchTrig(false);
+    } else {
+      setMobSearchTrig(true);
+    }
+  };
+
   const handleHome = () => {
     router.push('/');
   };
-
-  const [openLogin, setOpenLogin] = useState(false);
 
   const handleClickOpenLogin = () => {
     setOpenLogin(true);
@@ -326,8 +228,6 @@ const NavBar = () => {
   const handleCloseLogin = () => {
     setOpenLogin(false);
   };
-
-  const [openRegister, setOpenRegister] = useState(false);
 
   const handleClickOpenRegister = () => {
     setOpenRegister(true);

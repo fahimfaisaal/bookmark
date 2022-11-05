@@ -19,7 +19,7 @@ import {
 const Register = ({ open, handleClickOpen, handleClose }) => {
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
-  const [signup, { data, isLoading, error: responseError }] =
+  const [signup, { data, isLoading, error: responseError, isSuccess }] =
     useSignupMutation();
   const [error, setError] = useState('');
   // console.log({data,isLoading,isSuccess,responseError, error})
@@ -90,6 +90,25 @@ const Register = ({ open, handleClickOpen, handleClose }) => {
                       required: 'Username is required'
                     })}
                     helperText={errors.username?.message}
+                  />
+                </InputContainer>
+              )}
+            />
+            <Controller
+              name="email"
+              control={control}
+              render={({ field }) => (
+                <InputContainer>
+                  <InputLabelStyle variant="h4">Email</InputLabelStyle>
+                  <TextField
+                    fullWidth
+                    name="email"
+                    label={'Email'}
+                    error={Boolean(errors.email)}
+                    {...register('email', {
+                      required: 'Email is required'
+                    })}
+                    helperText={errors.email?.message}
                   />
                 </InputContainer>
               )}

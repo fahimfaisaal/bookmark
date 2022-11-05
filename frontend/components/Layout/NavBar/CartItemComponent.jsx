@@ -45,11 +45,10 @@ export default function CartItemComponent({
             justifyContent={'space-between'}
             alignItems={'center'}
           >
-            <Stack direction={"row"} alignItems={"center"}>
-              <HiShoppingBag fontSize={"24px"} />
-              <Typography variant="h4" fontSize={"18px"} px={"10px"}>
-                {cartLists?.length > 0 ? cartLists?.length : "No"}{" "}
-                Item
+            <Stack direction={'row'} alignItems={'center'}>
+              <HiShoppingBag fontSize={'24px'} />
+              <Typography variant="h4" fontSize={'18px'} px={'10px'}>
+                {cartLists?.length > 0 ? cartLists?.length : 'No'} Item
               </Typography>
             </Stack>
             <Box>
@@ -63,7 +62,7 @@ export default function CartItemComponent({
 
         {cartLists?.map((cart) => (
           <CartItemContainer>
-            <CartItem cart={cart} cartId={cart?.id} key={cart?.id}  />
+            <CartItem cart={cart} cartId={cart?.id} key={cart?.id} />
           </CartItemContainer>
         ))}
       </CartContainer>
