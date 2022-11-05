@@ -29,12 +29,12 @@ import { userLoggedOut } from '../../../store/features/auth/authSlice';
 import { useGetBooksQuery } from '../../../store/features/books/booksApi';
 import { useGetCartsByUserQuery } from '../../../store/features/carts/cartsApi';
 import Drawer from './Drawer';
+import useAuthCheck from '../../../hooks/useAuthCheck';
+import { categoreyItems, menuItems } from './menuLinks';
 import SearchBar from '../../shared/SearchBar';
 import Login from '../Auth/Login';
 import Register from '../Auth/Register';
 import CartItemComponent from './CartItemComponent';
-import useAuthCheck from '../../../hooks/useAuthCheck';
-import { categoreyItems, menuItems } from './menuLinks';
 import {
   AppBarContainer,
   IconContainer,
@@ -70,6 +70,8 @@ const NavBar = () => {
   const { data: cartLists } = useGetCartsByUserQuery({ userId: authUser?.id });
   const { data: cartBooks } = useGetBooksQuery(cartBookFilter);
 
+  const [cartListsWithImage, setCartListsWithImage] = useState();
+
   useEffect(() => {
     const cartbookIds = cartLists?.data?.map(
       (item) => item?.attributes?.book?.data?.id
@@ -82,9 +84,7 @@ const NavBar = () => {
         }
       }
     };
-    setCartBookFilter({
-      query
-    });
+    setCartBookFilter({query});
   }, [cartLists]);
 
   useEffect(() => {
@@ -130,7 +130,6 @@ const NavBar = () => {
     dispatch(userLoggedOut());
     localStorage.removeItem(BOOKMARK_AUTH);
     router.push('/');
-    console.log('logout click');
   };
   // have logout dependency
   const profileMenuItems = [

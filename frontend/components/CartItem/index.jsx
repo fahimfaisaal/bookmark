@@ -31,7 +31,6 @@ const CartItem = ({ cart, cartId }) => {
 
   const url =
     `http://localhost:1337${cart?.cartImage}` || '/images/product-dummy.png';
-  // console.log({cart})
 
   useEffect(() => {
     if (cartQty !== cart?.quantity) {
