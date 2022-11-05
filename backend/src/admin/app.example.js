@@ -33,7 +33,7 @@ const bootstrap = (app) => {
   console.log(app);
 };
 
-export default {
+module.exports = {
   config,
   bootstrap
 };

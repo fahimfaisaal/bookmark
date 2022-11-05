@@ -1,4 +1,4 @@
-module.exports = ({ env }) => ({
+module.exports = () => ({
   // ...
   'users-permissions': {
     config: {

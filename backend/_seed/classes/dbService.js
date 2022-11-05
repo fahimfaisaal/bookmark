@@ -186,9 +186,9 @@ class DbService {
         console.info(`✅ delete all ${modelName} successfully`);
       }
 
-      console.info(`✅ reset models successfully`);
+      console.info('✅ reset models successfully');
     } catch (e) {
-      throw e;
+      console.error(e);
     } finally {
       process.exit(0);
     }
@@ -275,7 +275,7 @@ class DbService {
       for (const { id } of ids) {
         await strapi.plugins.upload.services.upload.remove({ id });
       }
-      console.info(`✅ reset media successfully`);
+      console.info('✅ reset media successfully');
 
       console.info('⌛️ deleting uploaded medias');
       const uploadFilePath = resolve(process.cwd(), 'public', 'uploads');
