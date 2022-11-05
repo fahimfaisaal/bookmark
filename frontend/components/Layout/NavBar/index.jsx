@@ -70,8 +70,6 @@ const NavBar = () => {
   const { data: cartLists } = useGetCartsByUserQuery({ userId: authUser?.id });
   const { data: cartBooks } = useGetBooksQuery(cartBookFilter);
 
-  const [cartListsWithImage, setCartListsWithImage] = useState();
-
   useEffect(() => {
     const cartbookIds = cartLists?.data?.map(
       (item) => item?.attributes?.book?.data?.id
@@ -84,7 +82,7 @@ const NavBar = () => {
         }
       }
     };
-    setCartBookFilter({query});
+    setCartBookFilter({ query });
   }, [cartLists]);
 
   useEffect(() => {
