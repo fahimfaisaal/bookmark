@@ -1,12 +1,10 @@
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-import { Stack, Typography } from '@mui/material';
-import Rating from '@mui/material/Rating';
+import { Rating, Stack, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import Link from 'next/link';
 import { useState } from 'react';
 import { FaShoppingCart } from 'react-icons/fa';
-import { useSelector } from 'react-redux';
 import CustomImage from '../CustomImage';
 
 import {
@@ -17,17 +15,17 @@ import {
   StyledBox,
   StyledFav,
   TitleStyle,
-  WriterLinkStyle,
+  WriterLinkStyle
 } from './Styles';
 
-const BookCard = ({ book, bookId }) => {
+function BookCard({ book, bookId }) {
   const [favorite, setFavorite] = useState(false);
   const { authors, images, variants, status, ratings } = book || {};
+
   const bookImage =
     (images?.data &&
       `http://localhost:1337${images?.data[0]?.attributes?.url}`) ||
     '/images/product-dummy.png';
-  const authorId = authors?.data[0]?.id;
 
   const handleFavorite = () => {
     if (favorite) {
@@ -36,12 +34,20 @@ const BookCard = ({ book, bookId }) => {
       setFavorite(true);
     }
   };
-  const avarageReview = ratings?.data?.reduce((acc, cur) => {
-    acc += Number(cur.attributes.rate);
-    return acc;
-  }, 0);
-  const authUser = useSelector((state) => state?.auth?.user);
-  // console.log({authorId })
+  const avarageReview = ratings?.data?.reduce(
+    (acc, cur) => acc + Number(cur.attributes.rate),
+    0
+  );
+
+  const [min, max] =
+    variants?.data?.reduce(
+      ([prevMin, prevMax], { attributes }) => [
+        Math.min(prevMin, attributes?.price),
+        Math.max(prevMax, attributes?.price)
+      ],
+      [Infinity, -Infinity]
+    ) ?? [];
+
   return (
     <StyledBox>
       <Link href={`/books/${bookId}`} sx={{ cursor: 'pointer' }}>
@@ -52,7 +58,7 @@ const BookCard = ({ book, bookId }) => {
       <ContentContainerStyle>
         <TitleStyle>
           <Link href={`/books/${bookId}`}>
-            <Typography variant="h3" color="text.primary" py={'5px'}>
+            <Typography variant="h3" color="text.primary" py="5px">
               {book?.name}
             </Typography>
           </Link>
@@ -89,9 +95,11 @@ const BookCard = ({ book, bookId }) => {
         <PriceStyle direction={'row'} alignItems={'center'}>
           {variants?.data[0]?.attributes?.price == null ? (
             <Typography variant="h4">Free</Typography>
+          ) : min == max ? (
+            <Typography variant="h4">${max}</Typography>
           ) : (
             <Typography variant="h4">
-              ${variants?.data[0]?.attributes?.price}
+              ${min} - ${max}
             </Typography>
           )}
 
@@ -126,6 +134,6 @@ const BookCard = ({ book, bookId }) => {
       )}
     </StyledBox>
   );
-};
+}
 
 export default BookCard;

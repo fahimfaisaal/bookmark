@@ -8,6 +8,6 @@ export const StyledGrid = styled(Grid)(({ theme }) => ({
   marginRight: '20px',
   padding: '20px',
   [theme.breakpoints.down('md')]: {
-    marginBottom: '10px',
-  },
+    marginBottom: '10px'
+  }
 }));

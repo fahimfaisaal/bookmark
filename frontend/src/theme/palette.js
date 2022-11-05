@@ -20,49 +20,48 @@ const GREY = {
   500_32: alpha('#919EAB', 0.32),
   500_48: alpha('#919EAB', 0.48),
   500_56: alpha('#919EAB', 0.56),
-  500_80: alpha('#919EAB', 0.8),
+  500_80: alpha('#919EAB', 0.8)
 };
 
 const PRIMARY = {
   main: '#009F7F',
   light: '#04C48C ',
   dark: '#019376',
-  contrastText: '#fff',
+  contrastText: '#fff'
 };
 
 const SECONDARY = {
   main: '#1F2937',
   light: '#F3F4F6',
   dark: '#000000',
-  contrastText: '#fff',
+  contrastText: '#fff'
 };
 
 export const paletteDark = {
   common: { black: '#000', white: '#fff' },
   primary: { ...PRIMARY },
   secondary: {
-    main: '#1E293B',
+    main: '#1E293B'
   },
   blue: '#171F69',
   divider: grey[500],
-  blue: '#171F69',
   grey: GREY,
   background: {
     default: '#0F172A',
     paper: '#1f2937',
     dark: '#000',
-    other: GREY[600],
+    other: GREY[600]
   },
   text: {
     primary: '#fff',
     secondary: '#fff',
-    third: '#f97316',
+    third: '#f97316'
   },
   action: {
     hover: PRIMARY.dark,
     focus: GREY[500_24],
-    disabled: GREY[500_80],
-  },
+    disabled: GREY[500_80]
+  }
 };
 
 export const paletteLight = {
@@ -76,17 +75,17 @@ export const paletteLight = {
     primary: '#1f2937',
     secondary: grey[700],
     third: '#f97316',
-    disabled: GREY[500],
+    disabled: GREY[500]
   },
   background: {
     paper: '#F9FAFB',
     default: '#FFFFFF',
     dark: '#F3F4F6',
-    other: '#D1D5DB',
+    other: '#D1D5DB'
   },
   action: {
     hover: PRIMARY.dark,
     focus: GREY[500_24],
-    disabled: GREY[500_80],
-  },
+    disabled: GREY[500_80]
+  }
 };

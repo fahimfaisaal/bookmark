@@ -5,16 +5,16 @@ import { StyledContainer } from '../Styles';
 import ContactCard from './ContactCard';
 import InputField from './InputField';
 
-const Profile = () => {
+function Profile() {
   return (
     <Stack spacing={3}>
       <InputField />
       <ContactCard />
       <StyledContainer sx={{ boxShadow: 3 }}>
-        <AddressCard label={'Address'} />
+        <AddressCard label="Address" />
       </StyledContainer>
     </Stack>
   );
-};
+}
 
 export default Profile;

@@ -1,11 +1,11 @@
-const CustomImage = ({ src, title, width, height }) => {
+function CustomImage({ src, title, width, height }) {
   return (
     <img
       style={{
         backgroundSize: 'cover',
         backgroundRepeat: 'no-repeat',
         width: '100%',
-        height: '100%',
+        height: '100%'
       }}
       src={src}
       alt={title}
@@ -13,6 +13,6 @@ const CustomImage = ({ src, title, width, height }) => {
       height={height}
     />
   );
-};
+}
 
 export default CustomImage;

@@ -3,14 +3,11 @@ import {
   Badge,
   Box,
   Button,
-  Divider,
-  ListItem,
   Menu,
   MenuItem,
-  SwipeableDrawer,
   Tooltip,
   Typography,
-  useTheme,
+  useTheme
 } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 import { Stack } from '@mui/system';
@@ -21,8 +18,7 @@ import { AiOutlineFilter } from 'react-icons/ai';
 import { BiSearch, BiUser } from 'react-icons/bi';
 import { BsSunFill } from 'react-icons/bs';
 import { CgMenuLeft, CgShoppingBag } from 'react-icons/cg';
-import { HiOutlineShoppingBag, HiShoppingBag } from 'react-icons/hi';
-import { IoIosClose } from 'react-icons/io';
+import { HiOutlineShoppingBag } from 'react-icons/hi';
 import { MdOutlineFavoriteBorder } from 'react-icons/md';
 import { RiMoonLine } from 'react-icons/ri';
 import { VscHome } from 'react-icons/vsc';
@@ -31,136 +27,97 @@ import { BOOKMARK_AUTH } from '../../../constant';
 import { UseThemeContext } from '../../../context/ThemeContext';
 import useAuthCheck from '../../../hooks/useAuthCheck';
 import { userLoggedOut } from '../../../store/features/auth/authSlice';
+import { useGetBooksQuery } from '../../../store/features/books/booksApi';
+import { useGetCartsByUserQuery } from '../../../store/features/carts/cartsApi';
+import { shortId } from '../../../uitls';
 import SearchBar from '../../shared/SearchBar';
 import Login from '../Auth/Login';
 import Register from '../Auth/Register';
 import CartItemComponent from './CartItemComponent';
+import Drawer from './Drawer';
+import { categoreyItems, menuItems } from './menuLinks';
 import {
   AppBarContainer,
-  CartContainer,
-  CartHeaderContainer,
-  CartItemContainer,
-  CloseBtnContaner,
   IconContainer,
   LinkContainer,
   LogoContainer,
-  MenuContainer,
-  MenuHeaderContiner,
   MenuItemContainer,
-  MenuLinkContainer,
-  MenuListContainer,
   MiniTopBarContainer,
   MobileBarContainer,
   MobileMenuContainer,
   MobMenuItemContainer,
-  ThemeSwitchStyle,
-} from "./Styles";
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
-const menuItems = [
-  {
-    link: "/books",
-    text: "Books",
-  },
-  {
-    link: "/authors",
-    text: "Authors",
-  },
-  {
-    link: "/publishers",
-    text: "Publishers",
-  },
-  {
-    link: "/contact",
-    text: "Contact",
-  },
-  {
-    link: "/about",
-    text: "About Us",
-  },
-];
-
-const categoreyItems = [
-  {
-    link: "",
-    text: "Comic books",
-  },
-  {
-    link: "",
-    text: " Science Fiction",
-  },
-  {
-    link: "",
-    text: "Literature",
-  },
-  {
-    link: "",
-    text: "Childrens",
-  },
-  {
-    link: "",
-    text: "Literature",
-  },
-  {
-    link: "",
-    text: "Horror Fiction",
-  },
-];
-
-const Drawer = ({ anchor, data, open, toggle }) => {
-  const router = useRouter();
-  return (
-    <SwipeableDrawer
-      anchor={anchor}
-      open={open}
-      onClose={toggle(false)}
-      onOpen={toggle(true)}
-    >
-      <MenuContainer role="presentation">
-        <MenuHeaderContiner>
-          <Stack
-            direction={"row"}
-            justifyContent={"space-between"}
-            alignItems={"center"}
-          >
-            <Link href="/">
-              <img src="/images/logo-1.png" alt="" width={180} height={30} />
-            </Link>
-            <Box>
-              <CloseBtnContaner onClick={toggle(false)}>
-                <IoIosClose />
-              </CloseBtnContaner>
-            </Box>
-          </Stack>
-        </MenuHeaderContiner>
-        <Divider />
-
-        <MenuListContainer>
-          {data.map((item) => (
-            <ListItem key={item.text} onClick={toggle(false)}>
-              <Link href={item.link}>
-                <MenuLinkContainer active={router.pathname.includes(item.link)}>
-                  {item.text}
-                </MenuLinkContainer>
-              </Link>
-            </ListItem>
-          ))}
-        </MenuListContainer>
-      </MenuContainer>
-    </SwipeableDrawer>
-  );
-};
+  ThemeSwitchStyle
+} from './Styles';
 
 const NavBar = () => {
   const theme = useTheme();
+  // eslint-disable-next-line no-unused-vars
+  const authChecked = useAuthCheck(); //don't remove it
   const dispatch = useDispatch();
-  const authChecked = useAuthCheck();
   const [anchorElUser, setAnchorElUser] = useState(null);
+  const [cartBookFilter, setCartBookFilter] = useState();
+  const [serachTrig, setSearchTrig] = useState(false);
+  const [cartListsWithImage, setCartListsWithImage] = useState();
+  const [cartModalTrg, setCartModalTrig] = useState(false);
+  const [mobMenuTrig, setMobMenuTrig] = useState(false);
+  const [mobSearchTrig, setMobSearchTrig] = useState(false);
+  const [filterMenuTrig, setFilterMenuTrig] = useState(false);
+  const [profileMenuTrig, setProfileMenuTrig] = useState(false);
+  const [openLogin, setOpenLogin] = useState(false);
+  const [openRegister, setOpenRegister] = useState(false);
   const { handleChangeMode } = UseThemeContext();
   const router = useRouter();
-  const isAuthenticated = useSelector(state => state?.auth)
+  const isAuthenticated = useSelector((state) => state?.auth);
+  const authUser = isAuthenticated?.user || {};
 
+  const { data: cartLists } = useGetCartsByUserQuery({ userId: authUser?.id });
+  const { data: cartBooks } = useGetBooksQuery(cartBookFilter);
 
-  // console.log({isAuthenticat: !!isAuthenticated.accessToken, isAuthenticated });
+  useEffect(() => {
+    const cartbookIds = cartLists?.data?.map(
+      (item) => item?.attributes?.book?.data?.id
+    );
+    let query = {
+      populate: ['images'],
+      filters: {
+        id: {
+          $in: cartbookIds
+        }
+      }
+    };
+    setCartBookFilter({ query });
+  }, [cartLists]);
+
+  useEffect(() => {
+    if (cartLists?.data && cartBooks?.data) {
+      const cartBookItem = cartBooks?.data?.reduce(
+        (acc, curr) => ({
+          ...acc,
+          [curr.id]: curr?.attributes?.images?.data[0]?.attributes?.url
+        }),
+        {}
+      );
+
+      // @LATER cart image not insert
+      const cartWithImage = cartLists?.data?.map((item, ind) => ({
+        ...item.attributes,
+        cartImage: cartBookItem[item?.attributes?.book?.data?.id],
+        id: cartLists?.data[ind]?.id
+      }));
+
+      setCartListsWithImage(cartWithImage);
+    }
+  }, [cartLists?.data, cartBooks?.data]);
+
+  // console.log({ cartB: cartLists?.data });
+
+  const totalAmount = cartLists?.data?.reduce(
+    (acc, curr) =>
+      acc +
+      curr?.attributes?.variant?.data?.attributes?.price *
+        curr?.attributes?.quantity,
+    0
+  );
 
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
@@ -173,69 +130,85 @@ const NavBar = () => {
   const logoutUser = () => {
     dispatch(userLoggedOut());
     localStorage.removeItem(BOOKMARK_AUTH);
-    console.log("logout user");
-    router.push("/");
+    router.push('/');
   };
 
-  // console.log({ navabr: authChecked });
-
-  const [cartModalTrg, setCartModalTrig] = useState(false);
+  // have logout dependency
+  const profileMenuItems = [
+    {
+      link: '/profile',
+      text: 'Profile'
+    },
+    {
+      link: '/profile/my-orders',
+      text: 'My Orders'
+    },
+    {
+      link: '/profile/my-wishlist',
+      text: 'My Wishlists'
+    },
+    {
+      link: '/checkout',
+      text: 'Checkout'
+    },
+    {
+      link: '/profile/change-password',
+      text: 'Change Password'
+    },
+    {
+      link: '/logout',
+      text: 'Logout',
+      onClickHandler: logoutUser
+    }
+  ];
 
   const toggleDrawer = (open) => (event) => {
     if (
       event &&
-      event.type === "keydown" &&
-      (event.key === "Tab" || event.key === "Shift")
+      event.type === 'keydown' &&
+      (event.key === 'Tab' || event.key === 'Shift')
     ) {
       return;
     }
     setCartModalTrig(open);
   };
 
-  const [serachTrig, setSearchTrig] = useState(false);
-
   const toggleSearch = () => {
     setSearchTrig(true);
   };
 
-  const [mobMenuTrig, setMobMenuTrig] = useState(false);
-
   const toggleMenuDraw = (open) => (event) => {
     if (
       event &&
-      event.type === "keydown" &&
-      (event.key === "Tab" || event.key === "Shift")
+      event.type === 'keydown' &&
+      (event.key === 'Tab' || event.key === 'Shift')
     ) {
       return;
     }
     setMobMenuTrig(open);
   };
-  const [profileMenuTrig, setProfileMenuTrig] = useState(false);
 
   const toggleProfileDraw = (open) => (event) => {
     if (
       event &&
-      event.type === "keydown" &&
-      (event.key === "Tab" || event.key === "Shift")
+      event.type === 'keydown' &&
+      (event.key === 'Tab' || event.key === 'Shift')
     ) {
       return;
     }
     setProfileMenuTrig(open);
   };
-  const [filterMenuTrig, setFilterMenuTrig] = useState(false);
 
   const toggleFilterDraw = (open) => (event) => {
     if (
       event &&
-      event.type === "keydown" &&
-      (event.key === "Tab" || event.key === "Shift")
+      event.type === 'keydown' &&
+      (event.key === 'Tab' || event.key === 'Shift')
     ) {
       return;
     }
     setFilterMenuTrig(open);
   };
-
-  const [mobSearchTrig, setMobSearchTrig] = useState(false);
 
   const handleSearchToggle = () => {
     if (mobSearchTrig) {
@@ -245,39 +218,9 @@ const NavBar = () => {
     }
   };
 
-  const profileMenuItems = [
-    {
-      link: "/profile",
-      text: "Profile",
-    },
-    {
-      link: "/profile/my-orders",
-      text: "My Orders",
-    },
-    {
-      link: "/profile/my-wishlist",
-      text: "My Wishlists",
-    },
-    {
-      link: "/checkout",
-      text: "Checkout",
-    },
-    {
-      link: "/profile/change-password",
-      text: "Change Password",
-    },
-    {
-      link: "/logout",
-      text: "Logout",
-      onClickHandler: logoutUser,
-    },
-  ];
-
   const handleHome = () => {
-    router.push("/");
+    router.push('/');
   };
-
-  const [openLogin, setOpenLogin] = useState(false);
 
   const handleClickOpenLogin = () => {
     setOpenLogin(true);
@@ -286,8 +229,6 @@ const NavBar = () => {
   const handleCloseLogin = () => {
     setOpenLogin(false);
   };
-
-  const [openRegister, setOpenRegister] = useState(false);
 
   const handleClickOpenRegister = () => {
     setOpenRegister(true);
@@ -301,20 +242,20 @@ const NavBar = () => {
     <>
       <AppBarContainer position="fixed">
         <Stack
-          direction={"row"}
+          direction="row"
           spacing={2}
           alignItems="center"
-          justifyContent={"space-between"}
+          justifyContent="space-between"
         >
           <Link href="/">
-            <LogoContainer marginTop={"8px"}>
+            <LogoContainer marginTop="8px">
               <img src="/images/logo-1.png" alt="" />
             </LogoContainer>
           </Link>
           {!serachTrig ? (
-            <Stack direction={"row"} spacing={2} alignItems="center">
+            <Stack direction="row" spacing={2} alignItems="center">
               {menuItems.map((item) => (
-                <Link href={item.link}>
+                <Link key={shortId()} href={item.link}>
                   <LinkContainer
                     key={item.text}
                     active={router.pathname.includes(item.link)}
@@ -323,33 +264,33 @@ const NavBar = () => {
                   </LinkContainer>
                 </Link>
               ))}
-              <LinkContainer additional={true} onClick={toggleSearch}>
+              <LinkContainer additional onClick={toggleSearch}>
                 Search
               </LinkContainer>
             </Stack>
           ) : (
             <SearchBar normal={false} />
           )}
-          <SearchBar normal={true} />
+          <SearchBar normal />
           <IconContainer onClick={handleChangeMode}>
             <ThemeSwitchStyle>
-              {theme.palette.mode === "light" ? <RiMoonLine /> : <BsSunFill />}
+              {theme.palette.mode === 'light' ? <RiMoonLine /> : <BsSunFill />}
             </ThemeSwitchStyle>
           </IconContainer>
-          <IconContainer fontSize={"28px"} onClick={toggleDrawer(true)}>
-            <Badge badgeContent={4} color="primary">
+          <IconContainer fontSize="28px" onClick={toggleDrawer(true)}>
+            <Badge badgeContent={cartLists?.data?.length} color="primary">
               <HiOutlineShoppingBag />
             </Badge>
           </IconContainer>
-          <Link href={"/profile/my-wishlist"}>
-            <IconContainer fontSize={"32px"}>
+          <Link href="/profile/my-wishlist">
+            <IconContainer fontSize="32px">
               <Badge badgeContent={2} color="primary">
                 <MdOutlineFavoriteBorder />
               </Badge>
             </IconContainer>
           </Link>
 
-          {!!isAuthenticated?.accessToken ? (
+          {isAuthenticated?.accessToken ? (
             <Box sx={{ flexGrow: 0 }}>
               <Tooltip title="Open settings">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
@@ -358,18 +299,18 @@ const NavBar = () => {
               </Tooltip>
               <Menu
                 sx={{
-                  mt: "45px",
+                  mt: '45px'
                 }}
                 id="menu-appbar"
                 anchorEl={anchorElUser}
                 anchorOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
+                  vertical: 'top',
+                  horizontal: 'right'
                 }}
                 keepMounted
                 transformOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
+                  vertical: 'top',
+                  horizontal: 'right'
                 }}
                 open={Boolean(anchorElUser)}
                 onClose={handleCloseUserMenu}
@@ -404,7 +345,7 @@ const NavBar = () => {
             <Box>
               <Button
                 variant="contained"
-                disableElevation={true}
+                disableElevation
                 onClick={handleClickOpenLogin}
               >
                 Join
@@ -413,21 +354,27 @@ const NavBar = () => {
           )}
         </Stack>
 
-        <CartItemComponent cartModalTrg={cartModalTrg} toggleDrawer={toggleDrawer} theme={theme}/>
+        <CartItemComponent
+          cartModalTrg={cartModalTrg}
+          toggleDrawer={toggleDrawer}
+          theme={theme}
+          cartLists={cartListsWithImage}
+          totalAmount={totalAmount}
+        />
       </AppBarContainer>
 
       <MobileBarContainer position="fixed">
         <Stack
-          direction={"row"}
+          direction="row"
           spacing={2}
           alignItems="center"
-          justifyContent={"center"}
+          justifyContent="center"
         >
           {mobSearchTrig ? (
             <SearchBar normal={false} />
           ) : (
             <Link href="/">
-              <LogoContainer marginTop={"8px"}>
+              <LogoContainer marginTop="8px">
                 <img src="/images/logo-1.png" alt="" />
               </LogoContainer>
             </Link>
@@ -436,27 +383,27 @@ const NavBar = () => {
       </MobileBarContainer>
       <MiniTopBarContainer>
         <Stack
-          direction={"row"}
-          justifyContent={"space-between"}
-          alignItems={"center"}
+          direction="row"
+          justifyContent="space-between"
+          alignItems="center"
         >
           <Box>
             <Button variant="outlined" onClick={toggleFilterDraw(true)}>
               <AiOutlineFilter />
-              <Typography variant="h4" marginLeft={"5px"}>
+              <Typography variant="h4" marginLeft="5px">
                 Filter
               </Typography>
             </Button>
           </Box>
           <IconContainer onClick={handleChangeMode}>
             <ThemeSwitchStyle>
-              {theme.palette.mode === "light" ? <RiMoonLine /> : <BsSunFill />}
+              {theme.palette.mode === 'light' ? <RiMoonLine /> : <BsSunFill />}
             </ThemeSwitchStyle>
           </IconContainer>
         </Stack>
 
         <Drawer
-          anchor={"left"}
+          anchor="left"
           open={filterMenuTrig}
           toggle={toggleFilterDraw}
           data={categoreyItems}
@@ -465,10 +412,10 @@ const NavBar = () => {
 
       <MobileMenuContainer position="fexed">
         <Stack
-          direction={"row"}
+          direction="row"
           spacing={2}
           alignItems="center"
-          justifyContent={"space-between"}
+          justifyContent="space-between"
         >
           <MobMenuItemContainer onClick={toggleMenuDraw(true)}>
             <CgMenuLeft />
@@ -494,13 +441,13 @@ const NavBar = () => {
         </Stack>
 
         <Drawer
-          anchor={"left"}
+          anchor="left"
           open={mobMenuTrig}
           toggle={toggleMenuDraw}
           data={menuItems}
         />
         <Drawer
-          anchor={"right"}
+          anchor="right"
           open={profileMenuTrig}
           toggle={toggleProfileDraw}
           data={profileMenuItems}
@@ -512,6 +459,7 @@ const NavBar = () => {
         handleClickOpen={handleClickOpenRegister}
         handleClose={handleCloseLogin}
       />
+
       <Register
         open={openRegister}
         handleClickOpen={handleClickOpenLogin}

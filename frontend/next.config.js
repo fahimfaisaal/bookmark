@@ -1,15 +1,14 @@
+/* eslint-disable no-undef */
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // reactStrictMode: true,
-  // swcMinify: true,
+  reactStrictMode: true,
+  swcMinify: true,
   rewrites: async () => [
     {
       source: '/api/:slug*',
-      destination: `${
-        process.env.NEXT_PUBLIC_API_URL 
-      }/:slug*`,
-    },
-  ],
-}
+      destination: `${process.env.NEXT_PUBLIC_API_URL}/:slug*`
+    }
+  ]
+};
 
-module.exports = nextConfig
+module.exports = nextConfig;

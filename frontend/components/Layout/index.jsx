@@ -10,15 +10,15 @@ import NavBar from './NavBar';
 const ChildrenContainer = styled(Box)(({ theme }) => ({
   margin: '130px 5%',
   [theme.breakpoints.down('sm')]: {
-    margin: '130px 3%',
-  },
+    margin: '130px 3%'
+  }
 }));
 
-const Layout = ({ children }) => {
-  //Custom Theme ================================
+function Layout({ children }) {
+  // Custom Theme ================================
   const theme = useTheme();
   theme.components = ComponentsOverrides(theme);
-  //Custom Theme ================================
+  // Custom Theme ================================
 
   const router = useRouter();
   const URL = router.pathname;
@@ -36,6 +36,6 @@ const Layout = ({ children }) => {
       <Footer />
     </Box>
   );
-};
+}
 
 export default Layout;

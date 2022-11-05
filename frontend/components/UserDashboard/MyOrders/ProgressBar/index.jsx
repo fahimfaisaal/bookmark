@@ -8,10 +8,10 @@ const steps = [
   'Order Received',
   'Order Processing',
   'Order Dispatched',
-  'At Local Facility',
+  'At Local Facility'
 ];
 
-const ProgressBar = () => {
+function ProgressBar() {
   return (
     <Box sx={{ width: '100%', marginTop: '10px' }}>
       <Stepper activeStep={0} alternativeLabel>
@@ -23,6 +23,6 @@ const ProgressBar = () => {
       </Stepper>
     </Box>
   );
-};
+}
 
 export default ProgressBar;

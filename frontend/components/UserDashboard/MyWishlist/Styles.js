@@ -5,7 +5,7 @@ import { Box } from '@mui/system';
 export const StyledStack = styled(Stack)(({ theme }) => ({
   borderBottom: `2px solid ${theme.palette.background.paper}`,
   backgroundColor: `${theme.palette.background.default}`,
-  padding: '5px 10px 20px',
+  padding: '5px 10px 20px'
 }));
 
 export const StyledContainer = styled(Button)(({ theme }) => ({
@@ -20,8 +20,8 @@ export const StyledContainer = styled(Button)(({ theme }) => ({
   padding: '5px 2px',
   '&:hover': {
     backgroundColor: `${theme.palette.primary.dark}`,
-    color: `${theme.palette.common.white}`,
-  },
+    color: `${theme.palette.common.white}`
+  }
 }));
 
 export const StyledImage = styled(Box)(({ theme }) => ({
@@ -31,19 +31,19 @@ export const StyledImage = styled(Box)(({ theme }) => ({
   padding: '4px',
   margin: '2px',
   display: 'flex',
-  alignItems: 'center',
+  alignItems: 'center'
 }));
 
 export const StyledRemove = styled(Button)(({ theme }) => ({
   color: 'red',
   borderLeft: `2px dashed ${theme.palette.background.dark}`,
   '&:hover': {
-    textDecoration: 'underline',
-  },
+    textDecoration: 'underline'
+  }
 }));
 
-export const StyledCart = styled(Button)(({ theme }) => ({
+export const StyledCart = styled(Button)(() => ({
   '&:hover': {
-    textDecoration: 'underline',
-  },
+    textDecoration: 'underline'
+  }
 }));
