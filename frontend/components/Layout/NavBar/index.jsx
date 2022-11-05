@@ -10,33 +10,33 @@ import {
   SwipeableDrawer,
   Tooltip,
   Typography,
-  useTheme,
-} from "@mui/material";
-import IconButton from "@mui/material/IconButton";
-import { Stack } from "@mui/system";
-import Link from "next/link";
-import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
-import { AiOutlineFilter } from "react-icons/ai";
-import { BiSearch, BiUser } from "react-icons/bi";
-import { BsSunFill } from "react-icons/bs";
-import { CgMenuLeft, CgShoppingBag } from "react-icons/cg";
-import { HiOutlineShoppingBag, HiShoppingBag } from "react-icons/hi";
-import { IoIosClose } from "react-icons/io";
-import { MdOutlineFavoriteBorder } from "react-icons/md";
-import { RiMoonLine } from "react-icons/ri";
-import { VscHome } from "react-icons/vsc";
-import { useDispatch, useSelector } from "react-redux";
-import { BOOKMARK_AUTH } from "../../../constant";
-import { UseThemeContext } from "../../../context/ThemeContext";
-import useAuthCheck from "../../../hooks/useAuthCheck";
-import { userLoggedOut } from "../../../store/features/auth/authSlice";
-import { useGetBooksQuery } from "../../../store/features/books/booksApi";
-import { useGetCartsByUserQuery } from "../../../store/features/carts/cartsApi";
-import SearchBar from "../../shared/SearchBar";
-import Login from "../Auth/Login";
-import Register from "../Auth/Register";
-import CartItemComponent from "./CartItemComponent";
+  useTheme
+} from '@mui/material';
+import IconButton from '@mui/material/IconButton';
+import { Stack } from '@mui/system';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
+import { AiOutlineFilter } from 'react-icons/ai';
+import { BiSearch, BiUser } from 'react-icons/bi';
+import { BsSunFill } from 'react-icons/bs';
+import { CgMenuLeft, CgShoppingBag } from 'react-icons/cg';
+import { HiOutlineShoppingBag, HiShoppingBag } from 'react-icons/hi';
+import { IoIosClose } from 'react-icons/io';
+import { MdOutlineFavoriteBorder } from 'react-icons/md';
+import { RiMoonLine } from 'react-icons/ri';
+import { VscHome } from 'react-icons/vsc';
+import { useDispatch, useSelector } from 'react-redux';
+import { BOOKMARK_AUTH } from '../../../constant';
+import { UseThemeContext } from '../../../context/ThemeContext';
+import useAuthCheck from '../../../hooks/useAuthCheck';
+import { userLoggedOut } from '../../../store/features/auth/authSlice';
+import { useGetBooksQuery } from '../../../store/features/books/booksApi';
+import { useGetCartsByUserQuery } from '../../../store/features/carts/cartsApi';
+import SearchBar from '../../shared/SearchBar';
+import Login from '../Auth/Login';
+import Register from '../Auth/Register';
+import CartItemComponent from './CartItemComponent';
 import {
   AppBarContainer,
   CloseBtnContaner,
@@ -161,12 +161,11 @@ const NavBar = () => {
   const [cartBookFilter, setCartBookFilter] = useState();
   const { data: cartLists } = useGetCartsByUserQuery({ userId: authUser?.id });
   const { data: cartBooks } = useGetBooksQuery(cartBookFilter);
-  const [cartListsWithImage, setCartListsWithImage] = useState()
+  const [cartListsWithImage, setCartListsWithImage] = useState();
 
   useEffect(() => {
     setCartBookFilter({
-      params:
-        "populate[0]=images&filters[id][$in][0]=1197",
+      params: 'populate[0]=images&filters[id][$in][0]=1197'
     });
   }, [cartLists]);
 
@@ -175,20 +174,20 @@ const NavBar = () => {
       let cartBookItem = cartBooks?.data?.reduce(
         (acc, curr) => ({
           ...acc,
-          [curr.id]: curr?.attributes?.images?.data[0]?.attributes?.url,
+          [curr.id]: curr?.attributes?.images?.data[0]?.attributes?.url
         }),
         {}
       );
 
       //@LATER cart image not insert
-     let cartWithImage = cartLists?.data?.map((item, ind) => {
+      let cartWithImage = cartLists?.data?.map((item, ind) => {
         return {
           ...item.attributes,
           cartImage: cartBookItem[item?.attributes?.book?.data?.id],
           id: cartLists?.data[ind]?.id
         };
       });
-      setCartListsWithImage(cartWithImage)
+      setCartListsWithImage(cartWithImage);
       console.log({ newCart: cartWithImage, cartBookItem, cartLists });
     }
   }, [cartLists?.data, cartBooks?.data]);
@@ -214,7 +213,7 @@ const NavBar = () => {
   const logoutUser = () => {
     dispatch(userLoggedOut());
     localStorage.removeItem(BOOKMARK_AUTH);
-    router.push("/");
+    router.push('/');
   };
 
   // console.log({ navabr: authChecked });
