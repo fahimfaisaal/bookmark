@@ -102,6 +102,8 @@ function BookCard({ book, bookId }) {
         <PriceStyle direction="row" alignItems="center">
           {variants?.data[0]?.attributes?.price === null ? (
             <Typography variant="h4">Free</Typography>
+          ) : min == max ? (
+            <Typography variant="h4">${max}</Typography>
           ) : (
             <Typography variant="h4">
               ${min} - ${max}

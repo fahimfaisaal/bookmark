@@ -19,7 +19,7 @@ import {
 function Register({ open, handleClickOpen, handleClose }) {
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
-  const [signup, { data, isLoading, error: responseError }] =
+  const [signup, { data, isLoading, error: responseError, isSuccess }] =
     useSignupMutation();
   const [, setError] = useState('');
   // console.log({data,isLoading,isSuccess,responseError, error})
@@ -61,8 +61,10 @@ function Register({ open, handleClickOpen, handleClose }) {
 
   const onSubmit = (submittedData) => {
     signup({ data: submittedData });
-    reset();
-    handleClose();
+    if (isSuccess) {
+      reset();
+      handleClose();
+    }
   };
   // Handle Form =========================
 
@@ -93,6 +95,25 @@ function Register({ open, handleClickOpen, handleClose }) {
                       required: 'Username is required'
                     })}
                     helperText={errors.username?.message}
+                  />
+                </InputContainer>
+              )}
+            />
+            <Controller
+              name="email"
+              control={control}
+              render={() => (
+                <InputContainer>
+                  <InputLabelStyle variant="h4">Email</InputLabelStyle>
+                  <TextField
+                    fullWidth
+                    name="email"
+                    label={'Email'}
+                    error={Boolean(errors.email)}
+                    {...register('email', {
+                      required: 'Email is required'
+                    })}
+                    helperText={errors.email?.message}
                   />
                 </InputContainer>
               )}

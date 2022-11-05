@@ -22,7 +22,7 @@
     "prettier": "^2.7.1"
   },
   "scripts": {
-    "format": "prettier --config .prettierrc './**/**/*.{js,jsx}' --write",
+    "format": "prettier --config .prettierrc ./**/**/*.{js,jsx} --write",
     "lint": "eslint .",
     "prepare": "husky install"
   },

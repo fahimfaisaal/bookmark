@@ -29,7 +29,6 @@ export default function useAuthCheck() {
       setAuthChecked(false);
       console.log('logout');
     }
-    console.log('outside');
   }, [dispatch, setAuthChecked, authChecked, localAuth]);
 
   return authChecked;
