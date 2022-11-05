@@ -42,6 +42,7 @@ export const apiSlice = createApi({
     'author',
     'publishers',
     'publisher',
+    'banner',
     'categories'
   ],
   keepUnusedDataFor: 3600,

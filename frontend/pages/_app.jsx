@@ -1,8 +1,7 @@
-/* eslint-disable react/require-default-props */
-/* eslint-disable react/forbid-prop-types */
 import { CacheProvider } from '@emotion/react';
 import CssBaseline from '@mui/material/CssBaseline';
 import Head from 'next/head';
+import NextNProgress from 'nextjs-progressbar';
 import PropTypes from 'prop-types';
 import * as React from 'react';
 import 'react-multi-carousel/lib/styles.css';
@@ -36,6 +35,7 @@ export default function MyApp(props) {
         <ThemeContext>
           <CssBaseline />
           <Layout>
+            <NextNProgress />
             <Component {...pageProps} />
           </Layout>
         </ThemeContext>

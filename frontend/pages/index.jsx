@@ -1,23 +1,26 @@
-import { Box, Button, Grid } from '@mui/material';
+import { Box, Button, Grid, Skeleton } from '@mui/material';
 import { Stack } from '@mui/system';
 import Link from 'next/link';
 import React from 'react';
 import Carousel from 'react-multi-carousel';
 import AuthorCard from '../components/AuthorCard';
+import AuthorSkeleton from '../components/AuthorSkeleton';
 import BookCard from '../components/BookCard';
+import BookSkeleton from '../components/BookSkeleton';
 import CategoryCard from '../components/CategoryCard';
 import PublicationCard from '../components/PublicationCard';
+import PublisherSkeleton from '../components/PublisherSkeleton';
 import {
   CustomLeftBtn,
   CustomRightBtn
 } from '../components/shared/ui/CarouselBtn';
 import { useGetAuthorsQuery } from '../store/features/authors/authorsApi';
+import { useGetBannersQuery } from '../store/features/banner/bannerApi';
 import {
   useGetBooksQuery,
   useGetCategoryQuery
 } from '../store/features/books/booksApi';
 import { useGetPublishersQuery } from '../store/features/publishers/publishersApi';
-
 import {
   ContainerStyle,
   HeroContainer,
@@ -51,10 +54,12 @@ const responsive = (xl, lg, md, sm, xs) => ({
 });
 
 function Home() {
-  const { data: authorLists } = useGetAuthorsQuery();
-  const { data: publisherLists } = useGetPublishersQuery();
+  const { data: authorLists, isLoading: isAuthorLoading } =
+    useGetAuthorsQuery();
+  const { data: publisherLists, isLoading: isPublisherLoading } =
+    useGetPublishersQuery();
   // TODO: this query need to fix
-  const { data: newBooks, isSuccess } = useGetBooksQuery({
+  const { data: newBooks, isLoading: isNewBooksLoading } = useGetBooksQuery({
     query: {
       populate: '*',
       pagination: {
@@ -67,35 +72,51 @@ function Home() {
       }
     }
   });
-  const { data: popularBooks } = useGetBooksQuery({
-    query: {
-      populate: '*',
-      filters: {
-        bestSelling: true
+  const { data: popularBooks, isLoading: isPopularBookLoading } =
+    useGetBooksQuery({
+      query: {
+        populate: '*',
+        filters: {
+          bestSelling: true
+        }
       }
-    }
-  });
+    });
 
-  const { data: categoryLists } = useGetCategoryQuery();
+  const { data: banners } = useGetBannersQuery();
+  const bannerImg =
+    (banners?.data &&
+      `http://localhost:1337${banners?.data?.attributes?.images?.data[0]?.attributes?.url}`) ||
+    '/images/Cover.png';
+
+  const { data: categories, isLoading: isCategoriesLoading } =
+    useGetCategoryQuery();
+
+  const fakeArr = (length) => [...new Array(length).keys()];
 
   return (
     <ContainerStyle>
       <HeroContainer>
-        <Link href="/books">
+        <Link href={`/books/${banners?.data?.attributes?.book?.data?.id}`}>
           <Box sx={{ cursor: 'pointer' }}>
-            {/* TODO: have to improve */}
-            <img alt="hello" src="/images/Cover.png" />
+            <img src={bannerImg} />
           </Box>
         </Link>
       </HeroContainer>
       <SectionContainer>
         <SectionHeaderStyle variant="h1">Popular Books</SectionHeaderStyle>
+
         <Grid container spacing={3}>
-          {popularBooks?.data?.slice(0, 8).map((book) => (
-            <Grid item lg={3} md={6} xs={12} key={book?.id}>
-              <BookCard book={book?.attributes} bookId={book?.id} />
-            </Grid>
-          ))}
+          {isPopularBookLoading
+            ? fakeArr(8).map((item) => (
+                <Grid item lg={3} md={6} xs={12} key={item}>
+                  <BookSkeleton />
+                </Grid>
+              ))
+            : popularBooks?.data?.slice(0, 8).map((book) => (
+                <Grid item lg={3} md={6} xs={12} key={book?.id}>
+                  <BookCard book={book?.attributes} bookId={book?.id} />
+                </Grid>
+              ))}
         </Grid>
       </SectionContainer>
 
@@ -103,35 +124,53 @@ function Home() {
         <SectionHeaderStyle variant="h1">
           Which Book You Like to See?
         </SectionHeaderStyle>
-        <Carousel
-          responsive={responsive(10, 7, 5, 3, 2)}
-          customLeftArrow={<CustomLeftBtn />}
-          customRightArrow={<CustomRightBtn />}
-        >
-          {categoryLists?.data?.length > 0 &&
-            categoryLists?.data?.map((category) => (
-              <CategoryCard
-                key={category?.id}
-                category={category?.attributes}
-              />
+        {isCategoriesLoading ? (
+          <Carousel
+            responsive={responsive(10, 7, 5, 3, 2)}
+            customLeftArrow={<CustomLeftBtn />}
+            customRightArrow={<CustomRightBtn />}
+          >
+            {fakeArr(12).map((item) => (
+              <Box key={item} px={2}>
+                <Skeleton width={'100%'} height={150} variant={'rounded'} />
+                <Skeleton width={'50%'} height={15} variant={'text'} />
+              </Box>
             ))}
-        </Carousel>
+          </Carousel>
+        ) : (
+          <Carousel
+            responsive={responsive(10, 7, 5, 3, 2)}
+            customLeftArrow={<CustomLeftBtn />}
+            customRightArrow={<CustomRightBtn />}
+          >
+            {categories?.data?.length > 0 &&
+              categories?.data?.map((category) => (
+                <CategoryCard
+                  key={category?.id}
+                  category={category?.attributes}
+                />
+              ))}
+          </Carousel>
+        )}
       </SectionContainer>
 
       <SectionContainer>
         <SectionHeaderStyle variant="h1">New Arrival Books</SectionHeaderStyle>
-        {isSuccess && (
-          <Grid container spacing={2}>
-            {newBooks?.data?.map((book) => (
-              <Grid item lg={3} md={6} xs={12} key={book?.id}>
-                <BookCard book={book?.attributes} bookId={book?.id} />
-              </Grid>
-            ))}
-          </Grid>
-        )}
-
-        <Stack direction="row" justifyContent="center" my={5}>
-          <Button variant="contained" size="large" disableElevation>
+        <Grid container spacing={2}>
+          {isNewBooksLoading
+            ? fakeArr(12).map((item) => (
+                <Grid item lg={3} md={6} xs={12} key={item}>
+                  <BookSkeleton />
+                </Grid>
+              ))
+            : newBooks?.data?.map((book) => (
+                <Grid item lg={3} md={6} xs={12} key={book?.id}>
+                  <BookCard book={book?.attributes} bookId={book?.id} />
+                </Grid>
+              ))}
+        </Grid>
+        <Stack direction={'row'} justifyContent={'center'} my={5}>
+          <Button variant="contained" size="large" disableElevation={true}>
             Load More
           </Button>
         </Stack>
@@ -148,16 +187,28 @@ function Home() {
             <SeeAllLinkStyle>See All</SeeAllLinkStyle>
           </Link>
         </Stack>
-        <Carousel
-          responsive={responsive(8, 6, 3, 2, 1)}
-          customLeftArrow={<CustomLeftBtn />}
-          customRightArrow={<CustomRightBtn />}
-        >
-          {authorLists?.data?.length > 0 &&
-            authorLists?.data?.map((author) => (
-              <AuthorCard key={author?.id} author={author} />
+        {isAuthorLoading ? (
+          <Carousel
+            responsive={responsive(8, 6, 3, 2, 1)}
+            customLeftArrow={<CustomLeftBtn />}
+            customRightArrow={<CustomRightBtn />}
+          >
+            {fakeArr(12).map((item) => (
+              <AuthorSkeleton key={item} />
             ))}
-        </Carousel>
+          </Carousel>
+        ) : (
+          <Carousel
+            responsive={responsive(8, 6, 3, 2, 1)}
+            customLeftArrow={<CustomLeftBtn />}
+            customRightArrow={<CustomRightBtn />}
+          >
+            {authorLists?.data?.length > 0 &&
+              authorLists?.data?.map((author) => (
+                <AuthorCard key={author?.id} author={author} />
+              ))}
+          </Carousel>
+        )}
       </SectionContainer>
 
       <SectionContainer>
@@ -173,17 +224,28 @@ function Home() {
             <SeeAllLinkStyle>See All</SeeAllLinkStyle>
           </Link>
         </Stack>
-
-        <Carousel
-          responsive={responsive(7, 5, 3, 2, 1)}
-          customLeftArrow={<CustomLeftBtn />}
-          customRightArrow={<CustomRightBtn />}
-        >
-          {publisherLists?.data?.length > 0 &&
-            publisherLists?.data?.map((publisher) => (
-              <PublicationCard key={publisher?.id} publisher={publisher} />
+        {isPublisherLoading ? (
+          <Carousel
+            responsive={responsive(7, 5, 3, 2, 1)}
+            customLeftArrow={<CustomLeftBtn />}
+            customRightArrow={<CustomRightBtn />}
+          >
+            {fakeArr(12).map((item) => (
+              <PublisherSkeleton key={item} />
             ))}
-        </Carousel>
+          </Carousel>
+        ) : (
+          <Carousel
+            responsive={responsive(7, 5, 3, 2, 1)}
+            customLeftArrow={<CustomLeftBtn />}
+            customRightArrow={<CustomRightBtn />}
+          >
+            {publisherLists?.data?.length > 0 &&
+              publisherLists?.data?.map((publisher) => (
+                <PublicationCard key={publisher?.id} publisher={publisher} />
+              ))}
+          </Carousel>
+        )}
       </SectionContainer>
     </ContainerStyle>
   );

@@ -5,6 +5,7 @@ import {
   Divider,
   Grid,
   Link as MuiLink,
+  Skeleton,
   Typography
 } from '@mui/material';
 import Rating from '@mui/material/Rating';
@@ -15,6 +16,7 @@ import { useState } from 'react';
 import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
 import { useSelector } from 'react-redux';
 import BookCard from '../../components/BookCard';
+import BookSkeleton from '../../components/BookSkeleton';
 import CustomImage from '../../components/CustomImage';
 import {
   LeftBtnStyle,
@@ -58,7 +60,7 @@ function BookItem() {
   const router = useRouter();
   const { id } = router.query;
   const authUser = useSelector((state) => state?.auth?.user);
-  const { data: book } = useGetBookQuery(id);
+  const { data: book, isLoading } = useGetBookQuery(id);
   const bookData = book?.data?.attributes || {};
 
   const { data: bookRatings } = useGetNestedBookItemQuery(
@@ -167,7 +169,6 @@ function BookItem() {
     data.variant =
       bookVariants?.data?.attributes?.variants?.data[activeVariant]?.id;
     data.quantity = cartQty;
-
     if (
       cartBook?.data[0]?.id &&
       cartBook?.data[0]?.attributes?.variant?.data?.id === data?.variant
@@ -198,217 +199,330 @@ function BookItem() {
         <Grid container spacing="50px">
           <Grid item lg={6} md={12}>
             <BookImagesContainer>
-              <CustomImage
-                src={`http://localhost:1337${bookData?.images?.data[activeImg].attributes.url}`}
-              />
-              <LeftBtnStyle onClick={handleImgPrev}>
-                <FiChevronLeft />
-              </LeftBtnStyle>
-              <RightBtnStyle onClick={handleImgNext}>
-                <FiChevronRight />
-              </RightBtnStyle>
+              {isLoading ? (
+                <Skeleton width={'100%'} height={550} variant="rectangular" />
+              ) : (
+                <>
+                  <CustomImage
+                    src={`http://localhost:1337${bookData?.images?.data[activeImg].attributes.url}`}
+                  />
+                  <LeftBtnStyle onClick={handleImgPrev}>
+                    <FiChevronLeft />
+                  </LeftBtnStyle>
+                  <RightBtnStyle onClick={handleImgNext}>
+                    <FiChevronRight />
+                  </RightBtnStyle>
+                </>
+              )}
             </BookImagesContainer>
             <ImgListContainer py={5}>
-              {bookData?.images?.data.map((img, ind) => (
-                <ImgListItem
-                  active={activeImg === ind}
-                  key={Math.random().toString(32)}
-                  onClick={() => handleImgCurrent(ind)}
-                >
-                  <CustomImage
-                    src={`http://localhost:1337${img.attributes.url}`}
-                  />
-                </ImgListItem>
-              ))}
+              {isLoading ? (
+                <>
+                  <Box px={1}>
+                    <Skeleton
+                      width={150}
+                      height={200}
+                      variant={'rectangular'}
+                    />
+                  </Box>
+                  <Box px={1}>
+                    <Skeleton
+                      width={150}
+                      height={200}
+                      variant={'rectangular'}
+                    />
+                  </Box>
+                  <Box px={1}>
+                    <Skeleton
+                      width={150}
+                      height={200}
+                      variant={'rectangular'}
+                    />
+                  </Box>
+                </>
+              ) : (
+                bookData?.images?.data.map((img, ind) => (
+                  <ImgListItem
+                    active={activeImg === ind}
+                    key={ind}
+                    onClick={() => handleImgCurrent(ind)}
+                  >
+                    <CustomImage
+                      src={`http://localhost:1337${img.attributes.url}`}
+                    />
+                  </ImgListItem>
+                ))
+              )}
             </ImgListContainer>
           </Grid>
           <Grid item lg={6} md={12}>
             <BookDetailsContainer>
-              <Stack
-                direction="row"
-                alignItems="center"
-                justifyContent="space-between"
-                mb={2}
-              >
-                <BookTitleStyle variant="h1">{bookData?.name}</BookTitleStyle>
-                <FavIconStyle>
-                  <FavoriteBorderIcon />
-                </FavIconStyle>
-              </Stack>
-              <Stack direction="row" alignItems="center" spacing={1}>
-                <Typography variant="body2">By (Author)</Typography>
-                {bookData?.authors?.data.map((author, index) => (
-                  <Link key={shortId()} href={`/authors/${author.id}`}>
-                    <AuthorLinkStyle variant="h3">
-                      {author.attributes.name}
-                      {bookData?.authors?.data.length > 1 &&
-                        bookData?.authors?.data.length - 1 !== index &&
-                        ','}
-                    </AuthorLinkStyle>
-                  </Link>
-                ))}
-              </Stack>
-              {numberOfReview > 0 && (
-                <Stack pt={2} direction="row" alignItems="center">
-                  <Rating
-                    defaultValue={avarageReview / numberOfReview}
-                    precision={0.5}
-                    readOnly
-                  />
-                  <Typography variant="body1" px={2}>
-                    {numberOfReview} Reviews
-                  </Typography>
-                </Stack>
-              )}
-
-              {variants.prices.length ? (
-                <Stack direction="row" alignItems="center" gap={2} pt={5}>
-                  <OldBookPriceStyle variant="h1">
-                    {variants.prices[activeVariant]}$
-                  </OldBookPriceStyle>
-
-                  <BookPriceStyle variant="h1">
-                    {Math.round(newPrice)}$
-                  </BookPriceStyle>
-                  <Typography variant="body1">
-                    You Save {Math.round(saveAmount)}$ (
-                    {variants.discounts[activeVariant]}
-                    %)
-                  </Typography>
-                </Stack>
+              {isLoading ? (
+                <Box>
+                  <Skeleton width={'100%'} height={50} variant={'text'} />
+                  <Skeleton width={'60%'} height={20} variant={'text'} />
+                  <Skeleton width={'50%'} height={20} variant={'text'} />
+                  <Box py={3}>
+                    <Skeleton width={'40%'} height={20} variant={'text'} />
+                    <Skeleton width={'20%'} height={20} variant={'text'} />
+                  </Box>
+                  <Box py={5}>
+                    <Box py={2}>
+                      <Skeleton width={'70%'} height={20} variant={'text'} />
+                    </Box>
+                    <Box py={1} mb={3}>
+                      <Divider />
+                    </Box>
+                    <Skeleton width={'80%'} height={20} variant={'text'} />
+                    <Skeleton width={'90%'} height={20} variant={'text'} />
+                    <Skeleton width={'60%'} height={20} variant={'text'} />
+                  </Box>
+                  <Box py={1}>
+                    <Skeleton width={'100%'} height={20} variant={'text'} />
+                  </Box>
+                  <Box py={2}>
+                    <Skeleton width={'100%'} height={50} variant={'text'} />
+                  </Box>
+                  <Box py={1} mb={3}>
+                    <Divider />
+                  </Box>
+                  <Box py={2}>
+                    <Skeleton width={'100%'} height={20} variant={'text'} />
+                    <Skeleton width={'100%'} height={20} variant={'text'} />
+                  </Box>
+                </Box>
               ) : (
-                <BookPriceStyle variant="h1" py={2}>
-                  FREE
-                </BookPriceStyle>
+                <>
+                  <Stack
+                    direction={'row'}
+                    alignItems={'center'}
+                    justifyContent={'space-between'}
+                    mb={2}
+                  >
+                    <BookTitleStyle variant="h1">
+                      {bookData?.name}
+                    </BookTitleStyle>
+                    <FavIconStyle>
+                      <FavoriteBorderIcon />
+                    </FavIconStyle>
+                  </Stack>
+                  <Stack direction={'row'} alignItems={'center'} spacing={1}>
+                    <Typography variant="body2">By (Author)</Typography>
+                    {bookData?.authors?.data.map((author, index) => (
+                      <Link href={`/authors/${author.id}`} key={author.id}>
+                        <AuthorLinkStyle variant="h3">
+                          {author.attributes.name}
+                          {bookData?.authors?.data.length > 1 &&
+                            bookData?.authors?.data.length - 1 !== index &&
+                            ','}
+                        </AuthorLinkStyle>
+                      </Link>
+                    ))}
+                  </Stack>
+                  {numberOfReview > 0 && (
+                    <Stack pt={2} direction={'row'} alignItems={'center'}>
+                      <Rating
+                        defaultValue={avarageReview / numberOfReview}
+                        precision={0.5}
+                        readOnly
+                      />
+                      <Typography variant="body1" px={2}>
+                        {numberOfReview} Reviews
+                      </Typography>
+                    </Stack>
+                  )}
+                  {variants.prices.length ? (
+                    <Stack
+                      direction={'row'}
+                      alignItems={'center'}
+                      gap={2}
+                      pt={5}
+                    >
+                      <OldBookPriceStyle variant="h1">
+                        {variants.prices[activeVariant]}$
+                      </OldBookPriceStyle>
+
+                      <BookPriceStyle variant="h1">
+                        {Math.round(newPrice)}$
+                      </BookPriceStyle>
+                      <Typography variant="body1">
+                        You Save {Math.round(saveAmount)}$ (
+                        {variants.discounts[activeVariant]}%)
+                      </Typography>
+                    </Stack>
+                  ) : (
+                    <BookPriceStyle variant="h1" py={2}>
+                      FREE
+                    </BookPriceStyle>
+                  )}
+                  <Typography variant="h3" pb={5} pt={1}>
+                    {bookData?.status}
+                  </Typography>
+                  <Stack
+                    direction={'row'}
+                    alignItems={'center'}
+                    spacing={2}
+                    mb={3}
+                  >
+                    <Typography variant="h3">Language :</Typography>
+                    <Stack direction={'row'} alignItems={'center'} spacing={2}>
+                      {variants.languages.map((lang, ind) => (
+                        <VariantBtnStyle
+                          variant="outlined"
+                          key={lang}
+                          onClick={() => handleSelectVariant(ind)}
+                          active={ind === activeVariant}
+                        >
+                          {lang}
+                        </VariantBtnStyle>
+                      ))}
+                    </Stack>
+                  </Stack>
+                  <Divider />
+                  <Stack
+                    direction={'row'}
+                    alignItems={'center'}
+                    spacing={2}
+                    my={3}
+                  >
+                    <Typography variant="h3">Book Type :</Typography>
+                    <Stack direction={'row'} alignItems={'center'} spacing={2}>
+                      {variants.formates.map((formate, ind) => (
+                        <VariantBtnStyle
+                          variant="outlined"
+                          key={formate}
+                          onClick={() => handleSelectVariant(ind)}
+                          active={ind === activeVariant}
+                        >
+                          {formate}
+                        </VariantBtnStyle>
+                      ))}
+                    </Stack>
+                  </Stack>
+                  <Stack
+                    direction={'row'}
+                    alignItems={'center'}
+                    spacing={2}
+                    my={3}
+                  >
+                    <Typography variant="h3">Page Quality :</Typography>
+                    <Stack direction={'row'} alignItems={'center'} spacing={2}>
+                      {variants.pageQualities.map((qal, ind) => (
+                        <VariantBtnStyle
+                          variant="outlined"
+                          key={qal}
+                          onClick={() => handleSelectVariant(ind)}
+                          active={ind === activeVariant}
+                        >
+                          {qal}
+                        </VariantBtnStyle>
+                      ))}
+                    </Stack>
+                  </Stack>
+                  <Stack
+                    direction={'row'}
+                    alignItems={'center'}
+                    spacing={2}
+                    my={3}
+                  >
+                    <Typography variant="h3">Page Formate :</Typography>
+                    <Stack direction={'row'} alignItems={'center'} spacing={2}>
+                      {variants.pageFormates.map((form, ind) => (
+                        <VariantBtnStyle
+                          variant="outlined"
+                          key={form}
+                          onClick={() => handleSelectVariant(ind)}
+                          active={ind === activeVariant}
+                        >
+                          {form}
+                        </VariantBtnStyle>
+                      ))}
+                    </Stack>
+                  </Stack>
+                  <Box pt={3}>
+                    <Typography variant="body1">
+                      {bookData?.description}
+                    </Typography>
+                    <MuiLink href="#details">See more</MuiLink>
+                  </Box>
+
+                  {/* add to cart btn */}
+                  <Stack direction={'row'} alignItems={'center'} gap={3} my={3}>
+                    <Stack direction={'row'} alignItems={'center'}>
+                      <QtyBtnLeft onClick={itemDecrement} disabled={true}>
+                        -
+                      </QtyBtnLeft>
+                      <Qty>{cartQty}</Qty>
+                      <QtyBtnRight onClick={itemIncrement}>+</QtyBtnRight>
+                    </Stack>
+                    <Button
+                      variant="contained"
+                      fullWidth={true}
+                      disableElevation={true}
+                      size={'large'}
+                      sx={{ padding: '12px' }}
+                      onClick={addToCartBook}
+                    >
+                      Add To Cart
+                    </Button>
+                  </Stack>
+                  <Divider />
+                  <Stack
+                    direction={'row'}
+                    alignItems={'center'}
+                    my={5}
+                    justifyContent={'space-between'}
+                  >
+                    <Box>
+                      <Typography variant="h3" mb={2}>
+                        Categories
+                      </Typography>
+                      <Typography variant="body2">
+                        {bookData?.categories?.data.map(
+                          (cat) => `${cat.attributes.type}, `
+                        )}
+                      </Typography>
+                    </Box>
+                    <Box>
+                      <Typography variant="h3" mb={2}>
+                        Tags
+                      </Typography>
+                      <Typography variant="body2">
+                        {bookData?.tags?.data.map(
+                          (tag) => `${tag.attributes.type}, `
+                        )}
+                      </Typography>
+                    </Box>
+                  </Stack>
+                </>
               )}
-              <Typography variant="h3" pb={5} pt={1}>
-                {bookData?.status}
-              </Typography>
-              <Stack direction="row" alignItems="center" spacing={2} mb={3}>
-                <Typography variant="h3">Language :</Typography>
-                <Stack direction="row" alignItems="center" spacing={2}>
-                  {variants.languages.map((lang, ind) => (
-                    <VariantBtnStyle
-                      variant="outlined"
-                      key={shortId()}
-                      onClick={() => handleSelectVariant(ind)}
-                      active={ind === activeVariant}
-                    >
-                      {lang}
-                    </VariantBtnStyle>
-                  ))}
-                </Stack>
-              </Stack>
-              <Divider />
-              <Stack direction="row" alignItems="center" spacing={2} my={3}>
-                <Typography variant="h3">Book Type :</Typography>
-                <Stack direction="row" alignItems="center" spacing={2}>
-                  {variants.formates.map((formate, ind) => (
-                    <VariantBtnStyle
-                      variant="outlined"
-                      key={shortId()}
-                      onClick={() => handleSelectVariant(ind)}
-                      active={ind === activeVariant}
-                    >
-                      {formate}
-                    </VariantBtnStyle>
-                  ))}
-                </Stack>
-              </Stack>
-              <Stack direction="row" alignItems="center" spacing={2} my={3}>
-                <Typography variant="h3">Page Quality :</Typography>
-                <Stack direction="row" alignItems="center" spacing={2}>
-                  {variants.pageQualities.map((qal, ind) => (
-                    <VariantBtnStyle
-                      variant="outlined"
-                      key={shortId()}
-                      onClick={() => handleSelectVariant(ind)}
-                      active={ind === activeVariant}
-                    >
-                      {qal}
-                    </VariantBtnStyle>
-                  ))}
-                </Stack>
-              </Stack>
-              <Stack direction="row" alignItems="center" spacing={2} my={3}>
-                <Typography variant="h3">Page Formate :</Typography>
-                <Stack direction="row" alignItems="center" spacing={2}>
-                  {variants.pageFormates.map((form, ind) => (
-                    <VariantBtnStyle
-                      variant="outlined"
-                      key={shortId()}
-                      onClick={() => handleSelectVariant(ind)}
-                      active={ind === activeVariant}
-                    >
-                      {form}
-                    </VariantBtnStyle>
-                  ))}
-                </Stack>
-              </Stack>
-              <Box pt={3}>
-                <Typography variant="body1">{bookData?.description}</Typography>
-                <MuiLink href="#details">See more</MuiLink>
-              </Box>
-              {/* add to cart btn */}
-              <Stack direction="row" alignItems="center" gap={3} my={3}>
-                <Stack direction="row" alignItems="center">
-                  <QtyBtnLeft onClick={itemDecrement} disabled>
-                    -
-                  </QtyBtnLeft>
-                  <Qty>{cartQty}</Qty>
-                  <QtyBtnRight onClick={itemIncrement}>+</QtyBtnRight>
-                </Stack>
-                <Button
-                  variant="contained"
-                  fullWidth
-                  disableElevation
-                  size="large"
-                  sx={{ padding: '12px' }}
-                  onClick={addToCartBook}
-                  disabled={
-                    bookVariants?.data?.attributes?.variants?.data?.length === 0
-                  }
-                >
-                  Add To Cart
-                </Button>
-              </Stack>
             </BookDetailsContainer>
-            <Divider />
-            <Stack
-              direction="row"
-              alignItems="center"
-              my={5}
-              justifyContent="space-between"
-            >
-              <Box>
-                <Typography variant="h3" mb={2}>
-                  Categories
-                </Typography>
-                <Typography variant="body2">
-                  {bookData?.categories?.data.map(
-                    (cat) => `${cat.attributes.type}, `
-                  )}
-                </Typography>
-              </Box>
-              <Box>
-                <Typography variant="h3" mb={2}>
-                  Tags
-                </Typography>
-                <Typography variant="body2">
-                  {bookData?.tags?.data.map(
-                    (tag) => `${tag.attributes.type}, `
-                  )}
-                </Typography>
-              </Box>
-            </Stack>
           </Grid>
         </Grid>
       </BookInfoContainer>
+
       <Divider />
       <Box mt={5} id="details">
         <Typography variant="h1" my={2} fontWeight={700}>
           Details
         </Typography>
+        {isLoading ? (
+          <>
+            <Box py={1}>
+              <Skeleton width={'40%'} height={20} />
+            </Box>
+            <Box py={3}>
+              <Skeleton width={'20%'} height={15} />
+              <Skeleton width={'20%'} height={15} />
+              <Skeleton width={'20%'} height={15} />
+              <Skeleton width={'20%'} height={15} />
+              <Skeleton width={'20%'} height={15} />
+              <Skeleton width={'20%'} height={15} />
+            </Box>
+          </>
+        ) : (
+          <></>
+        )}
         <Typography variant="body2">{bookData?.description}</Typography>
         <Box my={4}>
           <Stack direction="row" gap={2} mb={1} alignItems="center">
@@ -474,12 +588,27 @@ function BookItem() {
         </Stack>
         <Divider />
         <Box py={3}>
-          {bookRatings?.data?.attributes?.ratings?.data.map((rating) => (
-            <Box key={rating.id}>
-              <ReviewItem rating={rating} />
-              <Divider />
-            </Box>
-          ))}
+          {isLoading ? (
+            <>
+              <Box py={2}>
+                <Skeleton width={'20%'} height={35} variant={'text'} />
+                <Skeleton width={'40%'} height={15} variant={'text'} />
+                <Skeleton width={'30%'} height={15} variant={'text'} />
+              </Box>
+              <Box py={2}>
+                <Skeleton width={'20%'} height={35} variant={'text'} />
+                <Skeleton width={'40%'} height={15} variant={'text'} />
+                <Skeleton width={'30%'} height={15} variant={'text'} />
+              </Box>
+            </>
+          ) : (
+            bookRatings?.data?.attributes?.ratings?.data.map((rating) => (
+              <Box key={rating.id}>
+                <ReviewItem rating={rating} />
+                <Divider />
+              </Box>
+            ))
+          )}
         </Box>
         <ReviewForm
           open={openReview}
@@ -492,11 +621,17 @@ function BookItem() {
           Related Books
         </Typography>
         <Grid container spacing={3} py={2}>
-          {relatedBooks?.data?.map((book) => (
-            <Grid item lg={3} md={6} xs={12} key={book?.id}>
-              <BookCard book={book?.attributes} bookId={book?.id} />
-            </Grid>
-          ))}
+          {isLoading
+            ? [1, 2, 3, 4].map((item) => (
+                <Grid item lg={3} md={6} xs={12} key={item}>
+                  <BookSkeleton />
+                </Grid>
+              ))
+            : relatedBooks?.data?.map((book) => (
+                <Grid item lg={3} md={6} xs={12} key={book?.id}>
+                  <BookCard book={book?.attributes} bookId={book?.id} />
+                </Grid>
+              ))}
         </Grid>
       </Box>
     </Box>

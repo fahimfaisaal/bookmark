@@ -1,12 +1,14 @@
 import { Box, Grid, Stack, Typography } from '@mui/material';
 import AuthorCard from '../../components/AuthorCard';
+import AuthorSkeleton from '../../components/AuthorSkeleton';
 import CustomLink from '../../components/shared/CustomLink';
 import SearchBar from '../../components/shared/SearchBar';
 import { useGetAuthorsQuery } from '../../store/features/authors/authorsApi';
 import { HeaderContainerStyle, HeaderStyle } from './Styles';
 
 function Authors() {
-  const { data: authorLists } = useGetAuthorsQuery();
+  const { data: authorLists, isLoading: isAuthorLoading } =
+    useGetAuthorsQuery();
   return (
     <Box>
       <HeaderContainerStyle>
@@ -27,17 +29,23 @@ function Authors() {
       </HeaderContainerStyle>
       <Box my={5}>
         <Grid container spacing={3}>
-          {authorLists?.data?.length > 0 &&
-            authorLists?.data?.map((author) => (
-              <CustomLink
-                href={`/authors/${author?.attributes?.id}`}
-                key={author?.id}
-              >
-                <Grid item lg={2} md={4} sm={6} xs={12}>
-                  <AuthorCard author={author} />
+          {isAuthorLoading
+            ? [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((item) => (
+                <Grid item lg={2} md={4} sm={6} xs={12} key={item}>
+                  <AuthorSkeleton />
                 </Grid>
-              </CustomLink>
-            ))}
+              ))
+            : authorLists?.data?.length > 0 &&
+              authorLists?.data?.map((author) => (
+                <CustomLink
+                  href={`/authors/${author?.attributes?.id}`}
+                  key={author?.id}
+                >
+                  <Grid item lg={2} md={4} sm={6} xs={12}>
+                    <AuthorCard author={author} />
+                  </Grid>
+                </CustomLink>
+              ))}
         </Grid>
       </Box>
     </Box>

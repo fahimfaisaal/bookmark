@@ -5,8 +5,6 @@ import { Box } from '@mui/system';
 import Link from 'next/link';
 import { useState } from 'react';
 import { FaShoppingCart } from 'react-icons/fa';
-import { useSelector } from 'react-redux';
-
 import CustomImage from '../CustomImage';
 
 import {
@@ -40,7 +38,7 @@ function BookCard({ book, bookId }) {
     (acc, cur) => acc + Number(cur.attributes.rate),
     0
   );
-  const authUser = useSelector((state) => state?.auth?.user);
+
   const [min, max] =
     variants?.data?.reduce(
       ([prevMin, prevMax], { attributes }) => [
@@ -54,12 +52,7 @@ function BookCard({ book, bookId }) {
     <StyledBox>
       <Link href={`/books/${bookId}`} sx={{ cursor: 'pointer' }}>
         <Box sx={{ cursor: 'pointer' }}>
-          <CustomImage
-            src={bookImage}
-            height="350px"
-            title="comic-book"
-            width="250px"
-          />
+          <CustomImage src={bookImage} />
         </Box>
       </Link>
       <ContentContainerStyle>
@@ -82,7 +75,7 @@ function BookCard({ book, bookId }) {
           </Link>
         </Stack>
         {ratings?.data?.length > 0 && (
-          <Stack direction="row" alignItems="center" pb={1}>
+          <Stack direction={'row'} alignItems={'center'} pb={1}>
             <Rating
               defaultValue={avarageReview}
               precision={0.5}
@@ -99,8 +92,8 @@ function BookCard({ book, bookId }) {
         >
           {status}
         </Typography>
-        <PriceStyle direction="row" alignItems="center">
-          {variants?.data[0]?.attributes?.price === null ? (
+        <PriceStyle direction={'row'} alignItems={'center'}>
+          {variants?.data[0]?.attributes?.price == null ? (
             <Typography variant="h4">Free</Typography>
           ) : min == max ? (
             <Typography variant="h4">${max}</Typography>
@@ -123,10 +116,7 @@ function BookCard({ book, bookId }) {
           alignItems="center"
           justifyContent="space-between"
         >
-          <Link
-            href={`${authUser ? `/books/${bookId}` : ''}`}
-            sx={{ cursor: 'pointer' }}
-          >
+          <Link href={`/books/${bookId}`} sx={{ cursor: 'pointer' }}>
             <CartBtnStyle>
               <FaShoppingCart /> Cart
             </CartBtnStyle>
