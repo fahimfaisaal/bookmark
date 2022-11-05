@@ -5,7 +5,7 @@ import typography from '../src/theme/typography';
 
 const Context = createContext();
 
-export const ThemeContext = ({ children }) => {
+export function ThemeContext({ children }) {
   const [mode, setMode] = useState('light');
 
   const handleChangeMode = () => {
@@ -40,5 +40,5 @@ export const ThemeContext = ({ children }) => {
       <ThemeProvider theme={theme}>{children}</ThemeProvider>
     </Context.Provider>
   );
-};
+}
 export const UseThemeContext = () => useContext(Context);

@@ -42,7 +42,7 @@ export const StyledRemove = styled(Button)(({ theme }) => ({
   }
 }));
 
-export const StyledCart = styled(Button)(({ theme }) => ({
+export const StyledCart = styled(Button)(() => ({
   '&:hover': {
     textDecoration: 'underline'
   }

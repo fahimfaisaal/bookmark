@@ -3,7 +3,7 @@ import { Box, styled } from '@mui/system';
 
 export const ContainerStyle = styled(Box)(() => ({}));
 
-export const HeroContainer = styled(Box)(({ theme }) => ({
+export const HeroContainer = styled(Box)(() => ({
   display: 'flex',
   width: '100%',
   height: '100%',

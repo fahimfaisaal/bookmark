@@ -1,6 +1,6 @@
 import { Box, styled } from '@mui/system';
 
-export const InnerContainerStyle = styled(Box)(({ theme }) => ({
+export const InnerContainerStyle = styled(Box)(() => ({
   width: '288px',
   display: 'flex',
   flexDirection: 'column',

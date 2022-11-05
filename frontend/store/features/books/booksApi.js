@@ -27,7 +27,7 @@ export const booksApi = apiSlice.injectEndpoints({
       providesTags: ['books']
     }),
     getCategory: builder.query({
-      query: () => `/categories?populate[0]=coverImage&pagination[pageSize]=15 `
+      query: () => '/categories?populate[0]=coverImage&pagination[pageSize]=15 '
     }),
     getBooksByTags: builder.query({
       query: (query) => `/books?populate=*${query}`,

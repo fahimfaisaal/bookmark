@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import useAuth from '../hooks/useAuth';
 
 const withAuth = (Component) => {
-  const Auth = (props) => {
+  function Auth(props) {
     const isLoggedIn = useAuth();
     console.log({ isLoggedIn });
     const router = useRouter();
@@ -18,7 +18,7 @@ const withAuth = (Component) => {
     ) : (
       'Loading from private auth...'
     );
-  };
+  }
 
   // Copy getInitial props so it will run as well
   if (Component.getInitialProps) {

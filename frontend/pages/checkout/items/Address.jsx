@@ -1,35 +1,35 @@
-import * as React from 'react';
+import { Grid, InputLabel } from '@mui/material';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
-import { Grid, InputLabel } from '@mui/material';
 import { Stack } from '@mui/system';
+import * as React from 'react';
+import AddressModal from '../../../components/shared/Modals/AddressModal';
 import { StyledContainer } from '../../../components/UserDashboard/Styles';
 import { StyledTypo } from './Styles';
-import AddressModal from '../../../components/shared/Modals/AddressModal';
-const Address = ({ billingAddress, label, text }) => {
+
+function Address({ label, text }) {
   const [formValue, setFormValue] = React.useState('');
 
-  //state lifting starts==========
+  // state lifting starts==========
   const getData = (data) => {
     setFormValue(data);
   };
-  //state lifting ends==========
+  // state lifting ends==========
   return (
     <StyledContainer sx={{ boxShadow: 5, marginTop: 3 }}>
       <Stack
-        direction={'row'}
+        direction="row"
         justifyContent="space-between"
         alignItems="center"
-        flexWrap={'wrap'}
+        flexWrap="wrap"
       >
         <InputLabel color="secondary">
           {' '}
-          <StyledTypo component={'span'}>{text}</StyledTypo> {label}
+          <StyledTypo component="span">{text}</StyledTypo> {label}
         </InputLabel>
-        <>
-          <AddressModal getData={getData} btnText="+ Update" />
-        </>
+
+        <AddressModal getData={getData} btnText="+ Update" />
       </Stack>
       <Grid container sx={{}}>
         <Grid item>
@@ -54,6 +54,6 @@ const Address = ({ billingAddress, label, text }) => {
       </Grid>
     </StyledContainer>
   );
-};
+}
 
 export default Address;

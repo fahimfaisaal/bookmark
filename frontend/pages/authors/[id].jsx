@@ -7,7 +7,7 @@ import { useGetAuthorQuery } from '../../store/features/authors/authorsApi';
 import { useGetBooksByAuthorQuery } from '../../store/features/books/booksApi';
 import { SectionHeaderStyle } from './Styles';
 
-const AuthorItem = () => {
+function AuthorItem() {
   const router = useRouter();
   // console.log({ q: router.query.slug });
   const { data } = useGetAuthorQuery(router.query.id);
@@ -28,14 +28,14 @@ const AuthorItem = () => {
             </Grid>
           ))}
         </Grid>
-        <Stack direction={'row'} justifyContent={'center'} my={5}>
-          <Button variant="contained" size="large" disableElevation={true}>
+        <Stack direction="row" justifyContent="center" my={5}>
+          <Button variant="contained" size="large" disableElevation>
             Load More
           </Button>
         </Stack>
       </Box>
     </Box>
   );
-};
+}
 
 export default AuthorItem;

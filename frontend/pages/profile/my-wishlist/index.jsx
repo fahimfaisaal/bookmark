@@ -3,7 +3,7 @@ import UserDashboard from '../../../components/UserDashboard';
 import MyWishlist from '../../../components/UserDashboard/MyWishlist';
 import withAuth from '../../../hoc/PrivateAuth';
 
-const MyFavList = () => {
+function MyFavList() {
   return (
     <UserDashboard>
       <Box sx={{ boxShadow: 1, padding: 2 }}>
@@ -13,6 +13,6 @@ const MyFavList = () => {
       </Box>
     </UserDashboard>
   );
-};
+}
 
 export default withAuth(MyFavList);

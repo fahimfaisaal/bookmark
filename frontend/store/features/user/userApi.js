@@ -1,10 +1,11 @@
+/* eslint-disable operator-linebreak */
 import { apiSlice } from '../api/apiSlice';
 
 export const userApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    getUser: builder.query({ query: () => ``, providesTags: ['user'] }),
+    getUser: builder.query({ query: () => '', providesTags: ['user'] }),
     getProfile: builder.query({
-      query: () => ``,
+      query: () => '',
       providesTags: ['user']
     }),
     updateProfile: builder.mutation({

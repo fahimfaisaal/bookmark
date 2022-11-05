@@ -4,7 +4,7 @@ import React from 'react';
 import { AiFillCheckCircle, AiFillStar, AiOutlineMore } from 'react-icons/ai';
 import { IconMenuContainer, ReviewPointStyle } from './Styles';
 
-const ReviewItem = (rating) => {
+function ReviewItem(rating) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -26,12 +26,8 @@ const ReviewItem = (rating) => {
         by {rating?.rating?.attributes?.userId?.data?.attributes?.username}{' '}
         <AiFillCheckCircle />
       </Typography>
-      <Stack
-        direction={'row'}
-        alignItems={'center'}
-        justifyContent={'space-between'}
-      >
-        <Typography variant="h2" fontWeight={'400'} mb={3}>
+      <Stack direction="row" alignItems="center" justifyContent="space-between">
+        <Typography variant="h2" fontWeight="400" mb={3}>
           {rating?.rating?.attributes?.comment}
         </Typography>
         {false && (
@@ -68,6 +64,6 @@ const ReviewItem = (rating) => {
       <Typography variant="body2">{date.toUTCString()}</Typography>
     </Box>
   );
-};
+}
 
 export default ReviewItem;

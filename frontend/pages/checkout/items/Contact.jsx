@@ -1,34 +1,34 @@
-import { InputLabel, TextField, Typography } from '@mui/material';
+import { InputLabel, TextField } from '@mui/material';
 import { Stack } from '@mui/system';
 import { useState } from 'react';
 import ContactModal from '../../../components/shared/Modals/ContactModal';
 import { StyledContainer } from '../../../components/UserDashboard/Styles';
 import { StyledTypo } from './Styles';
 
-const Contact = ({ text }) => {
+function Contact({ text }) {
   const [formValue, setFormValue] = useState('');
 
-  //state lifting starts==========
+  // state lifting starts==========
   const getData = (data) => {
     setFormValue(data);
   };
-  //state lifting ends==========
+  // state lifting ends==========
   return (
     <StyledContainer sx={{ boxShadow: 5 }}>
       <Stack
-        direction={'row'}
+        direction="row"
         justifyContent="space-between"
         alignItems="center"
-        flexWrap={'wrap'}
+        flexWrap="wrap"
       >
         <InputLabel color="secondary">
-          {' '}
-          <StyledTypo component={'span'}>{text}</StyledTypo> Contact Number
+          <br />
+          <StyledTypo component="span">{text}</StyledTypo>
+          <br />
+          <span>Contact Number</span>
         </InputLabel>
 
-        <>
-          <ContactModal getData={getData} btnText="+ Update" />
-        </>
+        <ContactModal getData={getData} btnText="+ Update" />
       </Stack>
       <TextField
         sx={{ marginBottom: 1.6 }}
@@ -42,6 +42,6 @@ const Contact = ({ text }) => {
       />
     </StyledContainer>
   );
-};
+}
 
 export default Contact;

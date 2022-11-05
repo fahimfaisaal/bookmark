@@ -28,8 +28,12 @@
   },
   "devDependencies": {
     "eslint": "^8.26.0",
+    "eslint-config-airbnb": "^19.0.4",
     "eslint-config-next": "12.3.1",
-    "prettier": "^2.7.1"
+    "eslint-plugin-import": "^2.25.3",
+    "eslint-plugin-jsx-a11y": "^6.5.1",
+    "eslint-plugin-react": "^7.31.10",
+    "eslint-plugin-react-hooks": "^4.3.0"
   },
   "main": "./pages/_app.js",
   "repository": "https://github.com/fahimfaisaal/bookmark",

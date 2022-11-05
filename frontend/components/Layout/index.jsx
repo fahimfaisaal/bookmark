@@ -14,11 +14,11 @@ const ChildrenContainer = styled(Box)(({ theme }) => ({
   }
 }));
 
-const Layout = ({ children }) => {
-  //Custom Theme ================================
+function Layout({ children }) {
+  // Custom Theme ================================
   const theme = useTheme();
   theme.components = ComponentsOverrides(theme);
-  //Custom Theme ================================
+  // Custom Theme ================================
 
   const router = useRouter();
   const URL = router.pathname;
@@ -36,6 +36,6 @@ const Layout = ({ children }) => {
       <Footer />
     </Box>
   );
-};
+}
 
 export default Layout;

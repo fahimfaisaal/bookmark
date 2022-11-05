@@ -1,7 +1,7 @@
 import { Box, Typography } from '@mui/material';
 import { Stack, styled } from '@mui/system';
 
-export const ItemContainerStyle = styled(Stack)((theme) => ({
+export const ItemContainerStyle = styled(Stack)(() => ({
   alignItems: 'center'
 }));
 
@@ -14,7 +14,7 @@ export const PriceContainerStyle = styled(Typography)(({ theme }) => ({
   fontWeight: '600',
   color: `${theme.palette.primary.main}`
 }));
-export const TotalPriceContainerStyle = styled(Typography)(({ theme }) => ({
+export const TotalPriceContainerStyle = styled(Typography)(() => ({
   fontWeight: '600'
 }));
 

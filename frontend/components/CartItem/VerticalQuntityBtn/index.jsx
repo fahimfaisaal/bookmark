@@ -1,6 +1,6 @@
 import { BtnContainerStyle, ContainerStyle, QntContainerStyle } from './Styles';
 
-const VerticalQuantityBtn = ({ itemIncrement, itemDecrement, cartQty }) => {
+function VerticalQuantityBtn({ itemIncrement, itemDecrement, cartQty }) {
   return (
     <ContainerStyle>
       <BtnContainerStyle variant="button" onClick={itemIncrement}>
@@ -12,6 +12,6 @@ const VerticalQuantityBtn = ({ itemIncrement, itemDecrement, cartQty }) => {
       </BtnContainerStyle>
     </ContainerStyle>
   );
-};
+}
 
 export default VerticalQuantityBtn;

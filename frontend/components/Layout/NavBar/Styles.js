@@ -1,13 +1,12 @@
+/* eslint-disable object-curly-newline */
 import { AppBar, Link, List, Switch, Typography } from '@mui/material';
 import { Box, styled } from '@mui/system';
 
-const barStyle = (theme) => {
-  return {
-    backgroundColor: `${theme.palette.background.default}`,
-    boxShadow: `${theme.shadows[1]}`,
-    padding: '20px 50px'
-  };
-};
+const barStyle = (theme) => ({
+  backgroundColor: `${theme.palette.background.default}`,
+  boxShadow: `${theme.shadows[1]}`,
+  padding: '20px 50px'
+});
 
 export const AppBarContainer = styled(AppBar)(({ theme }) => ({
   ...barStyle(theme),
@@ -41,7 +40,7 @@ export const MobileMenuContainer = styled(Box)(({ theme }) => ({
   }
 }));
 
-export const LogoContainer = styled(Box)(({ theme }) => ({
+export const LogoContainer = styled(Box)(() => ({
   cursor: 'pointer',
   img: {
     width: '180px',
@@ -66,7 +65,7 @@ export const LinkContainer = styled(Link)(({ theme, additional, active }) => ({
   }
 }));
 
-export const SearchContainer = styled(Box)(({ theme, normal, width }) => ({
+export const SearchContainer = styled(Box)(({ theme, normal }) => ({
   background: `${theme.palette.background.dark}`,
   border: `1px solid ${theme.palette.background.dark}`,
   borderRadius: '7px',

@@ -3,25 +3,22 @@ import PublicationCard from '../../components/PublicationCard';
 import CustomLink from '../../components/shared/CustomLink';
 import SearchBar from '../../components/shared/SearchBar';
 import { useGetPublishersQuery } from '../../store/features/publishers/publishersApi';
+import { shortId } from '../../uitls';
 import { HeaderContainerStyle, HeaderStyle } from '../authors/Styles';
 
-const Publications = () => {
-  const {
-    data: publisherLists,
-    isLoading: isPublisherLoading,
-    isError: isPublisherError
-  } = useGetPublishersQuery();
+function Publications() {
+  const { data: publisherLists } = useGetPublishersQuery();
   return (
     <Box>
       <HeaderContainerStyle>
         <HeaderStyle>
-          <Typography variant="h1" color={'primary'}>
+          <Typography variant="h1" color="primary">
             Manufacturers/Publishers
           </Typography>
           <Typography variant="body1">
             Lorem ipsum dolor sit amet, consectetu eradipiscing elit.
           </Typography>
-          <Stack direction={'row'} justifyContent={'center'} my={5}>
+          <Stack direction="row" justifyContent="center" my={5}>
             <SearchBar
               placeholder="Search Your Favorite Author from here"
               width="700px"
@@ -33,7 +30,10 @@ const Publications = () => {
         <Grid container spacing={2}>
           {publisherLists?.data?.length > 0 &&
             publisherLists?.data?.map((publisher) => (
-              <CustomLink href={`/publishers/${publisher?.attributes?.id}`}>
+              <CustomLink
+                key={shortId()}
+                href={`/publishers/${publisher?.attributes?.id}`}
+              >
                 <Grid item lg={2.4} md={4} sm={6} xs={12} key={publisher?.id}>
                   <PublicationCard publisher={publisher} />
                 </Grid>
@@ -43,6 +43,6 @@ const Publications = () => {
       </Box>
     </Box>
   );
-};
+}
 
 export default Publications;

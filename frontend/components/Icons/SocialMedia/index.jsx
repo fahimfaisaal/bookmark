@@ -3,7 +3,8 @@ import InstagramIcon from '@mui/icons-material/Instagram';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import { Box } from '@mui/material';
 import { Stack } from '@mui/system';
-const SocialMediaIcons = () => {
+
+function SocialMediaIcons() {
   return (
     <Box sx={{ width: '100px', margin: '5px' }}>
       <Stack direction="row" justifyContent="space-between" spacing={1}>
@@ -13,6 +14,6 @@ const SocialMediaIcons = () => {
       </Stack>
     </Box>
   );
-};
+}
 
 export default SocialMediaIcons;

@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { Box, Input, InputLabel } from '@mui/material';
 
-export const StyledInput = styled(Input)(({ theme }) => ({
+export const StyledInput = styled(Input)(() => ({
   display: 'none'
 }));
 export const StyledLabel = styled(InputLabel)(({ theme }) => ({
@@ -12,6 +12,7 @@ export const StyledLabel = styled(InputLabel)(({ theme }) => ({
   cursor: 'pointer',
   textAlign: 'center'
 }));
+
 export const StyledBox = styled(Box)(({ theme }) => ({
   display: 'flex',
   justifyContent: 'center',

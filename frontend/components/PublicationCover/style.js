@@ -9,11 +9,11 @@ export const ContainerStyle = styled(Box)(({ theme }) => ({
   justifyContent: 'space-between'
 }));
 
-export const ProfileContainerStyle = styled(Stack)(({ theme }) => ({
+export const ProfileContainerStyle = styled(Stack)(() => ({
   width: '30%'
 }));
 
-export const DetailsContainerStyle = styled(Box)(({ theme }) => ({
+export const DetailsContainerStyle = styled(Box)(() => ({
   textAlign: 'center'
 }));
 
