@@ -5,7 +5,6 @@ import React from 'react';
 import { LinkContainer } from './Styles';
 
 const FooterItem = ({ title, data }) => {
-  console.log(data);
   return (
     <Box>
       <Typography variant="h2" paddingBottom={4}>

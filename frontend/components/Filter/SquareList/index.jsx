@@ -8,11 +8,15 @@ import React, { useState } from 'react';
 import { FilterTitleStyle } from '../style';
 import { ListContainerStyle } from './style';
 
-export default function CheckboxList({ title, data }) {
-  const [expanded, setExpanded] = useState(true);
+export default function CheckboxList({ title, data, selectItems, setItem }) {
+  const [expanded, setExpanded] = useState(false);
 
   const handleChange = () => {
     setExpanded(!expanded);
+  };
+
+  const handleCheckChange = (e) => {
+    setItem(e.target.name.split(':'));
   };
 
   return (
@@ -32,11 +36,17 @@ export default function CheckboxList({ title, data }) {
       <AccordionDetails sx={{ padding: '0' }}>
         <ListContainerStyle>
           <FormGroup>
-            {data.map((item, index) => (
+            {data?.map((item, index) => (
               <FormControlLabel
-                control={<Checkbox defaultChecked={index === 0} />}
-                label={item}
-                name={item.toLowerCase()}
+                key={item?.id ?? index}
+                control={
+                  <Checkbox
+                    checked={selectItems.has(String(item.id ?? item))}
+                    onChange={handleCheckChange}
+                  />
+                }
+                label={item.name ?? item}
+                name={item?.id ? `${item.id}:${item.name}` : item}
               />
             ))}
           </FormGroup>

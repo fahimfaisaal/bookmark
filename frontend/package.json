@@ -18,6 +18,7 @@
     "@reduxjs/toolkit": "^1.8.6",
     "next": "12.3.1",
     "prop-types": "^15.8.1",
+    "qs": "^6.11.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-hook-form": "^7.38.0",
@@ -26,7 +27,12 @@
     "react-redux": "^8.0.4"
   },
   "devDependencies": {
-    "eslint": "8.25.0",
-    "eslint-config-next": "12.3.1"
-  }
+    "eslint": "^8.26.0",
+    "eslint-config-next": "12.3.1",
+    "prettier": "^2.7.1"
+  },
+  "main": "./pages/_app.js",
+  "repository": "https://github.com/fahimfaisaal/bookmark",
+  "author": "fahimfasaal",
+  "license": "MIT"
 }

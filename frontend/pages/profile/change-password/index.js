@@ -1,5 +1,6 @@
 import UserDashboard from '../../../components/UserDashboard';
 import ChangePassword from '../../../components/UserDashboard/ChangePassword';
+import withAuth from '../../../hoc/PrivateAuth';
 const ChangePass = () => {
   return (
     <UserDashboard>
@@ -8,4 +9,4 @@ const ChangePass = () => {
   );
 };
 
-export default ChangePass;
+export default withAuth(ChangePass);

@@ -1,0 +1,33 @@
+{
+  "name": "bookmark",
+  "version": "1.0.0",
+  "description": "a large book shop",
+  "main": ".",
+  "repository": "git@github.com:fahimfaisaal/bookmark.git",
+  "author": "Fahim Faisaal <fahimfaisal.soikot@gmail.com>",
+  "license": "MIT",
+  "eslintConfig": {
+    "env": {
+      "browser": true,
+      "node": true
+    }
+  },
+  "devDependencies": {
+    "babel-eslint": "^10.1.0",
+    "eslint": "^8.26.0",
+    "husky": "^8.0.0",
+    "lint-staged": "^13.0.3",
+    "prettier": "^2.7.1"
+  },
+  "scripts": {
+    "format": "prettier --config .prettierrc ./**/**/*.{js,jsx} --write",
+    "lint": "eslint .",
+    "prepare": "husky install"
+  },
+  "lint-staged": {
+    "./**/**/*.{js,jsx}": [
+      "yarn format",
+      "yarn lint"
+    ]
+  }
+}

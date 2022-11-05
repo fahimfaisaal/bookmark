@@ -10,17 +10,17 @@ export const ReviewPointStyle = styled(Box)(({ theme }) => ({
   borderRadius: '20px',
   h2: {
     color: '#fff',
-    marginRight: '5px',
+    marginRight: '5px'
   },
   h3: {
     color: '#fff',
-    marginTop: '4px',
-  },
+    marginTop: '4px'
+  }
 }));
 
 export const IconMenuContainer = styled(Typography)(({ theme }) => ({
   cursor: 'pointer',
   '&:hover': {
-    color: `${theme.palette.action.hover}`,
-  },
+    color: `${theme.palette.action.hover}`
+  }
 }));

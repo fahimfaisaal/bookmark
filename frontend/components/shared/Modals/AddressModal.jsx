@@ -26,10 +26,10 @@ export default function AddressModal({ btnText, getData }) {
     formState: { errors },
     register,
     watch,
-    reset,
+    reset
   } = useForm({
     mode: 'onBlur',
-    defaultValues: { title: '', address: '' },
+    defaultValues: { title: '', address: '' }
   });
   const onSubmit = (data) => {
     console.log(data);
@@ -86,7 +86,7 @@ export default function AddressModal({ btnText, getData }) {
                     label={'Address'}
                     error={Boolean(errors.address)}
                     {...register('address', {
-                      required: 'Address is required',
+                      required: 'Address is required'
                     })}
                     helperText={errors.address?.message}
                     type={'text'}

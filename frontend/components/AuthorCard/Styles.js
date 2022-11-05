@@ -14,6 +14,6 @@ export const ImgContainerStyle = styled(Box)(({ theme }) => ({
     height: '180px',
     display: 'flex',
     alignItems: 'center',
-    borderRadius: '50%',
-  },
+    borderRadius: '50%'
+  }
 }));

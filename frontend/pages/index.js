@@ -9,70 +9,86 @@ import CategoryCard from '../components/CategoryCard';
 import PublicationCard from '../components/PublicationCard';
 import {
   CustomLeftBtn,
-  CustomRightBtn,
+  CustomRightBtn
 } from '../components/shared/ui/CarouselBtn';
-import { useGetCategoryQuery, useGetBooksQuery } from '../store/features/books/booksApi';
-import { useGetAuthorsQuery, useGetPublishersQuery } from '../store/features/user/userApi';
+import { useGetAuthorsQuery } from '../store/features/authors/authorsApi';
+import {
+  useGetBooksQuery,
+  useGetCategoryQuery
+} from '../store/features/books/booksApi';
+import { useGetPublishersQuery } from '../store/features/publishers/publishersApi';
 
 import {
   ContainerStyle,
   HeroContainer,
   SectionContainer,
   SectionHeaderStyle,
-  SeeAllLinkStyle,
-} from "./Styles";
+  SeeAllLinkStyle
+} from './Styles';
 
 const responsive = (xl, lg, md, sm, xs) => {
   return {
     superLargeDesktop: {
       // the naming can be any, depends on you.
       breakpoint: { max: 4000, min: 3000 },
-      items: xl,
+      items: xl
     },
     desktop: {
       breakpoint: { max: 3000, min: 1025 },
-      items: lg,
+      items: lg
     },
     laptop: {
       breakpoint: { max: 1024, min: 769 },
-      items: md,
+      items: md
     },
     tablet: {
       breakpoint: { max: 768, min: 481 },
-      items: sm,
+      items: sm
     },
     mobile: {
       breakpoint: { max: 480, min: 0 },
-      items: xs,
-    },
+      items: xs
+    }
   };
 };
 
 const Home = () => {
-  const newArraivalDate = new Date().toISOString();
   const {
     data: authorLists,
     isLoading: isAuthorLoading,
-    isError: isAuthorError,
+    isError: isAuthorError
   } = useGetAuthorsQuery();
   const {
     data: publisherLists,
     isLoading: isPublisherLoading,
-    isError: isPublisherError,
+    isError: isPublisherError
   } = useGetPublishersQuery();
-
-  const { data: popularbookLists } = useGetBooksQuery({
-    params: "filters[bestSelling][$eq]=true",
+  // TODO: this query need to fix
+  const { data: newBooks, isSuccess } = useGetBooksQuery({
+    query: {
+      populate: '*',
+      pagination: {
+        pageSize: 8
+      },
+      filters: {
+        createdAt: {
+          $lte: new Date().toISOString()
+        }
+      }
+    }
+  });
+  const { data: popularBooks } = useGetBooksQuery({
+    query: {
+      populate: '*',
+      filters: {
+        bestSelling: true
+      }
+    }
   });
 
-  const { data: newbookLists, isLoading: isNewBooksLoading } = useGetBooksQuery(
-    {
-      params: `filters[createdAt][$gte]=${"2022-10-29T03:07:38.922Z"}&pagination[pageSize]=8`,
-    }
-  );
   const { data: categoryLists } = useGetCategoryQuery();
 
-  console.log({ lists: popularbookLists, isNewBooksLoading });
+  // console.log({ newBooks, isSuccess, popularBooks, categoryLists });
   return (
     <ContainerStyle>
       <HeroContainer>
@@ -85,9 +101,9 @@ const Home = () => {
       <SectionContainer>
         <SectionHeaderStyle variant="h1">Popular Books</SectionHeaderStyle>
         <Grid container spacing={3}>
-          {popularbookLists?.data?.slice(0, 8).map((book) => (
+          {popularBooks?.data?.slice(0, 8).map((book) => (
             <Grid item lg={3} md={6} xs={12} key={book?.id}>
-              <BookCard book={book?.attributes} bookId={book?.id}/>
+              <BookCard book={book?.attributes} bookId={book?.id} />
             </Grid>
           ))}
         </Grid>
@@ -102,22 +118,29 @@ const Home = () => {
           customLeftArrow={<CustomLeftBtn />}
           customRightArrow={<CustomRightBtn />}
         >
-          {categoryLists?.data?.length > 0 && categoryLists?.data?.map((category) => (
-            <CategoryCard key={category?.id} category={category?.attributes} />
-          ))}
+          {categoryLists?.data?.length > 0 &&
+            categoryLists?.data?.map((category) => (
+              <CategoryCard
+                key={category?.id}
+                category={category?.attributes}
+              />
+            ))}
         </Carousel>
       </SectionContainer>
 
       <SectionContainer>
         <SectionHeaderStyle variant="h1">New Arrival Books</SectionHeaderStyle>
-        <Grid container spacing={2}>
-          {newbookLists?.data?.map((book) => (
-            <Grid item lg={3} md={6} xs={12} key={book?.id}>
-              <BookCard book={book?.attributes} bookId={book?.id}/>
-            </Grid>
-          ))}
-        </Grid>
-        <Stack direction={"row"} justifyContent={"center"} my={5}>
+        {isSuccess && (
+          <Grid container spacing={2}>
+            {newBooks?.data?.map((book) => (
+              <Grid item lg={3} md={6} xs={12} key={book?.id}>
+                <BookCard book={book?.attributes} bookId={book?.id} />
+              </Grid>
+            ))}
+          </Grid>
+        )}
+
+        <Stack direction={'row'} justifyContent={'center'} my={5}>
           <Button variant="contained" size="large" disableElevation={true}>
             Load More
           </Button>
@@ -126,9 +149,9 @@ const Home = () => {
 
       <SectionContainer>
         <Stack
-          direction={"row"}
-          alignItems={"center"}
-          justifyContent={"space-between"}
+          direction={'row'}
+          alignItems={'center'}
+          justifyContent={'space-between'}
         >
           <SectionHeaderStyle variant="h1">Top Authors</SectionHeaderStyle>
           <Link href="/authors">
@@ -149,9 +172,9 @@ const Home = () => {
 
       <SectionContainer>
         <Stack
-          direction={"row"}
-          alignItems={"center"}
-          justifyContent={"space-between"}
+          direction={'row'}
+          alignItems={'center'}
+          justifyContent={'space-between'}
         >
           <SectionHeaderStyle variant="h1" sx={{ margin: 0 }}>
             Top Publishers
@@ -162,7 +185,7 @@ const Home = () => {
         </Stack>
 
         <Carousel
-          responsive={responsive(5, 4, 2, 1, 1)}
+          responsive={responsive(7, 5, 3, 2, 1)}
           customLeftArrow={<CustomLeftBtn />}
           customRightArrow={<CustomRightBtn />}
         >
@@ -170,11 +193,8 @@ const Home = () => {
             publisherLists?.data?.map((publisher) => (
               <PublicationCard key={publisher?.id} publisher={publisher} />
             ))}
-
-          
         </Carousel>
       </SectionContainer>
-    
     </ContainerStyle>
   );
 };

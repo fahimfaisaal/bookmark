@@ -114,16 +114,17 @@
       "target": "api::order.order",
       "mappedBy": "usersId"
     },
-    "carts": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::cart.cart"
-    },
     "favorites": {
       "type": "relation",
       "relation": "manyToMany",
       "target": "api::book.book",
       "mappedBy": "users"
+    },
+    "carts": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::cart.cart",
+      "mappedBy": "userId"
     }
   }
 }

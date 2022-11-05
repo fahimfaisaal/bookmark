@@ -1,27 +1,27 @@
-import { Box, Grid, Stack, Typography } from "@mui/material";
-import PublicationCard from "../../components/PublicationCard";
-import CustomLink from "../../components/shared/CustomLink";
-import SearchBar from "../../components/shared/SearchBar";
-import { useGetPublishersQuery } from "../../store/features/user/userApi";
-import { HeaderContainerStyle, HeaderStyle } from "../authors/Styles";
+import { Box, Grid, Stack, Typography } from '@mui/material';
+import PublicationCard from '../../components/PublicationCard';
+import CustomLink from '../../components/shared/CustomLink';
+import SearchBar from '../../components/shared/SearchBar';
+import { useGetPublishersQuery } from '../../store/features/publishers/publishersApi';
+import { HeaderContainerStyle, HeaderStyle } from '../authors/Styles';
 
 const Publications = () => {
   const {
     data: publisherLists,
     isLoading: isPublisherLoading,
-    isError: isPublisherError,
+    isError: isPublisherError
   } = useGetPublishersQuery();
   return (
     <Box>
       <HeaderContainerStyle>
         <HeaderStyle>
-          <Typography variant="h1" color={"primary"}>
+          <Typography variant="h1" color={'primary'}>
             Manufacturers/Publishers
           </Typography>
           <Typography variant="body1">
             Lorem ipsum dolor sit amet, consectetu eradipiscing elit.
           </Typography>
-          <Stack direction={"row"} justifyContent={"center"} my={5}>
+          <Stack direction={'row'} justifyContent={'center'} my={5}>
             <SearchBar
               placeholder="Search Your Favorite Author from here"
               width="700px"
@@ -33,10 +33,10 @@ const Publications = () => {
         <Grid container spacing={2}>
           {publisherLists?.data?.length > 0 &&
             publisherLists?.data?.map((publisher) => (
-              <CustomLink href={`/publishers/${publisher?.attributes?.name}`}>
-              <Grid item lg={3} md={6} sm={12} xs={12} key={publisher?.id}>
-                <PublicationCard publisher={publisher} />
-              </Grid>
+              <CustomLink href={`/publishers/${publisher?.attributes?.id}`}>
+                <Grid item lg={2.4} md={4} sm={6} xs={12} key={publisher?.id}>
+                  <PublicationCard publisher={publisher} />
+                </Grid>
               </CustomLink>
             ))}
         </Grid>

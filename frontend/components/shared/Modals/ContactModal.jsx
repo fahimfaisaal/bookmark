@@ -26,10 +26,10 @@ export default function ContactModal({ btnText, getData }) {
     formState: { errors },
     register,
     watch,
-    reset,
+    reset
   } = useForm({
     mode: 'onBlur',
-    defaultValues: { contact: '' },
+    defaultValues: { contact: '' }
   });
   const onSubmit = (data) => {
     console.log(data);
@@ -65,7 +65,7 @@ export default function ContactModal({ btnText, getData }) {
                     placeholder="+01...."
                     error={Boolean(errors.contact)}
                     {...register('contact', {
-                      required: 'contact is required',
+                      required: 'contact is required'
                     })}
                     helperText={errors.contact?.message}
                     type={'text'}
