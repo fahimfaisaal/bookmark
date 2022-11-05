@@ -33,6 +33,9 @@ const CartItem = ({ cart, cartId }) => {
     if (cartQty > 0) setCartQty((prev) => prev - 1);
   };
 
+  const url = `http://localhost:1337${cart?.cartImage}` || "/images/product-dummy.png";
+  console.log({cart})
+
   useEffect(() => {
     if (cartQty !== cart?.quantity) {
       let data = {};
@@ -62,7 +65,7 @@ const CartItem = ({ cart, cartId }) => {
         cartQty={cartQty}
       />
       <ImgContainerStyle>
-        <img src="/images/book-1.jpg" alt="" height={70} width={60} />
+        <img src={url} alt={book?.data?.attributes?.name} height={70} width={60} />
       </ImgContainerStyle>
       <Stack direction={"column"} spacing={2}>
         <Typography variant="h3">{book?.data?.attributes?.name}</Typography>

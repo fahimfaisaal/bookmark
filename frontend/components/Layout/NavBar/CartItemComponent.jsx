@@ -54,7 +54,7 @@ export default function CartItemComponent({
             <Stack direction={"row"} alignItems={"center"}>
               <HiShoppingBag fontSize={"24px"} />
               <Typography variant="h4" fontSize={"18px"} px={"10px"}>
-                {cartLists?.data?.length > 0 ? cartLists?.data?.length : "No"}{" "}
+                {cartLists?.length > 0 ? cartLists?.length : "No"}{" "}
                 Item
               </Typography>
             </Stack>
@@ -67,13 +67,13 @@ export default function CartItemComponent({
         </CartHeaderContainer>
         <Divider />
 
-        {cartLists?.data?.map((cart) => (
+        {cartLists?.map((cart) => (
           <CartItemContainer>
-            <CartItem cart={cart?.attributes} cartId={cart?.id} key={cart?.id}  />
+            <CartItem cart={cart} cartId={cart?.id} key={cart?.id}  />
           </CartItemContainer>
         ))}
       </CartContainer>
-      {cartLists?.data?.length > 0 && totalAmount && (
+      {cartLists?.length > 0 && totalAmount && (
         <Box
           pb={5}
           px={3}
