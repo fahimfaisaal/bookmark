@@ -8,6 +8,8 @@
     "start": "strapi start",
     "build": "strapi build",
     "strapi": "strapi",
+    "seed": "cross-env FORCE_APP_BOOTSTRAP_ONLY_TO=SEED strapi start",
+    "reset": "cross-env FORCE_APP_BOOTSTRAP_ONLY_TO=RESET strapi start",
     "seed:models": "cross-env FORCE_APP_BOOTSTRAP_ONLY_TO=SEED_MODELS strapi start",
     "reset:models": "cross-env FORCE_APP_BOOTSTRAP_ONLY_TO=RESET_MODELS strapi start",
     "relate:models": "cross-env FORCE_APP_BOOTSTRAP_ONLY_TO=RELATE_MODELS strapi start",

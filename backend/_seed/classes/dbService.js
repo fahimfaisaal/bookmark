@@ -132,8 +132,6 @@ class DbService {
       console.error('✅ seed completed');
     } catch (e) {
       console.log(e.message);
-    } finally {
-      process.exit(0);
     }
   }
 
@@ -171,8 +169,6 @@ class DbService {
       console.info('✅ relation completed');
     } catch (e) {
       console.error(e.message);
-    } finally {
-      process.exit(0);
     }
   }
 
@@ -189,8 +185,6 @@ class DbService {
       console.info('✅ reset models successfully');
     } catch (e) {
       console.error(e);
-    } finally {
-      process.exit(0);
     }
   }
 
@@ -262,8 +256,6 @@ class DbService {
       console.info('✅ releate medias completed');
     } catch (e) {
       console.log(e.message);
-    } finally {
-      process.exit(0);
     }
   }
 
@@ -289,8 +281,6 @@ class DbService {
       console.info('✅ delete uploaded medias');
     } catch (e) {
       console.log(e);
-    } finally {
-      process.exit(0);
     }
   }
 }
