@@ -84,7 +84,8 @@ function Home() {
         },
         filters: {
           bestSelling: true
-        }
+        },
+        sort: 'id'
       }
     });
   const { data: banners } = useGetBannersQuery();

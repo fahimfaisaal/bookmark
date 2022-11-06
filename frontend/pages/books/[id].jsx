@@ -1,4 +1,5 @@
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import FavoriteIcon from '@mui/icons-material/Favorite';
 import {
   Box,
   Button,
@@ -12,7 +13,7 @@ import Rating from '@mui/material/Rating';
 import { Stack } from '@mui/system';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
 import { useSelector } from 'react-redux';
 import BookCard from '../../components/BookCard';
@@ -25,7 +26,8 @@ import {
 import {
   useGetBookQuery,
   useGetBooksByTagsQuery,
-  useGetNestedBookItemQuery
+  useGetNestedBookItemQuery,
+  useUpdateFavoriteBookMutation
 } from '../../store/features/books/booksApi';
 import {
   useAddToCartMutation,
@@ -54,6 +56,7 @@ import {
 
 function BookItem() {
   const [openReview, setOpenReview] = useState(false);
+  const [favorite, setFavorite] = useState(false);
   const [activeImg, setActiveImg] = useState(0);
   const [activeVariant, setActiveVariant] = useState(0);
   const [cartQty, setCartQty] = useState(1);
@@ -86,6 +89,11 @@ function BookItem() {
 
   const [updateCart] = useUpdateCartMutation();
   const [addToCart] = useAddToCartMutation();
+  const [updateFavoriteBook] = useUpdateFavoriteBookMutation();
+
+  useEffect(() => {
+    setFavorite(!!bookData?.isFavorite);
+  }, [bookData]);
 
   const handleSelectVariant = (ind) => {
     setActiveVariant(ind);
@@ -160,6 +168,33 @@ function BookItem() {
   };
   const itemDecrement = () => {
     if (cartQty > 1) setCartQty((prev) => prev - 1);
+  };
+
+  const userIds = bookData?.users?.data?.map((item) => item?.id) || [];
+  console.log({ userIds });
+
+  const handleFavorite = () => {
+    let data = {};
+    let isUserFav = userIds?.find((item) => item === authUser?.id);
+
+    if (isUserFav) {
+      data.users = userIds?.filter((item) => item !== authUser?.id);
+      setFavorite(false);
+      updateFavoriteBook({ bookId: id, data });
+      console.log({ id, data, msg: 'remove', userIds, isUserFav });
+    } else {
+      data.users = [...userIds, authUser?.id];
+      console.log({
+        id,
+        data,
+        msg: 'add',
+        userIds,
+        isUserFav,
+        userId: authUser?.id
+      });
+      updateFavoriteBook({ bookId: id, data });
+      setFavorite(true);
+    }
   };
 
   const addToCartBook = () => {
@@ -302,8 +337,8 @@ function BookItem() {
                     <BookTitleStyle variant="h1">
                       {bookData?.name}
                     </BookTitleStyle>
-                    <FavIconStyle>
-                      <FavoriteBorderIcon />
+                    <FavIconStyle onClick={handleFavorite}>
+                      {favorite ? <FavoriteIcon /> : <FavoriteBorderIcon />}
                     </FavIconStyle>
                   </Stack>
                   <Stack direction={'row'} alignItems={'center'} spacing={1}>
