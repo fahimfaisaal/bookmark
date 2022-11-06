@@ -8,7 +8,7 @@ const PublisherSkeleton = () => {
       sx={{
         width: '90%',
         boxShadow: 'rgba(99, 99, 99, 0.2) 0px 2px 8px 0px',
-        padding: '12px 15px',
+        padding: '12px 15px'
       }}
     >
       <Stack direction={'row'} gap={2} alignItems={'center'}>

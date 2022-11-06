@@ -4,9 +4,9 @@ export const bannerApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getBanners: builder.query({
       query: () => `/banner?populate=*`,
-      providesTags: ['banner'],
-    }),
-  }),
+      providesTags: ['banner']
+    })
+  })
 });
 
 export const { useGetBannersQuery } = bannerApi;
