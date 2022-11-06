@@ -26,7 +26,9 @@ const Layout = ({ children }) => {
   return (
     <Box
       sx={
-        URL.includes('/profile') || URL.includes('/checkout')
+        URL.includes('/profile') ||
+        URL.includes('/checkout') ||
+        URL.includes('/contact')
           ? { backgroundColor: `${theme.palette.background.paper}` }
           : null
       }
