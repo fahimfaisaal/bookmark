@@ -1,7 +1,7 @@
 import { Box, Button, Grid, Skeleton } from '@mui/material';
 import { Stack } from '@mui/system';
 import Link from 'next/link';
-import React from 'react';
+import React, { useMemo } from 'react';
 import Carousel from 'react-multi-carousel';
 import AuthorCard from '../components/AuthorCard';
 import AuthorSkeleton from '../components/AuthorSkeleton';
@@ -61,7 +61,7 @@ function Home() {
     useGetPublishersQuery();
   const { data: categories, isLoading: isCategoriesLoading } =
     useGetCategoryQuery();
-  // TODO: this query need to fix
+  const memoDate = useMemo(() => new Date().toISOString(), []);
   const { data: newBooks, isLoading: isNewBooksLoading } = useGetBooksQuery({
     query: {
       populate: '*',
@@ -69,8 +69,8 @@ function Home() {
         pageSize: 8
       },
       filters: {
-        createdAt: {
-          $lte: new Date().toISOString()
+        publishedAt: {
+          $lte: memoDate
         }
       }
     }
@@ -84,7 +84,8 @@ function Home() {
         },
         filters: {
           bestSelling: true
-        }
+        },
+        sort: 'id'
       }
     });
   const { data: banners } = useGetBannersQuery();
