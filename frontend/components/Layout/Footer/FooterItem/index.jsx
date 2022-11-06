@@ -2,7 +2,7 @@ import { Typography } from '@mui/material';
 import { Box, Stack } from '@mui/system';
 import Link from 'next/link';
 import React from 'react';
-import { shortId } from '../../../../uitls';
+import { shortId } from '../../../../utils';
 import { LinkContainer } from './Styles';
 
 function FooterItem({ title, data }) {

@@ -32,7 +32,7 @@ import {
   useGetCartByUserBookQuery,
   useUpdateCartMutation
 } from '../../store/features/carts/cartsApi';
-import { shortId } from '../../uitls';
+import { shortId } from '../../utils';
 import ReviewForm from './ReviewForm';
 import ReviewItem from './ReviewItem';
 import {

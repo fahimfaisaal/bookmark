@@ -1,12 +1,14 @@
 import { Box, Button, Grid, Typography } from '@mui/material';
 import { Stack } from '@mui/system';
-import React, { useEffect, useLayoutEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FiFilter } from 'react-icons/fi';
 import { MdClose } from 'react-icons/md';
 import { useDispatch, useSelector } from 'react-redux';
 import BookCard from '../../components/BookCard';
+import BookSkeleton from '../../components/BookSkeleton';
 import Filter from '../../components/Filter';
 import { useGetBooksQuery } from '../../store/features/books/booksApi';
+
 import {
   getAvailabilities,
   getCategories,
@@ -17,6 +19,7 @@ import {
   getTags,
   setFilterFromQuery
 } from '../../store/features/filter/filterSlice';
+import { fakeArr } from '../../utils';
 import { FilterButtonContainer } from '../publishers/Style';
 
 const generateQuery = ({
@@ -77,12 +80,14 @@ function Books() {
   const ratingRange = useSelector(getRatingRange);
   const searchText = useSelector(getSearchText);
   const availabilities = useSelector(getAvailabilities);
-
-  console.log({ priceRange, ratingRange });
   const [page, setPage] = useState(1);
   const [books, setBooks] = useState([]);
   const [filterTrig, setFilterTrig] = useState(false);
-  const { data: bookLists, isSuccess } = useGetBooksQuery({
+  const {
+    data: bookLists,
+    isSuccess,
+    isLoading
+  } = useGetBooksQuery({
     query: generateQuery({
       page,
       tags,
@@ -103,12 +108,12 @@ function Books() {
     }
   }, []);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (isSuccess) {
       setBooks(() => [].concat(bookLists?.data ?? []));
       console.log({ effect: bookLists?.data, meta: bookLists?.meta });
     }
-  }, [bookLists?.data]);
+  }, [bookLists]);
 
   const paginationHandler = () => setPage(page + 1);
 
@@ -140,11 +145,23 @@ function Books() {
           </FilterButtonContainer>
 
           <Grid container spacing={3}>
-            {books?.map((book) => (
-              <Grid item md={6} lg={filterTrig ? 4 : 3} xs={12} key={book?.id}>
-                <BookCard book={book?.attributes} bookId={book?.id} />
-              </Grid>
-            ))}
+            {isLoading
+              ? fakeArr(8).map((item) => (
+                  <Grid item md={6} lg={filterTrig ? 4 : 3} xs={12} key={item}>
+                    <BookSkeleton />
+                  </Grid>
+                ))
+              : books?.map((book) => (
+                  <Grid
+                    item
+                    md={6}
+                    lg={filterTrig ? 4 : 3}
+                    xs={12}
+                    key={book?.id}
+                  >
+                    <BookCard book={book?.attributes} bookId={book?.id} />
+                  </Grid>
+                ))}
           </Grid>
           <Stack direction="row" justifyContent="center" my={5}>
             {bookLists?.meta?.pageCount > page && (

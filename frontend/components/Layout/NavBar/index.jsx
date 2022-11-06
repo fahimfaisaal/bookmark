@@ -29,7 +29,7 @@ import useAuthCheck from '../../../hooks/useAuthCheck';
 import { userLoggedOut } from '../../../store/features/auth/authSlice';
 import { useGetBooksQuery } from '../../../store/features/books/booksApi';
 import { useGetCartsByUserQuery } from '../../../store/features/carts/cartsApi';
-import { shortId } from '../../../uitls';
+import { shortId } from '../../../utils';
 import SearchBar from '../../shared/SearchBar';
 import Login from '../Auth/Login';
 import Register from '../Auth/Register';

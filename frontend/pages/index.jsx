@@ -21,6 +21,7 @@ import {
   useGetCategoryQuery
 } from '../store/features/books/booksApi';
 import { useGetPublishersQuery } from '../store/features/publishers/publishersApi';
+import { fakeArr } from '../utils';
 import {
   ContainerStyle,
   HeroContainer,
@@ -58,6 +59,8 @@ function Home() {
     useGetAuthorsQuery();
   const { data: publisherLists, isLoading: isPublisherLoading } =
     useGetPublishersQuery();
+  const { data: categories, isLoading: isCategoriesLoading } =
+    useGetCategoryQuery();
   // TODO: this query need to fix
   const { data: newBooks, isLoading: isNewBooksLoading } = useGetBooksQuery({
     query: {
@@ -81,17 +84,11 @@ function Home() {
         }
       }
     });
-
   const { data: banners } = useGetBannersQuery();
   const bannerImg =
     (banners?.data &&
       `http://localhost:1337${banners?.data?.attributes?.images?.data[0]?.attributes?.url}`) ||
     '/images/Cover.png';
-
-  const { data: categories, isLoading: isCategoriesLoading } =
-    useGetCategoryQuery();
-
-  const fakeArr = (length) => [...new Array(length).keys()];
 
   return (
     <ContainerStyle>

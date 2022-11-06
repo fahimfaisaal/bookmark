@@ -9,7 +9,7 @@ import { Stack } from '@mui/system';
 import { useRouter } from 'next/router';
 import { HiShoppingBag } from 'react-icons/hi';
 import { IoIosClose } from 'react-icons/io';
-import { shortId } from '../../../uitls';
+import { shortId } from '../../../utils';
 import CartItem from '../../CartItem';
 import {
   CartContainer,

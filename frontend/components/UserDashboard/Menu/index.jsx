@@ -1,7 +1,7 @@
 import { List } from '@mui/material';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { shortId } from '../../../uitls';
+import { shortId } from '../../../utils';
 import { StyledContainer, StyledLink, StyledListItem } from './Styles';
 
 const profileMenu = [
