@@ -14,11 +14,11 @@ const ChildrenContainer = styled(Box)(({ theme }) => ({
   }
 }));
 
-function Layout({ children }) {
-  // Custom Theme ================================
+const Layout = ({ children }) => {
+  //Custom Theme ================================
   const theme = useTheme();
   theme.components = ComponentsOverrides(theme);
-  // Custom Theme ================================
+  //Custom Theme ================================
 
   const router = useRouter();
   const URL = router.pathname;
@@ -26,7 +26,9 @@ function Layout({ children }) {
   return (
     <Box
       sx={
-        URL.includes('/profile') || URL.includes('/checkout')
+        URL.includes('/profile') ||
+        URL.includes('/checkout') ||
+        URL.includes('/contact')
           ? { backgroundColor: `${theme.palette.background.paper}` }
           : null
       }
@@ -36,6 +38,6 @@ function Layout({ children }) {
       <Footer />
     </Box>
   );
-}
+};
 
 export default Layout;
