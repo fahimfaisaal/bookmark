@@ -4,10 +4,12 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import { Stack } from '@mui/system';
 import { useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
+import toast from 'react-hot-toast';
 import { useSignupMutation } from '../../../store/features/auth/authApi';
 import CloseBtn from './CloseBtn';
 import FormBtn from './FormBtn';
 import Header from './Header';
+
 import {
   CloseContainer,
   ContainerStyle,
@@ -31,13 +33,13 @@ function Register({ open, handleClickOpen, handleClose }) {
   useEffect(() => {
     if (responseError?.data) {
       setError(responseError?.data?.error?.message);
-      alert(responseError?.data?.error?.message);
+      toast.error(responseError?.data?.error?.message);
     }
     if (data?.jwt && data?.user) {
       /**
        * TODO: later redirect home page
        */
-      alert('Successfully Registered');
+      toast.success('Successfully Registered!');
       handleClose();
     }
   }, [data, responseError]);

@@ -6,12 +6,14 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import { Box } from '@mui/system';
 import { useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
+import toast from 'react-hot-toast';
 import { BsGoogle } from 'react-icons/bs';
 import { FaFacebookF } from 'react-icons/fa';
 import { useLoginMutation } from '../../../store/features/auth/authApi';
 import CloseBtn from './CloseBtn';
 import FormBtn from './FormBtn';
 import Header from './Header';
+
 import {
   CloseContainer,
   ContainerStyle,
@@ -30,13 +32,13 @@ function Login({ open, handleClickOpen, handleClose }) {
   useEffect(() => {
     if (responseError?.data) {
       setError(responseError?.data?.error?.message);
-      alert(responseError?.data?.error?.message);
+      toast.error(responseError?.data?.error?.message);
     }
     if (data?.jwt && data?.user) {
       /**
        * TODO: later redirect home page
        */
-      alert('Successfully Registered');
+      toast.success('Login Successful!');
       handleClose();
     }
   }, [data, responseError]);
@@ -161,7 +163,7 @@ function Login({ open, handleClickOpen, handleClose }) {
           my={3}
         >
           <Typography variant="body1">{"Don't have any account?"}</Typography>
-          <Link href="" sx={{ cursor: 'pointer' }} onClick={toggleRegister}>
+          <Link sx={{ cursor: 'pointer' }} onClick={toggleRegister}>
             Register
           </Link>
         </Stack>
