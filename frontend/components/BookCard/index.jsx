@@ -153,7 +153,7 @@ const BookCard = ({ book, bookId }) => {
           </Link>
 
           <StyledFav onClick={handleFavorite}>
-            {favorite ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+            {book?.isFavorite ? <FavoriteIcon /> : <FavoriteBorderIcon />}
           </StyledFav>
         </Stack>
       </ContentContainerStyle>

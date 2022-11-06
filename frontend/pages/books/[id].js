@@ -1,4 +1,5 @@
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import FavoriteIcon from '@mui/icons-material/Favorite';
 import {
   Box,
   Button,
@@ -11,7 +12,7 @@ import Rating from '@mui/material/Rating';
 import { Stack } from '@mui/system';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
 import { useSelector } from 'react-redux';
 import BookCard from '../../components/BookCard';
@@ -23,7 +24,8 @@ import {
 import {
   useGetBookQuery,
   useGetBooksByTagsQuery,
-  useGetNestedBookItemQuery
+  useGetNestedBookItemQuery,
+  useUpdateFavoriteBookMutation
 } from '../../store/features/books/booksApi';
 import {
   useAddToCartMutation,
@@ -54,9 +56,11 @@ const BookItem = () => {
   const [activeImg, setActiveImg] = useState(0);
   const [activeVariant, setActiveVariant] = useState(0);
   const [cartQty, setCartQty] = useState(1);
+  const [favorite, setFavorite] = useState(false);
   const router = useRouter();
   const { id } = router.query;
   const authUser = useSelector((state) => state?.auth?.user);
+
   const {
     data: book,
     isLoading,
@@ -65,14 +69,15 @@ const BookItem = () => {
     isSuccess
   } = useGetBookQuery(id);
   const bookData = book?.data?.attributes || {};
-
   const { data: bookRatings } = useGetNestedBookItemQuery(
     `${id}?populate[ratings][populate][0]=userId`
   );
   const { data: bookVariants } = useGetNestedBookItemQuery(
     `${id}?populate[variants][populate][0]=languageId`
   );
-
+  useEffect(() => {
+    setFavorite(!!bookData?.isFavorite);
+  }, [bookData]);
   const relatedBooksQuery = [];
   //tag.attributes.type
   bookData?.categories?.data.map((cat) =>
@@ -91,6 +96,8 @@ const BookItem = () => {
     useUpdateCartMutation();
   const [addToCart, { data: addtoCartData, error: addtoCartError }] =
     useAddToCartMutation();
+
+  const [updateFavoriteBook] = useUpdateFavoriteBookMutation();
 
   const handleSelectVariant = (ind) => {
     setActiveVariant(ind);
@@ -169,6 +176,32 @@ const BookItem = () => {
   const itemDecrement = () => {
     if (cartQty > 1) setCartQty((prev) => prev - 1);
   };
+  const userIds = bookData?.users?.data?.map((item) => item?.id) || [];
+  console.log({ userIds });
+
+  const handleFavorite = () => {
+    let data = {};
+    let isUserFav = userIds?.find((item) => item === authUser?.id);
+
+    if (isUserFav) {
+      data.users = userIds?.filter((item) => item !== authUser?.id);
+      setFavorite(false);
+      updateFavoriteBook({ bookId: id, data });
+      console.log({ id, data, msg: 'remove', userIds, isUserFav });
+    } else {
+      data.users = [...userIds, authUser?.id];
+      console.log({
+        id,
+        data,
+        msg: 'add',
+        userIds,
+        isUserFav,
+        userId: authUser?.id
+      });
+      updateFavoriteBook({ bookId: id, data });
+      setFavorite(true);
+    }
+  };
 
   const addToCartBook = () => {
     let data = {};
@@ -241,8 +274,8 @@ const BookItem = () => {
                 mb={2}
               >
                 <BookTitleStyle variant="h1">{bookData?.name}</BookTitleStyle>
-                <FavIconStyle>
-                  <FavoriteBorderIcon />
+                <FavIconStyle onClick={handleFavorite}>
+                  {favorite ? <FavoriteIcon /> : <FavoriteBorderIcon />}
                 </FavIconStyle>
               </Stack>
               <Stack direction={'row'} alignItems={'center'} spacing={1}>
@@ -503,7 +536,7 @@ const BookItem = () => {
         <Grid container spacing={3} py={2}>
           {relatedBooks?.data?.map((book) => (
             <Grid item lg={3} md={6} xs={12} key={book?.id}>
-              <BookCard book={book?.attributes} bookId={book?.id} />
+              <BookCard book={book?.attributes} id={book?.id} />
             </Grid>
           ))}
         </Grid>

@@ -82,13 +82,14 @@ const Home = () => {
       populate: '*',
       filters: {
         bestSelling: true
-      }
+      },
+      sort: 'id'
     }
   });
 
   const { data: categoryLists } = useGetCategoryQuery();
 
-  // console.log({ newBooks, isSuccess, popularBooks, categoryLists });
+  console.log({ popularBooks, categoryLists });
   return (
     <ContainerStyle>
       <HeroContainer>
