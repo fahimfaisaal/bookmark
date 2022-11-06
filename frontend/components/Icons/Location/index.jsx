@@ -1,7 +1,7 @@
 import { Stack, Typography } from '@mui/material';
 import FmdGoodIcon from '@mui/icons-material/FmdGood';
 
-const LocationIcon = ({ location }) => {
+function LocationIcon() {
   return (
     <Stack
       direction="row"
@@ -17,6 +17,6 @@ const LocationIcon = ({ location }) => {
       </Typography>
     </Stack>
   );
-};
+}
 
 export default LocationIcon;

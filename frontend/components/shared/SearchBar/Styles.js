@@ -15,10 +15,10 @@ export const SearchContainer = styled(Box)(({ theme, normal, width }) => ({
     cursor: 'pointer',
     marginRight: '10px',
     '&:hover': {
-      color: `${theme.palette.action.hover}`,
-    },
+      color: `${theme.palette.action.hover}`
+    }
   },
   [theme.breakpoints.down('lg')]: {
-    display: `${normal ? 'none' : ''}`,
-  },
+    display: `${normal ? 'none' : ''}`
+  }
 }));

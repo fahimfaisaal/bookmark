@@ -11,19 +11,32 @@ import { useState } from 'react';
 import { FilterTitleStyle } from '../style';
 import { PriceRangeContainer } from './style';
 
-export default function RangeSlider() {
+export default function RangeSlider({
+  title,
+  commitHandler,
+  initialState,
+  min,
+  max,
+  step
+}) {
   const theme = useTheme();
-
   const [expanded, setExpanded] = useState(true);
+  const [value, setValue] = useState([0, 0]);
+
+  React.useEffect(() => {
+    setValue(initialState);
+  }, [initialState]);
 
   const handleAccordion = () => {
     setExpanded(!expanded);
   };
 
-  const [value, setValue] = React.useState([20, 37]);
-
   const handleChange = (event, newValue) => {
     setValue(newValue);
+  };
+
+  const changeCommittedHandler = () => {
+    commitHandler(value);
   };
 
   return (
@@ -38,21 +51,25 @@ export default function RangeSlider() {
         id="panel1bh-header"
         sx={{ padding: '0' }}
       >
-        <FilterTitleStyle variant="h2">Sort By Price</FilterTitleStyle>
+        <FilterTitleStyle variant="h2">{title}</FilterTitleStyle>
       </AccordionSummary>
       <AccordionDetails sx={{ padding: '0' }}>
         <Box>
           <Slider
-            getAriaLabel={() => 'Price range'}
+            getAriaLabel={() => title}
             value={value}
             onChange={handleChange}
+            onChangeCommitted={changeCommittedHandler}
             valueLabelDisplay="auto"
+            step={step}
+            min={min}
+            max={max}
           />
 
           <Stack
-            direction={'row'}
-            justifyContent={'space-between'}
-            alignItems={'center'}
+            direction="row"
+            justifyContent="space-between"
+            alignItems="center"
             gap={2}
           >
             <PriceRangeContainer>
@@ -62,7 +79,7 @@ export default function RangeSlider() {
                   fontSize: '16px',
                   fontWeight: '500',
                   color: `${theme.palette.text.secondary}`,
-                  marginBottom: '5px',
+                  marginBottom: '5px'
                 }}
               >
                 Min
@@ -76,7 +93,7 @@ export default function RangeSlider() {
                   fontSize: '16px',
                   fontWeight: '500',
                   color: `${theme.palette.text.secondary}`,
-                  marginBottom: '5px',
+                  marginBottom: '5px'
                 }}
               >
                 Max

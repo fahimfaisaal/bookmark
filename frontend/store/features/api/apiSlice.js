@@ -1,29 +1,29 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { userLoggedOut } from '../auth/authSlice';
 
-// NEXT_PUBLIC_API_URL=http://localhost:1337/api
-
 const baseQuery = fetchBaseQuery({
+  // eslint-disable-next-line no-undef
   baseUrl: process.env.NEXT_PUBLIC_API_URL,
-  prepareHeaders: async (headers, { getState, endpoint }) => {
+  prepareHeaders: async (headers, { getState }) => {
     const token = getState()?.auth?.accessToken;
     if (token) {
-      headers.set('Authorization', `Bearer ${token}`);
+      headers.set('authorization', `Bearer ${token}`);
     }
-    // headers.set("mode", "no-cors");
+
     return headers;
-  },
+  }
 });
 
 export const apiSlice = createApi({
   reducerPath: 'api',
   baseQuery: async (args, api, extraOptions) => {
-    let result = await baseQuery(args, api, extraOptions);
+    const result = await baseQuery(args, api, extraOptions);
 
     if (result?.error?.status === 401) {
       api.dispatch(userLoggedOut());
       localStorage.clear();
     }
+
     return result;
   },
   tagTypes: [
@@ -42,7 +42,9 @@ export const apiSlice = createApi({
     'author',
     'publishers',
     'publisher',
+    'banner',
+    'categories'
   ],
   keepUnusedDataFor: 3600,
-  endpoints: (builder) => ({}),
+  endpoints: () => ({})
 });

@@ -1,30 +1,29 @@
-import * as React from 'react';
+import { Grid, InputLabel } from '@mui/material';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
-import { Grid, InputLabel } from '@mui/material';
 import { Stack } from '@mui/system';
+import * as React from 'react';
 import AddressModal from '../shared/Modals/AddressModal';
-const AddressCard = ({ billingAddress, label }) => {
+
+function AddressCard({ label }) {
   const [formValue, setFormValue] = React.useState('');
 
-  //state lifting starts==========
+  // state lifting starts==========
   const getData = (data) => {
     setFormValue(data);
   };
-  //state lifting ends==========
+  // state lifting ends==========
   return (
     <>
       <Stack
-        direction={'row'}
+        direction="row"
         justifyContent="space-between"
         alignItems="center"
-        flexWrap={'wrap'}
+        flexWrap="wrap"
       >
         <InputLabel color="secondary"> {label}</InputLabel>
-        <>
-          <AddressModal getData={getData} btnText="+ Update" />
-        </>
+        <AddressModal getData={getData} btnText="+ Update" />
       </Stack>
       <Grid container>
         <Grid item>
@@ -44,6 +43,6 @@ const AddressCard = ({ billingAddress, label }) => {
       </Grid>
     </>
   );
-};
+}
 
 export default AddressCard;

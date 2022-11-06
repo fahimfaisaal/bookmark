@@ -1,6 +1,6 @@
 import { Typography } from '@mui/material';
 import { Stack } from '@mui/system';
-import { BsFacebook, BsInstagram, BsYoutube } from 'react-icons/bs';
+import { BsFacebook, BsLinkedin, BsTwitter } from 'react-icons/bs';
 import CustomImage from '../CustomImage';
 
 import {
@@ -10,44 +10,63 @@ import {
   LinkContainer,
   LogoContainer,
   ProfileContainerStyle,
-  TitleStyle,
+  TitleStyle
 } from './style';
 
-const PublicationCover = ({ img, title, slug }) => {
+function PublicationCover({ publisherData }) {
+  // const { name, logo, banner, socials, website } = publisherData;
+  const logoUrl =
+    (publisherData?.data &&
+      `http://localhost:1337${publisherData?.logo?.data[0]?.attributes?.url}`) ||
+    '/images/publisher-logo.png';
+  const bannerUrl =
+    (publisherData?.data &&
+      `http://localhost:1337${publisherData?.banner?.data[0]?.attributes?.url}`) ||
+    '/images/publisher-banner.png';
+
   return (
     <ContainerStyle>
       <ProfileContainerStyle
-        direction={'column'}
-        alignItems={'center'}
-        justifyContent={'center'}
+        direction="column"
+        alignItems="center"
+        justifyContent="center"
       >
         <LogoContainer>
-          <img src="/images/publisher-logo.png" alt="" />
+          <img src={logoUrl} alt="" />
         </LogoContainer>
         <DetailsContainerStyle>
-          <TitleStyle variant={'h2'}>Too Cool Publication</TitleStyle>
+          <TitleStyle variant="h2">{publisherData?.name}</TitleStyle>
           <LinkContainer>
-            <Typography variant="caption">https://redq.io/</Typography>
+            <Typography variant="caption">{publisherData?.website}</Typography>
           </LinkContainer>
-          <Stack direction={'row'} spacing={1} justifyContent={'center'}>
-            <LinkContainer>
+          <Stack direction="row" spacing={1} justifyContent="center">
+            <LinkContainer
+              target="_blank"
+              href={publisherData?.socials.split(',')[0]}
+            >
               <BsFacebook />
             </LinkContainer>
-            <LinkContainer>
-              <BsYoutube />
+            <LinkContainer
+              target="_blank"
+              href={publisherData?.socials.split(',')[1]}
+            >
+              <BsTwitter />
             </LinkContainer>
-            <LinkContainer>
-              <BsInstagram />
+            <LinkContainer
+              target="_blank"
+              href={publisherData?.socials.split(',')[2]}
+            >
+              <BsLinkedin />
             </LinkContainer>
           </Stack>
         </DetailsContainerStyle>
       </ProfileContainerStyle>
 
       <BannerContainerStyle>
-        <CustomImage src="/images/publisher-banner.png" alt="" />
+        <CustomImage src={bannerUrl} alt="" />
       </BannerContainerStyle>
     </ContainerStyle>
   );
-};
+}
 
 export default PublicationCover;

@@ -1,10 +1,10 @@
-import * as React from 'react';
+import { Stack } from '@mui/material';
 import Typography from '@mui/material/Typography';
+import * as React from 'react';
 import { FaRegStar } from 'react-icons/fa';
 import { StyledCard, StyledContainer, StyledDate } from './Styles';
-import { Stack } from '@mui/material';
 
-const ReviewCard = ({ review, user, comment, date }) => {
+function ReviewCard() {
   return (
     <StyledCard>
       <StyledContainer variant="btnDark">
@@ -28,6 +28,6 @@ const ReviewCard = ({ review, user, comment, date }) => {
       <StyledDate variant="caption">Date: October 19, 2022</StyledDate>
     </StyledCard>
   );
-};
+}
 
 export default ReviewCard;

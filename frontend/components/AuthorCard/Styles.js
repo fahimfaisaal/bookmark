@@ -1,7 +1,7 @@
 import { Box } from '@mui/material';
 import { styled } from '@mui/system';
 
-export const ImgContainerStyle = styled(Box)(({ theme }) => ({
+export const ImgContainerStyle = styled(Box)(() => ({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
@@ -14,6 +14,6 @@ export const ImgContainerStyle = styled(Box)(({ theme }) => ({
     height: '180px',
     display: 'flex',
     alignItems: 'center',
-    borderRadius: '50%',
-  },
+    borderRadius: '50%'
+  }
 }));

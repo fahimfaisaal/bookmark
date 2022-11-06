@@ -1,4 +1,4 @@
-import { Container, Stack, Typography } from '@mui/material';
+import { Stack, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import SocialMediaIcons from '../../../components/Icons/SocialMedia';
 import { StyledContainer } from '../../../components/UserDashboard/Styles';
@@ -7,18 +7,18 @@ const contactDetail = [
   {
     id: 1,
     title: 'Address',
-    info: 'NY, United States',
+    info: 'NY, United States'
   },
   {
     id: 2,
     title: 'Phone',
-    info: '+129290122122',
+    info: '+129290122122'
   },
   {
     id: 3,
     title: 'Website',
-    info: 'https://bookmark.store',
-  },
+    info: 'https://bookmark.store'
+  }
 ];
 
 const Information = () => {

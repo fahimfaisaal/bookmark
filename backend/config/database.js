@@ -9,6 +9,6 @@ module.exports = ({ env }) => ({
       password: env('DATABASE_PASSWORD', 'admin'),
       schema: env('DATABASE_SCHEMA', 'public')
     },
-    debug: false,
-  },
+    debug: false
+  }
 });

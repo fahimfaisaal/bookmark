@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { Button, TableCell, TableContainer, Typography } from '@mui/material';
+import { TableCell, TableContainer } from '@mui/material';
 
 export const StyledTableContainer = styled(TableContainer)(({ theme }) => ({
   backgroundColor: `${theme.palette.background.paper}`,
@@ -9,11 +9,11 @@ export const StyledTableContainer = styled(TableContainer)(({ theme }) => ({
   marginTop: '15px',
   '&:hover': {
     border: `2px solid ${theme.palette.primary.main}`,
-    borderRadius: '5px',
-  },
+    borderRadius: '5px'
+  }
 }));
 
 export const StyledTableCell = styled(TableCell)(({ theme }) => ({
   color: `${theme.palette.text.primary}`,
-  fontWeight: 600,
+  fontWeight: 600
 }));

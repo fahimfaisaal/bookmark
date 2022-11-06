@@ -1,29 +1,29 @@
-import * as React from 'react';
+import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+import { Button, InputLabel } from '@mui/material';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
-import { Button, InputLabel } from '@mui/material';
-import CloudUploadIcon from '@mui/icons-material/CloudUpload';
-import { StyledBox, StyledInput, StyledLabel } from './Styles';
+import * as React from 'react';
+import { Controller, useForm } from 'react-hook-form';
 import { StyledContainer } from '../../Styles';
-import { useForm, Controller } from 'react-hook-form';
+import { StyledBox, StyledInput, StyledLabel } from './Styles';
 
-const InputField = () => {
-  //Handle Form =========================
+function InputField() {
+  // Handle Form =========================
   const {
     handleSubmit,
     control,
     formState: { errors },
     register,
-    reset,
+    reset
   } = useForm({
     mode: 'onBlur',
-    defaultValues: { name: '', bio: '' },
+    defaultValues: { name: '', bio: '' }
   });
   const onValid = (data) => {
     console.log(data);
     reset();
   };
-  //Handle Form =========================
+  // Handle Form =========================
 
   return (
     <StyledContainer sx={{ boxShadow: 3 }}>
@@ -31,7 +31,7 @@ const InputField = () => {
         <Controller
           name="file"
           control={control}
-          render={({ field }) => (
+          render={() => (
             <StyledBox>
               <StyledLabel>
                 <Box>
@@ -59,11 +59,11 @@ const InputField = () => {
                 id="name"
                 fullWidth
                 name="name"
-                label={'Name'}
+                label="Name"
                 error={Boolean(errors.name)}
                 {...register('name', { required: 'Name is required' })}
                 helperText={errors.name?.message}
-                type={'text'}
+                type="text"
                 {...field}
               />
             </Box>
@@ -86,20 +86,20 @@ const InputField = () => {
                 id="bio"
                 fullWidth
                 name="bio"
-                label={'Bio'}
+                label="Bio"
                 error={Boolean(errors.bio)}
                 rows={4}
                 multiline
                 {...register('bio', { required: 'Bio is required' })}
                 helperText={errors.bio?.message}
-                type={'text'}
+                type="text"
                 {...field}
               />
             </Box>
           )}
         />
 
-        <Box textAlign={'right'}>
+        <Box textAlign="right">
           <Button type="submit" variant="btnGreen">
             Save
           </Button>
@@ -107,6 +107,6 @@ const InputField = () => {
       </form>
     </StyledContainer>
   );
-};
+}
 
 export default InputField;

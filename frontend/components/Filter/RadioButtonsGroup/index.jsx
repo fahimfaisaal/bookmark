@@ -4,7 +4,7 @@ import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import * as React from 'react';
 
-const RadioButtonsGroup = () => {
+function RadioButtonsGroup() {
   return (
     <FormControl>
       <RadioGroup
@@ -30,6 +30,6 @@ const RadioButtonsGroup = () => {
       </RadioGroup>
     </FormControl>
   );
-};
+}
 
 export default RadioButtonsGroup;

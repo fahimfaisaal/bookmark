@@ -5,29 +5,26 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import Rating from '@mui/material/Rating';
-import { useTheme } from '@mui/material/styles';
-import useMediaQuery from '@mui/material/useMediaQuery';
 import { Box, Stack } from '@mui/system';
 import * as React from 'react';
 
-const ReviewForm = ({ open, handleClose, handleClickOpen }) => {
-  const theme = useTheme();
-  const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
+function ReviewForm({ open, handleClose }) {
+  // const theme = useTheme();
+  // const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
 
   return (
     <Dialog
       // fullScreen={fullScreen}
-
       open={open}
       onClose={handleClose}
       aria-labelledby="responsive-dialog-title"
     >
-      <DialogTitle id="responsive-dialog-title">{'Add a review'}</DialogTitle>
+      <DialogTitle id="responsive-dialog-title">Add a review</DialogTitle>
       <DialogContent sx={{ width: '400px' }}>
         <Stack
-          direction={'row'}
-          alignItems={'center'}
-          justifyContent={'space-between'}
+          direction="row"
+          alignItems="center"
+          justifyContent="space-between"
           gap={3}
           my={3}
         >
@@ -38,7 +35,7 @@ const ReviewForm = ({ open, handleClose, handleClickOpen }) => {
           <Typography variant="h3" pb={1}>
             Your Review
           </Typography>
-          <TextField multiline rows={10} fullWidth={true} />
+          <TextField multiline rows={10} fullWidth />
         </Box>
       </DialogContent>
       <DialogActions>
@@ -46,6 +43,6 @@ const ReviewForm = ({ open, handleClose, handleClickOpen }) => {
       </DialogActions>
     </Dialog>
   );
-};
+}
 
 export default ReviewForm;

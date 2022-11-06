@@ -2,7 +2,7 @@ import { Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import { DialogHeader } from './Styles';
 
-const Header = ({ subtitle }) => {
+function Header({ subtitle }) {
   return (
     <DialogHeader>
       <Box>
@@ -13,6 +13,6 @@ const Header = ({ subtitle }) => {
       </Typography>
     </DialogHeader>
   );
-};
+}
 
 export default Header;

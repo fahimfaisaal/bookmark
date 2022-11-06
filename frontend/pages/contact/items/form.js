@@ -1,12 +1,4 @@
-import {
-  Box,
-  Button,
-  Container,
-  InputLabel,
-  TextField,
-  Typography,
-} from '@mui/material';
-import { Stack } from '@mui/system';
+import { Box, Button, InputLabel, TextField, Typography } from '@mui/material';
 import { useForm, Controller } from 'react-hook-form';
 import { StyledContainer } from '../../../components/UserDashboard/Styles';
 
@@ -18,10 +10,10 @@ const Form = () => {
     control,
     formState: { errors },
     register,
-    reset,
+    reset
   } = useForm({
     mode: 'onBlur',
-    defaultValues: { name: '', email: '', subject: '', description: '' },
+    defaultValues: { name: '', email: '', subject: '', description: '' }
   });
 
   const onSubmit = (data) => {
@@ -55,7 +47,7 @@ const Form = () => {
                   label={'Name'}
                   error={Boolean(errors.name)}
                   {...register('name', {
-                    required: 'Name is required',
+                    required: 'Name is required'
                   })}
                   helperText={errors.name?.message}
                   type={'text'}
@@ -82,7 +74,7 @@ const Form = () => {
                   label={'Email'}
                   error={Boolean(errors.email)}
                   {...register('email', {
-                    required: 'Email is required',
+                    required: 'Email is required'
                   })}
                   helperText={errors.email?.message}
                   type={'email'}
@@ -109,7 +101,7 @@ const Form = () => {
                   label={'Subject'}
                   error={Boolean(errors.subject)}
                   {...register('subject', {
-                    required: 'Subject is required',
+                    required: 'Subject is required'
                   })}
                   helperText={errors.subject?.message}
                   type={'subject'}
@@ -141,7 +133,7 @@ const Form = () => {
                   rows={4}
                   multiline
                   {...register('description', {
-                    required: 'Description is required',
+                    required: 'Description is required'
                   })}
                   helperText={errors.description?.message}
                   type={'text'}

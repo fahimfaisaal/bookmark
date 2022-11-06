@@ -8,11 +8,11 @@ export const TitleContainerStyle = styled(Typography)(({ theme }) => ({
   color: `${theme.palette.text.secondary}`,
   transition: 'all 0.4s',
   '&:hover': {
-    color: `${theme.palette.text.third}`,
-  },
+    color: `${theme.palette.text.third}`
+  }
 }));
 
-const CardTitle = ({ title, variant }) => {
+function CardTitle({ title, variant }) {
   return (
     <TitleContainerStyle variant={variant}>
       {/* {title.length > 15 ? title.slice(0, 15) + '...' : title}
@@ -20,6 +20,6 @@ const CardTitle = ({ title, variant }) => {
       {title}
     </TitleContainerStyle>
   );
-};
+}
 
 export default CardTitle;

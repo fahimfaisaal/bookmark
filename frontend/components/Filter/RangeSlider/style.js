@@ -1,9 +1,9 @@
 import { Box, styled } from '@mui/system';
 
-export const InnerContainerStyle = styled(Box)(({ theme, style }) => ({
+export const InnerContainerStyle = styled(Box)(({ style }) => ({
   width: '288px',
   padding: '0px 18px',
-  ...style,
+  ...style
 }));
 
 export const PriceRangeContainer = styled(Box)(({ theme }) => ({
@@ -19,5 +19,5 @@ export const PriceRangeContainer = styled(Box)(({ theme }) => ({
   padding: '10px',
   borderRadius: 2,
   fontSize: '0.875rem',
-  fontWeight: '700',
+  fontWeight: '700'
 }));

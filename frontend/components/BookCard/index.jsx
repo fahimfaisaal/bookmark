@@ -1,10 +1,9 @@
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-import { Stack, Typography } from '@mui/material';
-import Rating from '@mui/material/Rating';
+import { Rating, Stack, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import Link from 'next/link';
-import * as React from 'react';
+import { useState } from 'react';
 import { FaShoppingCart } from 'react-icons/fa';
 import CustomImage from '../CustomImage';
 
@@ -16,12 +15,13 @@ import {
   StyledBox,
   StyledFav,
   TitleStyle,
-  WriterLinkStyle,
+  WriterLinkStyle
 } from './Styles';
 
-const BookCard = ({ book, bookId }) => {
-  const [favorite, setFavorite] = React.useState(false);
+function BookCard({ book, bookId }) {
+  const [favorite, setFavorite] = useState(false);
   const { authors, images, variants, status, ratings } = book || {};
+
   const bookImage =
     (images?.data &&
       `http://localhost:1337${images?.data[0]?.attributes?.url}`) ||
@@ -34,27 +34,31 @@ const BookCard = ({ book, bookId }) => {
       setFavorite(true);
     }
   };
-  const avarageReview = ratings?.data?.reduce((acc, cur) => {
-    acc += Number(cur.attributes.rate);
-    return acc;
-  }, 0);
+  const avarageReview = ratings?.data?.reduce(
+    (acc, cur) => acc + Number(cur.attributes.rate),
+    0
+  );
+
+  const [min, max] =
+    variants?.data?.reduce(
+      ([prevMin, prevMax], { attributes }) => [
+        Math.min(prevMin, attributes?.price),
+        Math.max(prevMax, attributes?.price)
+      ],
+      [Infinity, -Infinity]
+    ) ?? [];
 
   return (
     <StyledBox>
       <Link href={`/books/${bookId}`} sx={{ cursor: 'pointer' }}>
         <Box sx={{ cursor: 'pointer' }}>
-          <CustomImage
-            src={bookImage}
-            height="350px"
-            title="comic-book"
-            width="250px"
-          />
+          <CustomImage src={bookImage} />
         </Box>
       </Link>
       <ContentContainerStyle>
         <TitleStyle>
           <Link href={`/books/${bookId}`}>
-            <Typography variant="h3" color="text.primary" py={'5px'}>
+            <Typography variant="h3" color="text.primary" py="5px">
               {book?.name}
             </Typography>
           </Link>
@@ -62,7 +66,7 @@ const BookCard = ({ book, bookId }) => {
 
         <Stack direction="row" spacing={1} alignItems="center">
           <Typography variant="caption">by</Typography>
-          <Link href={'/authors/123'}>
+          <Link href={`/authors/${authors?.data[0]?.id}`}>
             <WriterLinkStyle>
               <Typography variant="body2">
                 {authors?.data[0]?.attributes?.name}
@@ -91,9 +95,11 @@ const BookCard = ({ book, bookId }) => {
         <PriceStyle direction={'row'} alignItems={'center'}>
           {variants?.data[0]?.attributes?.price == null ? (
             <Typography variant="h4">Free</Typography>
+          ) : min == max ? (
+            <Typography variant="h4">${max}</Typography>
           ) : (
             <Typography variant="h4">
-              ${variants?.data[0]?.attributes?.price}
+              ${min} - ${max}
             </Typography>
           )}
 
@@ -103,15 +109,19 @@ const BookCard = ({ book, bookId }) => {
             </Typography>
           )}
         </PriceStyle>
+
         <Stack
           direction="row"
           spacing={2}
           alignItems="center"
           justifyContent="space-between"
         >
-          <CartBtnStyle>
-            <FaShoppingCart /> Cart
-          </CartBtnStyle>
+          <Link href={`/books/${bookId}`} sx={{ cursor: 'pointer' }}>
+            <CartBtnStyle>
+              <FaShoppingCart /> Cart
+            </CartBtnStyle>
+          </Link>
+
           <StyledFav onClick={handleFavorite}>
             {favorite ? <FavoriteIcon /> : <FavoriteBorderIcon />}
           </StyledFav>
@@ -124,6 +134,6 @@ const BookCard = ({ book, bookId }) => {
       )}
     </StyledBox>
   );
-};
+}
 
 export default BookCard;
