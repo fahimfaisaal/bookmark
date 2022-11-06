@@ -79,6 +79,9 @@ function Home() {
     useGetBooksQuery({
       query: {
         populate: '*',
+        pagination: {
+          pageSize: 8
+        },
         filters: {
           bestSelling: true
         }
@@ -109,7 +112,7 @@ function Home() {
                   <BookSkeleton />
                 </Grid>
               ))
-            : popularBooks?.data?.slice(0, 8).map((book) => (
+            : popularBooks?.data?.map((book) => (
                 <Grid item lg={3} md={6} xs={12} key={book?.id}>
                   <BookCard book={book?.attributes} bookId={book?.id} />
                 </Grid>
