@@ -61,24 +61,20 @@ function Home() {
     useGetPublishersQuery();
   const { data: categories, isLoading: isCategoriesLoading } =
     useGetCategoryQuery();
-  const newBookQuery = useMemo(
-    () => ({
-      query: {
-        populate: '*',
-        pagination: {
-          pageSize: 8
-        },
-        filters: {
-          publishedAt: {
-            $lte: new Date().toISOString()
-          }
+  const memoDate = useMemo(() => new Date().toISOString(), []);
+  const { data: newBooks, isLoading: isNewBooksLoading } = useGetBooksQuery({
+    query: {
+      populate: '*',
+      pagination: {
+        pageSize: 8
+      },
+      filters: {
+        publishedAt: {
+          $lte: memoDate
         }
       }
-    }),
-    []
-  );
-  const { data: newBooks, isLoading: isNewBooksLoading } =
-    useGetBooksQuery(newBookQuery);
+    }
+  });
   const { data: popularBooks, isLoading: isPopularBookLoading } =
     useGetBooksQuery({
       query: {
