@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { useState } from 'react';
 import { FaShoppingCart } from 'react-icons/fa';
 import { useSelector } from 'react-redux';
+import { useUpdateFavoriteBookMutation } from '../../store/features/books/booksApi';
 
 import CustomImage from '../CustomImage';
 
@@ -29,11 +30,30 @@ const BookCard = ({ book, bookId }) => {
       `http://localhost:1337${images?.data[0]?.attributes?.url}`) ||
     '/images/product-dummy.png';
   const authorId = authors?.data[0]?.id;
+  const authUser = useSelector((state) => state?.auth?.user);
+  const [updateFavoriteBook] = useUpdateFavoriteBookMutation();
+  const userIds = book?.users?.data?.map((item) => item?.id) || [];
 
   const handleFavorite = () => {
-    if (favorite) {
+    let data = {};
+    let isUserFav = userIds?.find((item) => item === authUser?.id);
+
+    if (isUserFav) {
+      data.users = userIds?.filter((item) => item !== authUser?.id);
       setFavorite(false);
+      updateFavoriteBook({ bookId, data });
+      console.log({ bookId, data, msg: 'remove', userIds, isUserFav });
     } else {
+      data.users = [...userIds, authUser?.id];
+      console.log({
+        bookId,
+        data,
+        msg: 'add',
+        userIds,
+        isUserFav,
+        userId: authUser?.id
+      });
+      updateFavoriteBook({ bookId, data });
       setFavorite(true);
     }
   };
@@ -41,7 +61,6 @@ const BookCard = ({ book, bookId }) => {
     acc += Number(cur.attributes.rate);
     return acc;
   }, 0);
-  const authUser = useSelector((state) => state?.auth?.user);
   let [min, max] =
     variants?.data?.reduce(
       ([prevMin, prevMax], { attributes }) => [

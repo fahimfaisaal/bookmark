@@ -32,6 +32,17 @@ export const booksApi = apiSlice.injectEndpoints({
     getBooksByTags: builder.query({
       query: (query) => `/books?populate=*${query}`,
       providesTags: ['books']
+    }),
+    updateFavoriteBook: builder.mutation({
+      query: ({ bookId, data }) => ({
+        url: `/books/${bookId}`,
+        method: 'PUT',
+        body: { data }
+      }),
+      invalidatesTags: (result, error, arg) => [
+        { type: 'book', id: arg },
+        'books'
+      ]
     })
   })
 });
@@ -43,5 +54,6 @@ export const {
   useGetBooksQuery,
   useGetCategoryQuery,
   useGetNestedBookItemQuery,
-  useGetBooksByTagsQuery
+  useGetBooksByTagsQuery,
+  useUpdateFavoriteBookMutation
 } = booksApi;
