@@ -14,6 +14,7 @@ import { Stack } from '@mui/system';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
+import { toast } from 'react-hot-toast';
 import { AiOutlineFilter } from 'react-icons/ai';
 import { BiSearch, BiUser } from 'react-icons/bi';
 import { BsSunFill } from 'react-icons/bs';
@@ -27,6 +28,12 @@ import { BOOKMARK_AUTH } from '../../../constant';
 import { UseThemeContext } from '../../../context/ThemeContext';
 import useAuthCheck from '../../../hooks/useAuthCheck';
 import { userLoggedOut } from '../../../store/features/auth/authSlice';
+import {
+  closeLoginModal,
+  closeRegisterModal,
+  openLoginModal,
+  openRegisterModal
+} from '../../../store/features/authModal/authModalSlice';
 import { useGetBooksQuery } from '../../../store/features/books/booksApi';
 import { useGetCartsByUserQuery } from '../../../store/features/carts/cartsApi';
 import { shortId } from '../../../utils';
@@ -63,12 +70,15 @@ const NavBar = () => {
   const [mobSearchTrig, setMobSearchTrig] = useState(false);
   const [filterMenuTrig, setFilterMenuTrig] = useState(false);
   const [profileMenuTrig, setProfileMenuTrig] = useState(false);
-  const [openLogin, setOpenLogin] = useState(false);
-  const [openRegister, setOpenRegister] = useState(false);
+  // const [openLogin, setOpenLogin] = useState(false);
+  // const [openRegister, setOpenRegister] = useState(false);
   const { handleChangeMode } = UseThemeContext();
   const router = useRouter();
   const isAuthenticated = useSelector((state) => state?.auth);
   const authUser = isAuthenticated?.user || {};
+  const { loginModal, registerModal } = useSelector(
+    (state) => state?.authModal
+  );
 
   const { data: cartLists } = useGetCartsByUserQuery({ userId: authUser?.id });
   const { data: cartBooks } = useGetBooksQuery(cartBookFilter);
@@ -131,6 +141,7 @@ const NavBar = () => {
     dispatch(userLoggedOut());
     localStorage.removeItem(BOOKMARK_AUTH);
     router.push('/');
+    toast.success('You are logged out!');
   };
 
   // have logout dependency
@@ -223,20 +234,21 @@ const NavBar = () => {
   };
 
   const handleClickOpenLogin = () => {
-    setOpenLogin(true);
+    dispatch(openLoginModal());
   };
 
   const handleCloseLogin = () => {
-    setOpenLogin(false);
+    dispatch(closeLoginModal());
   };
 
   const handleClickOpenRegister = () => {
-    setOpenRegister(true);
+    dispatch(openRegisterModal());
   };
 
   const handleCloseRegister = () => {
-    setOpenRegister(false);
+    dispatch(closeRegisterModal());
   };
+  console.log({ authChecked });
 
   return (
     <>
@@ -455,13 +467,13 @@ const NavBar = () => {
       </MobileMenuContainer>
 
       <Login
-        open={openLogin}
+        open={loginModal}
         handleClickOpen={handleClickOpenRegister}
         handleClose={handleCloseLogin}
       />
 
       <Register
-        open={openRegister}
+        open={registerModal}
         handleClickOpen={handleClickOpenLogin}
         handleClose={handleCloseRegister}
       />

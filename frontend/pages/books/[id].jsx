@@ -1,5 +1,5 @@
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import {
   Box,
   Button,
@@ -13,9 +13,10 @@ import Rating from '@mui/material/Rating';
 import { Stack } from '@mui/system';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import toast from 'react-hot-toast';
 import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import BookCard from '../../components/BookCard';
 import BookSkeleton from '../../components/BookSkeleton';
 import CustomImage from '../../components/CustomImage';
@@ -23,6 +24,7 @@ import {
   LeftBtnStyle,
   RightBtnStyle
 } from '../../components/shared/ui/CarouselBtn/Styles';
+import { openLoginModal } from '../../store/features/authModal/authModalSlice';
 import {
   useGetBookQuery,
   useGetBooksByTagsQuery,
@@ -65,6 +67,7 @@ function BookItem() {
   const authUser = useSelector((state) => state?.auth?.user);
   const { data: book, isLoading } = useGetBookQuery(id);
   const bookData = book?.data?.attributes || {};
+  const dispatch = useDispatch();
 
   const { data: bookRatings } = useGetNestedBookItemQuery(
     `${id}?populate[ratings][populate][0]=userId`
@@ -174,6 +177,11 @@ function BookItem() {
   console.log({ userIds });
 
   const handleFavorite = () => {
+    if (!authUser?.id) {
+      dispatch(openLoginModal());
+      toast.error('You must login first to add to favorite!');
+      return;
+    }
     let data = {};
     let isUserFav = userIds?.find((item) => item === authUser?.id);
 
@@ -198,6 +206,11 @@ function BookItem() {
   };
 
   const addToCartBook = () => {
+    if (!authUser?.id) {
+      dispatch(openLoginModal());
+      toast.error('You must login first to add to cart!');
+      return;
+    }
     let data = {};
     data.book = book?.data?.id;
     data.userId = authUser?.id;
@@ -212,11 +225,13 @@ function BookItem() {
       data.quantity = cartQty + cartBook?.data[0]?.attributes?.quantity;
       // console.log({update:data});
       updateCart({ cartId: cartBook?.data[0]?.id, data });
+      toast.success(`${cartQty} item(s) have been updated in your cart`);
     } else {
       // cart add
       data = { data };
       console.log({ add: data });
       addToCart(data);
+      toast.success(`${cartQty} new item(s) have been added to your cart`);
     }
     setCartQty(1);
     console.log({
