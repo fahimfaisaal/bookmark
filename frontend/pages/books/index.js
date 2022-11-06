@@ -11,7 +11,7 @@ import { FilterButtonContainer } from '../publishers/Style';
 
 const Books = () => {
   const { data: bookLists, isLoading } = useGetBooksQuery({
-    params: '',
+    query: ''
   });
 
   const [filterTrig, setFilterTrig] = useState(false);
