@@ -65,7 +65,6 @@ export const booksApi = apiSlice.injectEndpoints({
         return responseModified;
       }
     }),
-
     getNestedBookItem: builder.query({
       query: (params) => `books/${params}`,
       providesTags: ['nestedBook']
