@@ -1,7 +1,6 @@
 import { Button, Grid, Skeleton, Stack } from '@mui/material';
 import { Box } from '@mui/system';
 import { useRouter } from 'next/router';
-import { useState } from 'react';
 import { FiFilter } from 'react-icons/fi';
 import { MdClose } from 'react-icons/md';
 import AuthorProfile from '../../components/AuthorProfile';
@@ -9,25 +8,26 @@ import { StyledBox } from '../../components/AuthorProfile/Styles';
 import BookCard from '../../components/BookCard';
 import BookSkeleton from '../../components/BookSkeleton';
 import Filter from '../../components/Filter';
+import useBooksFilterQuery from '../../hooks/useBooksFilterQuery';
 import { useGetAuthorQuery } from '../../store/features/authors/authorsApi';
-import { useGetBooksByAuthorQuery } from '../../store/features/books/booksApi';
+import { fakeArr } from '../../utils';
 import { FilterButtonContainer } from '../publishers/Style';
 import { SectionHeaderStyle } from './Styles';
 
 const AuthorItem = () => {
-  const [filterTrig, setFilterTrig] = useState(false);
   const router = useRouter();
-  // console.log({ q: router.query.slug });
   const { data, isLoading } = useGetAuthorQuery(router.query.id);
   const authorData = data?.data?.attributes;
-  // const { name, bio, birth, avatar, books } = authorData;
-  // console.log({ name:authorData?.name });
-  const { data: authorBooks, isLoading: isAuthorBookLoading } =
-    useGetBooksByAuthorQuery(authorData?.name);
+  const {
+    pagination,
+    books: authorBooks,
+    isLoading: isAuthorBookLoading,
+    filterTrig,
+    handleFilter,
+    paginationHandler
+  } = useBooksFilterQuery({ authors: [router.query.id] });
 
-  const handleFilter = () => {
-    setFilterTrig(!filterTrig);
-  };
+  // TODO: have to fix href issue
 
   return (
     <Box>
@@ -84,7 +84,7 @@ const AuthorItem = () => {
           <Box>
             <Grid container spacing={2}>
               {isAuthorBookLoading
-                ? [1, 2, 3, 4, 5, 6, 7, 8].map((item) => (
+                ? fakeArr(8).map((item) => (
                     <Grid
                       item
                       md={6}
@@ -95,7 +95,7 @@ const AuthorItem = () => {
                       <BookSkeleton />
                     </Grid>
                   ))
-                : authorBooks?.data?.map((book) => (
+                : authorBooks?.map((book) => (
                     <Grid
                       item
                       md={6}
@@ -107,11 +107,18 @@ const AuthorItem = () => {
                     </Grid>
                   ))}
             </Grid>
-            <Stack direction={'row'} justifyContent={'center'} my={5}>
-              <Button variant="contained" size="large" disableElevation={true}>
-                Load More
-              </Button>
-            </Stack>
+            {pagination?.pageCount > 1 && (
+              <Stack direction={'row'} justifyContent={'center'} my={5}>
+                <Button
+                  variant="contained"
+                  size="large"
+                  disableElevation={true}
+                  onClick={paginationHandler}
+                >
+                  Load More
+                </Button>
+              </Stack>
+            )}
           </Box>
         </Grid>
       </Grid>

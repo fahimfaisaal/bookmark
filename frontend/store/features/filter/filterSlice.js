@@ -4,7 +4,6 @@ const initialState = {
   search: '',
   tags: [],
   categories: [],
-  publishers: [],
   price: [],
   rating: [],
   sort: '',
@@ -47,15 +46,6 @@ const filterSlice = createSlice({
         state.categories.push(id);
       }
     },
-    addRemovePublishers(state, { payload }) {
-      const { id } = payload;
-
-      if (state.publishers.includes(id)) {
-        state.publishers = state.publishers.filter((curId) => curId !== id);
-      } else {
-        state.publishers.push(id);
-      }
-    },
     addRemoveAvailability(state, { payload: { status } }) {
       if (state.availabilities.includes(status)) {
         state.availabilities = state.availabilities.filter(
@@ -92,8 +82,6 @@ export const {
 
 export const getTags = (state) => state.filter.tags;
 
-export const getPublishers = (state) => state.filter.publishers;
-
 export const getSearchText = (state) => state.filter.search;
 
 export const getCategories = (state) => state.filter.categories;
@@ -111,14 +99,11 @@ export const getQueries = ({ filter }) => {
     search: filter.search,
     tags: filter.tags.join(','),
     categories: filter.categories.join(','),
-    publishers: filter.publishers.join(','),
     price: filter.price.join('-'),
     rating: filter.rating.join('-'),
     sort: filter.sort,
     availabilities: filter.availabilities.join(',')
   };
-
-  console.log({ own: query });
 
   for (const key in query) {
     const value = query[key];

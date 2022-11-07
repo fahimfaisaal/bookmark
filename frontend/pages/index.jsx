@@ -91,7 +91,7 @@ function Home() {
   const { data: banners } = useGetBannersQuery();
   const bannerImg =
     (banners?.data &&
-      `http://localhost:1337${banners?.data?.attributes?.images?.data[0]?.attributes?.url}`) ||
+      `${banners?.data?.attributes?.images?.data[0]?.attributes?.url}`) ||
     '/images/Cover.png';
 
   return (

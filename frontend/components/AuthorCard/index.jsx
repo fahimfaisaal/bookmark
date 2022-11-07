@@ -6,8 +6,10 @@ import { ImgContainerStyle } from './Styles';
 
 function AuthorCard({ author }) {
   const {
-    attributes: { name, avatar }
+    attributes: { name, avatar },
+    id
   } = author;
+
   const url =
     `http://localhost:1337${avatar?.data?.attributes?.url}` ||
     '/images/author-dummy.png';
@@ -15,10 +17,9 @@ function AuthorCard({ author }) {
     <Stack direction="row">
       <Stack direction="column" alignItems="center">
         <ImgContainerStyle>
-          ,
           <img src={url} alt={name} />
         </ImgContainerStyle>
-        <Link href={`/authors/${author?.id}`}>
+        <Link href={`/authors/${id}`}>
           <Box>
             <CardTitle title={name} variant="h3" />
           </Box>
