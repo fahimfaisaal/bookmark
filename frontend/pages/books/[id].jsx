@@ -173,7 +173,8 @@ function BookItem() {
     if (cartQty > 1) setCartQty((prev) => prev - 1);
   };
 
-  const userIds = bookData?.users?.data?.map((item) => item?.id) || [];
+  // const userIds = bookData?.users?.data?.map((item) => item?.id) || [];
+  const userIds = new Set(bookData?.users?.data?.map((item) => item?.id));
   console.log({ userIds });
 
   const handleFavorite = () => {
@@ -183,12 +184,16 @@ function BookItem() {
       return;
     }
     let data = {};
-    let isUserFav = userIds?.find((item) => item === authUser?.id);
+    // let isUserFav = userIds?.find((item) => item === authUser?.id);
+    let isUserFav = userIds.has(authUser?.id);
 
     if (isUserFav) {
-      data.users = userIds?.filter((item) => item !== authUser?.id);
-      setFavorite(false);
+      // data.users = userIds?.filter((item) => item !== authUser?.id);
+      userIds.delete(authUser?.id);
+      data.users = [...userIds];
+
       updateFavoriteBook({ bookId: id, data });
+      setFavorite(false);
       console.log({ id, data, msg: 'remove', userIds, isUserFav });
     } else {
       data.users = [...userIds, authUser?.id];

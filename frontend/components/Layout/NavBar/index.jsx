@@ -81,7 +81,10 @@ const NavBar = () => {
     (state) => state?.authModal
   );
 
-  const { data: cartLists } = useGetCartsByUserQuery({ userId: authUser?.id });
+  const { data: cartLists } = useGetCartsByUserQuery(
+    { userId: authUser?.id },
+    { skip: !authUser?.id }
+  );
   const { data: cartBooks } = useGetBooksQuery(cartBookFilter);
 
   useEffect(() => {
@@ -290,18 +293,22 @@ const NavBar = () => {
               {theme.palette.mode === 'light' ? <RiMoonLine /> : <BsSunFill />}
             </ThemeSwitchStyle>
           </IconContainer>
-          <IconContainer fontSize="28px" onClick={toggleDrawer(true)}>
-            <Badge badgeContent={cartLists?.data?.length} color="primary">
-              <HiOutlineShoppingBag />
-            </Badge>
-          </IconContainer>
-          <Link href="/profile/my-wishlist">
-            <IconContainer fontSize="32px">
-              <Badge badgeContent={2} color="primary">
-                <MdOutlineFavoriteBorder />
-              </Badge>
-            </IconContainer>
-          </Link>
+          {isAuthenticated?.accessToken && (
+            <>
+              <IconContainer fontSize="28px" onClick={toggleDrawer(true)}>
+                <Badge badgeContent={cartLists?.data?.length} color="primary">
+                  <HiOutlineShoppingBag />
+                </Badge>
+              </IconContainer>
+              <Link href="/profile/my-wishlist">
+                <IconContainer fontSize="32px">
+                  <Badge badgeContent={null} color="primary">
+                    <MdOutlineFavoriteBorder />
+                  </Badge>
+                </IconContainer>
+              </Link>
+            </>
+          )}
 
           {isAuthenticated?.accessToken ? (
             <Box sx={{ flexGrow: 0 }}>

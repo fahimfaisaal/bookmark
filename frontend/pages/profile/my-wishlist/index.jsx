@@ -2,7 +2,6 @@ import { Box } from '@mui/system';
 import { useSelector } from 'react-redux';
 import UserDashboard from '../../../components/UserDashboard';
 import MyWishlist from '../../../components/UserDashboard/MyWishlist';
-import withAuth from '../../../hoc/PrivateAuth';
 import { useGetBooksQuery } from '../../../store/features/books/booksApi';
 
 const MyFavList = () => {
@@ -23,11 +22,15 @@ const MyFavList = () => {
     <UserDashboard>
       <Box sx={{ boxShadow: 1, padding: 2 }}>
         {favBooks?.data?.map((favBook) => (
-          <MyWishlist book={favBook} key={favBook?.id} />
+          <MyWishlist
+            book={favBook?.attributes}
+            key={favBook?.id}
+            bookId={favBook?.id}
+          />
         ))}
       </Box>
     </UserDashboard>
   );
 };
 
-export default withAuth(MyFavList);
+export default MyFavList;

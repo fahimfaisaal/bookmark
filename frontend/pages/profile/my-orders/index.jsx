@@ -1,6 +1,5 @@
 import UserDashboard from '../../../components/UserDashboard';
 import MyOrders from '../../../components/UserDashboard/MyOrders';
-import withAuth from '../../../hoc/PrivateAuth';
 
 function OrderList() {
   return (
@@ -10,4 +9,4 @@ function OrderList() {
   );
 }
 
-export default withAuth(OrderList);
+export default OrderList;
