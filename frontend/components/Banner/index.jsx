@@ -1,7 +1,7 @@
 import { Box, Button, Grid, Typography } from '@mui/material';
 import { Stack } from '@mui/system';
 import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight';
-import { StyledGrid, StyledGridItem } from './Styles';
+import { StyledGrid, StyledGridItem, StyledText } from './Styles';
 
 const Banner = () => {
   return (
@@ -9,9 +9,9 @@ const Banner = () => {
       <StyledGridItem item md={6} lg={6}>
         <Stack direction={'column'} alignItems={'flex-start'} spacing={2}>
           <Typography variant="h4">SALE UP TO 20% OFF</Typography>
-          <Typography variant="h1" fontSize={'3rem'}>
+          <StyledText variant="h1" fontSize={'3rem'}>
             Meet Your Next <br /> Favorite Books.
-          </Typography>
+          </StyledText>
           <Button sx={{ color: 'white' }}>
             Shop Now <KeyboardDoubleArrowRightIcon />
           </Button>

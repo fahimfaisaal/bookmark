@@ -376,7 +376,6 @@ const NavBar = () => {
           ) : (
             <Link href="/">
               <LogoContainer marginTop="8px">
-                {/* <img src="/images/logo-1.png" alt="" /> */}
                 <Logo />
               </LogoContainer>
             </Link>
