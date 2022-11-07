@@ -1,9 +1,9 @@
 'use strict';
 
 /**
- * title controller
+ * home controller
  */
 
 const { createCoreController } = require('@strapi/strapi').factories;
 
-module.exports = createCoreController('api::title.title');
+module.exports = createCoreController('api::home.home');

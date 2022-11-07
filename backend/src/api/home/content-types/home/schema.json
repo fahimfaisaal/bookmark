@@ -1,0 +1,36 @@
+{
+  "kind": "singleType",
+  "collectionName": "homes",
+  "info": {
+    "singularName": "home",
+    "pluralName": "homes",
+    "displayName": "Home"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "whichBook": {
+      "type": "string"
+    },
+    "buttonText": {
+      "type": "string"
+    },
+    "author": {
+      "type": "string"
+    },
+    "arrival": {
+      "type": "string"
+    },
+    "popular": {
+      "type": "string"
+    },
+    "publisher": {
+      "type": "string"
+    },
+    "sliderText": {
+      "type": "string"
+    }
+  }
+}
