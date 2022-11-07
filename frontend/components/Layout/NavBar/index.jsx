@@ -30,6 +30,7 @@ import { userLoggedOut } from '../../../store/features/auth/authSlice';
 import { useGetBooksQuery } from '../../../store/features/books/booksApi';
 import { useGetCartsByUserQuery } from '../../../store/features/carts/cartsApi';
 import { shortId } from '../../../utils';
+import Logo from '../../Logo';
 import SearchBar from '../../shared/SearchBar';
 import Login from '../Auth/Login';
 import Register from '../Auth/Register';
@@ -249,7 +250,7 @@ const NavBar = () => {
         >
           <Link href="/">
             <LogoContainer marginTop="8px">
-              <img src="/images/logo-1.png" alt="" />
+              <Logo />
             </LogoContainer>
           </Link>
           {!serachTrig ? (
@@ -375,7 +376,8 @@ const NavBar = () => {
           ) : (
             <Link href="/">
               <LogoContainer marginTop="8px">
-                <img src="/images/logo-1.png" alt="" />
+                {/* <img src="/images/logo-1.png" alt="" /> */}
+                <Logo />
               </LogoContainer>
             </Link>
           )}

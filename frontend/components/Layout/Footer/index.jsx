@@ -1,6 +1,7 @@
 import { Box, Grid, Typography } from '@mui/material';
 import { Stack } from '@mui/system';
 import Link from 'next/link';
+import Logo from '../../Logo';
 import { LogoContainer } from '../NavBar/Styles';
 import FooterItem from './FooterItem';
 import {
@@ -37,7 +38,7 @@ function Footer() {
         <Grid item lg={3} md={6} xs={12}>
           <Link href="/">
             <LogoContainer>
-              <img src="/images/logo-1.png" alt="" />
+              <Logo />
             </LogoContainer>
           </Link>
           <Typography variant="body2" py={3} fontWeight={400}>
