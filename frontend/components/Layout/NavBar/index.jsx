@@ -70,7 +70,10 @@ const NavBar = () => {
   const isAuthenticated = useSelector((state) => state?.auth);
   const authUser = isAuthenticated?.user || {};
 
-  const { data: cartLists } = useGetCartsByUserQuery({ userId: authUser?.id });
+  const { data: cartLists } = useGetCartsByUserQuery(
+    { userId: authUser?.id },
+    { skip: !authUser?.id }
+  );
   const { data: cartBooks } = useGetBooksQuery(cartBookFilter);
 
   useEffect(() => {

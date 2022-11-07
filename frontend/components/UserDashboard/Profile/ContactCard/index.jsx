@@ -1,16 +1,24 @@
 import { InputLabel, TextField } from '@mui/material';
 import { Stack } from '@mui/system';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import ContactModal from '../../../shared/Modals/ContactModal';
 import { StyledContainer } from '../../Styles';
 
-function ContactCard() {
+// const initialValues = {
+//   phone: ''
+// };
+function ContactCard({ profileData }) {
   const [formValue, setFormValue] = useState('');
 
   // state lifting starts==========
   const getData = (data) => {
     setFormValue(data);
   };
+  useEffect(() => {
+    if (profileData) {
+      setFormValue(profileData?.phone);
+    }
+  }, [profileData]);
   // state lifting ends==========
 
   return (
@@ -30,10 +38,10 @@ function ContactCard() {
       <TextField
         sx={{ marginBottom: 1.6 }}
         value={formValue}
-        id="contact"
+        id="phone"
         fullWidth
         placeholder="+8801..."
-        name="contact"
+        name="phone"
         disabled
       />
     </StyledContainer>

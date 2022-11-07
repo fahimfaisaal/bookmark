@@ -5,7 +5,7 @@ export const userApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getUser: builder.query({ query: () => '', providesTags: ['user'] }),
     getProfile: builder.query({
-      query: () => '',
+      query: () => '/users/me?populate[0]=avatar',
       providesTags: ['user']
     }),
     updateProfile: builder.mutation({
@@ -16,14 +16,6 @@ export const userApi = apiSlice.injectEndpoints({
       }),
       invalidatesTags: (result, error, arg) => [{ type: 'user', id: arg }]
     })
-    // getAuthors: builder.query({
-    //   query: () =>
-    //     `/authors?populate[0]=avatar&pagination[page]=1&pagination[pageSize]=15`,
-    // }),
-    // getPublishers: builder.query({
-    //     query: () =>
-    //       `/publishers?populate[0]=logo&populate[1]=banner&pagination[page]=1&pagination[pageSize]=15`,
-    //   }),
   })
 });
 
