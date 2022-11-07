@@ -21,8 +21,9 @@ import {
   useGetBooksQuery,
   useGetCategoryQuery
 } from '../store/features/books/booksApi';
-import { useGetPublishersQuery } from '../store/features/publishers/publishersApi';
 import { fakeArr } from '../utils';
+import { useGetPublishersQuery } from '../store/features/publishers/publishersApi';
+
 import {
   ContainerStyle,
   HeroContainer,
@@ -94,7 +95,6 @@ function Home() {
   //     `http://localhost:1337${banners?.data?.attributes?.images?.data[0]?.attributes?.url}`) ||
   //   '/images/Cover.png';
 
-  //console.log({ categories, popularBooks });
   return (
     <ContainerStyle>
       <HeroContainer sx={{ cursor: 'pointer' }}>
