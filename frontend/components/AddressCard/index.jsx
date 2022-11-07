@@ -35,7 +35,7 @@ function AddressCard({ label, profileData }) {
           <Card sx={{ backgroundColor: 'background.default' }}>
             <CardContent>
               <Typography variant="h3" component="div">
-                {formValue.title ? formValue.title : 'Billing'}
+                {'Billing'}
               </Typography>
               <Typography variant="caption">
                 {formValue

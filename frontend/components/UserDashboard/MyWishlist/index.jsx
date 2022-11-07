@@ -4,9 +4,13 @@ import CustomImage from '../../CustomImage';
 import { StyledCart, StyledImage, StyledRemove, StyledStack } from './Styles';
 import Rating from '@mui/material/Rating';
 import { useRouter } from 'next/router';
+import { useSelector } from 'react-redux';
+import { useUpdateFavoriteBookMutation } from '../../../store/features/books/booksApi';
 
 function MyWishlist({ book, bookId }) {
   const router = useRouter();
+  const authUser = useSelector((state) => state?.auth?.user);
+  const [updateFavoriteBook] = useUpdateFavoriteBookMutation();
   const { images, variants, authors, ratings, name } = book;
   const imgUrl =
     `http://localhost:1337${images?.data[0]?.attributes?.url}` ||
@@ -16,37 +20,20 @@ function MyWishlist({ book, bookId }) {
     (acc, cur) => acc + Number(cur.attributes.rate),
     0
   );
+  const userIds = new Set(book?.users?.data?.map((item) => item?.id));
+  const removeFavourite = () => {
+    let data = {};
+    // let isUserFav = userIds?.find((item) => item === authUser?.id);
+    let isUserFav = userIds.has(authUser?.id);
 
-  // const addToCartBook = () => {
-  //   let data = {};
-  //   data.book = book?.data?.id;
-  //   data.userId = authUser?.id;
-  //   data.variant =
-  //     bookVariants?.data?.attributes?.variants?.data[activeVariant]?.id;
-  //   data.quantity = cartQty;
-  //   if (
-  //     cartBook?.data[0]?.id &&
-  //     cartBook?.data[0]?.attributes?.variant?.data?.id === data?.variant
-  //   ) {
-  //     // cart update
-  //     data.quantity = cartQty + cartBook?.data[0]?.attributes?.quantity;
-  //     // console.log({update:data});
-  //     updateCart({ cartId: cartBook?.data[0]?.id, data });
-  //   } else {
-  //     // cart add
-  //     data = { data };
-  //     console.log({ add: data });
-  //     addToCart(data);
-  //   }
-  //   setCartQty(1);
-  //   console.log({
-  //     cart: cartBook?.data[0],
-  //     data,
-  //     isCart:
-  //       cartBook?.data[0]?.id &&
-  //       cartBook?.data[0]?.attributes?.variant?.data?.id === data?.variant
-  //   });
-  // };
+    if (isUserFav) {
+      // data.users = userIds?.filter((item) => item !== authUser?.id);
+      userIds.delete(authUser?.id);
+      data.users = [...userIds];
+
+      updateFavoriteBook({ bookId, data });
+    }
+  };
   return (
     <StyledStack direction="row" justifyContent="space-between">
       <Grid container>
@@ -87,7 +74,7 @@ function MyWishlist({ book, bookId }) {
               <StyledCart onClick={() => router.push(`/books/${bookId}`)}>
                 Add to Cart
               </StyledCart>
-              <StyledRemove>Remove</StyledRemove>
+              <StyledRemove onClick={removeFavourite}>Remove</StyledRemove>
             </Stack>
           </Stack>
         </Grid>

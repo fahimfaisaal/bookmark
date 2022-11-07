@@ -161,7 +161,7 @@ function Login({ open, handleClickOpen, handleClose }) {
           my={3}
         >
           <Typography variant="body1">{"Don't have any account?"}</Typography>
-          <Link href="" sx={{ cursor: 'pointer' }} onClick={toggleRegister}>
+          <Link sx={{ cursor: 'pointer' }} onClick={toggleRegister}>
             Register
           </Link>
         </Stack>
