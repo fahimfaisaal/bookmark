@@ -4,6 +4,7 @@ import Head from 'next/head';
 import NextNProgress from 'nextjs-progressbar';
 import PropTypes from 'prop-types';
 import * as React from 'react';
+import { Toaster } from 'react-hot-toast';
 import 'react-multi-carousel/lib/styles.css';
 import { Provider } from 'react-redux';
 import Layout from '../components/Layout';
@@ -36,6 +37,7 @@ export default function MyApp(props) {
           <CssBaseline />
           <Layout>
             <NextNProgress />
+            <Toaster />
             <Component {...pageProps} />
           </Layout>
         </ThemeContext>

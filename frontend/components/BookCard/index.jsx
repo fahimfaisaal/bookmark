@@ -5,6 +5,9 @@ import { Box } from '@mui/system';
 import Link from 'next/link';
 import { useState } from 'react';
 import { FaShoppingCart } from 'react-icons/fa';
+import { useSelector } from 'react-redux';
+import { useUpdateFavoriteBookMutation } from '../../store/features/books/booksApi';
+
 import CustomImage from '../CustomImage';
 
 import {
@@ -19,6 +22,7 @@ import {
 } from './Styles';
 
 function BookCard({ book, bookId }) {
+  // eslint-disable-next-line no-unused-vars
   const [favorite, setFavorite] = useState(false);
   const { authors, images, variants, status, ratings } = book || {};
 
@@ -26,11 +30,30 @@ function BookCard({ book, bookId }) {
     (images?.data &&
       `http://localhost:1337${images?.data[0]?.attributes?.url}`) ||
     '/images/product-dummy.png';
+  const authUser = useSelector((state) => state?.auth?.user);
+  const [updateFavoriteBook] = useUpdateFavoriteBookMutation();
+  const userIds = book?.users?.data?.map((item) => item?.id) || [];
 
   const handleFavorite = () => {
-    if (favorite) {
+    let data = {};
+    let isUserFav = userIds?.find((item) => item === authUser?.id);
+
+    if (isUserFav) {
+      data.users = userIds?.filter((item) => item !== authUser?.id);
       setFavorite(false);
+      updateFavoriteBook({ bookId, data });
+      console.log({ bookId, data, msg: 'remove', userIds, isUserFav });
     } else {
+      data.users = [...userIds, authUser?.id];
+      console.log({
+        bookId,
+        data,
+        msg: 'add',
+        userIds,
+        isUserFav,
+        userId: authUser?.id
+      });
+      updateFavoriteBook({ bookId, data });
       setFavorite(true);
     }
   };
@@ -123,7 +146,7 @@ function BookCard({ book, bookId }) {
           </Link>
 
           <StyledFav onClick={handleFavorite}>
-            {favorite ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+            {book?.isFavorite ? <FavoriteIcon /> : <FavoriteBorderIcon />}
           </StyledFav>
         </Stack>
       </ContentContainerStyle>
