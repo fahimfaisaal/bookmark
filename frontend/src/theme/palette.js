@@ -44,6 +44,7 @@ export const paletteDark = {
     main: '#1E293B'
   },
   blue: '#171F69',
+  logo: '#F3F4F6',
   divider: grey[500],
   grey: GREY,
   background: {
@@ -69,6 +70,7 @@ export const paletteLight = {
   primary: { ...PRIMARY },
   secondary: { ...SECONDARY },
   blue: '#171F69',
+  logo: '#171F69',
   grey: GREY,
   divider: GREY[500_24],
   text: {
