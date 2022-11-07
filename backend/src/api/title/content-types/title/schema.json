@@ -1,0 +1,18 @@
+{
+  "kind": "singleType",
+  "collectionName": "titles",
+  "info": {
+    "singularName": "title",
+    "pluralName": "titles",
+    "displayName": "Title"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "allTitles": {
+      "type": "json"
+    }
+  }
+}
