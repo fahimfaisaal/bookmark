@@ -5,6 +5,7 @@ import React from 'react';
 import Carousel from 'react-multi-carousel';
 import AuthorCard from '../components/AuthorCard';
 import AuthorSkeleton from '../components/AuthorSkeleton';
+import Banner from '../components/Banner';
 import BookCard from '../components/BookCard';
 import BookSkeleton from '../components/BookSkeleton';
 import CategoryCard from '../components/CategoryCard';
@@ -88,18 +89,17 @@ function Home() {
       }
     });
   const { data: banners } = useGetBannersQuery();
-  const bannerImg =
-    (banners?.data &&
-      `http://localhost:1337${banners?.data?.attributes?.images?.data[0]?.attributes?.url}`) ||
-    '/images/Cover.png';
+  // const bannerImg =
+  //   (banners?.data &&
+  //     `http://localhost:1337${banners?.data?.attributes?.images?.data[0]?.attributes?.url}`) ||
+  //   '/images/Cover.png';
 
+  //console.log({ categories, popularBooks });
   return (
     <ContainerStyle>
-      <HeroContainer>
+      <HeroContainer sx={{ cursor: 'pointer' }}>
         <Link href={`/books/${banners?.data?.attributes?.book?.data?.id}`}>
-          <Box sx={{ cursor: 'pointer' }}>
-            <img src={bannerImg} />
-          </Box>
+          <Banner />
         </Link>
       </HeroContainer>
       <SectionContainer>
