@@ -56,6 +56,32 @@ const responsive = (xl, lg, md, sm, xs) => ({
   }
 });
 
+const getHomeData = () => ({
+  data: {
+    id: 1,
+    attributes: {
+      whichBook: 'Which Book You Like to See?',
+      author: 'Top Authors',
+      arrival: 'New Arrival Books',
+      popular: 'Popular Books',
+      publisher: 'Top Publishers',
+      sliderText: 'See All',
+      createdAt: '2022-11-07T16:17:17.336Z',
+      updatedAt: '2022-11-08T11:12:23.901Z',
+      publishedAt: '2022-11-07T16:17:21.186Z',
+      buttons: {
+        buttons: [
+          {
+            url: '/books',
+            text: 'Load More'
+          }
+        ]
+      }
+    }
+  },
+  meta: {}
+});
+
 function Home() {
   const { data: authorLists, isLoading: isAuthorLoading } =
     useGetAuthorsQuery();
@@ -91,12 +117,12 @@ function Home() {
       }
     });
   const { data: banners } = useGetBannersQuery();
+  const { data: homeData } = getHomeData();
 
   // const bannerImg =
   //   (banners?.data &&
   //     `http://localhost:1337${banners?.data?.attributes?.images?.data[0]?.attributes?.url}`) ||
   //   '/images/Cover.png';
-
 
   return (
     <ContainerStyle>
@@ -106,7 +132,9 @@ function Home() {
         </Link>
       </HeroContainer>
       <SectionContainer>
-        <SectionHeaderStyle variant="h1">Popular Books</SectionHeaderStyle>
+        <SectionHeaderStyle variant="h1">
+          {homeData.attributes?.popular}
+        </SectionHeaderStyle>
 
         <Grid container spacing={3}>
           {isPopularBookLoading
@@ -125,7 +153,7 @@ function Home() {
 
       <SectionContainer>
         <SectionHeaderStyle variant="h1">
-          Which Book You Like to See?
+          {homeData.attributes?.whichBook}
         </SectionHeaderStyle>
         {isCategoriesLoading ? (
           <Carousel
@@ -158,7 +186,9 @@ function Home() {
       </SectionContainer>
 
       <SectionContainer>
-        <SectionHeaderStyle variant="h1">New Arrival Books</SectionHeaderStyle>
+        <SectionHeaderStyle variant="h1">
+          {homeData.attributes?.arrival}
+        </SectionHeaderStyle>
         <Grid container spacing={2}>
           {isNewBooksLoading
             ? fakeArr(12).map((item) => (
@@ -173,9 +203,16 @@ function Home() {
               ))}
         </Grid>
         <Stack direction={'row'} justifyContent={'center'} my={5}>
-          <Button variant="contained" size="large" disableElevation={true}>
-            Load More
-          </Button>
+          {homeData.attributes?.buttons?.buttons?.map((item) => (
+            <Button
+              variant="contained"
+              size="large"
+              disableElevation={true}
+              key={item.id}
+            >
+              {item.text}
+            </Button>
+          ))}
         </Stack>
       </SectionContainer>
 
@@ -185,9 +222,11 @@ function Home() {
           alignItems="center"
           justifyContent="space-between"
         >
-          <SectionHeaderStyle variant="h1">Top Authors</SectionHeaderStyle>
+          <SectionHeaderStyle variant="h1">
+            {homeData.attributes?.author}
+          </SectionHeaderStyle>
           <Link href="/authors">
-            <SeeAllLinkStyle>See All</SeeAllLinkStyle>
+            <SeeAllLinkStyle>{homeData.attributes?.sliderText}</SeeAllLinkStyle>
           </Link>
         </Stack>
         {isAuthorLoading ? (
@@ -221,10 +260,10 @@ function Home() {
           justifyContent="space-between"
         >
           <SectionHeaderStyle variant="h1" sx={{ margin: 0 }}>
-            Top Publishers
+            {homeData.attributes?.publisher}
           </SectionHeaderStyle>
           <Link href="/publishers">
-            <SeeAllLinkStyle>See All</SeeAllLinkStyle>
+            <SeeAllLinkStyle>{homeData.attributes?.sliderText}</SeeAllLinkStyle>
           </Link>
         </Stack>
         {isPublisherLoading ? (

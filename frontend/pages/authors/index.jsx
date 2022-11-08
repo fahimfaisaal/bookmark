@@ -7,20 +7,30 @@ import { useGetAuthorsQuery } from '../../store/features/authors/authorsApi';
 import { fakeArr } from '../../utils';
 import { HeaderContainerStyle, HeaderStyle } from './Styles';
 
+const getAuthor = () => ({
+  data: {
+    id: 1,
+    attributes: {
+      title: 'Search Our Beloved Authors',
+      subtitle: 'Lorem ipsum dolor sit amet, consectetu eradipiscing elit.'
+    }
+  }
+});
+
 function Authors() {
   const { data: authorLists, isLoading: isAuthorLoading } =
     useGetAuthorsQuery();
+
+  const { data } = getAuthor();
 
   return (
     <Box>
       <HeaderContainerStyle>
         <HeaderStyle>
           <Typography variant="h1" color="primary">
-            Search Our beloved authors
+            {data.attributes?.title}
           </Typography>
-          <Typography variant="body1">
-            Lorem ipsum dolor sit amet, consectetu eradipiscing elit.
-          </Typography>
+          <Typography variant="body1">{data.attributes?.subtitle}</Typography>
           <Stack direction="row" justifyContent="center" my={5}>
             <SearchBar
               placeholder="Search Your Favorite Author from here"

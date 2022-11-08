@@ -15,7 +15,7 @@ function FooterItem({ title, data }) {
         {data.map((item) => (
           <Link key={shortId()} href={item.link}>
             <Box>
-              <LinkContainer key={item.text}>{item.text}</LinkContainer>
+              <LinkContainer key={item.name}>{item.name}</LinkContainer>
             </Box>
           </Link>
         ))}

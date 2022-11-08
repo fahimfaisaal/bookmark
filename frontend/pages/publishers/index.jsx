@@ -6,18 +6,30 @@ import SearchBar from '../../components/shared/SearchBar';
 import { useGetPublishersQuery } from '../../store/features/publishers/publishersApi';
 import { HeaderContainerStyle, HeaderStyle } from '../authors/Styles';
 
+const getPublisherData = () => ({
+  data: {
+    id: 1,
+    attributes: {
+      title: 'Manufacturers/Publishers',
+      subtitle: 'Lorem ipsum dolor sit amet, consectetu eradipiscing elit.'
+    }
+  }
+});
+
 function Publications() {
   const { data: publisherLists, isLoading: isPublisherLoading } =
     useGetPublishersQuery();
+
+  const { data: publisherData } = getPublisherData();
   return (
     <Box>
       <HeaderContainerStyle>
         <HeaderStyle>
           <Typography variant="h1" color="primary">
-            Manufacturers/Publishers
+            {publisherData.attributes?.title}
           </Typography>
           <Typography variant="body1">
-            Lorem ipsum dolor sit amet, consectetu eradipiscing elit.
+            {publisherData.attributes?.subtitle}
           </Typography>
           <Stack direction="row" justifyContent="center" my={5}>
             <SearchBar

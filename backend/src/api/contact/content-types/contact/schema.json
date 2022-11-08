@@ -22,8 +22,18 @@
     "info": {
       "type": "json"
     },
-    "buttonText": {
-      "type": "string"
+    "buttons": {
+      "type": "json"
+    },
+    "image": {
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ],
+      "type": "media",
+      "multiple": false
     }
   }
 }
