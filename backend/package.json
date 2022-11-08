@@ -7,6 +7,7 @@
     "dev": "strapi develop",
     "start": "strapi start",
     "build": "strapi build",
+    "build:prod": "cross-env yarn reset yarn seed strapi build",
     "strapi": "strapi",
     "seed": "cross-env FORCE_APP_BOOTSTRAP_ONLY_TO=SEED strapi start",
     "reset": "cross-env FORCE_APP_BOOTSTRAP_ONLY_TO=RESET strapi start",
@@ -20,7 +21,8 @@
     "@strapi/plugin-i18n": "4.4.3",
     "@strapi/plugin-users-permissions": "4.4.3",
     "@strapi/strapi": "4.4.3",
-    "pg": "^8.8.0"
+    "pg": "^8.8.0",
+    "pg-connection-string": "^2.5.0"
   },
   "author": {
     "name": "A Strapi developer"
@@ -29,7 +31,7 @@
     "uuid": "6522849a-92b8-4c46-a738-89e6658849f8"
   },
   "engines": {
-    "node": ">=14.19.1 <=18.x.x",
+    "node": ">=14.17.0 <=18.x.x",
     "npm": ">=6.0.0"
   },
   "license": "MIT",
