@@ -26,7 +26,7 @@
         "DELIVERED",
         "RETURNED"
       ],
-      "required": true
+      "required": false
     },
     "isCanceled": {
       "type": "boolean",
