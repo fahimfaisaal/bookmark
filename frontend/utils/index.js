@@ -54,3 +54,13 @@ export const generateQuery = ({
     }
   }
 });
+
+export const parseQuery = (paramsPath, valuePath) => {
+  const valuesPath = valuePath.split('/');
+  return paramsPath.split('/').reduce((acc, cur, index) => {
+    if (cur.startsWith('[') && cur.endsWith(']')) {
+      acc[cur.substring(1, cur.length - 1)] = valuesPath.at(index);
+    }
+    return acc;
+  }, {});
+};

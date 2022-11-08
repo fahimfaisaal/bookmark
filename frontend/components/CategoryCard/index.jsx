@@ -1,14 +1,20 @@
 import { Box } from '@mui/system';
+import { useRouter } from 'next/router';
 import CardTitle from '../PublicationCard/CardTitle';
 import { ImageContainerStyle } from './Styles';
 
-function CategoryCard({ category }) {
+function CategoryCard({ category, id }) {
+  const router = useRouter();
   const { coverImage, type } = category;
   const categoryImage =
     `http://localhost:1337${coverImage?.data?.attributes?.url}` ||
     '/images/author-dummy.png';
+  const clickHandler = () => {
+    router.push(`/books?categories=${id}`);
+  };
+
   return (
-    <Box>
+    <Box onClick={clickHandler}>
       <ImageContainerStyle>
         <img src={categoryImage} alt={type} width="100%" height="100%" />
       </ImageContainerStyle>

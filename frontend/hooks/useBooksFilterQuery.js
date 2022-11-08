@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useGetBooksQuery } from '../store/features/books/booksApi';
 import {
+  clearFilter,
   getAvailabilities,
   getCategories,
   getPriceRange,
@@ -51,6 +52,8 @@ const useBooksFilterQuery = ({ authors, publisherId } = {}) => {
     if (query.toString().length) {
       setFilterTrig(true);
       dispatch(setFilterFromQuery(Object.fromEntries(query)));
+    } else {
+      dispatch(clearFilter());
     }
   }, []);
 

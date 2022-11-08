@@ -4,6 +4,7 @@ import PublisherSkeleton from '../../components/PublisherSkeleton';
 import CustomLink from '../../components/shared/CustomLink';
 import SearchBar from '../../components/shared/SearchBar';
 import { useGetPublishersQuery } from '../../store/features/publishers/publishersApi';
+import { fakeArr } from '../../utils';
 import { HeaderContainerStyle, HeaderStyle } from '../authors/Styles';
 
 function Publications() {
@@ -30,7 +31,7 @@ function Publications() {
       <Box my={5}>
         <Grid container spacing={2}>
           {isPublisherLoading
-            ? [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((item) => (
+            ? fakeArr(12).map((item) => (
                 <Grid item lg={2.4} md={4} sm={6} xs={12} key={item}>
                   <PublisherSkeleton />
                 </Grid>
@@ -38,8 +39,8 @@ function Publications() {
             : publisherLists?.data?.length > 0 &&
               publisherLists?.data?.map((publisher) => (
                 <CustomLink
-                  href={`/publishers/${publisher?.attributes?.id}`}
-                  key={publisher?.attributes?.id}
+                  href={`/publishers/${publisher?.id}`}
+                  key={publisher?.id}
                 >
                   <Grid item lg={2.4} md={4} sm={6} xs={12} key={publisher?.id}>
                     <PublicationCard publisher={publisher} />

@@ -64,6 +64,7 @@ function Home() {
   const { data: categories, isLoading: isCategoriesLoading } =
     useGetCategoryQuery();
   const memoDate = useMemo(() => new Date().toISOString(), []);
+  // TODO: use useFilterBooksQuery
   const { data: newBooks, isLoading: isNewBooksLoading } = useGetBooksQuery({
     query: {
       populate: '*',
@@ -77,6 +78,7 @@ function Home() {
       }
     }
   });
+  // TODO: use useFilterBooksQuery
   const { data: popularBooks, isLoading: isPopularBookLoading } =
     useGetBooksQuery({
       query: {
@@ -97,7 +99,6 @@ function Home() {
   //     `http://localhost:1337${banners?.data?.attributes?.images?.data[0]?.attributes?.url}`) ||
   //   '/images/Cover.png';
 
-
   return (
     <ContainerStyle>
       <HeroContainer sx={{ cursor: 'pointer' }}>
@@ -105,6 +106,7 @@ function Home() {
           <Banner />
         </Link>
       </HeroContainer>
+
       <SectionContainer>
         <SectionHeaderStyle variant="h1">Popular Books</SectionHeaderStyle>
 
@@ -149,8 +151,9 @@ function Home() {
             {categories?.data?.length > 0 &&
               categories?.data?.map((category) => (
                 <CategoryCard
-                  key={category?.id}
-                  category={category?.attributes}
+                  key={category.id}
+                  id={category.id}
+                  category={category.attributes}
                 />
               ))}
           </Carousel>
