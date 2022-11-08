@@ -6,7 +6,6 @@ import Link from 'next/link';
 import { useState } from 'react';
 import { FaShoppingCart } from 'react-icons/fa';
 import { useSelector } from 'react-redux';
-import { useUpdateFavoriteBookMutation } from '../../store/features/books/booksApi';
 
 import CustomImage from '../CustomImage';
 
@@ -21,8 +20,7 @@ import {
   WriterLinkStyle
 } from './Styles';
 
-function BookCard({ book, bookId }) {
-  // eslint-disable-next-line no-unused-vars
+const BookCard = ({ book, bookId }) => {
   const [favorite, setFavorite] = useState(false);
   const { authors, images, variants, status, ratings } = book || {};
 
@@ -30,39 +28,21 @@ function BookCard({ book, bookId }) {
     (images?.data &&
       `http://localhost:1337${images?.data[0]?.attributes?.url}`) ||
     '/images/product-dummy.png';
-  const authUser = useSelector((state) => state?.auth?.user);
-  const [updateFavoriteBook] = useUpdateFavoriteBookMutation();
-  const userIds = book?.users?.data?.map((item) => item?.id) || [];
+  const authorId = authors?.data[0]?.id;
 
   const handleFavorite = () => {
-    let data = {};
-    let isUserFav = userIds?.find((item) => item === authUser?.id);
-
-    if (isUserFav) {
-      data.users = userIds?.filter((item) => item !== authUser?.id);
+    if (favorite) {
       setFavorite(false);
-      updateFavoriteBook({ bookId, data });
-      console.log({ bookId, data, msg: 'remove', userIds, isUserFav });
     } else {
-      data.users = [...userIds, authUser?.id];
-      console.log({
-        bookId,
-        data,
-        msg: 'add',
-        userIds,
-        isUserFav,
-        userId: authUser?.id
-      });
-      updateFavoriteBook({ bookId, data });
       setFavorite(true);
     }
   };
-  const avarageReview = ratings?.data?.reduce(
-    (acc, cur) => acc + Number(cur.attributes.rate),
-    0
-  );
-
-  const [min, max] =
+  const avarageReview = ratings?.data?.reduce((acc, cur) => {
+    acc += Number(cur.attributes.rate);
+    return acc;
+  }, 0);
+  const authUser = useSelector((state) => state?.auth?.user);
+  let [min, max] =
     variants?.data?.reduce(
       ([prevMin, prevMax], { attributes }) => [
         Math.min(prevMin, attributes?.price),
@@ -75,13 +55,18 @@ function BookCard({ book, bookId }) {
     <StyledBox>
       <Link href={`/books/${bookId}`} sx={{ cursor: 'pointer' }}>
         <Box sx={{ cursor: 'pointer' }}>
-          <CustomImage src={bookImage} />
+          <CustomImage
+            src={bookImage}
+            height="350px"
+            title="comic-book"
+            width="250px"
+          />
         </Box>
       </Link>
       <ContentContainerStyle>
         <TitleStyle>
           <Link href={`/books/${bookId}`}>
-            <Typography variant="h3" color="text.primary" py="5px">
+            <Typography variant="h3" color="text.primary" py={'5px'}>
               {book?.name}
             </Typography>
           </Link>
@@ -139,14 +124,17 @@ function BookCard({ book, bookId }) {
           alignItems="center"
           justifyContent="space-between"
         >
-          <Link href={`/books/${bookId}`} sx={{ cursor: 'pointer' }}>
+          <Link
+            href={`${authUser ? `/books/${bookId}` : ''}`}
+            sx={{ cursor: 'pointer' }}
+          >
             <CartBtnStyle>
               <FaShoppingCart /> Cart
             </CartBtnStyle>
           </Link>
 
           <StyledFav onClick={handleFavorite}>
-            {book?.isFavorite ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+            {favorite ? <FavoriteIcon /> : <FavoriteBorderIcon />}
           </StyledFav>
         </Stack>
       </ContentContainerStyle>
@@ -157,6 +145,6 @@ function BookCard({ book, bookId }) {
       )}
     </StyledBox>
   );
-}
+};
 
 export default BookCard;

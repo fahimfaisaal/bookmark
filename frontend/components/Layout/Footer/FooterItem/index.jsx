@@ -2,10 +2,9 @@ import { Typography } from '@mui/material';
 import { Box, Stack } from '@mui/system';
 import Link from 'next/link';
 import React from 'react';
-import { shortId } from '../../../../utils';
 import { LinkContainer } from './Styles';
 
-function FooterItem({ title, data }) {
+const FooterItem = ({ title, data }) => {
   return (
     <Box>
       <Typography variant="h2" paddingBottom={4}>
@@ -13,15 +12,15 @@ function FooterItem({ title, data }) {
       </Typography>
       <Stack>
         {data.map((item) => (
-          <Link key={shortId()} href={item.link}>
+          <Link href={item.link}>
             <Box>
-              <LinkContainer key={item.name}>{item.name}</LinkContainer>
+              <LinkContainer key={item.text}>{item.text}</LinkContainer>
             </Box>
           </Link>
         ))}
       </Stack>
     </Box>
   );
-}
+};
 
 export default FooterItem;

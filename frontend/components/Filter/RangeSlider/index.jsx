@@ -67,9 +67,9 @@ export default function RangeSlider({
           />
 
           <Stack
-            direction="row"
-            justifyContent="space-between"
-            alignItems="center"
+            direction={'row'}
+            justifyContent={'space-between'}
+            alignItems={'center'}
             gap={2}
           >
             <PriceRangeContainer>

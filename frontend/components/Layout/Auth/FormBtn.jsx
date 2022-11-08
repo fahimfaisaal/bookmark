@@ -1,13 +1,13 @@
 import { Button } from '@mui/material';
 import React from 'react';
 
-function FormBtn({ children, color, disabled }) {
+const FormBtn = ({ children, color, disabled }) => {
   return (
     <Button
       variant="contained"
       size="large"
-      fullWidth
-      disableElevation
+      fullWidth={true}
+      disableElevation={true}
       disabled={disabled}
       color={color}
       type="submit"
@@ -20,6 +20,6 @@ function FormBtn({ children, color, disabled }) {
       {children}
     </Button>
   );
-}
+};
 
 export default FormBtn;

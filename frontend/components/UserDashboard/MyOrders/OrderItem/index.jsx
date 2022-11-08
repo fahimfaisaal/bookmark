@@ -1,4 +1,5 @@
 import {
+  Box,
   Button,
   Table,
   TableBody,
@@ -7,9 +8,9 @@ import {
   TableRow,
   Typography
 } from '@mui/material';
-import { StyledTableCell, StyledTableContainer } from './Styles';
+import { StyledOrder, StyledTableCell, StyledTableContainer } from './Styles';
 
-function OrderItem() {
+const OrderItem = () => {
   return (
     <StyledTableContainer>
       <Table>
@@ -45,6 +46,6 @@ function OrderItem() {
       </Table>
     </StyledTableContainer>
   );
-}
+};
 
 export default OrderItem;

@@ -1,19 +1,18 @@
 import { Typography } from '@mui/material';
 import { Box } from '@mui/system';
-import Logo from '../../Logo';
 import { DialogHeader } from './Styles';
 
-function Header({ subtitle }) {
+const Header = ({ subtitle }) => {
   return (
     <DialogHeader>
       <Box>
-        <Logo />
+        <img src="/images/logo-1.png" alt="" width={210} height={35} />
       </Box>
       <Typography variant="body1" py={2}>
         {subtitle}
       </Typography>
     </DialogHeader>
   );
-}
+};
 
 export default Header;

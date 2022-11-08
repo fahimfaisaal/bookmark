@@ -1,4 +1,4 @@
-function CustomImage({ src, title, width, height }) {
+const CustomImage = ({ src, title, width, height }) => {
   return (
     <img
       style={{
@@ -13,6 +13,6 @@ function CustomImage({ src, title, width, height }) {
       height={height}
     />
   );
-}
+};
 
 export default CustomImage;

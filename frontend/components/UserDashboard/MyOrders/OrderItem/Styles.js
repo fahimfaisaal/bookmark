@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { TableCell, TableContainer } from '@mui/material';
+import { Button, TableCell, TableContainer, Typography } from '@mui/material';
 
 export const StyledTableContainer = styled(TableContainer)(({ theme }) => ({
   backgroundColor: `${theme.palette.background.paper}`,

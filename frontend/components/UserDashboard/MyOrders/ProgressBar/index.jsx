@@ -11,7 +11,7 @@ const steps = [
   'At Local Facility'
 ];
 
-function ProgressBar() {
+const ProgressBar = () => {
   return (
     <Box sx={{ width: '100%', marginTop: '10px' }}>
       <Stepper activeStep={0} alternativeLabel>
@@ -23,6 +23,6 @@ function ProgressBar() {
       </Stepper>
     </Box>
   );
-}
+};
 
 export default ProgressBar;

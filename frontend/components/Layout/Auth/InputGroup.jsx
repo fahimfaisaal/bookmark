@@ -2,7 +2,7 @@ import { TextField } from '@mui/material';
 import React from 'react';
 import { InputLabelStyle } from './Styles';
 
-function InputGroup({ label, type }) {
+const InputGroup = ({ label, type, field }) => {
   const name = String(label).toLowerCase();
   return (
     <>
@@ -10,6 +10,6 @@ function InputGroup({ label, type }) {
       <TextField fullWidth name={name} type={type} />
     </>
   );
-}
+};
 
 export default InputGroup;

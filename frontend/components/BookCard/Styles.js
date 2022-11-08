@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { Box, Button, Link } from '@mui/material';
 import { Stack } from '@mui/system';
 
-export const StyledBox = styled(Box)(() => ({
+export const StyledBox = styled(Box)(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
   gap: '5px',

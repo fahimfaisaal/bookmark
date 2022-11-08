@@ -11,12 +11,12 @@ export const ContainerStyle = styled(Box)(({ theme }) => ({
   background: `${theme.palette.background.dark}`
 }));
 
-export const BtnContainerStyle = styled(Typography)(() => ({
+export const BtnContainerStyle = styled(Typography)(({ theme }) => ({
   fontSize: '24px',
   cursor: 'pointer'
 }));
 
-export const QntContainerStyle = styled(Typography)(() => ({
+export const QntContainerStyle = styled(Typography)(({ theme }) => ({
   fontSize: '18px',
   marginTop: '5px'
 }));

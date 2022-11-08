@@ -19,6 +19,7 @@ export const StyledLink = styled(MLink)(({ theme, active }) => ({
 export const StyledListItem = styled(ListItem)(({ theme, active }) => ({
   margin: '10px 0px',
   padding: '10px',
+  borderLeft: `3px solid ${theme.palette.background.paper}`,
   cursor: 'pointer',
   borderLeft: active
     ? `3px solid ${theme.palette.primary.main}`
@@ -31,6 +32,7 @@ export const StyledContainer = styled(Box)(({ theme }) => ({
   margin: 0,
   border: 'none',
   borderRadius: '8px',
+  boxShadow: `${theme.shadows[4]}`,
   backgroundColor: `${theme.palette.background.default}`,
   boxShadow: myShadows.common,
   [theme.breakpoints.down('md')]: {

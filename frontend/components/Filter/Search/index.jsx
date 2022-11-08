@@ -13,7 +13,7 @@ import {
 import SearchBar from '../../shared/SearchBar';
 import { FilterTitleStyle } from '../style';
 
-function SearchBarComp() {
+const SearchBarComp = () => {
   const router = useRouter();
   const [expanded, setExpanded] = useState(false);
   const filterSearch = useSelector(getSearchText);
@@ -58,6 +58,6 @@ function SearchBarComp() {
       </Accordion>
     </Box>
   );
-}
+};
 
 export default SearchBarComp;

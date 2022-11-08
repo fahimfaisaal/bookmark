@@ -13,7 +13,7 @@ import {
   TitleStyle
 } from './style';
 
-function PublicationCover({ publisherData }) {
+const PublicationCover = ({ publisherData }) => {
   // const { name, logo, banner, socials, website } = publisherData;
   const logoUrl =
     (publisherData?.data &&
@@ -27,33 +27,33 @@ function PublicationCover({ publisherData }) {
   return (
     <ContainerStyle>
       <ProfileContainerStyle
-        direction="column"
-        alignItems="center"
-        justifyContent="center"
+        direction={'column'}
+        alignItems={'center'}
+        justifyContent={'center'}
       >
         <LogoContainer>
           <img src={logoUrl} alt="" />
         </LogoContainer>
         <DetailsContainerStyle>
-          <TitleStyle variant="h2">{publisherData?.name}</TitleStyle>
+          <TitleStyle variant={'h2'}>{publisherData?.name}</TitleStyle>
           <LinkContainer>
             <Typography variant="caption">{publisherData?.website}</Typography>
           </LinkContainer>
-          <Stack direction="row" spacing={1} justifyContent="center">
+          <Stack direction={'row'} spacing={1} justifyContent={'center'}>
             <LinkContainer
-              target="_blank"
+              target={'_blank'}
               href={publisherData?.socials.split(',')[0]}
             >
               <BsFacebook />
             </LinkContainer>
             <LinkContainer
-              target="_blank"
+              target={'_blank'}
               href={publisherData?.socials.split(',')[1]}
             >
               <BsTwitter />
             </LinkContainer>
             <LinkContainer
-              target="_blank"
+              target={'_blank'}
               href={publisherData?.socials.split(',')[2]}
             >
               <BsLinkedin />
@@ -67,6 +67,6 @@ function PublicationCover({ publisherData }) {
       </BannerContainerStyle>
     </ContainerStyle>
   );
-}
+};
 
 export default PublicationCover;

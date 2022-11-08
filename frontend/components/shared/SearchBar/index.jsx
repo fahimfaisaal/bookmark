@@ -3,21 +3,19 @@ import { useDeferredValue, useEffect, useState } from 'react';
 import { BiSearch } from 'react-icons/bi';
 import { SearchContainer } from './Styles';
 
-function SearchBar({
+const SearchBar = ({
   searchHandler,
   normal = true,
   initialState = '',
   placeholder = 'Search Books (at least 3 char)'
-}) {
+}) => {
   const theme = useTheme();
   const [focus, setFocus] = useState(false);
   const [searchText, setSearchText] = useState(initialState);
   const deferredText = useDeferredValue(searchText);
 
   useEffect(() => {
-    if (searchHandler) {
-      searchHandler(deferredText);
-    }
+    searchHandler && searchHandler(deferredText);
   }, [deferredText]);
 
   useEffect(() => {
@@ -53,10 +51,10 @@ function SearchBar({
         onFocus={handleOnFocus}
         onBlur={handleOnBlur}
         onChange={changeHandler}
-        fullWidth
+        fullWidth={true}
       />
     </SearchContainer>
   );
-}
+};
 
 export default SearchBar;

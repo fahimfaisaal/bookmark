@@ -9,7 +9,6 @@ import { Stack } from '@mui/system';
 import { useRouter } from 'next/router';
 import { HiShoppingBag } from 'react-icons/hi';
 import { IoIosClose } from 'react-icons/io';
-import { shortId } from '../../../utils';
 import CartItem from '../../CartItem';
 import {
   CartContainer,
@@ -34,7 +33,7 @@ export default function CartItemComponent({
 
   return (
     <SwipeableDrawer
-      anchor="right"
+      anchor={'right'}
       open={cartModalTrg}
       onClose={toggleDrawer(false)}
       onOpen={toggleDrawer(true)}
@@ -42,13 +41,13 @@ export default function CartItemComponent({
       <CartContainer role="presentation">
         <CartHeaderContainer>
           <Stack
-            direction="row"
-            justifyContent="space-between"
-            alignItems="center"
+            direction={'row'}
+            justifyContent={'space-between'}
+            alignItems={'center'}
           >
-            <Stack direction="row" alignItems="center">
-              <HiShoppingBag fontSize="24px" />
-              <Typography variant="h4" fontSize="18px" px="10px">
+            <Stack direction={'row'} alignItems={'center'}>
+              <HiShoppingBag fontSize={'24px'} />
+              <Typography variant="h4" fontSize={'18px'} px={'10px'}>
                 {cartLists?.length > 0 ? cartLists?.length : 'No'} Item
               </Typography>
             </Stack>
@@ -62,7 +61,7 @@ export default function CartItemComponent({
         <Divider />
 
         {cartLists?.map((cart) => (
-          <CartItemContainer key={shortId()}>
+          <CartItemContainer>
             <CartItem cart={cart} cartId={cart?.id} key={cart?.id} />
           </CartItemContainer>
         ))}
@@ -78,8 +77,8 @@ export default function CartItemComponent({
           </Typography>
           <Button
             variant="contained"
-            fullWidth
-            size="large"
+            fullWidth={true}
+            size={'large'}
             onClick={navigateCheckout}
           >
             Checkout

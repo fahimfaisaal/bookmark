@@ -13,6 +13,6 @@ export const StyledContainer = styled(Box)(({ theme }) => ({
   backgroundColor: `${theme.palette.background.default}`,
   boxShadow: myShadows.common
 }));
-export const StyledGrid = styled(Grid)(() => ({
+export const StyledGrid = styled(Grid)(({ theme }) => ({
   // backgroundColor: `${theme.palette.background.default}`,
 }));

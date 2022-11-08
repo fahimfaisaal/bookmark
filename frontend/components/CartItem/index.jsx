@@ -1,6 +1,6 @@
 import { Typography } from '@mui/material';
 import { Stack } from '@mui/system';
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { IoIosClose } from 'react-icons/io';
 import {
   useDeleteCartMutation,
@@ -13,13 +13,13 @@ import {
   RemoveBtnContanerStyle
 } from './Styles';
 import VerticalQuantityBtn from './VerticalQuntityBtn';
-
-function CartItem({ cart, cartId }) {
+const CartItem = ({ cart, cartId }) => {
   const { book, variant } = cart;
   const [deleteCart] = useDeleteCartMutation();
 
   const [cartQty, setCartQty] = useState(cart?.quantity);
-  const [updateCart] = useUpdateCartMutation();
+  const [updateCart, { data: updateCartData, error: updateCartError }] =
+    useUpdateCartMutation();
 
   const itemIncrement = () => {
     // based on stock
@@ -34,7 +34,7 @@ function CartItem({ cart, cartId }) {
 
   useEffect(() => {
     if (cartQty !== cart?.quantity) {
-      const data = {};
+      let data = {};
       data.quantity = cartQty;
       if (data.quantity <= 0) {
         deleteCart({ cartId });
@@ -50,9 +50,9 @@ function CartItem({ cart, cartId }) {
 
   return (
     <ItemContainerStyle
-      direction="row"
+      direction={'row'}
       spacing={2}
-      justifyContent="space-between"
+      justifyContent={'space-between'}
     >
       <VerticalQuantityBtn
         quantity={cart?.quantity}
@@ -68,9 +68,9 @@ function CartItem({ cart, cartId }) {
           width={60}
         />
       </ImgContainerStyle>
-      <Stack direction="column" spacing={2}>
+      <Stack direction={'column'} spacing={2}>
         <Typography variant="h3">{book?.data?.attributes?.name}</Typography>
-        <Stack direction="row" justifyContent="space-between">
+        <Stack direction={'row'} justifyContent={'space-between'}>
           <PriceContainerStyle variant="body1">
             {' '}
             ${variant?.data?.attributes?.price}
@@ -86,6 +86,6 @@ function CartItem({ cart, cartId }) {
       </RemoveBtnContanerStyle>
     </ItemContainerStyle>
   );
-}
+};
 
 export default CartItem;

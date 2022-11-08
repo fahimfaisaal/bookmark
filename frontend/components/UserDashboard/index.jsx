@@ -1,8 +1,10 @@
 import { Box, Grid } from '@mui/material';
+import { Container } from '@mui/system';
 import React from 'react';
 import ProfileMenu from './Menu';
+import { StyledGrid } from './Styles';
 
-function UserDashboard({ children }) {
+const UserDashboard = ({ children }) => {
   return (
     <Grid container spacing={4} sx={{ paddingTop: 5, marginTop: -5 }}>
       <Grid item xs={12} sm={3} md={4} lg={3}>
@@ -13,6 +15,6 @@ function UserDashboard({ children }) {
       </Grid>
     </Grid>
   );
-}
+};
 
 export default UserDashboard;

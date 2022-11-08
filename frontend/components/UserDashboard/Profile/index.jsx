@@ -4,23 +4,17 @@ import AddressCard from '../../AddressCard';
 import { StyledContainer } from '../Styles';
 import ContactCard from './ContactCard';
 import InputField from './InputField';
-import { useSelector } from 'react-redux';
-import { useGetProfileQuery } from '../../../store/features/user/userApi';
 
-function Profile() {
-  const authUser = useSelector((state) => state?.auth?.user);
-  const { data: profileData } = useGetProfileQuery(undefined, {
-    skip: !authUser
-  });
+const Profile = () => {
   return (
     <Stack spacing={3}>
-      <InputField profileData={profileData} />
-      <ContactCard profileData={profileData} />
+      <InputField />
+      <ContactCard />
       <StyledContainer sx={{ boxShadow: 3 }}>
-        <AddressCard label="Address" profileData={profileData} />
+        <AddressCard label={'Address'} />
       </StyledContainer>
     </Stack>
   );
-}
+};
 
 export default Profile;

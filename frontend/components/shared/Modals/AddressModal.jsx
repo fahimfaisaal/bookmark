@@ -1,12 +1,12 @@
+import * as React from 'react';
 import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
-import TextField from '@mui/material/TextField';
+import { useForm, Controller } from 'react-hook-form';
 import { Box } from '@mui/system';
-import * as React from 'react';
-import { Controller, useForm } from 'react-hook-form';
 
 export default function AddressModal({ btnText, getData }) {
   const [open, setOpen] = React.useState(false);
@@ -19,7 +19,7 @@ export default function AddressModal({ btnText, getData }) {
     setOpen(false);
   };
 
-  // Handle Form =========================
+  //Handle Form =========================
   const {
     handleSubmit,
     control,
@@ -36,12 +36,17 @@ export default function AddressModal({ btnText, getData }) {
     getData({ ...data });
     reset();
   };
-  // Handle Form =========================
+  //Handle Form =========================
 
   return (
     <>
       <Button onClick={handleClickOpen}>{btnText}</Button>
-      <Dialog open={open} onClose={handleClose} fullWidth maxWidth="sm">
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        fullWidth={true}
+        maxWidth={'sm'}
+      >
         <DialogTitle>Update Address</DialogTitle>
         <DialogContent>
           <form onSubmit={handleSubmit(onSubmit)}>
@@ -56,11 +61,11 @@ export default function AddressModal({ btnText, getData }) {
                     fullWidth
                     name="title"
                     size="small"
-                    label="Title"
+                    label={'Title'}
                     error={Boolean(errors.title)}
                     {...register('title', { required: 'Title is required' })}
                     helperText={errors.title?.message}
-                    type="text"
+                    type={'text'}
                     {...field}
                   />
                 </Box>
@@ -78,13 +83,13 @@ export default function AddressModal({ btnText, getData }) {
                     name="address"
                     placeholder="stree, city, country.."
                     size="small"
-                    label="Address"
+                    label={'Address'}
                     error={Boolean(errors.address)}
                     {...register('address', {
                       required: 'Address is required'
                     })}
                     helperText={errors.address?.message}
-                    type="text"
+                    type={'text'}
                     {...field}
                   />
                 </Box>
