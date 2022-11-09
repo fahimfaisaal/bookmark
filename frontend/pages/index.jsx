@@ -97,7 +97,6 @@ function Home() {
   //     `http://localhost:1337${banners?.data?.attributes?.images?.data[0]?.attributes?.url}`) ||
   //   '/images/Cover.png';
 
-
   return (
     <ContainerStyle>
       <HeroContainer sx={{ cursor: 'pointer' }}>
