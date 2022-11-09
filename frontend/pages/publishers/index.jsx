@@ -1,10 +1,11 @@
-import { Box, Grid, Stack, Typography } from '@mui/material';
+import { Box, debounce, Grid, Stack, Typography } from '@mui/material';
+import { useState } from 'react';
 import PublicationCard from '../../components/PublicationCard';
 import PublisherSkeleton from '../../components/PublisherSkeleton';
 import CustomLink from '../../components/shared/CustomLink';
 import SearchBar from '../../components/shared/SearchBar';
 import { useGetPublishersQuery } from '../../store/features/publishers/publishersApi';
-import { fakeArr } from '../../utils';
+import { fakeArr, generateQuery } from '../../utils';
 import { HeaderContainerStyle, HeaderStyle } from '../authors/Styles';
 
 const getPublisherData = () => ({
@@ -12,14 +13,21 @@ const getPublisherData = () => ({
     id: 1,
     attributes: {
       title: 'Manufacturers/Publishers',
-      subtitle: 'Lorem ipsum dolor sit amet, consectetu eradipiscing elit.'
+      subtitle: 'Lorem ipsum dolor sit amet, consectetu eradipiscing elit.',
+      searchPlaceholder: 'Search Your Favorite Publisher from here'
     }
   }
 });
 
 function Publications() {
+  const [searchText, setSearchText] = useState('');
   const { data: publisherLists, isLoading: isPublisherLoading } =
-    useGetPublishersQuery();
+    useGetPublishersQuery({ query: generateQuery({ searchText }) });
+  console.log({ searchText: generateQuery({ searchText }) });
+
+  const publisherSearchHandler = (value) => {
+    setSearchText(value);
+  };
 
   const { data: publisherData } = getPublisherData();
   return (
@@ -27,15 +35,16 @@ function Publications() {
       <HeaderContainerStyle>
         <HeaderStyle>
           <Typography variant="h1" color="primary">
-            {publisherData.attributes?.title}
+            {publisherData?.attributes?.title}
           </Typography>
           <Typography variant="body1">
-            {publisherData.attributes?.subtitle}
+            {publisherData?.attributes?.subtitle}
           </Typography>
           <Stack direction="row" justifyContent="center" my={5}>
             <SearchBar
-              placeholder="Search Your Favorite Author from here"
+              placeholder={publisherData?.attributes?.searchPlaceholder}
               width="700px"
+              searchHandler={debounce(publisherSearchHandler, 800)}
             />
           </Stack>
         </HeaderStyle>

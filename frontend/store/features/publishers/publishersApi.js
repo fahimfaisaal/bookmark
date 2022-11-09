@@ -3,7 +3,7 @@ import { apiSlice } from '../api/apiSlice';
 export const publishersApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getPublishers: builder.query({
-      query: () => '/publishers?populate=*',
+      query: ({ query = 'populate=*' } = {}) => `/publishers?${query}`,
       providesTags: ['publishers']
     }),
     getPublisher: builder.query({

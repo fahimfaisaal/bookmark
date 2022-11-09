@@ -3,7 +3,7 @@ import { userLoggedOut } from '../auth/authSlice';
 
 const baseQuery = fetchBaseQuery({
   // eslint-disable-next-line no-undef
-  baseUrl: '/api',
+  baseUrl: process.env.NEXT_PUBLIC_API_URL,
   prepareHeaders: async (headers, { getState }) => {
     const token = getState()?.auth?.accessToken;
     if (token) {
