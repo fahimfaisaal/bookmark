@@ -90,6 +90,7 @@ function Home() {
   const { data: categories, isLoading: isCategoriesLoading } =
     useGetCategoryQuery();
   const memoDate = useMemo(() => new Date().toISOString(), []);
+  // TODO: use useFilterBooksQuery
   const { data: newBooks, isLoading: isNewBooksLoading } = useGetBooksQuery({
     query: {
       populate: '*',
@@ -103,6 +104,7 @@ function Home() {
       }
     }
   });
+  // TODO: use useFilterBooksQuery
   const { data: popularBooks, isLoading: isPopularBookLoading } =
     useGetBooksQuery({
       query: {
@@ -131,6 +133,7 @@ function Home() {
           <Banner />
         </Link>
       </HeroContainer>
+
       <SectionContainer>
         <SectionHeaderStyle variant="h1">
           {homeData.attributes?.popular}
@@ -177,8 +180,9 @@ function Home() {
             {categories?.data?.length > 0 &&
               categories?.data?.map((category) => (
                 <CategoryCard
-                  key={category?.id}
-                  category={category?.attributes}
+                  key={category.id}
+                  id={category.id}
+                  category={category.attributes}
                 />
               ))}
           </Carousel>
