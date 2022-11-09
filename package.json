@@ -23,7 +23,7 @@
   },
   "scripts": {
     "format": "prettier --config .prettierrc ./**/**/*.{js,jsx} --write",
-    "lint": "eslint .",
+    "lint": "eslint . --fix",
     "prepare": "husky install"
   },
   "lint-staged": {
@@ -31,5 +31,6 @@
       "yarn format",
       "yarn lint"
     ]
-  }
+  },
+  "dependencies": {}
 }
