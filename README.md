@@ -1,12 +1,5 @@
-- 
+<h1 align="center">Bookmark<h1>
 
-
-
-
-
-
-
-# Project: Bookmark - an E-commerce full stack application
 ---
  # Description:
  The “FullStack Army” a learning platform of programming under the monitoring of the best promising programmer in BD Mr. H M Nayem who has offered to his students to  do group work which would enhance the learning curve of development in Information Technology. As a student we were  selected for building an E-commerce web application.we chose our product as a “book” and named it as “BOOKMARK”. This application is fully made of modern technology in running trends of the IT industry. 

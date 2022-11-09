@@ -7,12 +7,21 @@
     "dev": "strapi develop",
     "start": "strapi start",
     "build": "strapi build",
-    "strapi": "strapi"
+    "strapi": "strapi",
+    "seed": "cross-env FORCE_APP_BOOTSTRAP_ONLY_TO=SEED strapi start",
+    "reset": "cross-env FORCE_APP_BOOTSTRAP_ONLY_TO=RESET strapi start",
+    "seed:models": "cross-env FORCE_APP_BOOTSTRAP_ONLY_TO=SEED_MODELS strapi start",
+    "reset:models": "cross-env FORCE_APP_BOOTSTRAP_ONLY_TO=RESET_MODELS strapi start",
+    "relate:models": "cross-env FORCE_APP_BOOTSTRAP_ONLY_TO=RELATE_MODELS strapi start",
+    "seed:medias": "cross-env FORCE_APP_BOOTSTRAP_ONLY_TO=SEED_MEDIAS strapi start",
+    "reset:medias": "cross-env FORCE_APP_BOOTSTRAP_ONLY_TO=RESET_MEDIAS strapi start"
   },
   "dependencies": {
     "@strapi/plugin-i18n": "4.4.3",
     "@strapi/plugin-users-permissions": "4.4.3",
+    "@strapi/provider-upload-cloudinary": "^4.4.7",
     "@strapi/strapi": "4.4.3",
+    "axios": "^1.1.3",
     "pg": "^8.8.0"
   },
   "author": {
@@ -25,5 +34,11 @@
     "node": ">=14.19.1 <=18.x.x",
     "npm": ">=6.0.0"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "@faker-js/faker": "^7.6.0",
+    "cross-env": "^7.0.3",
+    "lint-staged": "^13.0.3",
+    "yaml": "^2.1.3"
+  }
 }

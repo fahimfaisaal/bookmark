@@ -1,0 +1,114 @@
+- modelName: user
+  count: 10
+  medias:
+    - fieldName: avatar
+      path: _seed/images/user
+      type: image
+  relations:
+    - relateWith: book
+      type: m2m
+      labels:
+        - favorites
+        - books
+      max: 10
+      min: 3
+
+- modelName: book
+  count: 150
+  medias:
+    - fieldName: images
+      path: _seed/images/book
+      type: image
+      multi: true
+      max: 5
+      min: 1
+  relations:
+    - relateWith: category
+      type: m2m
+      labels:
+        - categories
+        - books
+      max: 3
+      min: 1
+
+    - relateWith: tag
+      type: m2m
+      labels:
+        - tags
+        - books
+      max: 5
+      min: 1
+
+    - relateWith: author
+      type: m2m
+      labels:
+        - authors
+        - books
+      max: 3
+      min: 1
+
+    - relateWith: publisher
+      type: o2m
+      label: publisherId
+
+    - relateWith: book
+      type: o2m
+      label: editions
+      max: 3
+      min: 0
+
+- modelName: category
+  count: 50
+  medias:
+    - fieldName: coverImage
+      path: _seed/images/category
+      type: image
+- modelName: tag
+  count: 50
+
+- modelName: language
+  count: 15
+
+- modelName: author
+  count: 25
+  medias:
+    - fieldName: avatar
+      path: _seed/images/author
+      type: image
+  relations:
+    - relateWith: publisher
+      type: m2m
+      labels:
+        - publishers
+        - authors
+      max: 5
+      min: 1
+
+- modelName: publisher
+  count: 10
+
+- modelName: rating
+  count: 50
+  relations:
+    - relateWith: book
+      type: o2m
+      label: bookId
+
+    - relateWith: user
+      type: o2m
+      label: userId
+
+- modelName: variant
+  count: 200
+  medias:
+    - fieldName: downloadable
+      path: _seed/pdf/book
+      type: file
+  relations:
+    - relateWith: language
+      type: o2m
+      label: languageId
+
+    - relateWith: book
+      type: o2m
+      label: bookId

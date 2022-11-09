@@ -25,7 +25,8 @@
         "PROCESSING",
         "DELIVERED",
         "RETURNED"
-      ]
+      ],
+      "required": false
     },
     "isCanceled": {
       "type": "boolean",
@@ -40,7 +41,7 @@
     "books": {
       "type": "relation",
       "relation": "oneToMany",
-      "target": "api::book.book"
+      "target": "api::cart.cart"
     }
   }
 }

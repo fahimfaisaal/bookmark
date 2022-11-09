@@ -12,7 +12,7 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "book": {
+    "bookId": {
       "type": "relation",
       "relation": "manyToOne",
       "target": "api::book.book",
@@ -24,30 +24,58 @@
         "PDF",
         "AUDIO",
         "HAND_COPY"
-      ]
+      ],
+      "default": "HAND_COPY",
+      "required": true
     },
     "discount": {
-      "type": "integer"
+      "type": "integer",
+      "min": 0,
+      "max": 100
     },
     "price": {
-      "type": "integer"
+      "type": "integer",
+      "min": 0
     },
-    "media": {
+    "downloadable": {
       "type": "media",
-      "multiple": true,
+      "multiple": false,
       "required": false,
       "allowedTypes": [
-        "images",
         "files",
-        "videos",
         "audios"
       ]
     },
-    "languages": {
+    "languageId": {
       "type": "relation",
-      "relation": "manyToMany",
+      "relation": "manyToOne",
       "target": "api::language.language",
       "inversedBy": "variants"
+    },
+    "pageFormate": {
+      "type": "enumeration",
+      "enum": [
+        "A0",
+        "A1",
+        "A2",
+        "A3",
+        "A4",
+        "A5",
+        "A6"
+      ],
+      "default": "A4",
+      "required": true
+    },
+    "pageQuality": {
+      "type": "enumeration",
+      "enum": [
+        "WHITE_OFFSET",
+        "WHITE_OR_NATURAL",
+        "GLOSS_TEXT",
+        "WHITE_SMOOTH_OFFSET"
+      ],
+      "default": "WHITE_OFFSET",
+      "required": true
     }
   }
 }

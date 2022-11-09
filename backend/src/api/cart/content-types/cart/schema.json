@@ -4,7 +4,8 @@
   "info": {
     "singularName": "cart",
     "pluralName": "carts",
-    "displayName": "Cart"
+    "displayName": "Cart",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -12,12 +13,8 @@
   "pluginOptions": {},
   "attributes": {
     "quantity": {
-      "type": "integer"
-    },
-    "userId": {
-      "type": "relation",
-      "relation": "oneToOne",
-      "target": "plugin::users-permissions.user"
+      "type": "integer",
+      "required": true
     },
     "orderId": {
       "type": "string"
@@ -26,6 +23,17 @@
       "type": "relation",
       "relation": "oneToOne",
       "target": "api::variant.variant"
+    },
+    "book": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::book.book"
+    },
+    "userId": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "carts"
     }
   }
 }

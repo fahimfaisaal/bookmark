@@ -70,10 +70,16 @@
       "mappedBy": "userId"
     },
     "firstName": {
-      "type": "string"
+      "type": "string",
+      "required": false,
+      "maxLength": 30,
+      "minLength": 2
     },
     "lastName": {
-      "type": "string"
+      "type": "string",
+      "maxLength": 30,
+      "minLength": 3,
+      "required": false
     },
     "gender": {
       "type": "enumeration",
@@ -81,7 +87,8 @@
         "MALE",
         "FEMALE",
         "OTHERS"
-      ]
+      ],
+      "required": false
     },
     "birthDate": {
       "type": "date"
@@ -91,14 +98,12 @@
       "multiple": false,
       "required": false,
       "allowedTypes": [
-        "images",
-        "files",
-        "videos",
-        "audios"
+        "images"
       ]
     },
     "phone": {
-      "type": "string"
+      "type": "string",
+      "required": true
     },
     "address": {
       "type": "text"
@@ -109,15 +114,17 @@
       "target": "api::order.order",
       "mappedBy": "usersId"
     },
+    "favorites": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::book.book",
+      "mappedBy": "users"
+    },
     "carts": {
       "type": "relation",
       "relation": "oneToMany",
-      "target": "api::cart.cart"
-    },
-    "favorites": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::book.book"
+      "target": "api::cart.cart",
+      "mappedBy": "userId"
     }
   }
 }

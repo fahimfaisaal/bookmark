@@ -26,14 +26,14 @@ const config = {
     // 'vi',
     // 'zh-Hans',
     // 'zh',
-  ],
+  ]
 };
 
 const bootstrap = (app) => {
   console.log(app);
 };
 
-export default {
+module.exports = {
   config,
-  bootstrap,
+  bootstrap
 };
