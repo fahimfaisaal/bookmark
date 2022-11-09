@@ -78,7 +78,7 @@ const NavBar = () => {
   const isAuthenticated = useSelector((state) => state?.auth);
   const authUser = isAuthenticated?.user || {};
   const { loginModal, registerModal } = useSelector(
-    (state) => state?.authModal
+    (state) => state?.authModal ?? false
   );
 
   const { data: cartLists } = useGetCartsByUserQuery(
