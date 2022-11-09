@@ -17,10 +17,10 @@ export const cartsApi = apiSlice.injectEndpoints({
       providesTags: (result, error, arg) => [{ type: 'cart', id: arg }, 'carts']
     }),
     addToCart: builder.mutation({
-      query: ({ data }) => ({
+      query: (data) => ({
         url: '/carts',
         method: 'POST',
-        body: { data }
+        body: data
       }),
       invalidatesTags: ['carts']
     }),
