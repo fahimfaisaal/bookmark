@@ -2,7 +2,7 @@ import { Box, Button, InputLabel, TextField, Typography } from '@mui/material';
 import { useForm, Controller } from 'react-hook-form';
 import { StyledContainer } from '../../../components/UserDashboard/Styles';
 
-const Form = () => {
+const Form = ({ contactData }) => {
   //Handle Form ===================
 
   const {
@@ -26,7 +26,7 @@ const Form = () => {
     <>
       <StyledContainer>
         <Typography variant="h2" fontWeight={800}>
-          Questions, Comments, or Concerns?
+          {contactData?.attributes?.heading}
         </Typography>
         <form onSubmit={handleSubmit(onSubmit)}>
           <Controller
@@ -39,12 +39,12 @@ const Form = () => {
                   htmlFor="description"
                   sx={{ marginTop: 2, paddingBottom: 1, fontWeight: 600 }}
                 >
-                  Name
+                  {contactData?.attributes?.form?.name}
                 </InputLabel>
                 <TextField
                   fullWidth
                   name="name"
-                  label={'Name'}
+                  label={contactData?.attributes?.form?.name}
                   error={Boolean(errors.name)}
                   {...register('name', {
                     required: 'Name is required'
@@ -66,12 +66,12 @@ const Form = () => {
                   htmlFor="description"
                   sx={{ marginTop: 2, paddingBottom: 1, fontWeight: 600 }}
                 >
-                  Email
+                  {contactData?.attributes?.form?.email}
                 </InputLabel>
                 <TextField
                   fullWidth
                   name="email"
-                  label={'Email'}
+                  label={contactData?.attributes?.form?.email}
                   error={Boolean(errors.email)}
                   {...register('email', {
                     required: 'Email is required'
@@ -93,12 +93,12 @@ const Form = () => {
                   htmlFor="description"
                   sx={{ marginTop: 2, paddingBottom: 1, fontWeight: 600 }}
                 >
-                  Subject
+                  {contactData?.attributes?.form?.subject}
                 </InputLabel>
                 <TextField
                   fullWidth
                   name="subject"
-                  label={'Subject'}
+                  label={contactData?.attributes?.form?.subject}
                   error={Boolean(errors.subject)}
                   {...register('subject', {
                     required: 'Subject is required'
@@ -121,14 +121,14 @@ const Form = () => {
                   htmlFor="description"
                   sx={{ marginTop: 2, paddingBottom: 1, fontWeight: 600 }}
                 >
-                  Description
+                  {contactData?.attributes?.form?.description}
                 </InputLabel>
                 <TextField
                   sx={{ marginBottom: 1.6 }}
                   id="description"
                   fullWidth
                   name="description"
-                  label={'Description'}
+                  label={contactData?.attributes?.form?.description}
                   error={Boolean(errors.description)}
                   rows={4}
                   multiline
@@ -143,15 +143,20 @@ const Form = () => {
             )}
           />
 
-          <Box>
+          {contactData?.attributes?.buttons?.buttons?.map((item) => (
             <Button
+              key={item.text}
               variant="btnGreen"
               type="submit"
-              sx={{ padding: '12px 25px' }}
+              sx={{
+                padding: '12px 25px',
+                marginTop: '.8rem',
+                marginBottom: '1.5rem'
+              }}
             >
-              Submit
+              {item.text}
             </Button>
-          </Box>
+          ))}
         </form>
       </StyledContainer>
     </>

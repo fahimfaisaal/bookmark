@@ -12,7 +12,7 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "header": {
+    "heading": {
       "type": "string"
     },
     "images": {
@@ -23,11 +23,11 @@
         "images"
       ]
     },
-    "discount": {
+    "status": {
       "type": "string"
     },
-    "halfText": {
-      "type": "string"
+    "buttons": {
+      "type": "json"
     }
   }
 }

@@ -4,7 +4,8 @@
   "info": {
     "singularName": "home",
     "pluralName": "homes",
-    "displayName": "Home"
+    "displayName": "Home",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -12,9 +13,6 @@
   "pluginOptions": {},
   "attributes": {
     "whichBook": {
-      "type": "string"
-    },
-    "buttonText": {
       "type": "string"
     },
     "author": {
@@ -31,6 +29,9 @@
     },
     "sliderText": {
       "type": "string"
+    },
+    "buttons": {
+      "type": "json"
     }
   }
 }

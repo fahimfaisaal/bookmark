@@ -1,6 +1,7 @@
 import { Box, Button, Grid, Skeleton } from '@mui/material';
 import { Stack } from '@mui/system';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import React, { useMemo } from 'react';
 import Carousel from 'react-multi-carousel';
 import AuthorCard from '../components/AuthorCard';
@@ -21,8 +22,8 @@ import {
   useGetBooksQuery,
   useGetCategoryQuery
 } from '../store/features/books/booksApi';
-import { fakeArr } from '../utils';
 import { useGetPublishersQuery } from '../store/features/publishers/publishersApi';
+import { fakeArr, generateQuery } from '../utils';
 
 import {
   ContainerStyle,
@@ -56,7 +57,32 @@ const responsive = (xl, lg, md, sm, xs) => ({
   }
 });
 
+const getHomeData = () => ({
+  data: {
+    id: 1,
+    attributes: {
+      whichBook: 'Which Book You Like to See?',
+      author: 'Top Authors',
+      arrival: 'New Arrival Books',
+      popular: 'Popular Books',
+      publisher: 'Top Publishers',
+      sliderText: 'See All',
+      createdAt: '2022-11-07T16:17:17.336Z',
+      updatedAt: '2022-11-08T11:12:23.901Z',
+      publishedAt: '2022-11-07T16:17:21.186Z',
+      buttons: [
+        {
+          url: '/books',
+          text: 'See more'
+        }
+      ]
+    }
+  },
+  meta: {}
+});
+
 function Home() {
+  const router = useRouter();
   const { data: authorLists, isLoading: isAuthorLoading } =
     useGetAuthorsQuery();
   const { data: publisherLists, isLoading: isPublisherLoading } =
@@ -64,39 +90,30 @@ function Home() {
   const { data: categories, isLoading: isCategoriesLoading } =
     useGetCategoryQuery();
   const memoDate = useMemo(() => new Date().toISOString(), []);
+  // TODO: use useFilterBooksQuery
   const { data: newBooks, isLoading: isNewBooksLoading } = useGetBooksQuery({
-    query: {
-      populate: '*',
-      pagination: {
-        pageSize: 8
-      },
-      filters: {
-        publishedAt: {
-          $lte: memoDate
-        }
+    query: generateQuery({
+      pageSize: 8,
+      publishedAt: {
+        $lte: memoDate
       }
-    }
+    })
   });
+  // TODO: use useFilterBooksQuery
   const { data: popularBooks, isLoading: isPopularBookLoading } =
     useGetBooksQuery({
-      query: {
-        populate: '*',
-        pagination: {
-          pageSize: 8
-        },
-        filters: {
-          bestSelling: true
-        },
-        sort: 'id'
-      }
+      query: generateQuery({
+        pageSize: 8,
+        bestSelling: true
+      })
     });
   const { data: banners } = useGetBannersQuery();
+  const { data: homeData } = getHomeData();
 
   // const bannerImg =
   //   (banners?.data &&
   //     `http://localhost:1337${banners?.data?.attributes?.images?.data[0]?.attributes?.url}`) ||
   //   '/images/Cover.png';
-
 
   return (
     <ContainerStyle>
@@ -105,8 +122,11 @@ function Home() {
           <Banner />
         </Link>
       </HeroContainer>
+
       <SectionContainer>
-        <SectionHeaderStyle variant="h1">Popular Books</SectionHeaderStyle>
+        <SectionHeaderStyle variant="h1">
+          {homeData.attributes?.popular}
+        </SectionHeaderStyle>
 
         <Grid container spacing={3}>
           {isPopularBookLoading
@@ -125,7 +145,7 @@ function Home() {
 
       <SectionContainer>
         <SectionHeaderStyle variant="h1">
-          Which Book You Like to See?
+          {homeData.attributes?.whichBook}
         </SectionHeaderStyle>
         {isCategoriesLoading ? (
           <Carousel
@@ -149,8 +169,9 @@ function Home() {
             {categories?.data?.length > 0 &&
               categories?.data?.map((category) => (
                 <CategoryCard
-                  key={category?.id}
-                  category={category?.attributes}
+                  key={category.id}
+                  id={category.id}
+                  category={category.attributes}
                 />
               ))}
           </Carousel>
@@ -158,7 +179,9 @@ function Home() {
       </SectionContainer>
 
       <SectionContainer>
-        <SectionHeaderStyle variant="h1">New Arrival Books</SectionHeaderStyle>
+        <SectionHeaderStyle variant="h1">
+          {homeData.attributes?.arrival}
+        </SectionHeaderStyle>
         <Grid container spacing={2}>
           {isNewBooksLoading
             ? fakeArr(12).map((item) => (
@@ -173,9 +196,17 @@ function Home() {
               ))}
         </Grid>
         <Stack direction={'row'} justifyContent={'center'} my={5}>
-          <Button variant="contained" size="large" disableElevation={true}>
-            Load More
-          </Button>
+          {homeData.attributes?.buttons?.map((item) => (
+            <Button
+              variant="contained"
+              size="large"
+              disableElevation={true}
+              key={item.id}
+              onClick={() => router.push(item.url)}
+            >
+              {item.text}
+            </Button>
+          ))}
         </Stack>
       </SectionContainer>
 
@@ -185,9 +216,11 @@ function Home() {
           alignItems="center"
           justifyContent="space-between"
         >
-          <SectionHeaderStyle variant="h1">Top Authors</SectionHeaderStyle>
+          <SectionHeaderStyle variant="h1">
+            {homeData.attributes?.author}
+          </SectionHeaderStyle>
           <Link href="/authors">
-            <SeeAllLinkStyle>See All</SeeAllLinkStyle>
+            <SeeAllLinkStyle>{homeData.attributes?.sliderText}</SeeAllLinkStyle>
           </Link>
         </Stack>
         {isAuthorLoading ? (
@@ -221,10 +254,10 @@ function Home() {
           justifyContent="space-between"
         >
           <SectionHeaderStyle variant="h1" sx={{ margin: 0 }}>
-            Top Publishers
+            {homeData.attributes?.publisher}
           </SectionHeaderStyle>
           <Link href="/publishers">
-            <SeeAllLinkStyle>See All</SeeAllLinkStyle>
+            <SeeAllLinkStyle>{homeData.attributes?.sliderText}</SeeAllLinkStyle>
           </Link>
         </Stack>
         {isPublisherLoading ? (
