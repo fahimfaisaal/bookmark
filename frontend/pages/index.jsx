@@ -1,6 +1,7 @@
 import { Box, Button, Grid, Skeleton } from '@mui/material';
 import { Stack } from '@mui/system';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import React, { useMemo } from 'react';
 import Carousel from 'react-multi-carousel';
 import AuthorCard from '../components/AuthorCard';
@@ -21,8 +22,8 @@ import {
   useGetBooksQuery,
   useGetCategoryQuery
 } from '../store/features/books/booksApi';
-import { fakeArr } from '../utils';
 import { useGetPublishersQuery } from '../store/features/publishers/publishersApi';
+import { fakeArr, generateQuery } from '../utils';
 
 import {
   ContainerStyle,
@@ -69,20 +70,19 @@ const getHomeData = () => ({
       createdAt: '2022-11-07T16:17:17.336Z',
       updatedAt: '2022-11-08T11:12:23.901Z',
       publishedAt: '2022-11-07T16:17:21.186Z',
-      buttons: {
-        buttons: [
-          {
-            url: '/books',
-            text: 'Load More'
-          }
-        ]
-      }
+      buttons: [
+        {
+          url: '/books',
+          text: 'See more'
+        }
+      ]
     }
   },
   meta: {}
 });
 
 function Home() {
+  const router = useRouter();
   const { data: authorLists, isLoading: isAuthorLoading } =
     useGetAuthorsQuery();
   const { data: publisherLists, isLoading: isPublisherLoading } =
@@ -90,31 +90,22 @@ function Home() {
   const { data: categories, isLoading: isCategoriesLoading } =
     useGetCategoryQuery();
   const memoDate = useMemo(() => new Date().toISOString(), []);
+  // TODO: use useFilterBooksQuery
   const { data: newBooks, isLoading: isNewBooksLoading } = useGetBooksQuery({
-    query: {
-      populate: '*',
-      pagination: {
-        pageSize: 8
-      },
-      filters: {
-        publishedAt: {
-          $lte: memoDate
-        }
+    query: generateQuery({
+      pageSize: 8,
+      publishedAt: {
+        $lte: memoDate
       }
-    }
+    })
   });
+  // TODO: use useFilterBooksQuery
   const { data: popularBooks, isLoading: isPopularBookLoading } =
     useGetBooksQuery({
-      query: {
-        populate: '*',
-        pagination: {
-          pageSize: 8
-        },
-        filters: {
-          bestSelling: true
-        },
-        sort: 'id'
-      }
+      query: generateQuery({
+        pageSize: 8,
+        bestSelling: true
+      })
     });
   const { data: banners } = useGetBannersQuery();
   const { data: homeData } = getHomeData();
@@ -131,6 +122,7 @@ function Home() {
           <Banner />
         </Link>
       </HeroContainer>
+
       <SectionContainer>
         <SectionHeaderStyle variant="h1">
           {homeData.attributes?.popular}
@@ -177,8 +169,9 @@ function Home() {
             {categories?.data?.length > 0 &&
               categories?.data?.map((category) => (
                 <CategoryCard
-                  key={category?.id}
-                  category={category?.attributes}
+                  key={category.id}
+                  id={category.id}
+                  category={category.attributes}
                 />
               ))}
           </Carousel>
@@ -203,12 +196,13 @@ function Home() {
               ))}
         </Grid>
         <Stack direction={'row'} justifyContent={'center'} my={5}>
-          {homeData.attributes?.buttons?.buttons?.map((item) => (
+          {homeData.attributes?.buttons?.map((item) => (
             <Button
               variant="contained"
               size="large"
               disableElevation={true}
               key={item.id}
+              onClick={() => router.push(item.url)}
             >
               {item.text}
             </Button>

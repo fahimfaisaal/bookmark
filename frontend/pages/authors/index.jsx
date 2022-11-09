@@ -1,10 +1,11 @@
-import { Box, Grid, Stack, Typography } from '@mui/material';
+import { Box, debounce, Grid, Stack, Typography } from '@mui/material';
+import { useState } from 'react';
 import AuthorCard from '../../components/AuthorCard';
 import AuthorSkeleton from '../../components/AuthorSkeleton';
 import CustomLink from '../../components/shared/CustomLink';
 import SearchBar from '../../components/shared/SearchBar';
 import { useGetAuthorsQuery } from '../../store/features/authors/authorsApi';
-import { fakeArr } from '../../utils';
+import { fakeArr, generateQuery } from '../../utils';
 import { HeaderContainerStyle, HeaderStyle } from './Styles';
 
 const getAuthor = () => ({
@@ -12,29 +13,38 @@ const getAuthor = () => ({
     id: 1,
     attributes: {
       title: 'Search Our Beloved Authors',
-      subtitle: 'Lorem ipsum dolor sit amet, consectetu eradipiscing elit.'
+      subtitle: 'Lorem ipsum dolor sit amet, consectetu eradipiscing elit.',
+      searchPlaceholder: 'Search Your Favorite Author from here'
     }
   }
 });
 
 function Authors() {
-  const { data: authorLists, isLoading: isAuthorLoading } =
-    useGetAuthorsQuery();
+  const { data: authorContent } = getAuthor();
+  const [searchText, setSearchText] = useState('');
+  const { data: authorLists, isLoading: isAuthorLoading } = useGetAuthorsQuery({
+    query: generateQuery({ searchText })
+  });
 
-  const { data } = getAuthor();
+  const authorSearchHandler = (value) => {
+    setSearchText(value);
+  };
 
   return (
     <Box>
       <HeaderContainerStyle>
         <HeaderStyle>
           <Typography variant="h1" color="primary">
-            {data.attributes?.title}
+            {authorContent?.attributes?.title}
           </Typography>
-          <Typography variant="body1">{data.attributes?.subtitle}</Typography>
+          <Typography variant="body1">
+            {authorContent?.attributes?.subtitle}
+          </Typography>
           <Stack direction="row" justifyContent="center" my={5}>
             <SearchBar
-              placeholder="Search Your Favorite Author from here"
+              placeholder={authorContent?.attributes?.searchPlaceholder}
               width="700px"
+              searchHandler={debounce(authorSearchHandler, 800)}
             />
           </Stack>
         </HeaderStyle>
