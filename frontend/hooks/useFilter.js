@@ -10,6 +10,7 @@ import {
   updatePriceRange,
   updateRatingRange
 } from '../store/features/filter/filterSlice';
+import { parseQuery } from '../utils';
 
 const useFilter = () => {
   const router = useRouter();
@@ -17,10 +18,15 @@ const useFilter = () => {
   const queries = useSelector(getQueries);
 
   useEffect(() => {
+    const params = parseQuery(router.pathname, window.location.pathname);
+
     router.push(
       {
         pathname: router.pathname,
-        query: queries
+        query: {
+          ...params,
+          ...queries
+        }
       },
       '',
       {

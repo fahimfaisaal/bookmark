@@ -71,8 +71,6 @@ const NavBar = () => {
   const [mobSearchTrig, setMobSearchTrig] = useState(false);
   const [filterMenuTrig, setFilterMenuTrig] = useState(false);
   const [profileMenuTrig, setProfileMenuTrig] = useState(false);
-  // const [openLogin, setOpenLogin] = useState(false);
-  // const [openRegister, setOpenRegister] = useState(false);
   const { handleChangeMode } = UseThemeContext();
   const router = useRouter();
   const isAuthenticated = useSelector((state) => state?.auth);
@@ -122,8 +120,6 @@ const NavBar = () => {
       setCartListsWithImage(cartWithImage);
     }
   }, [cartLists?.data, cartBooks?.data]);
-
-  // console.log({ cartB: cartLists?.data });
 
   const totalAmount = cartLists?.data?.reduce(
     (acc, curr) =>
@@ -252,7 +248,6 @@ const NavBar = () => {
   const handleCloseRegister = () => {
     dispatch(closeRegisterModal());
   };
-  console.log({ authChecked });
 
   return (
     <>
@@ -264,7 +259,7 @@ const NavBar = () => {
           justifyContent="space-between"
         >
           <Link href="/">
-            <LogoContainer marginTop="8px">
+            <LogoContainer>
               <Logo />
             </LogoContainer>
           </Link>
@@ -287,7 +282,7 @@ const NavBar = () => {
           ) : (
             <SearchBar normal={false} />
           )}
-          <SearchBar normal />
+          {/* <SearchBar normal /> */}
           <IconContainer onClick={handleChangeMode}>
             <ThemeSwitchStyle>
               {theme.palette.mode === 'light' ? <RiMoonLine /> : <BsSunFill />}
@@ -394,7 +389,7 @@ const NavBar = () => {
             <SearchBar normal={false} />
           ) : (
             <Link href="/">
-              <LogoContainer marginTop="8px">
+              <LogoContainer>
                 <Logo />
               </LogoContainer>
             </Link>

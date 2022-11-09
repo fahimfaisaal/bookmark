@@ -3,41 +3,20 @@ import { Box } from '@mui/system';
 import SocialMediaIcons from '../../../components/Icons/SocialMedia';
 import { StyledContainer } from '../../../components/UserDashboard/Styles';
 
-const contactDetail = [
-  {
-    id: 1,
-    title: 'Address',
-    info: 'NY, United States'
-  },
-  {
-    id: 2,
-    title: 'Phone',
-    info: '+129290122122'
-  },
-  {
-    id: 3,
-    title: 'Website',
-    info: 'https://bookmark.store'
-  }
-];
-
-const Information = () => {
+const Information = ({ data }) => {
   return (
     <>
       <StyledContainer>
         <img src="/contact.svg" />
-        {contactDetail.map((item) => (
-          <Stack direction={'column'} sx={{ marginTop: 1 }} key={item.id}>
+        {data?.attributes?.info?.info?.map((item) => (
+          <Stack direction={'column'} sx={{ marginTop: 1 }} key={item.title}>
             <Typography variant="subtitle1">{item.title}</Typography>
             <Typography sx={{ paddingTop: 2 }} variant="body2">
-              {item.info}
+              {item.text}
             </Typography>
           </Stack>
         ))}
-        <Box>
-          <Typography sx={{ paddingBottom: 1 }} variant="subtitle1">
-            Follow Us
-          </Typography>
+        <Box sx={{ marginTop: -2, paddingBottom: 2 }}>
           <SocialMediaIcons />
         </Box>
       </StyledContainer>
