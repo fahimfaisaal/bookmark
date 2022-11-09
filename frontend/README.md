@@ -1,34 +1,119 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Bookmark : frontend
 
-## Getting Started
 
-First, run the development server:
+# Introduction 
+Project bookmark frontend is structured based on the clientsite requirement. This portion is a continuous process of analytics of different mechanisms by the team. Team members were busy making the ui/ux to functionalities of all aspects along with the coding part. The Front part has a lot more user activities and interaction with the project. NEXTJs and Material Ui are chosen to build the layout. 
 
-```bash
-npm run dev
-# or
-yarn dev
+
+# Environment:
+The frontend part is constructed on the NODE.js environment. Npm package manager latest version used. Next.js is used to create react based web applications and Material UI is used for styling the application. 
+
+# Installation
+
+***Next.js :***  to install the next.js run the command 
+```
+$ npx create-next-app@latest
+```
+**Material UI :** 
+``` 
+$ yarn add @mui/material @emotion/react @emotion/styled
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+**Theme Customization :**
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+**Link** see[https://github.com/minimal-ui-kit/material-kit-react/tree/main/src/theme]
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
 
-## Learn More
+## Table of contents
+- Representation Layer
+- Data layer // rtk query
+- Network layer 
+- Logical layer // 
 
-To learn more about Next.js, take a look at the following resources:
+**Note :**  if user input a data it will take by the network layer to data layer reach the db.
+Representation Layer:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+**Layout:** 
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
 
-## Deploy on Vercel
+## List of UI Reusable components:
+- Address Card
+- Author Card
+- Author Profile
+- Book card 
+- Cart Item
+- Category Card
+- Custom image
+**- Filter** 
+- cartList 
+- radioButtonGroup 
+- rangeSlider
+- search
+- squireList
+- Icons  -->location
+         --> socialMedia
+**Layout**
+- Auth 
+- Footer
+- Navber
+- Publication Card  -> cardTitle
+- Publication Cover
+- Review Card
+- Shared folder
+- ***custom LInk***
+- Modals
+- SearchBar
+- UI --→ carosalBtn
+**UserDashboard**
+- change Password
+- Menu 
+- myOrders 
+- my wishList
+- profile
+**Buttons**
+ - Checkout:
+ - Cart:
+ - Load More:
+ - Slider:
+ - Newsletter:
+ - Menu cart:
+ - Side Cart
+ - Join
+ - Login/Register
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+ ---
+## Pages : 
+- About page 
+- Authors
+- Books
+- Checkout -→ items 
+- Contact 
+**Profile** 
+- Change Password
+- my orders
+- wishList 
+- Publishers
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+
+ ### Data layer and Logical layer:
+ ***RTK Query:***  
+ the regarding all logical function is included into RTK Query
+ **Feature of all store :**
+* Api -> Apislice.js
+* Auth → authSlice.js  authApi.js 
+* Book → booksApi.js bookSlice.js  
+* Carts → cartApi.js cartSlice.js
+* Checkout -> checkoutApi.js
+* Favorite  -> favoureatesApi.js
+* Order    - > orderApi.js
+* Rating   → rattingApi.js 
+* Tags    —> tagsApi.js
+* User   —> userApi.js
+
+### Network Layer
+
+
+
+
+

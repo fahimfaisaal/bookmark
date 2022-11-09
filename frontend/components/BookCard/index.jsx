@@ -27,8 +27,7 @@ function BookCard({ book, bookId }) {
   const { authors, images, variants, status, ratings } = book || {};
 
   const bookImage =
-    (images?.data &&
-      `http://localhost:1337${images?.data[0]?.attributes?.url}`) ||
+    (images?.data && `${images?.data[0]?.attributes?.url}`) ||
     '/images/product-dummy.png';
   const authUser = useSelector((state) => state?.auth?.user);
   const [updateFavoriteBook] = useUpdateFavoriteBookMutation();
