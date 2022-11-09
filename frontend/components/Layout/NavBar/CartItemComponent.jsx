@@ -6,14 +6,11 @@ import {
   Typography
 } from '@mui/material';
 import { Stack } from '@mui/system';
-import { toast } from 'react-hot-toast';
-// import { useRouter } from 'next/router';
 import axios from 'axios';
-// import { useEffect, useState } from 'react';
+import { toast } from 'react-hot-toast';
 import { HiShoppingBag } from 'react-icons/hi';
 import { IoIosClose } from 'react-icons/io';
 import { useSelector } from 'react-redux';
-// import { BOOKMARK_AUTH } from '../../../constant';
 import getStripe from '../../../lib/getStripe';
 import { usePostOrderMutation } from '../../../store/features/orders/ordersApi';
 import { shortId } from '../../../utils';
@@ -32,16 +29,8 @@ export default function CartItemComponent({
   cartLists,
   totalAmount
 }) {
-  // const router = useRouter();
   const isAuthenticated = useSelector((state) => state?.auth);
   const [postOrder] = usePostOrderMutation();
-  // const [token, setToken] = useState(undefined);
-
-  // useEffect(() => {
-  //   const token = JSON.parse(localStorage.getItem(BOOKMARK_AUTH));
-  //   setToken(token?.accessToken);
-  // }, []);
-  // console.log({ cartLists, token });
 
   const navigateCheckout = async () => {
     console.log('Before Call');
@@ -57,7 +46,6 @@ export default function CartItemComponent({
         {
           headers: {
             'Content-Type': 'application/json'
-            // Authorization: `Bearer ${token}`
           }
         }
       );
