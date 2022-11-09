@@ -6,12 +6,14 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import { Box } from '@mui/system';
 import { useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
+import toast from 'react-hot-toast';
 import { BsGoogle } from 'react-icons/bs';
 import { FaFacebookF } from 'react-icons/fa';
 import { useLoginMutation } from '../../../store/features/auth/authApi';
 import CloseBtn from './CloseBtn';
 import FormBtn from './FormBtn';
 import Header from './Header';
+
 import {
   CloseContainer,
   ContainerStyle,
@@ -21,23 +23,22 @@ import {
   InputLabelStyle
 } from './Styles';
 
-const Login = ({ open, handleClickOpen, handleClose }) => {
+function Login({ open, handleClickOpen, handleClose }) {
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
-  const [login, { data, isLoading, isSuccess, error: responseError }] =
-    useLoginMutation();
-  const [error, setError] = useState('');
+  const [login, { data, error: responseError }] = useLoginMutation();
+  const [, setError] = useState('');
   // console.log({data,isLoading,isSuccess,responseError, error})
   useEffect(() => {
     if (responseError?.data) {
       setError(responseError?.data?.error?.message);
-      alert(responseError?.data?.error?.message);
+      toast.error(responseError?.data?.error?.message);
     }
     if (data?.jwt && data?.user) {
       /**
        * TODO: later redirect home page
        */
-      alert('Successfully Registered');
+      toast.success('Login Successful!');
       handleClose();
     }
   }, [data, responseError]);
@@ -46,7 +47,7 @@ const Login = ({ open, handleClickOpen, handleClose }) => {
     handleClickOpen();
   };
 
-  //Handle Form =========================
+  // Handle Form =========================
   const {
     handleSubmit,
     control,
@@ -55,11 +56,11 @@ const Login = ({ open, handleClickOpen, handleClose }) => {
     reset
   } = useForm({ mode: 'onBlur' });
 
-  const onSubmit = (data) => {
-    login({ data });
+  const onSubmit = (submittedData) => {
+    login({ data: submittedData });
     reset();
   };
-  //Handle Form =========================
+  // Handle Form =========================
 
   return (
     <Dialog
@@ -70,7 +71,7 @@ const Login = ({ open, handleClickOpen, handleClose }) => {
       scroll="body"
     >
       <ContainerStyle>
-        <Header subtitle={'Login with your email & password'} />
+        <Header subtitle="Login with your email & password" />
 
         <FormContainer>
           <form onSubmit={handleSubmit(onSubmit)}>
@@ -83,8 +84,8 @@ const Login = ({ open, handleClickOpen, handleClose }) => {
                   <TextField
                     fullWidth
                     name="identifier"
-                    label={'Email/Username'}
-                    type={'text'}
+                    label="Email/Username"
+                    type="text"
                     {...field}
                     error={Boolean(errors.identifier)}
                     {...register('identifier', {
@@ -104,8 +105,8 @@ const Login = ({ open, handleClickOpen, handleClose }) => {
                   <TextField
                     fullWidth
                     name="password"
-                    label={'Password'}
-                    type={'password'}
+                    label="Password"
+                    type="password"
                     error={Boolean(errors.password)}
                     {...register('password', {
                       required: 'Password is required'
@@ -123,12 +124,12 @@ const Login = ({ open, handleClickOpen, handleClose }) => {
         </FormContainer>
         <Divider>Or</Divider>
         <InputContainer>
-          <FormBtn color={`secondary`}>
+          <FormBtn color="secondary">
             <Stack
-              direction={'row'}
-              gap={'10px'}
-              alignItems={'center'}
-              justifyContent={'center'}
+              direction="row"
+              gap="10px"
+              alignItems="center"
+              justifyContent="center"
             >
               <IconContainer>
                 <BsGoogle />
@@ -138,12 +139,12 @@ const Login = ({ open, handleClickOpen, handleClose }) => {
             </Stack>
           </FormBtn>
 
-          <FormBtn color={'info'}>
+          <FormBtn color="info">
             <Stack
-              direction={'row'}
-              gap={'10px'}
-              alignItems={'center'}
-              justifyContent={'center'}
+              direction="row"
+              gap="10px"
+              alignItems="center"
+              justifyContent="center"
             >
               <IconContainer>
                 <FaFacebookF />
@@ -155,13 +156,13 @@ const Login = ({ open, handleClickOpen, handleClose }) => {
         </InputContainer>
         <Divider />
         <Stack
-          direction={'row'}
-          alignItems={'center'}
-          justifyContent={'center'}
-          gap={'5px'}
+          direction="row"
+          alignItems="center"
+          justifyContent="center"
+          gap="5px"
           my={3}
         >
-          <Typography variant="body1">Don't have any account?</Typography>
+          <Typography variant="body1">{"Don't have any account?"}</Typography>
           <Link sx={{ cursor: 'pointer' }} onClick={toggleRegister}>
             Register
           </Link>
@@ -172,6 +173,6 @@ const Login = ({ open, handleClickOpen, handleClose }) => {
       </ContainerStyle>
     </Dialog>
   );
-};
+}
 
 export default Login;

@@ -4,10 +4,12 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import { Stack } from '@mui/system';
 import { useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
+import toast from 'react-hot-toast';
 import { useSignupMutation } from '../../../store/features/auth/authApi';
 import CloseBtn from './CloseBtn';
 import FormBtn from './FormBtn';
 import Header from './Header';
+
 import {
   CloseContainer,
   ContainerStyle,
@@ -16,12 +18,12 @@ import {
   InputLabelStyle
 } from './Styles';
 
-const Register = ({ open, handleClickOpen, handleClose }) => {
+function Register({ open, handleClickOpen, handleClose }) {
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
   const [signup, { data, isLoading, error: responseError, isSuccess }] =
     useSignupMutation();
-  const [error, setError] = useState('');
+  const [, setError] = useState('');
   // console.log({data,isLoading,isSuccess,responseError, error})
   const toggleLogin = () => {
     handleClose();
@@ -31,18 +33,18 @@ const Register = ({ open, handleClickOpen, handleClose }) => {
   useEffect(() => {
     if (responseError?.data) {
       setError(responseError?.data?.error?.message);
-      alert(responseError?.data?.error?.message);
+      toast.error(responseError?.data?.error?.message);
     }
     if (data?.jwt && data?.user) {
       /**
        * TODO: later redirect home page
        */
-      alert('Successfully Registered');
+      toast.success('Successfully Registered!');
       handleClose();
     }
   }, [data, responseError]);
 
-  //Handle Form =========================
+  // Handle Form =========================
   const {
     handleSubmit,
     control,
@@ -51,17 +53,22 @@ const Register = ({ open, handleClickOpen, handleClose }) => {
     reset
   } = useForm({
     mode: 'onBlur',
-    defaultValues: { username: '', email: '', password: '', phone: '' }
+    defaultValues: {
+      username: '',
+      email: '',
+      password: '',
+      phone: ''
+    }
   });
 
-  const onSubmit = (data) => {
-    signup({ data });
+  const onSubmit = (submittedData) => {
+    signup({ data: submittedData });
     if (isSuccess) {
       reset();
       handleClose();
     }
   };
-  //Handle Form =========================
+  // Handle Form =========================
 
   return (
     <Dialog
@@ -72,19 +79,19 @@ const Register = ({ open, handleClickOpen, handleClose }) => {
       scroll="body"
     >
       <ContainerStyle>
-        <Header subtitle={'By signing up, you agree to our terms & policy'} />
+        <Header subtitle="By signing up, you agree to our terms & policy" />
         <FormContainer>
           <form onSubmit={handleSubmit(onSubmit)}>
             <Controller
               name="username"
               control={control}
-              render={({ field }) => (
+              render={() => (
                 <InputContainer>
                   <InputLabelStyle variant="h4">Username</InputLabelStyle>
                   <TextField
                     fullWidth
                     name="username"
-                    label={'Username'}
+                    label="Username"
                     error={Boolean(errors.username)}
                     {...register('username', {
                       required: 'Username is required'
@@ -97,7 +104,7 @@ const Register = ({ open, handleClickOpen, handleClose }) => {
             <Controller
               name="email"
               control={control}
-              render={({ field }) => (
+              render={() => (
                 <InputContainer>
                   <InputLabelStyle variant="h4">Email</InputLabelStyle>
                   <TextField
@@ -122,11 +129,11 @@ const Register = ({ open, handleClickOpen, handleClose }) => {
                   <TextField
                     fullWidth
                     name="phone"
-                    label={'phone'}
+                    label="phone"
                     error={Boolean(errors.phone)}
                     {...register('phone', { required: 'phone is required' })}
                     helperText={errors.phone?.message}
-                    type={'text'}
+                    type="text"
                     {...field}
                   />
                 </InputContainer>
@@ -141,8 +148,8 @@ const Register = ({ open, handleClickOpen, handleClose }) => {
                   <TextField
                     fullWidth
                     name="password"
-                    label={'Password'}
-                    type={'password'}
+                    label="Password"
+                    type="password"
                     error={Boolean(errors.password)}
                     {...register('password', {
                       required: 'Password is required'
@@ -160,10 +167,10 @@ const Register = ({ open, handleClickOpen, handleClose }) => {
         </FormContainer>
         <Divider>Or</Divider>
         <Stack
-          direction={'row'}
-          alignItems={'center'}
-          justifyContent={'center'}
-          gap={'5px'}
+          direction="row"
+          alignItems="center"
+          justifyContent="center"
+          gap="5px"
           my={3}
         >
           <Typography variant="body1">Already have an account?</Typography>
@@ -177,6 +184,6 @@ const Register = ({ open, handleClickOpen, handleClose }) => {
       </ContainerStyle>
     </Dialog>
   );
-};
+}
 
 export default Register;

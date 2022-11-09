@@ -1,26 +1,15 @@
 import { Stack, Typography } from '@mui/material';
 import Divider from '@mui/material/Divider';
-import { useRouter } from 'next/router';
-import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
+import useFilter from '../../hooks/useFilter';
 import { useGetCategoriesQuery } from '../../store/features/category/categoryApi';
 import {
-  addRemoveAvailability,
-  addRemoveCategories,
-  addRemovePublishers,
-  addRemoveTags,
-  clearFilter,
   getAvailabilities,
   getCategories,
   getPriceRange,
-  getPublishers,
-  getQueries,
   getRatingRange,
-  getTags,
-  updatePriceRange,
-  updateRatingRange
+  getTags
 } from '../../store/features/filter/filterSlice';
-import { useGetPublishersQuery } from '../../store/features/publishers/publisherApi';
 import { useGetTagsQuery } from '../../store/features/tags/tagsApi';
 import RadioBoxList from './CircleList';
 import RangeSlider from './RangeSlider';
@@ -28,73 +17,33 @@ import SearchBarComp from './Search';
 import CheckboxList from './SquareList';
 import { ContainerStyle, InnerContainerStyle, LinkContainer } from './style';
 
-const Filter = () => {
-  const router = useRouter();
+function Filter() {
   const { data: tags = [] } = useGetTagsQuery();
   const { data: categories = [] } = useGetCategoriesQuery();
-  const { data: publishers = [] } = useGetPublishersQuery();
   const status = ['IN_STOCK', 'STOCK_OUT', 'COMING_SOON', 'PRE_ORDER'];
-  const dispatch = useDispatch();
   const filterTags = useSelector(getTags);
   const filterCategories = useSelector(getCategories);
-  const filterPublishers = useSelector(getPublishers);
   const filterAvailabilities = useSelector(getAvailabilities);
-  const queries = useSelector(getQueries);
   const filterPriceRange = useSelector(getPriceRange);
   const filterRatingRange = useSelector(getRatingRange);
-
-  useEffect(() => {
-    router.push(
-      {
-        pathname: router.pathname,
-        query: queries
-      },
-      '',
-      {
-        scroll: false
-      }
-    );
-  }, [queries]);
-
-  const setCategory = ([id, name]) => {
-    dispatch(addRemoveCategories({ id, name }));
-  };
-
-  const setTag = ([id, name]) => {
-    dispatch(addRemoveTags({ id, name }));
-  };
-
-  const setPublisher = ([id, name]) => {
-    dispatch(addRemovePublishers({ id, name }));
-  };
-
-  const setAvailabilities = ([status]) => {
-    dispatch(
-      addRemoveAvailability({
-        status: status.toUpperCase().replace(/\s/g, '_')
-      })
-    );
-  };
-
-  const priceCommitHandler = (value) => {
-    dispatch(updatePriceRange({ range: value }));
-  };
-
-  const ratingCommitHandler = (value) => {
-    dispatch(updateRatingRange({ range: value }));
-  };
-
-  const clear = () => dispatch(clearFilter());
+  const {
+    setCategory,
+    setTag,
+    setAvailabilities,
+    setPriceRange,
+    setRatingRange,
+    clear
+  } = useFilter();
 
   return (
     <ContainerStyle>
       <InnerContainerStyle>
         <Stack
-          direction={'row'}
-          alignItems={'center'}
-          justifyContent={'space-between'}
+          direction="row"
+          alignItems="center"
+          justifyContent="space-between"
         >
-          <Typography variant="h2" fontSize={'26px'}>
+          <Typography variant="h2" fontSize="26px">
             Filter
           </Typography>
           <LinkContainer>
@@ -111,16 +60,9 @@ const Filter = () => {
 
         <Divider />
         <RadioBoxList />
-        <CheckboxList
-          setItem={setCategory}
-          title={'Categories'}
-          data={categories}
-          selectItems={new Set(filterCategories)}
-        />
-        <Divider />
         <RangeSlider
-          title={'Price range'}
-          commitHandler={priceCommitHandler}
+          title="Price range"
+          commitHandler={setPriceRange}
           initialState={
             filterPriceRange.length === 0 ? [0, 5000] : filterPriceRange
           }
@@ -129,8 +71,8 @@ const Filter = () => {
           step={10}
         />
         <RangeSlider
-          title={'Rating range'}
-          commitHandler={ratingCommitHandler}
+          title="Rating range"
+          commitHandler={setRatingRange}
           initialState={
             filterRatingRange.length === 0 ? [0, 5] : filterRatingRange
           }
@@ -140,25 +82,22 @@ const Filter = () => {
         />
         <Divider />
         <CheckboxList
+          setItem={setCategory}
+          title="Categories"
+          data={categories}
+          selectItems={new Set(filterCategories)}
+        />
+        <Divider />
+        <CheckboxList
           setItem={setTag}
-          title={'Tags'}
+          title="Tags"
           data={tags}
           selectItems={new Set(filterTags)}
         />
         <Divider />
         <CheckboxList
-          setItem={setPublisher}
-          title={'Publishers'}
-          data={publishers.data?.map((publisher) => ({
-            id: publisher.id,
-            name: publisher.attributes.name
-          }))}
-          selectItems={new Set(filterPublishers)}
-        />
-        <Divider />
-        <CheckboxList
           setItem={setAvailabilities}
-          title={'Availability'}
+          title="Availability"
           data={status.map((stat) => stat.toLowerCase().replace(/_/g, ' '))}
           selectItems={
             new Set(
@@ -171,6 +110,6 @@ const Filter = () => {
       </InnerContainerStyle>
     </ContainerStyle>
   );
-};
+}
 
 export default Filter;

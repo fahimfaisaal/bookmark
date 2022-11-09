@@ -5,7 +5,6 @@ export default function useAuth() {
 
   if (auth?.accessToken && auth?.user) {
     return true;
-  } else {
-    return false;
   }
+  return false;
 }

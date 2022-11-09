@@ -1,41 +1,45 @@
-import * as React from 'react';
+import { Grid, InputLabel } from '@mui/material';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
-import { Grid, InputLabel } from '@mui/material';
 import { Stack } from '@mui/system';
+import { useEffect, useState } from 'react';
 import AddressModal from '../shared/Modals/AddressModal';
-const AddressCard = ({ billingAddress, label }) => {
-  const [formValue, setFormValue] = React.useState('');
 
-  //state lifting starts==========
+function AddressCard({ label, profileData }) {
+  const [formValue, setFormValue] = useState('');
+
+  // state lifting starts==========
   const getData = (data) => {
     setFormValue(data);
   };
-  //state lifting ends==========
+  useEffect(() => {
+    if (profileData) {
+      setFormValue(profileData?.address);
+    }
+  }, [profileData]);
+  // state lifting ends==========
   return (
     <>
       <Stack
-        direction={'row'}
+        direction="row"
         justifyContent="space-between"
         alignItems="center"
-        flexWrap={'wrap'}
+        flexWrap="wrap"
       >
         <InputLabel color="secondary"> {label}</InputLabel>
-        <>
-          <AddressModal getData={getData} btnText="+ Update" />
-        </>
+        <AddressModal getData={getData} btnText="+ Update" />
       </Stack>
       <Grid container>
-        <Grid item>
+        <Grid item sx={{ minWidth: '220px' }}>
           <Card sx={{ backgroundColor: 'background.default' }}>
             <CardContent>
               <Typography variant="h3" component="div">
-                {formValue.title ? formValue.title : 'Billing'}
+                {'Billing'}
               </Typography>
               <Typography variant="caption">
-                {formValue.address
-                  ? formValue.address
+                {formValue
+                  ? formValue
                   : '2231 Kidd Avenue, Ak, Kipnuk, 99614, United States'}
               </Typography>
             </CardContent>
@@ -44,6 +48,6 @@ const AddressCard = ({ billingAddress, label }) => {
       </Grid>
     </>
   );
-};
+}
 
 export default AddressCard;

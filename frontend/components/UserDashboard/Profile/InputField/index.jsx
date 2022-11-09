@@ -1,14 +1,37 @@
-import * as React from 'react';
+import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+import { Button, InputLabel } from '@mui/material';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
-import { Button, InputLabel } from '@mui/material';
-import CloudUploadIcon from '@mui/icons-material/CloudUpload';
-import { StyledBox, StyledInput, StyledLabel } from './Styles';
+import { useState, useEffect, useRef } from 'react';
+import { Controller, useForm } from 'react-hook-form';
 import { StyledContainer } from '../../Styles';
-import { useForm, Controller } from 'react-hook-form';
+// import ImageUploadCard from './ImageUpload';
+import { StyledBox, StyledLabel } from './Styles';
+import CloseIcon from '@mui/icons-material/Close';
 
-const InputField = () => {
-  //Handle Form =========================
+const initialValues = {
+  username: '',
+  avatar: ''
+};
+
+function InputField({ profileData }) {
+  const [image, setImage] = useState();
+  const [preview, setPreview] = useState();
+  const fileInputRef = useRef();
+
+  useEffect(() => {
+    if (image) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setPreview(reader.result);
+      };
+      reader.readAsDataURL(image);
+    } else {
+      setPreview(null);
+    }
+  }, [image]);
+
+  // Handle Form =========================
   const {
     handleSubmit,
     control,
@@ -17,60 +40,121 @@ const InputField = () => {
     reset
   } = useForm({
     mode: 'onBlur',
-    defaultValues: { name: '', bio: '' }
+    defaultValues: { ...initialValues }
   });
-  const onValid = (data) => {
-    console.log(data);
-    reset();
+  const onSubmit = (data) => {
+    console.log({ data });
+    reset(initialValues);
   };
-  //Handle Form =========================
+
+  const imageUpload = (event) => {
+    event.preventDefault();
+    fileInputRef.current.click();
+  };
+  const imageUploadOnchange = (event) => {
+    const file = event.target.files[0];
+    console.log({ file });
+    if (file && file.type.substring(0, 5) === 'image') {
+      setImage(file);
+    } else {
+      setImage(null);
+    }
+  };
+
+  useEffect(() => {
+    if (profileData) {
+      reset({
+        username: profileData?.username,
+        avatar: profileData?.avatar?.url
+      });
+    } else {
+      reset(initialValues);
+    }
+  }, [profileData]);
+
+  // console.log({image, preview})
+
+  // Handle Form =========================
 
   return (
     <StyledContainer sx={{ boxShadow: 3 }}>
-      <form onSubmit={handleSubmit(onValid)}>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <Controller
-          name="file"
+          name="avatar"
           control={control}
-          render={({ field }) => (
-            <StyledBox>
-              <StyledLabel>
-                <Box>
-                  <CloudUploadIcon color="disabled" fontSize="large" />
-                </Box>
-                <StyledInput type="file" /> Upload an image
-              </StyledLabel>
-            </StyledBox>
-          )}
+          render={() => {
+            return preview ? (
+              <>
+                <img
+                  src={preview}
+                  style={{
+                    objectFit: 'cover',
+                    width: '200px',
+                    height: '200px'
+                  }}
+                />
+                <CloseIcon
+                  sx={{ position: 'absolute', cursor: 'pointer' }}
+                  onClick={() => {
+                    setImage(null);
+                  }}
+                />
+              </>
+            ) : (
+              <StyledBox>
+                <StyledLabel>
+                  <Box>
+                    <CloudUploadIcon
+                      color="disabled"
+                      fontSize="large"
+                      onClick={imageUpload}
+                    />
+                  </Box>
+
+                  <input
+                    type="file"
+                    style={{ display: 'none' }}
+                    ref={fileInputRef}
+                    accept="image/*"
+                    onChange={imageUploadOnchange}
+                  />
+                </StyledLabel>
+              </StyledBox>
+            );
+          }}
         />
+
         <Controller
-          name="name"
+          name="username"
           control={control}
           render={({ field }) => (
             <Box>
               <InputLabel
                 color="secondary"
-                htmlFor="name"
+                htmlFor="username"
                 sx={{ marginTop: 2, paddingBottom: 1 }}
               >
-                Name
+                Username
               </InputLabel>
               <TextField
                 sx={{ marginBottom: 1.6 }}
-                id="name"
+                id="username"
                 fullWidth
-                name="name"
-                label={'Name'}
-                error={Boolean(errors.name)}
-                {...register('name', { required: 'Name is required' })}
-                helperText={errors.name?.message}
-                type={'text'}
+                name="username"
+                label="Username"
+                value={profileData?.username || 'Jony'}
+                defaultValue={'hello'}
+                error={Boolean(errors.username)}
+                {...register('username', { required: 'username is required' })}
+                helperText={errors.username?.message}
+                type="text"
                 {...field}
               />
             </Box>
           )}
         />
-        <Controller
-          name="bio"
+        {/* <Controller
+          username="bio"
           control={control}
           render={({ field }) => (
             <Box>
@@ -85,21 +169,21 @@ const InputField = () => {
                 sx={{ marginBottom: 1.6 }}
                 id="bio"
                 fullWidth
-                name="bio"
-                label={'Bio'}
+                username="bio"
+                label="Bio"
                 error={Boolean(errors.bio)}
                 rows={4}
                 multiline
                 {...register('bio', { required: 'Bio is required' })}
                 helperText={errors.bio?.message}
-                type={'text'}
+                type="text"
                 {...field}
               />
             </Box>
           )}
-        />
+        /> */}
 
-        <Box textAlign={'right'}>
+        <Box textAlign="right">
           <Button type="submit" variant="btnGreen">
             Save
           </Button>
@@ -107,6 +191,6 @@ const InputField = () => {
       </form>
     </StyledContainer>
   );
-};
+}
 
 export default InputField;
