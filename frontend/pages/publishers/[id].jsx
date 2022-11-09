@@ -1,30 +1,29 @@
 import { Box, Button, Grid, Skeleton } from '@mui/material';
 import { Stack } from '@mui/system';
 import { useRouter } from 'next/router';
-import { useState } from 'react';
 import { FiFilter } from 'react-icons/fi';
 import { MdClose } from 'react-icons/md';
 import BookCard from '../../components/BookCard';
 import BookSkeleton from '../../components/BookSkeleton';
 import Filter from '../../components/Filter';
 import PublicationCover from '../../components/PublicationCover';
-import { useGetBooksByPublisherQuery } from '../../store/features/books/booksApi';
+import useBooksFilterQuery from '../../hooks/useBooksFilterQuery';
 import { useGetPublisherQuery } from '../../store/features/publishers/publishersApi';
+import { fakeArr } from '../../utils';
 import { BooksContainer, FilterButtonContainer, TitleStyle } from './Style';
 
 function PublicationItem() {
   const router = useRouter();
   const { data, isLoading } = useGetPublisherQuery(router.query.id);
-  const [filterTrig, setFilterTrig] = useState(false);
-
   const publisherData = data?.data?.attributes;
-
-  const { data: publisherBooks, isLoading: isPublisherBookLoading } =
-    useGetBooksByPublisherQuery(publisherData?.name);
-
-  const handleFilter = () => {
-    setFilterTrig(!filterTrig);
-  };
+  const {
+    pagination,
+    books: publishersBooks,
+    isLoading: isPublisherBookLoading,
+    filterTrig,
+    handleFilter,
+    paginationHandler
+  } = useBooksFilterQuery({ publisherId: router.query.id });
 
   return (
     <Box>
@@ -56,7 +55,7 @@ function PublicationItem() {
 
             <Grid container spacing={3}>
               {isPublisherBookLoading
-                ? [1, 2, 3, 4, 5, 6, 7, 8].map((item) => (
+                ? fakeArr(8).map((item) => (
                     <Grid
                       item
                       md={6}
@@ -67,7 +66,7 @@ function PublicationItem() {
                       <BookSkeleton />
                     </Grid>
                   ))
-                : publisherBooks?.data?.map((book) => (
+                : publishersBooks.map((book) => (
                     <Grid
                       item
                       lg={filterTrig ? 4 : 3}
@@ -79,11 +78,18 @@ function PublicationItem() {
                     </Grid>
                   ))}
             </Grid>
-            <Stack direction="row" justifyContent="center" my={5}>
-              <Button variant="contained" size="large" disableElevation>
-                Load More
-              </Button>
-            </Stack>
+            {pagination?.pageCount > 1 && (
+              <Stack direction={'row'} justifyContent={'center'} my={5}>
+                <Button
+                  variant="contained"
+                  size="large"
+                  disableElevation={true}
+                  onClick={paginationHandler}
+                >
+                  Load More
+                </Button>
+              </Stack>
+            )}
           </BooksContainer>
         </Grid>
       </Grid>

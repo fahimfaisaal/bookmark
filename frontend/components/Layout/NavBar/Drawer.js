@@ -2,6 +2,8 @@ import { Box, Divider, ListItem, Stack, SwipeableDrawer } from '@mui/material';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { IoIosClose } from 'react-icons/io';
+import { shortId } from '../../../utils';
+import Logo from '../../Logo';
 import {
   CloseBtnContaner,
   MenuContainer,
@@ -27,7 +29,7 @@ const Drawer = ({ anchor, data, open, toggle }) => {
             alignItems={'center'}
           >
             <Link href="/">
-              <img src="/images/logo-1.png" alt="" width={180} height={30} />
+              <Logo />
             </Link>
             <Box>
               <CloseBtnContaner onClick={toggle(false)}>
@@ -40,7 +42,7 @@ const Drawer = ({ anchor, data, open, toggle }) => {
 
         <MenuListContainer>
           {data.map((item) => (
-            <ListItem key={item.text} onClick={toggle(false)}>
+            <ListItem key={shortId()} onClick={toggle(false)}>
               <Link href={item.link}>
                 <MenuLinkContainer active={router.pathname.includes(item.link)}>
                   {item.text}

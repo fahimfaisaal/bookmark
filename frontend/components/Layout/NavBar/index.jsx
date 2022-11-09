@@ -37,6 +37,7 @@ import {
 import { useGetBooksQuery } from '../../../store/features/books/booksApi';
 import { useGetCartsByUserQuery } from '../../../store/features/carts/cartsApi';
 import { shortId } from '../../../utils';
+import Logo from '../../Logo';
 import SearchBar from '../../shared/SearchBar';
 import Login from '../Auth/Login';
 import Register from '../Auth/Register';
@@ -70,8 +71,6 @@ const NavBar = () => {
   const [mobSearchTrig, setMobSearchTrig] = useState(false);
   const [filterMenuTrig, setFilterMenuTrig] = useState(false);
   const [profileMenuTrig, setProfileMenuTrig] = useState(false);
-  // const [openLogin, setOpenLogin] = useState(false);
-  // const [openRegister, setOpenRegister] = useState(false);
   const { handleChangeMode } = UseThemeContext();
   const router = useRouter();
   const isAuthenticated = useSelector((state) => state?.auth);
@@ -80,7 +79,10 @@ const NavBar = () => {
     (state) => state?.authModal
   );
 
-  const { data: cartLists } = useGetCartsByUserQuery({ userId: authUser?.id });
+  const { data: cartLists } = useGetCartsByUserQuery(
+    { userId: authUser?.id },
+    { skip: !authUser?.id }
+  );
   const { data: cartBooks } = useGetBooksQuery(cartBookFilter);
 
   useEffect(() => {
@@ -118,8 +120,6 @@ const NavBar = () => {
       setCartListsWithImage(cartWithImage);
     }
   }, [cartLists?.data, cartBooks?.data]);
-
-  // console.log({ cartB: cartLists?.data });
 
   const totalAmount = cartLists?.data?.reduce(
     (acc, curr) =>
@@ -248,7 +248,6 @@ const NavBar = () => {
   const handleCloseRegister = () => {
     dispatch(closeRegisterModal());
   };
-  console.log({ authChecked });
 
   return (
     <>
@@ -260,8 +259,8 @@ const NavBar = () => {
           justifyContent="space-between"
         >
           <Link href="/">
-            <LogoContainer marginTop="8px">
-              <img src="/images/logo-1.png" alt="" />
+            <LogoContainer>
+              <Logo />
             </LogoContainer>
           </Link>
           {!serachTrig ? (
@@ -283,24 +282,28 @@ const NavBar = () => {
           ) : (
             <SearchBar normal={false} />
           )}
-          <SearchBar normal />
+          {/* <SearchBar normal /> */}
           <IconContainer onClick={handleChangeMode}>
             <ThemeSwitchStyle>
               {theme.palette.mode === 'light' ? <RiMoonLine /> : <BsSunFill />}
             </ThemeSwitchStyle>
           </IconContainer>
-          <IconContainer fontSize="28px" onClick={toggleDrawer(true)}>
-            <Badge badgeContent={cartLists?.data?.length} color="primary">
-              <HiOutlineShoppingBag />
-            </Badge>
-          </IconContainer>
-          <Link href="/profile/my-wishlist">
-            <IconContainer fontSize="32px">
-              <Badge badgeContent={2} color="primary">
-                <MdOutlineFavoriteBorder />
-              </Badge>
-            </IconContainer>
-          </Link>
+          {isAuthenticated?.accessToken && (
+            <>
+              <IconContainer fontSize="28px" onClick={toggleDrawer(true)}>
+                <Badge badgeContent={cartLists?.data?.length} color="primary">
+                  <HiOutlineShoppingBag />
+                </Badge>
+              </IconContainer>
+              <Link href="/profile/my-wishlist">
+                <IconContainer fontSize="32px">
+                  <Badge badgeContent={null} color="primary">
+                    <MdOutlineFavoriteBorder />
+                  </Badge>
+                </IconContainer>
+              </Link>
+            </>
+          )}
 
           {isAuthenticated?.accessToken ? (
             <Box sx={{ flexGrow: 0 }}>
@@ -386,8 +389,8 @@ const NavBar = () => {
             <SearchBar normal={false} />
           ) : (
             <Link href="/">
-              <LogoContainer marginTop="8px">
-                <img src="/images/logo-1.png" alt="" />
+              <LogoContainer>
+                <Logo />
               </LogoContainer>
             </Link>
           )}

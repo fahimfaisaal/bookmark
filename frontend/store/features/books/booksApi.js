@@ -1,12 +1,10 @@
-import qs from 'qs';
 import { BOOKMARK_AUTH } from '../../../constant';
 import { apiSlice } from '../api/apiSlice';
 
 export const booksApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getBooks: builder.query({
-      query: ({ query } = {}) =>
-        `/books?${qs.stringify(query, { encode: false })}`,
+      query: ({ query = 'populate=*' } = {}) => `/books?${query}`,
       transformResponse: (response) => {
         const localAuth =
           JSON.parse(localStorage?.getItem(BOOKMARK_AUTH)) || {};
@@ -65,7 +63,6 @@ export const booksApi = apiSlice.injectEndpoints({
         return responseModified;
       }
     }),
-
     getNestedBookItem: builder.query({
       query: (params) => `books/${params}`,
       providesTags: ['nestedBook']

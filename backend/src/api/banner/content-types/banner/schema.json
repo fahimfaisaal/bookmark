@@ -4,30 +4,30 @@
   "info": {
     "singularName": "banner",
     "pluralName": "banners",
-    "displayName": "banner"
+    "displayName": "banner",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
   },
   "pluginOptions": {},
   "attributes": {
-    "header": {
+    "heading": {
       "type": "string"
     },
-    "discount": {
-      "type": "integer"
-    },
-    "book": {
-      "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::book.book"
-    },
     "images": {
+      "type": "media",
+      "multiple": true,
+      "required": false,
       "allowedTypes": [
         "images"
-      ],
-      "type": "media",
-      "multiple": true
+      ]
+    },
+    "status": {
+      "type": "string"
+    },
+    "buttons": {
+      "type": "json"
     }
   }
 }
