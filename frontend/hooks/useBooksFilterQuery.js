@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useGetBooksQuery } from '../store/features/books/booksApi';
@@ -14,38 +15,40 @@ import {
 import { generateQuery } from '../utils';
 
 const useBooksFilterQuery = ({ authors, publisherId } = {}) => {
+  const router = useRouter();
   const dispatch = useDispatch();
-  const tags = useSelector(getTags);
-  const categories = useSelector(getCategories);
-  const priceRange = useSelector(getPriceRange);
-  const ratingRange = useSelector(getRatingRange);
-  const searchText = useSelector(getSearchText) || undefined;
-  const availabilities = useSelector(getAvailabilities);
+  const filters = {
+    tags: useSelector(getTags),
+    categories: useSelector(getCategories),
+    priceRange: useSelector(getPriceRange),
+    ratingRange: useSelector(getRatingRange),
+    searchText: useSelector(getSearchText) || undefined,
+    availabilities: useSelector(getAvailabilities)
+  };
+
   const [page, setPage] = useState(1);
   const [books, setBooks] = useState([]);
   const [filterTrig, setFilterTrig] = useState(false);
   const { data: bookLists, isLoading } = useGetBooksQuery({
     query: generateQuery({
       page,
-      tags,
-      categories,
-      priceRange,
-      ratingRange,
-      searchText,
-      availabilities,
+      ...filters,
       authors,
       publisherId
     })
   });
 
   useEffect(() => {
-    if (bookLists?.meta?.pagination?.pageCount > 1) {
+    if (bookLists?.meta?.pagination?.pageCount > 1 && page > 1) {
       setBooks((prev) => prev.concat(bookLists?.data ?? []));
     } else {
       setBooks(() => [].concat(bookLists?.data ?? []));
-      setPage(1);
     }
   }, [bookLists?.data]);
+
+  useEffect(() => {
+    setPage(1);
+  }, [JSON.stringify(router.query)]);
 
   useEffect(() => {
     const query = new URLSearchParams(window.location.search);
