@@ -29,8 +29,7 @@ function CartItem({ cart, cartId }) {
     if (cartQty > 0) setCartQty((prev) => prev - 1);
   };
 
-  const url =
-    `http://localhost:1337${cart?.cartImage}` || '/images/product-dummy.png';
+  const url = cart?.cartImage || '/images/product-dummy.png';
 
   useEffect(() => {
     if (cartQty !== cart?.quantity) {

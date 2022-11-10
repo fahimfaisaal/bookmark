@@ -1,6 +1,7 @@
 import { Typography } from '@mui/material';
 import { Stack } from '@mui/system';
 import { BsFacebook, BsLinkedin, BsTwitter } from 'react-icons/bs';
+import { adjustValidURL } from '../../utils';
 import CustomImage from '../CustomImage';
 
 import {
@@ -17,11 +18,11 @@ function PublicationCover({ publisherData }) {
   // const { name, logo, banner, socials, website } = publisherData;
   const logoUrl =
     (publisherData?.data &&
-      `http://localhost:1337${publisherData?.logo?.data[0]?.attributes?.url}`) ||
+      adjustValidURL(publisherData?.logo?.data[0]?.attributes?.url)) ||
     '/images/publisher-logo.png';
   const bannerUrl =
     (publisherData?.data &&
-      `http://localhost:1337${publisherData?.banner?.data[0]?.attributes?.url}`) ||
+      adjustValidURL(publisherData?.banner?.data[0]?.attributes?.url)) ||
     '/images/publisher-banner.png';
 
   return (
