@@ -3,6 +3,7 @@
 /* eslint-disable linebreak-style */
 module.exports = [
   'strapi::errors',
+  'strapi::security',
   'strapi::cors',
   'strapi::poweredBy',
   'strapi::logger',
