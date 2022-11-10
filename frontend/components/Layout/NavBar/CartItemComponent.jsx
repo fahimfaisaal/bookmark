@@ -33,12 +33,10 @@ export default function CartItemComponent({
   const [postOrder] = usePostOrderMutation();
 
   const navigateCheckout = async () => {
-    console.log('Before Call');
     toggleDrawer(false);
     if (isAuthenticated?.user) {
       // router.push('/checkout');
       const stripe = await getStripe();
-      console.log('Before Call');
 
       const response = await axios.post(
         '/api/stripe',
@@ -49,7 +47,6 @@ export default function CartItemComponent({
           }
         }
       );
-      console.log('After Call', response);
 
       if (response.statusCode === 500) return;
 
@@ -60,7 +57,6 @@ export default function CartItemComponent({
       cartLists.map((item) => {
         orderData.books.push(item?.id);
       });
-      console.log({ orderData });
 
       postOrder(orderData);
 
@@ -79,53 +75,63 @@ export default function CartItemComponent({
       onClose={toggleDrawer(false)}
       onOpen={toggleDrawer(true)}
     >
-      <CartContainer role="presentation">
-        <CartHeaderContainer>
-          <Stack
-            direction="row"
-            justifyContent="space-between"
-            alignItems="center"
-          >
-            <Stack direction="row" alignItems="center">
-              <HiShoppingBag fontSize="24px" />
-              <Typography variant="h4" fontSize="18px" px="10px">
-                {cartLists?.length > 0 ? cartLists?.length : 'No'} Item
-              </Typography>
+      <Box
+        sx={{ background: `${theme.palette.background.default}` }}
+        height="100%"
+      >
+        <CartContainer role="presentation" position={'relative'}>
+          <CartHeaderContainer>
+            <Stack
+              direction="row"
+              justifyContent="space-between"
+              alignItems="center"
+            >
+              <Stack direction="row" alignItems="center">
+                <HiShoppingBag fontSize="24px" />
+                <Typography variant="h4" fontSize="18px" px="10px">
+                  {cartLists?.length > 0 ? cartLists?.length : 'No'} Item
+                </Typography>
+              </Stack>
+              <Box>
+                <CloseBtnContaner onClick={toggleDrawer(false)}>
+                  <IoIosClose />
+                </CloseBtnContaner>
+              </Box>
             </Stack>
-            <Box>
-              <CloseBtnContaner onClick={toggleDrawer(false)}>
-                <IoIosClose />
-              </CloseBtnContaner>
-            </Box>
-          </Stack>
-        </CartHeaderContainer>
-        <Divider />
+          </CartHeaderContainer>
+          <Divider />
 
-        {cartLists?.map((cart) => (
-          <CartItemContainer key={shortId()}>
-            <CartItem cart={cart} cartId={cart?.id} key={cart?.id} />
-          </CartItemContainer>
-        ))}
-      </CartContainer>
-      {cartLists?.length > 0 && totalAmount && (
+          {cartLists?.map((cart) => (
+            <CartItemContainer key={shortId()}>
+              <CartItem cart={cart} cartId={cart?.id} key={cart?.id} />
+            </CartItemContainer>
+          ))}
+        </CartContainer>
+
         <Box
-          pb={5}
-          px={3}
+          position="absolute"
+          left="0"
+          bottom="0"
+          width={'100%'}
           sx={{ background: `${theme.palette.background.default}` }}
         >
-          <Typography variant="h2" py={3}>
-            Total: {totalAmount}$
-          </Typography>
-          <Button
-            variant="contained"
-            fullWidth
-            size="large"
-            onClick={navigateCheckout}
-          >
-            Checkout
-          </Button>
+          {cartLists?.length > 0 && totalAmount && (
+            <Box pb={5} px={3}>
+              <Typography variant="h2" py={3}>
+                Total: {totalAmount}$
+              </Typography>
+              <Button
+                variant="contained"
+                fullWidth
+                size="large"
+                onClick={navigateCheckout}
+              >
+                Checkout
+              </Button>
+            </Box>
+          )}
         </Box>
-      )}
+      </Box>
     </SwipeableDrawer>
   );
 }
