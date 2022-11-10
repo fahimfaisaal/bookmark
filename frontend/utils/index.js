@@ -74,3 +74,12 @@ export const parseQuery = (paramsPath, valuePath) => {
     return acc;
   }, {});
 };
+
+export const adjustValidURL = (path) => {
+  if (/^\/uploads/.test(path)) {
+    const publicURL = process.env.NEXT_PUBLIC_API_URL;
+    return `${publicURL.substring(0, publicURL.length - 4)}${path}`;
+  }
+
+  return path;
+};

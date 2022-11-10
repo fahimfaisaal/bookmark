@@ -110,11 +110,6 @@ function Home() {
   const { data: banners } = useGetBannersQuery();
   const { data: homeData } = getHomeData();
 
-  // const bannerImg =
-  //   (banners?.data &&
-  //     `http://localhost:1337${banners?.data?.attributes?.images?.data[0]?.attributes?.url}`) ||
-  //   '/images/Cover.png';
-
   return (
     <ContainerStyle>
       <HeroContainer sx={{ cursor: 'pointer' }}>
