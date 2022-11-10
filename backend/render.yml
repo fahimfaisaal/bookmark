@@ -6,18 +6,18 @@ services:
     buildCommand: yarn install && yarn build
     startCommand: yarn start
     healthCheckPath: /_health
-    autoDeploy: false
+    autoDeploy: true
     envVars:
       - key: NODE_VERSION
         value: ~16.15.0
       - key: NODE_ENV
         value: production
       - key: CLOUDINARY_NAME
-        sync: false
+        sync: true
       - key: CLOUDINARY_KEY
-        sync: false
+        sync: true
       - key: CLOUDINARY_SECRET
-        sync: false
+        sync: true
       - key: DATABASE_URL
         fromDatabase:
           name: strapi
@@ -28,7 +28,3 @@ services:
         generateValue: true
       - key: APP_KEYS
         generateValue: true
-
-databases:
-  - name: strapi
-    plan: starter
