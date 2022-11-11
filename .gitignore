@@ -2,3 +2,7 @@ node_modules
 .env
 public/uploads
 build
+.env*
+.flaskenv*
+!.env.project
+!.env.vault
