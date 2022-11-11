@@ -7,8 +7,8 @@ import qs from 'qs'
 
 const MyFavList = () => {
   const authUser = useSelector((state) => state?.auth?.user);
-  const { data: favBooks } = useGetBooksQuery(qs.stringify({
-    query: {
+  const { data: favBooks } = useGetBooksQuery({
+    query: qs.stringify({
       populate: '*',
       filters: {
         users: {
@@ -16,8 +16,8 @@ const MyFavList = () => {
         }
       },
       sort: 'id'
-    }
-  }, { encode: false }));
+  }, { encode: false })
+  });
 
   return (
     <UserDashboard>
