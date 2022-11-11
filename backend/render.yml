@@ -3,8 +3,8 @@ services:
     name: strapi
     env: node
     plan: starter
-    buildCommand: yarn install && yarn build
-    startCommand: yarn start
+    buildCommand: yarn install && yarn build:prod
+    startCommand: yarn start:prod
     healthCheckPath: /_health
     autoDeploy: true
     envVars:
@@ -18,13 +18,13 @@ services:
         sync: true
       - key: CLOUDINARY_SECRET
         sync: true
-      - key: DATABASE_URL
+      - key: DATABASE_URL_PRODUCTION
         fromDatabase:
           name: strapi
           property: connectionString
-      - key: JWT_SECRET
+      - key: JWT_SECRET_PRODUCTION
         generateValue: true
-      - key: ADMIN_JWT_SECRET
+      - key: ADMIN_JWT_SECRET_PRODUCTION
         generateValue: true
-      - key: APP_KEYS
+      - key: APP_KEYS_PRODUCTION
         generateValue: true
