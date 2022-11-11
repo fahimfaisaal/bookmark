@@ -6,14 +6,14 @@ import Rating from '@mui/material/Rating';
 import { useRouter } from 'next/router';
 import { useSelector } from 'react-redux';
 import { useUpdateFavoriteBookMutation } from '../../../store/features/books/booksApi';
+import { adjustValidURL } from '../../../utils';
 
 function MyWishlist({ book, bookId }) {
   const router = useRouter();
   const authUser = useSelector((state) => state?.auth?.user);
   const [updateFavoriteBook] = useUpdateFavoriteBookMutation();
   const { images, variants, authors, ratings, name } = book;
-  const imgUrl =
-    `http://localhost:1337${images?.data[0]?.attributes?.url}` ||
+  const imgUrl = adjustValidURL(images?.data[0]?.attributes?.url) ||
     '/images/product-dummy.png';
   const numberOfReview = ratings?.data.length;
   const avarageReview = ratings?.data.reduce(
@@ -23,17 +23,16 @@ function MyWishlist({ book, bookId }) {
   const userIds = new Set(book?.users?.data?.map((item) => item?.id));
   const removeFavourite = () => {
     let data = {};
-    // let isUserFav = userIds?.find((item) => item === authUser?.id);
     let isUserFav = userIds.has(authUser?.id);
 
     if (isUserFav) {
-      // data.users = userIds?.filter((item) => item !== authUser?.id);
       userIds.delete(authUser?.id);
       data.users = [...userIds];
 
       updateFavoriteBook({ bookId, data });
     }
   };
+
   return (
     <StyledStack direction="row" justifyContent="space-between">
       <Grid container>
@@ -47,9 +46,6 @@ function MyWishlist({ book, bookId }) {
               <Typography variant="subtitle2">
                 {authors?.data[0]?.attributes?.name}
               </Typography>
-              {/* <StyledContainer variant="btnDark">
-                5 <StarIcon fontSize="small" />
-              </StyledContainer> */}
               {numberOfReview > 0 && (
                 <Stack pt={2} direction={'row'} alignItems={'center'}>
                   <Rating

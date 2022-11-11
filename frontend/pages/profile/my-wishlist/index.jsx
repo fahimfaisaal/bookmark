@@ -3,10 +3,11 @@ import { useSelector } from 'react-redux';
 import UserDashboard from '../../../components/UserDashboard';
 import MyWishlist from '../../../components/UserDashboard/MyWishlist';
 import { useGetBooksQuery } from '../../../store/features/books/booksApi';
+import qs from 'qs'
 
 const MyFavList = () => {
   const authUser = useSelector((state) => state?.auth?.user);
-  const { data: favBooks } = useGetBooksQuery({
+  const { data: favBooks } = useGetBooksQuery(qs.stringify({
     query: {
       populate: '*',
       filters: {
@@ -16,8 +17,8 @@ const MyFavList = () => {
       },
       sort: 'id'
     }
-  });
-  console.log({ favBooks });
+  }, { encode: false }));
+
   return (
     <UserDashboard>
       <Box sx={{ boxShadow: 1, padding: 2 }}>
