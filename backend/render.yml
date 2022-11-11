@@ -22,7 +22,7 @@ services:
         fromDatabase:
           name: strapi
           property: connectionString
-      - key: JWT_SECRET
+      - key: JWT_SECRET_PRODUCTION
         generateValue: true
       - key: ADMIN_JWT_SECRET_PRODUCTION
         generateValue: true
