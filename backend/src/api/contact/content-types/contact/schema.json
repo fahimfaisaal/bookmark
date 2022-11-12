@@ -16,24 +16,36 @@
       "type": "string",
       "required": true
     },
-    "form": {
-      "type": "json"
-    },
-    "info": {
-      "type": "json"
-    },
-    "buttons": {
-      "type": "json"
-    },
     "image": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
       "allowedTypes": [
         "images",
         "files",
         "videos",
         "audios"
-      ],
-      "type": "media",
-      "multiple": false
+      ]
+    },
+    "buttons": {
+      "type": "component",
+      "repeatable": true,
+      "component": "ui.button"
+    },
+    "inputs": {
+      "type": "component",
+      "repeatable": true,
+      "component": "ui.input-field"
+    },
+    "info": {
+      "type": "component",
+      "repeatable": true,
+      "component": "ui.info"
+    },
+    "icons": {
+      "type": "component",
+      "repeatable": true,
+      "component": "ui.icon"
     }
   }
 }

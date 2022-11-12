@@ -113,6 +113,9 @@ const generateModel = {
   }),
   language: () => ({
     name: faker.random.locale()
+  }),
+  home: () => ({
+    
   })
 };
 

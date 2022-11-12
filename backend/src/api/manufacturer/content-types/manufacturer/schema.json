@@ -4,7 +4,8 @@
   "info": {
     "singularName": "manufacturer",
     "pluralName": "manufacturers",
-    "displayName": "Manufacturer"
+    "displayName": "Manufacturer",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -15,6 +16,12 @@
       "type": "string"
     },
     "subtitle": {
+      "type": "string"
+    },
+    "renderCount": {
+      "type": "integer"
+    },
+    "searchPlaceholder": {
       "type": "string"
     }
   }

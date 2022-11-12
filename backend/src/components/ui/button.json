@@ -1,0 +1,28 @@
+{
+  "collectionName": "components_ui_buttons",
+  "info": {
+    "displayName": "Button",
+    "icon": "keyboard",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "text": {
+      "type": "string"
+    },
+    "url": {
+      "type": "string"
+    },
+    "type": {
+      "type": "enumeration",
+      "enum": [
+        "SUBMIT",
+        "BUTTON",
+        "RESET"
+      ]
+    },
+    "icon": {
+      "type": "string"
+    }
+  }
+}
