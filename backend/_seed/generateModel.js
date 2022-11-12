@@ -115,7 +115,50 @@ const generateModel = {
     name: faker.random.locale()
   }),
   home: () => ({
-    
+    sliders: [
+      {
+        heading: 'Meet Your Next Favorite Book',
+        status: 'SALE UP TO 20% OFF',
+        buttons: [
+          {
+            text: 'shop now',
+            url: '/books'
+          }
+        ]
+      }
+    ],
+    author: {
+      title: 'Top Authors',
+      renderCount: 12
+    },
+    publisher: {
+      title: 'Top Publishers',
+      renderCount: 12
+    },
+    category: {
+      title: 'Which Book You Like to See?',
+      renderCount: 12
+    },
+    newArrival: {
+      title: 'New Arrival Books',
+      renderCount: 12
+    },
+    popular: {
+      title: 'Popular Books',
+      renderCount: 12
+    }
+  }),
+  manufacturer: () => ({
+    title: '',
+    subTitle: '',
+    renderCount: 20,
+    searchPlaceholder: ''
+  }),
+  writer: () => ({
+    title: '',
+    subTitle: '',
+    renderCount: 20,
+    searchPlaceholder: ''
   })
 };
 

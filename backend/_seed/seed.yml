@@ -112,3 +112,4 @@
     - relateWith: book
       type: o2m
       label: bookId
+- modelName: home

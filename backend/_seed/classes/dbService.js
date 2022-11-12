@@ -1,6 +1,6 @@
 const generateModel = require('../generateModel');
 const { faker } = require('@faker-js/faker');
-const StrapiCRUDService = require('./strapiService');
+const StrapiService = require('./strapiService');
 const { getFiles } = require('../helpers');
 const { resolve } = require('path');
 const fs = require('fs');
@@ -18,7 +18,7 @@ class DbService {
       (acc, { modelName }) => ((acc[modelName] = []), acc),
       {}
     );
-    this.strapiService = new StrapiCRUDService(
+    this.strapiService = new StrapiService(
       strapi,
       new Set(Object.keys(this.modelIdMap))
     );
@@ -29,7 +29,7 @@ class DbService {
    * @param {string} modelName - the name of model
    * @param {number} modelCount
    */
-  async #createModels(modelName, modelCount) {
+  async #createCollectionModels(modelName, modelCount) {
     console.info(`⌛️ creating ${modelCount} ${modelName} models`);
     const models = [];
 
@@ -42,6 +42,24 @@ class DbService {
 
     await this.strapiService.createMany(modelName, models);
     console.info(`✅ ${modelName} models created successfully`);
+  }
+
+  async #createSingleModel(modelName) {
+    console.info(`⌛️ updating ${modelName} model`);
+    const response = await this.strapiService.create(modelName, {
+      data: {
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        publishedAt: new Date()
+      }
+    });
+
+    await this.strapiService.update(
+      modelName,
+      response.id,
+      generateModel[modelName](strapi)
+    );
+    console.info(`✅ ${modelName} model updated successfully`);
   }
 
   /**
@@ -127,7 +145,11 @@ class DbService {
     try {
       console.info('🚀 start seeding');
       for (const { modelName, count } of this.models) {
-        await this.#createModels(modelName, count);
+        if (this.strapiService.modelUIDs[modelName].kind === 'singleType') {
+          await this.#createSingleModel(modelName);
+        } else {
+          await this.#createCollectionModels(modelName, count);
+        }
       }
       console.error('✅ seed completed');
     } catch (e) {
@@ -143,11 +165,13 @@ class DbService {
       console.info('⌛️ start creating relation');
 
       for (const modelName in this.modelIdMap) {
-        this.modelIdMap[modelName] = (
-          await this.strapiService.findMany(modelName, {
-            fields: ['id']
-          })
-        ).map(({ id }) => id);
+        if (this.strapiService.modelUIDs[modelName].kind === 'collectionType') {
+          this.modelIdMap[modelName] = (
+            await this.strapiService.findMany(modelName, {
+              fields: ['id']
+            })
+          ).map(({ id }) => id);
+        }
       }
 
       for (const { modelName, relations } of this.models) {
@@ -204,7 +228,7 @@ class DbService {
             const uploadFile = await this.strapiService.uploadFile({
               data: {
                 refId: faker.datatype.number({ min: 1, max: 1e5 }), // random id
-                ref: this.strapiService.modelUIDs[modelName], // pointing any model
+                ref: this.strapiService.modelUIDs[modelName].uid, // pointing any model
                 field: fieldName
               },
               file: {
