@@ -123,19 +123,19 @@ const generateModel = {
     menus: [
       {
         text: 'Books',
-        ur: '/books'
+        url: '/books'
       },
       {
         text: 'Authors',
-        ur: '/authors'
+        url: '/authors'
       },
       {
         text: 'Publishers',
-        ur: '/publishers'
+        url: '/publishers'
       },
       {
         text: 'Contact us',
-        ur: '/contact'
+        url: '/contact'
       }
     ],
     profileMenus: [

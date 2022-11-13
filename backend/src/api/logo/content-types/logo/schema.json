@@ -1,5 +1,5 @@
 {
-  "kind": "collectionType",
+  "kind": "singleType",
   "collectionName": "logos",
   "info": {
     "singularName": "logo",
@@ -25,6 +25,9 @@
     },
     "description": {
       "type": "richtext"
+    },
+    "url": {
+      "type": "string"
     }
   }
 }

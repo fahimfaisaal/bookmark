@@ -12,11 +12,6 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "logo": {
-      "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::logo.logo"
-    },
     "menus": {
       "type": "component",
       "repeatable": true,

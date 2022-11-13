@@ -39,11 +39,6 @@
       "type": "component",
       "repeatable": true,
       "component": "ui.section"
-    },
-    "logo": {
-      "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::logo.logo"
     }
   }
 }
