@@ -14,10 +14,8 @@ module.exports = ({ env }) => {
         port: port ?? env.int('PORT_PRODUCTION', 5432),
         database,
         user,
-        password,
-        ssl: true
-      },
-      debug: false
+        password
+      }
     }
   };
 };
