@@ -44,7 +44,7 @@ import Register from '../Auth/Register';
 import CartItemComponent from './CartItemComponent';
 import Drawer from './Drawer';
 import { categoreyItems, menuItems } from './menuLinks';
-import qs from 'qs'
+import qs from 'qs';
 import {
   AppBarContainer,
   IconContainer,
@@ -84,7 +84,9 @@ const NavBar = () => {
     { userId: authUser?.id },
     { skip: !authUser?.id }
   );
-  const { data: cartBooks } = useGetBooksQuery({ query: qs.stringify(cartBookFilter, { encode: false}) });
+  const { data: cartBooks } = useGetBooksQuery({
+    query: qs.stringify(cartBookFilter, { encode: false })
+  });
 
   useEffect(() => {
     const cartbookIds = cartLists?.data?.map(

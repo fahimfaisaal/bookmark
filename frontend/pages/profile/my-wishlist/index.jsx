@@ -3,20 +3,23 @@ import { useSelector } from 'react-redux';
 import UserDashboard from '../../../components/UserDashboard';
 import MyWishlist from '../../../components/UserDashboard/MyWishlist';
 import { useGetBooksQuery } from '../../../store/features/books/booksApi';
-import qs from 'qs'
+import qs from 'qs';
 
 const MyFavList = () => {
   const authUser = useSelector((state) => state?.auth?.user);
   const { data: favBooks } = useGetBooksQuery({
-    query: qs.stringify({
-      populate: '*',
-      filters: {
-        users: {
-          id: authUser?.id
-        }
+    query: qs.stringify(
+      {
+        populate: '*',
+        filters: {
+          users: {
+            id: authUser?.id
+          }
+        },
+        sort: 'id'
       },
-      sort: 'id'
-  }, { encode: false })
+      { encode: false }
+    )
   });
 
   return (

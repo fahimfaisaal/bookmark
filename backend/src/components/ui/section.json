@@ -1,0 +1,26 @@
+{
+  "collectionName": "components_ui_sections",
+  "info": {
+    "displayName": "Section",
+    "icon": "square",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "renderCount": {
+      "type": "integer"
+    },
+    "buttons": {
+      "type": "component",
+      "repeatable": true,
+      "component": "ui.button"
+    },
+    "subtitle": {
+      "type": "string"
+    }
+  }
+}

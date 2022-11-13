@@ -1,0 +1,19 @@
+{
+  "collectionName": "components_ui_infos",
+  "info": {
+    "displayName": "Info",
+    "icon": "address-book"
+  },
+  "options": {},
+  "attributes": {
+    "heading": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    },
+    "url": {
+      "type": "string"
+    }
+  }
+}

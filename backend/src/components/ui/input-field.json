@@ -1,0 +1,51 @@
+{
+  "collectionName": "components_ui_input_fields",
+  "info": {
+    "displayName": "InputField",
+    "icon": "envelope-open-text",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "label": {
+      "type": "string"
+    },
+    "placeholder": {
+      "type": "string"
+    },
+    "type": {
+      "type": "enumeration",
+      "enum": [
+        "BUTTON",
+        "VALUE",
+        "CHECKBOX",
+        "COLOR",
+        "DATE",
+        "DATETIME-LOCAL",
+        "EMAIL",
+        "FILE",
+        "ACCEPT",
+        "HIDDEN",
+        "IMAGE",
+        "ALT",
+        "SRC",
+        "MONTH",
+        "NUMBER",
+        "PASSWORD",
+        "RADIO",
+        "NAME",
+        "RANGE",
+        "MIN",
+        "MAX",
+        "RESET",
+        "SEARCH",
+        "SUBMIT",
+        "TEL",
+        "TEXT",
+        "TIME",
+        "URL",
+        "WEEK"
+      ]
+    }
+  }
+}

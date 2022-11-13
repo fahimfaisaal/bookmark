@@ -9,9 +9,12 @@ class StrapiCRUDService {
   constructor(strapi, interactModels) {
     this.strapi = strapi;
     this.modelUIDs = strapi.db.config.models.reduce(
-      (acc, { modelName, uid }) => {
+      (acc, { modelName, uid, kind = 'component' }) => {
         if (interactModels.has(modelName)) {
-          acc[modelName] = uid;
+          acc[modelName] = {
+            uid,
+            kind
+          };
         }
 
         return acc;
@@ -45,29 +48,37 @@ class StrapiCRUDService {
     return uploadedFile;
   }
 
+  async create(modelName, data) {
+    return this.strapi.db.query(this.modelUIDs[modelName].uid).create({
+      data
+    });
+  }
+
   async createMany(modelName, models) {
-    return this.strapi.db.query(this.modelUIDs[modelName]).createMany({
+    return this.strapi.db.query(this.modelUIDs[modelName].uid).createMany({
       data: models
     });
   }
 
   async findMany(modelName, parameters) {
     return this.strapi.entityService.findMany(
-      this.modelUIDs[modelName],
+      this.modelUIDs[modelName].uid,
       parameters
     );
   }
 
   async update(modelName, populateId, model) {
     return this.strapi.entityService.update(
-      this.modelUIDs[modelName],
+      this.modelUIDs[modelName].uid,
       populateId,
       { data: model }
     );
   }
 
   async deleteMany(modelName, filter = {}) {
-    return this.strapi.db.query(this.modelUIDs[modelName]).deleteMany(filter);
+    return this.strapi.db
+      .query(this.modelUIDs[modelName].uid)
+      .deleteMany(filter);
   }
 }
 

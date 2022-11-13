@@ -1,0 +1,35 @@
+{
+  "kind": "singleType",
+  "collectionName": "navigations",
+  "info": {
+    "singularName": "navigation",
+    "pluralName": "navigations",
+    "displayName": "Navigation",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "logo": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::logo.logo"
+    },
+    "menus": {
+      "type": "component",
+      "repeatable": true,
+      "component": "ui.button"
+    },
+    "darkMode": {
+      "type": "boolean",
+      "default": false
+    },
+    "profileMenus": {
+      "type": "component",
+      "repeatable": true,
+      "component": "ui.button"
+    }
+  }
+}

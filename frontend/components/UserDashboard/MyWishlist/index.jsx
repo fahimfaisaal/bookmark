@@ -13,7 +13,8 @@ function MyWishlist({ book, bookId }) {
   const authUser = useSelector((state) => state?.auth?.user);
   const [updateFavoriteBook] = useUpdateFavoriteBookMutation();
   const { images, variants, authors, ratings, name } = book;
-  const imgUrl = adjustValidURL(images?.data[0]?.attributes?.url) ||
+  const imgUrl =
+    adjustValidURL(images?.data[0]?.attributes?.url) ||
     '/images/product-dummy.png';
   const numberOfReview = ratings?.data.length;
   const avarageReview = ratings?.data.reduce(
