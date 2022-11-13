@@ -1,6 +1,6 @@
+import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight';
 import { Box, Button, Grid, Typography } from '@mui/material';
 import { Stack } from '@mui/system';
-import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight';
 import { StyledGrid, StyledGridItem, StyledText } from './Styles';
 
 const getBanner = () => ({
@@ -105,7 +105,7 @@ const Banner = () => {
       </StyledGridItem>
       <Grid item md={6} lg={6}>
         <Box>
-          <img src="/banner.png" width="100%" />
+          <img src="/banner.png" width="100%" alt={data.attributes?.heading} />
         </Box>
       </Grid>
     </StyledGrid>

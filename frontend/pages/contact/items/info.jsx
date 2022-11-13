@@ -7,7 +7,7 @@ const Information = ({ data }) => {
   return (
     <>
       <StyledContainer>
-        <img src="/contact.svg" />
+        <img src="/contact.svg" alt="contact" />
         {data?.attributes?.info?.info?.map((item) => (
           <Stack direction={'column'} sx={{ marginTop: 1 }} key={item.title}>
             <Typography variant="subtitle1">{item.title}</Typography>

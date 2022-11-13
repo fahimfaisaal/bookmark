@@ -1,5 +1,6 @@
 import { Button, Grid, Skeleton, Stack } from '@mui/material';
 import { Box } from '@mui/system';
+import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { FiFilter } from 'react-icons/fi';
 import { MdClose } from 'react-icons/md';
@@ -31,6 +32,14 @@ const AuthorItem = () => {
 
   return (
     <Box>
+      <Head>
+        <title>{authorData?.name || 'Autor Name'}</title>
+        <meta name="description" content={authorData?.bio} />
+        <link
+          rel="icon"
+          href="https://upload.wikimedia.org/wikipedia/commons/2/2f/Icon-green-line-b-default.svg"
+        />
+      </Head>
       <Grid container spacing={'10px'}>
         {filterTrig && (
           <Grid item lg={3.5}>
