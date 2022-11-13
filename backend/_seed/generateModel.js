@@ -45,7 +45,7 @@ const generateModel = {
     return {
       name,
       bio: faker.lorem.sentence(20),
-      socials: ['facebook', 'twitter', 'linkedin']
+      socials: ['facebook', 'twitter', 'urledin']
         .map((socialName) => `https://${socialName}.com/${name}`)
         .join(','),
       website: faker.internet.domainName()
@@ -114,6 +114,57 @@ const generateModel = {
   language: () => ({
     name: faker.random.locale()
   }),
+  logo: () => ({
+    text: 'Book Mark',
+    description: faker.lorem.paragraph()
+  }),
+  navigation: () => ({
+    darkMode: false,
+    menus: [
+      {
+        text: 'Books',
+        ur: '/books'
+      },
+      {
+        text: 'Authors',
+        ur: '/authors'
+      },
+      {
+        text: 'Publishers',
+        ur: '/publishers'
+      },
+      {
+        text: 'Contact us',
+        ur: '/contact'
+      }
+    ],
+    profileMenus: [
+      {
+        url: '/profile',
+        text: 'Profile'
+      },
+      {
+        url: '/profile/my-orders',
+        text: 'My Orders'
+      },
+      {
+        url: '/profile/my-wishlist',
+        text: 'My Wishlists'
+      },
+      {
+        url: '/checkout',
+        text: 'Checkout'
+      },
+      {
+        url: '/profile/change-password',
+        text: 'Change Password'
+      },
+      {
+        url: '/logout',
+        text: 'Logout'
+      }
+    ]
+  }),
   home: () => ({
     sliders: [
       {
@@ -149,16 +200,134 @@ const generateModel = {
     }
   }),
   manufacturer: () => ({
-    title: '',
-    subTitle: '',
+    title: 'Manufacturers/Publishers',
+    subtitle: 'Lorem ipsum dolor sit amet, consectetu eradipiscing elit.',
     renderCount: 20,
-    searchPlaceholder: ''
+    searchPlaceholder: 'Search Your Favorite Publisher from here'
   }),
   writer: () => ({
-    title: '',
-    subTitle: '',
+    title: 'Search Our Beloved Authors',
+    subtitle: 'Lorem ipsum dolor sit amet, consectetu eradipiscing elit.',
     renderCount: 20,
-    searchPlaceholder: ''
+    searchPlaceholder: 'Searh your favorite authors'
+  }),
+  contact: () => ({
+    heading: 'Questions, Comments, or Concerns?',
+    inputs: [
+      {
+        label: 'Name',
+        placeholder: 'Jhon doe',
+        type: 'TEXT'
+      },
+      {
+        label: 'Email',
+        placeholder: 'youremail@xyz.com',
+        type: 'EMAIL'
+      },
+      {
+        label: 'Subject',
+        placeholder: 'Subject',
+        type: 'TEXT'
+      },
+      {
+        label: 'Description',
+        placeholder: 'Description',
+        type: 'TEXT'
+      }
+    ],
+    buttons: [
+      {
+        type: 'SUBMIT',
+        url: '/',
+        text: 'Submit'
+      }
+    ],
+    info: [
+      {
+        heading: 'Address',
+        description: faker.address.country()
+      },
+      {
+        heading: 'Phone',
+        description: faker.phone.number('+48 91 ### ## ##')
+      },
+      {
+        heading: 'Website',
+        description: 'https://bookmark.com'
+      },
+      {
+        heading: 'Follow us'
+      }
+    ],
+    icons: [
+      {
+        name: 'facebook',
+        url: 'https://facebook.com/bookmark'
+      },
+      {
+        name: 'instagram',
+        url: 'https://instagram.com/bookmark'
+      },
+      {
+        name: 'twitter',
+        url: 'https://twitter.com/bookmark'
+      }
+    ]
+  }),
+  footer: () => ({
+    address: faker.address.country(),
+    email: faker.internet.email(),
+    phone: faker.phone.number('+48 91 ### ## ##'),
+    copyright: '© Copyright 2022 - soft clan',
+    sections: [
+      {
+        title: 'Explore',
+        buttons: [
+          {
+            text: 'About Us',
+            url: '/about'
+          },
+          {
+            text: 'Books',
+            url: '/books'
+          },
+          {
+            text: 'Authors',
+            url: '/authors'
+          },
+          {
+            text: 'Publishers',
+            url: '/publishers'
+          }
+        ]
+      },
+      {
+        title: 'Customer Service',
+        buttons: [
+          {
+            text: 'Contact Us',
+            url: '/contact'
+          },
+          {
+            text: 'FAQ & Helps',
+            url: '/contact'
+          }
+        ]
+      },
+      {
+        title: 'Our information',
+        buttons: [
+          {
+            text: 'Privacy policy update',
+            url: '/contact'
+          },
+          {
+            text: 'Terms & conditions',
+            url: '/contact'
+          }
+        ]
+      }
+    ]
   })
 };
 

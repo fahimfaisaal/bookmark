@@ -19,7 +19,8 @@
         "SUBMIT",
         "BUTTON",
         "RESET"
-      ]
+      ],
+      "default": "BUTTON"
     },
     "icon": {
       "type": "string"

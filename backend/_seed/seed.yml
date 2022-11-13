@@ -113,3 +113,8 @@
       type: o2m
       label: bookId
 - modelName: home
+- modelName: footer
+- modelName: contact
+- modelName: manufacturer
+- modelName: writer
+- modelName: navigation

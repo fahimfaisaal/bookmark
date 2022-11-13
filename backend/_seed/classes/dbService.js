@@ -45,7 +45,7 @@ class DbService {
   }
 
   async #createSingleModel(modelName) {
-    console.info(`⌛️ updating ${modelName} model`);
+    console.info(`⌛️ creating ${modelName} model`);
     const response = await this.strapiService.create(modelName, {
       data: {
         createdAt: new Date(),
@@ -59,7 +59,7 @@ class DbService {
       response.id,
       generateModel[modelName](strapi)
     );
-    console.info(`✅ ${modelName} model updated successfully`);
+    console.info(`✅ ${modelName} model created successfully`);
   }
 
   /**
