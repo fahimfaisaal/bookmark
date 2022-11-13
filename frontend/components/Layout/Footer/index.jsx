@@ -250,22 +250,12 @@ function Footer() {
           >
             {footerData?.attributes?.payment?.data?.map((image) => (
               <PaymentImgContainer key={image.id}>
-                <img src={image?.attributes?.url} alt="" />
+                <img
+                  src={image?.attributes?.url}
+                  alt={image?.attributes?.url}
+                />
               </PaymentImgContainer>
             ))}
-            {/* <PaymentImgContainer>
-              <img src="/images/payments/discover.png" alt="" />
-            </PaymentImgContainer>
-            <PaymentImgContainer>
-              <img src="/images/payments/master.png" alt="" />
-            </PaymentImgContainer>
-
-            <PaymentImgContainer>
-              <img src="/images/payments/paypal.png" alt="" />
-            </PaymentImgContainer>
-            <PaymentImgContainer>
-              <img src="/images/payments/visa.png" alt="" />
-            </PaymentImgContainer> */}
           </Stack>
         </FooterBottomContainer>
       </Box>

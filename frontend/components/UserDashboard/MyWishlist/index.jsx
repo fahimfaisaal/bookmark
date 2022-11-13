@@ -1,19 +1,20 @@
 import { Grid, Typography } from '@mui/material';
-import { Stack } from '@mui/system';
-import CustomImage from '../../CustomImage';
-import { StyledCart, StyledImage, StyledRemove, StyledStack } from './Styles';
 import Rating from '@mui/material/Rating';
+import { Stack } from '@mui/system';
 import { useRouter } from 'next/router';
 import { useSelector } from 'react-redux';
 import { useUpdateFavoriteBookMutation } from '../../../store/features/books/booksApi';
 import { adjustValidURL } from '../../../utils';
+import CustomImage from '../../CustomImage';
+import { StyledCart, StyledImage, StyledRemove, StyledStack } from './Styles';
 
 function MyWishlist({ book, bookId }) {
   const router = useRouter();
   const authUser = useSelector((state) => state?.auth?.user);
   const [updateFavoriteBook] = useUpdateFavoriteBookMutation();
   const { images, variants, authors, ratings, name } = book;
-  const imgUrl = adjustValidURL(images?.data[0]?.attributes?.url) ||
+  const imgUrl =
+    adjustValidURL(images?.data[0]?.attributes?.url) ||
     '/images/product-dummy.png';
   const numberOfReview = ratings?.data.length;
   const avarageReview = ratings?.data.reduce(
@@ -39,7 +40,7 @@ function MyWishlist({ book, bookId }) {
         <Grid item sm={12} md={5} lg={6}>
           <Stack direction="row" spacing={3} alignItems="center">
             <StyledImage>
-              <CustomImage src={imgUrl} width="70px" height="70px" />
+              <CustomImage src={imgUrl} width="70px" height="70px" alt={name} />
             </StyledImage>
             <Stack direction="column" spacing={1}>
               <Typography variant="h3">{name}</Typography>

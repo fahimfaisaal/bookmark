@@ -9,7 +9,6 @@ function AuthorProfile({ authorInfo }) {
     (authorInfo?.avatar?.data &&
       `http://localhost:1337${authorInfo?.avatar?.data?.attributes?.url}`) ||
     '/images/publisher-logo.png';
-
   return (
     <Grid container spacing={6}>
       <Grid item xs={12} sm={6} lg={6}>
@@ -25,13 +24,13 @@ function AuthorProfile({ authorInfo }) {
           <Stack direction="row" alignItems="center" gap={2}>
             <Typography variant="h2">Born :</Typography>
             <Typography variant="body1" pt="5px">
-              24 October, 1995
+              {authorInfo?.birth || '24 October, 1980'}
             </Typography>
           </Stack>
           <Stack direction="row" alignItems="center" gap={2}>
-            <Typography variant="h2">Language: </Typography>
+            <Typography variant="h2">Languages: </Typography>
             <Typography variant="body1" pt="5px">
-              English
+              {authorInfo?.languages || 'English, Bangla'}
             </Typography>
           </Stack>
         </Stack>

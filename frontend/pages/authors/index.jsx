@@ -1,4 +1,5 @@
 import { Box, debounce, Grid, Stack, Typography } from '@mui/material';
+import Head from 'next/head';
 import { useState } from 'react';
 import AuthorCard from '../../components/AuthorCard';
 import AuthorSkeleton from '../../components/AuthorSkeleton';
@@ -32,6 +33,14 @@ function Authors() {
 
   return (
     <Box>
+      <Head>
+        <title>Authors</title>
+        <meta name="description" content="Bookmark application all authors" />
+        <link
+          rel="icon"
+          href="https://upload.wikimedia.org/wikipedia/commons/2/2f/Icon-green-line-b-default.svg"
+        />
+      </Head>
       <HeaderContainerStyle>
         <HeaderStyle>
           <Typography variant="h1" color="primary">

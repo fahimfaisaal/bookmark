@@ -45,6 +45,9 @@
       "relation": "manyToMany",
       "target": "api::publisher.publisher",
       "mappedBy": "authors"
+    },
+    "languages": {
+      "type": "string"
     }
   }
 }

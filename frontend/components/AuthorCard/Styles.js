@@ -10,8 +10,6 @@ export const ImgContainerStyle = styled(Box)(() => ({
   borderRadius: '50%',
   boxShadow: 'rgba(0,0,0,0.16) 0px 3px 6px',
   img: {
-    width: '180px',
-    height: '180px',
     display: 'flex',
     alignItems: 'center',
     borderRadius: '50%'

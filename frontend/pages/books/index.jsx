@@ -1,5 +1,6 @@
 import { Box, Button, Grid, Typography } from '@mui/material';
 import { Stack } from '@mui/system';
+import Head from 'next/head';
 import React from 'react';
 import { FiFilter } from 'react-icons/fi';
 import { MdClose } from 'react-icons/md';
@@ -24,6 +25,17 @@ function Books() {
 
   return (
     <Box>
+      <Head>
+        <title>Books</title>
+        <meta
+          name="description"
+          content="You can see all books in your application from here"
+        />
+        <link
+          rel="icon"
+          href="https://upload.wikimedia.org/wikipedia/commons/2/2f/Icon-green-line-b-default.svg"
+        />
+      </Head>
       <Grid container spacing={2}>
         {filterTrig && (
           <Grid item lg={3.5}>
