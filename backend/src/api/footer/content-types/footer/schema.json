@@ -27,7 +27,7 @@
       "type": "string",
       "required": true
     },
-    "payment": {
+    "payments": {
       "type": "media",
       "multiple": true,
       "required": true,
@@ -35,9 +35,10 @@
         "images"
       ]
     },
-    "lists": {
-      "type": "json",
-      "required": true
+    "sections": {
+      "type": "component",
+      "repeatable": true,
+      "component": "ui.section"
     }
   }
 }

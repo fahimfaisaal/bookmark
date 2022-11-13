@@ -12,26 +12,35 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "whichBook": {
-      "type": "string"
+    "sliders": {
+      "type": "component",
+      "repeatable": true,
+      "component": "ui.slider"
+    },
+    "category": {
+      "type": "component",
+      "repeatable": false,
+      "component": "ui.section"
     },
     "author": {
-      "type": "string"
+      "type": "component",
+      "repeatable": false,
+      "component": "ui.section"
     },
-    "arrival": {
-      "type": "string"
+    "newArrival": {
+      "type": "component",
+      "repeatable": false,
+      "component": "ui.section"
     },
     "popular": {
-      "type": "string"
+      "type": "component",
+      "repeatable": false,
+      "component": "ui.section"
     },
     "publisher": {
-      "type": "string"
-    },
-    "sliderText": {
-      "type": "string"
-    },
-    "buttons": {
-      "type": "json"
+      "type": "component",
+      "repeatable": false,
+      "component": "ui.section"
     }
   }
 }

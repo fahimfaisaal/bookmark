@@ -1,10 +1,10 @@
 {
   "kind": "singleType",
-  "collectionName": "banners",
+  "collectionName": "logos",
   "info": {
-    "singularName": "banner",
-    "pluralName": "banners",
-    "displayName": "banner",
+    "singularName": "logo",
+    "pluralName": "logos",
+    "displayName": "Logo",
     "description": ""
   },
   "options": {
@@ -12,22 +12,22 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "heading": {
+    "text": {
       "type": "string"
     },
-    "images": {
+    "image": {
       "type": "media",
-      "multiple": true,
+      "multiple": false,
       "required": false,
       "allowedTypes": [
         "images"
       ]
     },
-    "status": {
-      "type": "string"
+    "description": {
+      "type": "richtext"
     },
-    "buttons": {
-      "type": "json"
+    "url": {
+      "type": "string"
     }
   }
 }
