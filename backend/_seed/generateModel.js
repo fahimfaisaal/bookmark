@@ -38,7 +38,8 @@ const generateModel = {
   },
   author: () => ({
     name: faker.name.fullName(),
-    bio: faker.lorem.sentence(20)
+    bio: faker.lorem.sentence(20),
+    language: faker.random.locale()
   }),
   publisher: () => {
     const name = faker.word.noun();
