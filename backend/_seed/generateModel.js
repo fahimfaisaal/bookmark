@@ -294,7 +294,7 @@ const generateModel = {
     ]
   }),
   footer: () => ({
-    address: faker.address.country(),
+    address: '2429 River Drive, Suite 35 Cottonhall, CA 2296 United Kingdom',
     email: faker.internet.email(),
     phone: faker.phone.number('+48 91 ### ## ##'),
     copyright: '© Copyright 2022 - soft clan',
