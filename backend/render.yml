@@ -1,10 +1,10 @@
 services:
   - type: web
-    name: strapi
+    name: bookmark-backend
     env: node
     plan: starter
-    buildCommand: yarn install && yarn build:prod
-    startCommand: yarn start:prod
+    buildCommand: yarn; yarn build
+    startCommand: yarn start
     healthCheckPath: /_health
     autoDeploy: true
     envVars:
@@ -20,8 +20,7 @@ services:
         sync: true
       - key: DATABASE_URL_PRODUCTION
         fromDatabase:
-          name: strapi
-          property: connectionString
+        sync: true
       - key: JWT_SECRET_PRODUCTION
         generateValue: true
       - key: ADMIN_JWT_SECRET_PRODUCTION
