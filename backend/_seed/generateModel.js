@@ -1,3 +1,4 @@
+/* eslint-disable linebreak-style */
 const { faker } = require('@faker-js/faker');
 const bcrypt = require('bcryptjs');
 
@@ -180,11 +181,23 @@ const generateModel = {
     ],
     author: {
       title: 'Top Authors',
-      renderCount: 12
+      renderCount: 12,
+      buttons: [
+        {
+          text: 'See All',
+          url: '/authors'
+        }
+      ]
     },
     publisher: {
       title: 'Top Publishers',
-      renderCount: 12
+      renderCount: 12,
+      buttons: [
+        {
+          text: 'See All',
+          url: '/publishers'
+        }
+      ]
     },
     category: {
       title: 'Which Book You Like to See?',
@@ -192,7 +205,13 @@ const generateModel = {
     },
     newArrival: {
       title: 'New Arrival Books',
-      renderCount: 12
+      renderCount: 12,
+      buttons: [
+        {
+          text: 'See More',
+          url: '/books'
+        }
+      ]
     },
     popular: {
       title: 'Popular Books',

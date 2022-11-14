@@ -245,7 +245,7 @@ function Home() {
           justifyContent="space-between"
         >
           <SectionHeaderStyle variant="h1" sx={{ margin: 0 }}>
-            {home?.data?.attributes?.popular?.title}
+            {home?.data?.attributes?.publisher?.title}
           </SectionHeaderStyle>
           <Link href="/publishers">
             <SeeAllLinkStyle>{homeData.attributes?.sliderText}</SeeAllLinkStyle>

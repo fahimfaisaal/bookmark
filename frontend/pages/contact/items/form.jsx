@@ -33,51 +33,46 @@ const Form = ({ contactData }) => {
           {contactData?.data?.attributes?.inputs?.map((input) => {
             const labelSmall = input?.label?.toLowerCase();
             const labelCapital = input?.label;
+
+            const isDescription = labelSmall === 'description';
+
+            const renderComponent = ({ field }) => {
+              const myRegister = register(input.label, {
+                required: `${labelCapital} is required`
+              });
+              console.log({ myRegister, field });
+              return (
+                <Box>
+                  <InputLabel
+                    color="secondary"
+                    htmlFor="description"
+                    sx={{ marginTop: 2, paddingBottom: 1, fontWeight: 600 }}
+                  >
+                    {input?.label}
+                  </InputLabel>
+
+                  <TextField
+                    fullWidth
+                    name={input?.label}
+                    label={labelCapital}
+                    error={Boolean(errors.name)}
+                    rows={isDescription ? 4 : 1}
+                    multiline={isDescription}
+                    helperText={errors.name?.message}
+                    type={input?.type?.toLowerCase()}
+                    {...myRegister}
+                    {...field}
+                  />
+                </Box>
+              );
+            };
+
             return (
               <Controller
                 key={input.id}
                 name={labelSmall}
                 control={control}
-                render={({ field }) => (
-                  <Box>
-                    <InputLabel
-                      color="secondary"
-                      htmlFor="description"
-                      sx={{ marginTop: 2, paddingBottom: 1, fontWeight: 600 }}
-                    >
-                      {input?.label}
-                    </InputLabel>
-                    {input?.label === 'Description' ? (
-                      <TextField
-                        fullWidth
-                        name={input?.label?.toLowerCase()}
-                        label={labelCapital}
-                        error={Boolean(errors.name)}
-                        rows={4}
-                        multiline
-                        {...register(`${labelSmall}`, {
-                          required: `${labelCapital} is required`
-                        })}
-                        helperText={errors.name?.message}
-                        type={input?.type?.toLowerCase()}
-                        {...field}
-                      />
-                    ) : (
-                      <TextField
-                        fullWidth
-                        name={input?.label?.toLowerCase()}
-                        label={labelCapital}
-                        error={Boolean(errors.name)}
-                        {...register(`${labelSmall}`, {
-                          required: `${labelCapital} is required`
-                        })}
-                        helperText={errors.name?.message}
-                        type={input?.type?.toLowerCase()}
-                        {...field}
-                      />
-                    )}
-                  </Box>
-                )}
+                render={renderComponent}
               />
             );
           })}
