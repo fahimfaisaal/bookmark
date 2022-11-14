@@ -1,5 +1,6 @@
 import { Button, Grid, Skeleton, Stack } from '@mui/material';
 import { Box } from '@mui/system';
+import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { FiFilter } from 'react-icons/fi';
 import { MdClose } from 'react-icons/md';
@@ -31,44 +32,48 @@ const AuthorItem = () => {
 
   return (
     <Box>
+      <Head>
+        <title>{authorData?.name || 'Autor Name'}</title>
+        <meta name="description" content={authorData?.bio} />
+        <link
+          rel="icon"
+          href="https://upload.wikimedia.org/wikipedia/commons/2/2f/Icon-green-line-b-default.svg"
+        />
+      </Head>
+
+      {isLoading ? (
+        <Grid container spacing={6}>
+          <Grid item xs={12} sm={6} lg={6}>
+            <StyledBox>
+              <Skeleton width={'100%'} height={450} variant={'rectangular'} />
+            </StyledBox>
+          </Grid>
+          <Grid item xs={12} sm={6} lg={6}>
+            <Skeleton width={'80%'} height={40} variant={'rectangular'} />
+
+            <Box py={2}>
+              <Skeleton width={'60%'} height={15} variant={'rectangular'} />
+              <Box pt={1}></Box>
+              <Skeleton width={'60%'} height={15} variant={'rectangular'} />
+            </Box>
+            <Box py={2}>
+              <Skeleton width={'40%'} height={20} variant={'rectangular'} />
+              <Box pt={1}></Box>
+
+              <Skeleton width={'40%'} height={20} variant={'rectangular'} />
+            </Box>
+          </Grid>
+        </Grid>
+      ) : (
+        <AuthorProfile authorInfo={authorData} />
+      )}
       <Grid container spacing={'10px'}>
         {filterTrig && (
-          <Grid item lg={3.5}>
+          <Grid item md={3.5} mt="70px">
             <Filter />
           </Grid>
         )}
-
-        <Grid item lg={filterTrig ? 8.5 : 12}>
-          {isLoading ? (
-            <Grid container spacing={6}>
-              <Grid item xs={12} sm={6} lg={6}>
-                <StyledBox>
-                  <Skeleton
-                    width={'100%'}
-                    height={450}
-                    variant={'rectangular'}
-                  />
-                </StyledBox>
-              </Grid>
-              <Grid item xs={12} sm={6} lg={6}>
-                <Skeleton width={'80%'} height={40} variant={'rectangular'} />
-
-                <Box py={2}>
-                  <Skeleton width={'60%'} height={15} variant={'rectangular'} />
-                  <Box pt={1}></Box>
-                  <Skeleton width={'60%'} height={15} variant={'rectangular'} />
-                </Box>
-                <Box py={2}>
-                  <Skeleton width={'40%'} height={20} variant={'rectangular'} />
-                  <Box pt={1}></Box>
-
-                  <Skeleton width={'40%'} height={20} variant={'rectangular'} />
-                </Box>
-              </Grid>
-            </Grid>
-          ) : (
-            <AuthorProfile authorInfo={authorData} />
-          )}
+        <Grid item md={8.5}>
           <SectionHeaderStyle variant="h1">Author Books</SectionHeaderStyle>
 
           <FilterButtonContainer>

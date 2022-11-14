@@ -64,7 +64,7 @@ function PublicationCover({ publisherData }) {
       </ProfileContainerStyle>
 
       <BannerContainerStyle>
-        <CustomImage src={bannerUrl} alt="" />
+        <CustomImage src={bannerUrl} alt={publisherData?.name} />
       </BannerContainerStyle>
     </ContainerStyle>
   );

@@ -1,4 +1,4 @@
-function CustomImage({ src, title, width, height }) {
+function CustomImage({ src, alt, width, height }) {
   return (
     <img
       style={{
@@ -8,7 +8,7 @@ function CustomImage({ src, title, width, height }) {
         height: '100%'
       }}
       src={src}
-      alt={title}
+      alt={alt}
       width={width}
       height={height}
     />

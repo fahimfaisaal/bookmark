@@ -1,5 +1,6 @@
 import { Box, Button, Grid, Skeleton } from '@mui/material';
 import { Stack } from '@mui/system';
+import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { FiFilter } from 'react-icons/fi';
 import { MdClose } from 'react-icons/md';
@@ -27,6 +28,17 @@ function PublicationItem() {
 
   return (
     <Box>
+      <Head>
+        <title>{publisherData?.name}</title>
+        <meta
+          name="description"
+          content={`Bookmark application ${publisherData?.name}'s publisher page`}
+        />
+        <link
+          rel="icon"
+          href="https://upload.wikimedia.org/wikipedia/commons/2/2f/Icon-green-line-b-default.svg"
+        />
+      </Head>
       <Grid container spacing={'10px'}>
         {filterTrig && (
           <Grid item lg={3.5}>

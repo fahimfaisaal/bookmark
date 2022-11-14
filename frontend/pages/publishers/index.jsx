@@ -1,4 +1,5 @@
 import { Box, debounce, Grid, Stack, Typography } from '@mui/material';
+import Head from 'next/head';
 import { useState } from 'react';
 import PublicationCard from '../../components/PublicationCard';
 import PublisherSkeleton from '../../components/PublisherSkeleton';
@@ -32,6 +33,17 @@ function Publications() {
   const { data: publisherData } = getPublisherData();
   return (
     <Box>
+      <Head>
+        <title>Publishers</title>
+        <meta
+          name="description"
+          content="Bookmark application all publishers"
+        />
+        <link
+          rel="icon"
+          href="https://upload.wikimedia.org/wikipedia/commons/2/2f/Icon-green-line-b-default.svg"
+        />
+      </Head>
       <HeaderContainerStyle>
         <HeaderStyle>
           <Typography variant="h1" color="primary">

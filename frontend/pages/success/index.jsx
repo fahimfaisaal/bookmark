@@ -1,5 +1,6 @@
 import { Button, Typography } from '@mui/material';
 import { Box } from '@mui/system';
+import Head from 'next/head';
 import Link from 'next/link';
 import { useEffect } from 'react';
 import toast from 'react-hot-toast';
@@ -12,6 +13,17 @@ const Success = () => {
   }, []);
   return (
     <ContainerStyle>
+      <Head>
+        <title>Payment Success</title>
+        <meta
+          name="description"
+          content="Bookmark application cart items payment page"
+        />
+        <link
+          rel="icon"
+          href="https://upload.wikimedia.org/wikipedia/commons/2/2f/Icon-green-line-b-default.svg"
+        />
+      </Head>
       <IconStyle>
         <BsFillBagCheckFill />
       </IconStyle>
