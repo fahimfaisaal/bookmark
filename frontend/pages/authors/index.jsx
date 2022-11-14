@@ -5,26 +5,17 @@ import AuthorSkeleton from '../../components/AuthorSkeleton';
 import CustomLink from '../../components/shared/CustomLink';
 import SearchBar from '../../components/shared/SearchBar';
 import { useGetAuthorsQuery } from '../../store/features/authors/authorsApi';
+import { useGetWriterQuery } from '../../store/features/singleType/writer/writerApi';
 import { fakeArr, generateQuery } from '../../utils';
 import { HeaderContainerStyle, HeaderStyle } from './Styles';
 
-const getAuthor = () => ({
-  data: {
-    id: 1,
-    attributes: {
-      title: 'Search Our Beloved Authors',
-      subtitle: 'Lorem ipsum dolor sit amet, consectetu eradipiscing elit.',
-      searchPlaceholder: 'Search Your Favorite Author from here'
-    }
-  }
-});
-
 function Authors() {
-  const { data: authorContent } = getAuthor();
   const [searchText, setSearchText] = useState('');
   const { data: authorLists, isLoading: isAuthorLoading } = useGetAuthorsQuery({
     query: generateQuery({ searchText })
   });
+
+  const { data: writer } = useGetWriterQuery();
 
   const authorSearchHandler = (value) => {
     setSearchText(value);
@@ -35,14 +26,14 @@ function Authors() {
       <HeaderContainerStyle>
         <HeaderStyle>
           <Typography variant="h1" color="primary">
-            {authorContent?.attributes?.title}
+            {writer?.data?.attributes?.title}
           </Typography>
           <Typography variant="body1">
-            {authorContent?.attributes?.subtitle}
+            {writer?.data?.attributes?.subtitle}
           </Typography>
           <Stack direction="row" justifyContent="center" my={5}>
             <SearchBar
-              placeholder={authorContent?.attributes?.searchPlaceholder}
+              placeholder={writer?.data?.attributes?.searchPlaceholder}
               width="700px"
               searchHandler={debounce(authorSearchHandler, 800)}
             />

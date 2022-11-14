@@ -8,16 +8,16 @@ const Information = ({ data }) => {
     <>
       <StyledContainer>
         <img src="/contact.svg" />
-        {data?.attributes?.info?.info?.map((item) => (
-          <Stack direction={'column'} sx={{ marginTop: 1 }} key={item.title}>
-            <Typography variant="subtitle1">{item.title}</Typography>
+        {data?.data?.attributes?.info?.map((item) => (
+          <Stack direction={'column'} sx={{ marginTop: 1 }} key={item.id}>
+            <Typography variant="subtitle1">{item.heading}</Typography>
             <Typography sx={{ paddingTop: 2 }} variant="body2">
-              {item.text}
+              {item.description}
             </Typography>
           </Stack>
         ))}
         <Box sx={{ marginTop: -2, paddingBottom: 2 }}>
-          <SocialMediaIcons />
+          <SocialMediaIcons data={data} />
         </Box>
       </StyledContainer>
     </>

@@ -26,9 +26,78 @@ const Form = ({ contactData }) => {
     <>
       <StyledContainer>
         <Typography variant="h2" fontWeight={800}>
-          {contactData?.attributes?.heading}
+          {contactData?.data?.attributes?.heading}
         </Typography>
+
         <form onSubmit={handleSubmit(onSubmit)}>
+          {contactData?.data?.attributes?.inputs?.map((input) => {
+            const labelSmall = input?.label?.toLowerCase();
+            const labelCapital = input?.label;
+            return (
+              <Controller
+                key={input.id}
+                name={labelSmall}
+                control={control}
+                render={({ field }) => (
+                  <Box>
+                    <InputLabel
+                      color="secondary"
+                      htmlFor="description"
+                      sx={{ marginTop: 2, paddingBottom: 1, fontWeight: 600 }}
+                    >
+                      {input?.label}
+                    </InputLabel>
+                    {input?.label === 'Description' ? (
+                      <TextField
+                        fullWidth
+                        name={input?.label?.toLowerCase()}
+                        label={labelCapital}
+                        error={Boolean(errors.name)}
+                        rows={4}
+                        multiline
+                        {...register(`${labelSmall}`, {
+                          required: `${labelCapital} is required`
+                        })}
+                        helperText={errors.name?.message}
+                        type={input?.type?.toLowerCase()}
+                        {...field}
+                      />
+                    ) : (
+                      <TextField
+                        fullWidth
+                        name={input?.label?.toLowerCase()}
+                        label={labelCapital}
+                        error={Boolean(errors.name)}
+                        {...register(`${labelSmall}`, {
+                          required: `${labelCapital} is required`
+                        })}
+                        helperText={errors.name?.message}
+                        type={input?.type?.toLowerCase()}
+                        {...field}
+                      />
+                    )}
+                  </Box>
+                )}
+              />
+            );
+          })}
+          {contactData?.data?.attributes?.buttons?.map((item) => (
+            <Button
+              key={item.id}
+              variant="btnGreen"
+              type={item.type}
+              sx={{
+                padding: '12px 25px',
+                marginTop: '.8rem',
+                marginBottom: '1.5rem'
+              }}
+            >
+              {item.text}
+            </Button>
+          ))}
+        </form>
+
+        {/* <form onSubmit={handleSubmit(onSubmit)}>
           <Controller
             name="name"
             control={control}
@@ -157,7 +226,7 @@ const Form = ({ contactData }) => {
               {item.text}
             </Button>
           ))}
-        </form>
+        </form> */}
       </StyledContainer>
     </>
   );
