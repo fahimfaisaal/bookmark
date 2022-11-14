@@ -2,7 +2,7 @@ services:
   - type: web
     name: bookmark-backend
     env: node
-    plan: starter
+    plan: free
     repo: https://github.com/fahimfaisaal/bookmark
     branch: deploy_backend
     rootDir: ./backend
