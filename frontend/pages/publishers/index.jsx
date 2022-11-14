@@ -6,31 +6,21 @@ import PublisherSkeleton from '../../components/PublisherSkeleton';
 import CustomLink from '../../components/shared/CustomLink';
 import SearchBar from '../../components/shared/SearchBar';
 import { useGetPublishersQuery } from '../../store/features/publishers/publishersApi';
+import { useGetManufacturerQuery } from '../../store/features/singleType/manufacturer/manufacturerApi';
 import { fakeArr, generateQuery } from '../../utils';
 import { HeaderContainerStyle, HeaderStyle } from '../authors/Styles';
-
-const getPublisherData = () => ({
-  data: {
-    id: 1,
-    attributes: {
-      title: 'Manufacturers/Publishers',
-      subtitle: 'Lorem ipsum dolor sit amet, consectetu eradipiscing elit.',
-      searchPlaceholder: 'Search Your Favorite Publisher from here'
-    }
-  }
-});
 
 function Publications() {
   const [searchText, setSearchText] = useState('');
   const { data: publisherLists, isLoading: isPublisherLoading } =
     useGetPublishersQuery({ query: generateQuery({ searchText }) });
-  console.log({ searchText: generateQuery({ searchText }) });
+
+  // console.log({ searchText: generateQuery({ searchText }) });
 
   const publisherSearchHandler = (value) => {
     setSearchText(value);
   };
-
-  const { data: publisherData } = getPublisherData();
+  const { data: manufacturer } = useGetManufacturerQuery();
   return (
     <Box>
       <Head>
@@ -47,14 +37,14 @@ function Publications() {
       <HeaderContainerStyle>
         <HeaderStyle>
           <Typography variant="h1" color="primary">
-            {publisherData?.attributes?.title}
+            {manufacturer?.data?.attributes?.title}
           </Typography>
           <Typography variant="body1">
-            {publisherData?.attributes?.subtitle}
+            {manufacturer?.data?.attributes?.subtitle}
           </Typography>
           <Stack direction="row" justifyContent="center" my={5}>
             <SearchBar
-              placeholder={publisherData?.attributes?.searchPlaceholder}
+              placeholder={manufacturer?.data?.attributes?.searchPlaceholder}
               width="700px"
               searchHandler={debounce(publisherSearchHandler, 800)}
             />

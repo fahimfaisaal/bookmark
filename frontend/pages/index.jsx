@@ -24,6 +24,7 @@ import {
   useGetCategoryQuery
 } from '../store/features/books/booksApi';
 import { useGetPublishersQuery } from '../store/features/publishers/publishersApi';
+import { useGetHomeQuery } from '../store/features/singleType/home/homeApi';
 import { fakeArr, generateQuery } from '../utils';
 
 import {
@@ -58,30 +59,6 @@ const responsive = (xl, lg, md, sm, xs) => ({
   }
 });
 
-const getHomeData = () => ({
-  data: {
-    id: 1,
-    attributes: {
-      whichBook: 'Which Book You Like to See?',
-      author: 'Top Authors',
-      arrival: 'New Arrival Books',
-      popular: 'Popular Books',
-      publisher: 'Top Publishers',
-      sliderText: 'See All',
-      createdAt: '2022-11-07T16:17:17.336Z',
-      updatedAt: '2022-11-08T11:12:23.901Z',
-      publishedAt: '2022-11-07T16:17:21.186Z',
-      buttons: [
-        {
-          url: '/books',
-          text: 'See more'
-        }
-      ]
-    }
-  },
-  meta: {}
-});
-
 function Home() {
   const router = useRouter();
   const { data: authorLists, isLoading: isAuthorLoading } =
@@ -90,6 +67,8 @@ function Home() {
     useGetPublishersQuery();
   const { data: categories, isLoading: isCategoriesLoading } =
     useGetCategoryQuery();
+  const { data: home } = useGetHomeQuery();
+
   const memoDate = useMemo(() => new Date().toISOString(), []);
   // TODO: use useFilterBooksQuery
   const { data: newBooks, isLoading: isNewBooksLoading } = useGetBooksQuery({
@@ -109,7 +88,6 @@ function Home() {
       })
     });
   const { data: banners } = useGetBannersQuery();
-  const { data: homeData } = getHomeData();
 
   return (
     <ContainerStyle>
@@ -126,13 +104,13 @@ function Home() {
       </Head>
       <HeroContainer sx={{ cursor: 'pointer' }}>
         <Link href={`/books/${banners?.data?.attributes?.book?.data?.id}`}>
-          <Banner />
+          <Banner bannerData={home?.data?.attributes?.sliders} />
         </Link>
       </HeroContainer>
 
       <SectionContainer>
         <SectionHeaderStyle variant="h1">
-          {homeData.attributes?.popular}
+          {home?.data?.attributes?.popular?.title}
         </SectionHeaderStyle>
 
         <Grid container spacing={3}>
@@ -152,7 +130,7 @@ function Home() {
 
       <SectionContainer>
         <SectionHeaderStyle variant="h1">
-          {homeData.attributes?.whichBook}
+          {home?.data?.attributes?.category?.title}
         </SectionHeaderStyle>
         {isCategoriesLoading ? (
           <Carousel
@@ -187,7 +165,7 @@ function Home() {
 
       <SectionContainer>
         <SectionHeaderStyle variant="h1">
-          {homeData.attributes?.arrival}
+          {home?.data?.attributes?.newArrival?.title}
         </SectionHeaderStyle>
         <Grid container spacing={2}>
           {isNewBooksLoading
@@ -203,7 +181,7 @@ function Home() {
               ))}
         </Grid>
         <Stack direction={'row'} justifyContent={'center'} my={5}>
-          {homeData.attributes?.buttons?.map((item) => (
+          {home?.data?.attributes?.newArrival?.buttons?.map((item) => (
             <Button
               variant="contained"
               size="large"
@@ -224,11 +202,14 @@ function Home() {
           justifyContent="space-between"
         >
           <SectionHeaderStyle variant="h1">
-            {homeData.attributes?.author}
+            {home?.data?.attributes?.author?.title}
           </SectionHeaderStyle>
-          <Link href="/authors">
-            <SeeAllLinkStyle>{homeData.attributes?.sliderText}</SeeAllLinkStyle>
-          </Link>
+
+          {home?.data?.attributes?.author?.buttons?.map((btn) => (
+            <Link href={btn.url} key={btn.id}>
+              <SeeAllLinkStyle> {btn.text} </SeeAllLinkStyle>
+            </Link>
+          ))}
         </Stack>
         {isAuthorLoading ? (
           <Carousel
@@ -261,11 +242,13 @@ function Home() {
           justifyContent="space-between"
         >
           <SectionHeaderStyle variant="h1" sx={{ margin: 0 }}>
-            {homeData.attributes?.publisher}
+            {home?.data?.attributes?.publisher?.title}
           </SectionHeaderStyle>
-          <Link href="/publishers">
-            <SeeAllLinkStyle>{homeData.attributes?.sliderText}</SeeAllLinkStyle>
-          </Link>
+          {home?.data?.attributes?.publisher?.buttons?.map((btn) => (
+            <Link href={btn.url} key={btn.id}>
+              <SeeAllLinkStyle> {btn.text} </SeeAllLinkStyle>
+            </Link>
+          ))}
         </Stack>
         {isPublisherLoading ? (
           <Carousel

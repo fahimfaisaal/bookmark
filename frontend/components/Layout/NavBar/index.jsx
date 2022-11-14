@@ -57,6 +57,7 @@ import {
   MobMenuItemContainer,
   ThemeSwitchStyle
 } from './Styles';
+import { useGetNavigationQuery } from '../../../store/features/singleType/navigation/navigationApi';
 
 const NavBar = () => {
   const theme = useTheme();
@@ -252,6 +253,8 @@ const NavBar = () => {
     dispatch(closeRegisterModal());
   };
 
+  const { data: menuItem } = useGetNavigationQuery();
+
   return (
     <>
       <AppBarContainer position="fixed">
@@ -268,11 +271,11 @@ const NavBar = () => {
           </Link>
           {!serachTrig ? (
             <Stack direction="row" spacing={2} alignItems="center">
-              {menuItems.map((item) => (
-                <Link key={shortId()} href={item.link}>
+              {menuItem?.data?.attributes?.menus?.map((item) => (
+                <Link key={shortId()} href={item.url}>
                   <LinkContainer
-                    key={item.text}
-                    active={router.pathname.includes(item.link)}
+                    key={item.id}
+                    active={router.pathname.includes(item.url)}
                   >
                     {item.text}
                   </LinkContainer>
@@ -333,7 +336,7 @@ const NavBar = () => {
                 open={Boolean(anchorElUser)}
                 onClose={handleCloseUserMenu}
               >
-                {profileMenuItems.map((item) =>
+                {profileMenuItems?.map((item) =>
                   item?.onClickHandler ? (
                     <MenuItemContainer key={item.text}>
                       <MenuItem onClick={handleCloseUserMenu}>

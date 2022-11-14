@@ -26,9 +26,73 @@ const Form = ({ contactData }) => {
     <>
       <StyledContainer>
         <Typography variant="h2" fontWeight={800}>
-          {contactData?.attributes?.heading}
+          {contactData?.data?.attributes?.heading}
         </Typography>
+
         <form onSubmit={handleSubmit(onSubmit)}>
+          {contactData?.data?.attributes?.inputs?.map((input) => {
+            const labelSmall = input?.label?.toLowerCase();
+            const labelCapital = input?.label;
+
+            const isDescription = labelSmall === 'description';
+
+            const renderComponent = ({ field }) => {
+              const myRegister = register(input.label, {
+                required: `${labelCapital} is required`
+              });
+              console.log({ myRegister, field });
+              return (
+                <Box>
+                  <InputLabel
+                    color="secondary"
+                    htmlFor="description"
+                    sx={{ marginTop: 2, paddingBottom: 1, fontWeight: 600 }}
+                  >
+                    {input?.label}
+                  </InputLabel>
+
+                  <TextField
+                    fullWidth
+                    name={input?.label}
+                    label={labelCapital}
+                    error={Boolean(errors.name)}
+                    rows={isDescription ? 4 : 1}
+                    multiline={isDescription}
+                    helperText={errors.name?.message}
+                    type={input?.type?.toLowerCase()}
+                    {...myRegister}
+                    {...field}
+                  />
+                </Box>
+              );
+            };
+
+            return (
+              <Controller
+                key={input.id}
+                name={labelSmall}
+                control={control}
+                render={renderComponent}
+              />
+            );
+          })}
+          {contactData?.data?.attributes?.buttons?.map((item) => (
+            <Button
+              key={item.id}
+              variant="btnGreen"
+              type={item.type}
+              sx={{
+                padding: '12px 25px',
+                marginTop: '.8rem',
+                marginBottom: '1.5rem'
+              }}
+            >
+              {item.text}
+            </Button>
+          ))}
+        </form>
+
+        {/* <form onSubmit={handleSubmit(onSubmit)}>
           <Controller
             name="name"
             control={control}
@@ -157,7 +221,7 @@ const Form = ({ contactData }) => {
               {item.text}
             </Button>
           ))}
-        </form>
+        </form> */}
       </StyledContainer>
     </>
   );

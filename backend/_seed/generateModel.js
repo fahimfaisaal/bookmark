@@ -1,3 +1,4 @@
+/* eslint-disable linebreak-style */
 const { faker } = require('@faker-js/faker');
 const bcrypt = require('bcryptjs');
 
@@ -181,11 +182,23 @@ const generateModel = {
     ],
     author: {
       title: 'Top Authors',
-      renderCount: 12
+      renderCount: 12,
+      buttons: [
+        {
+          text: 'See All',
+          url: '/authors'
+        }
+      ]
     },
     publisher: {
       title: 'Top Publishers',
-      renderCount: 12
+      renderCount: 12,
+      buttons: [
+        {
+          text: 'See All',
+          url: '/publishers'
+        }
+      ]
     },
     category: {
       title: 'Which Book You Like to See?',
@@ -193,7 +206,13 @@ const generateModel = {
     },
     newArrival: {
       title: 'New Arrival Books',
-      renderCount: 12
+      renderCount: 12,
+      buttons: [
+        {
+          text: 'See More',
+          url: '/books'
+        }
+      ]
     },
     popular: {
       title: 'Popular Books',
@@ -276,7 +295,7 @@ const generateModel = {
     ]
   }),
   footer: () => ({
-    address: faker.address.country(),
+    address: '2429 River Drive, Suite 35 Cottonhall, CA 2296 United Kingdom',
     email: faker.internet.email(),
     phone: faker.phone.number('+48 91 ### ## ##'),
     copyright: '© Copyright 2022 - soft clan',
