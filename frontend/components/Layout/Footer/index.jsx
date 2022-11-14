@@ -38,7 +38,7 @@ function Footer() {
 
         {footerData?.data?.attributes?.sections?.map((item) => (
           <Grid item lg={3} md={6} xs={12} key={item.id}>
-            <FooterItem title={item?.title} data={item?.buttons} />
+            <FooterItem title={item?.title} data={item} />
           </Grid>
         ))}
       </Grid>

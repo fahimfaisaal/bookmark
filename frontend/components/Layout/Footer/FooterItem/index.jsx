@@ -12,10 +12,10 @@ function FooterItem({ title, data }) {
         {title}
       </Typography>
       <Stack>
-        {data?.map((item) => (
-          <Link key={shortId()} href={item.link}>
+        {data?.buttons?.map((item) => (
+          <Link key={shortId()} href={item.url}>
             <Box>
-              <LinkContainer key={item.name}>{item.name}</LinkContainer>
+              <LinkContainer key={item.text}>{item.text}</LinkContainer>
             </Box>
           </Link>
         ))}

@@ -4,25 +4,7 @@ import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArro
 import { StyledGrid, StyledGridItem, StyledText } from './Styles';
 import Link from 'next/link';
 
-const getBanner = () => ({
-  data: {
-    id: 1,
-    attributes: {
-      buttons: {
-        buttons: [
-          {
-            url: '/books',
-            text: 'Shop Now'
-          }
-        ]
-      }
-    }
-  }
-});
-
 const Banner = ({ bannerData }) => {
-  const { data } = getBanner();
-
   return (
     <StyledGrid container>
       <StyledGridItem item md={6} lg={6}>
@@ -38,7 +20,7 @@ const Banner = ({ bannerData }) => {
               {myData?.heading.slice(0, 14)} <br />
               {myData?.heading.slice(14, 28)}
             </StyledText>
-            {data?.attributes?.buttons?.buttons?.map((item) => (
+            {myData?.buttons?.map((item) => (
               <Link key={item.id} href={item.url}>
                 <Button sx={{ color: 'white' }}>
                   {item.text}
