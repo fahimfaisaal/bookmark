@@ -23,6 +23,7 @@ import {
   useGetCategoryQuery
 } from '../store/features/books/booksApi';
 import { useGetPublishersQuery } from '../store/features/publishers/publishersApi';
+import { useGetHomeQuery } from '../store/features/singleType/home/homeApi';
 import { fakeArr, generateQuery } from '../utils';
 
 import {
@@ -61,15 +62,7 @@ const getHomeData = () => ({
   data: {
     id: 1,
     attributes: {
-      whichBook: 'Which Book You Like to See?',
-      author: 'Top Authors',
-      arrival: 'New Arrival Books',
-      popular: 'Popular Books',
-      publisher: 'Top Publishers',
       sliderText: 'See All',
-      createdAt: '2022-11-07T16:17:17.336Z',
-      updatedAt: '2022-11-08T11:12:23.901Z',
-      publishedAt: '2022-11-07T16:17:21.186Z',
       buttons: [
         {
           url: '/books',
@@ -77,8 +70,7 @@ const getHomeData = () => ({
         }
       ]
     }
-  },
-  meta: {}
+  }
 });
 
 function Home() {
@@ -89,6 +81,10 @@ function Home() {
     useGetPublishersQuery();
   const { data: categories, isLoading: isCategoriesLoading } =
     useGetCategoryQuery();
+  const { data: home } = useGetHomeQuery();
+
+  console.log('Single type: Home: ', home);
+
   const memoDate = useMemo(() => new Date().toISOString(), []);
   // TODO: use useFilterBooksQuery
   const { data: newBooks, isLoading: isNewBooksLoading } = useGetBooksQuery({
@@ -114,13 +110,13 @@ function Home() {
     <ContainerStyle>
       <HeroContainer sx={{ cursor: 'pointer' }}>
         <Link href={`/books/${banners?.data?.attributes?.book?.data?.id}`}>
-          <Banner />
+          <Banner bannerData={home?.data?.attributes?.sliders} />
         </Link>
       </HeroContainer>
 
       <SectionContainer>
         <SectionHeaderStyle variant="h1">
-          {homeData.attributes?.popular}
+          {home?.data?.attributes?.popular?.title}
         </SectionHeaderStyle>
 
         <Grid container spacing={3}>
@@ -140,7 +136,7 @@ function Home() {
 
       <SectionContainer>
         <SectionHeaderStyle variant="h1">
-          {homeData.attributes?.whichBook}
+          {home?.data?.attributes?.category?.title}
         </SectionHeaderStyle>
         {isCategoriesLoading ? (
           <Carousel
@@ -175,7 +171,7 @@ function Home() {
 
       <SectionContainer>
         <SectionHeaderStyle variant="h1">
-          {homeData.attributes?.arrival}
+          {home?.data?.attributes?.newArrival?.title}
         </SectionHeaderStyle>
         <Grid container spacing={2}>
           {isNewBooksLoading
@@ -212,7 +208,7 @@ function Home() {
           justifyContent="space-between"
         >
           <SectionHeaderStyle variant="h1">
-            {homeData.attributes?.author}
+            {home?.data?.attributes?.author?.title}
           </SectionHeaderStyle>
           <Link href="/authors">
             <SeeAllLinkStyle>{homeData.attributes?.sliderText}</SeeAllLinkStyle>
@@ -249,7 +245,7 @@ function Home() {
           justifyContent="space-between"
         >
           <SectionHeaderStyle variant="h1" sx={{ margin: 0 }}>
-            {homeData.attributes?.publisher}
+            {home?.data?.attributes?.popular?.title}
           </SectionHeaderStyle>
           <Link href="/publishers">
             <SeeAllLinkStyle>{homeData.attributes?.sliderText}</SeeAllLinkStyle>
