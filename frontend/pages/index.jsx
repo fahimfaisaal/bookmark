@@ -1,5 +1,6 @@
 import { Box, Button, Grid, Skeleton } from '@mui/material';
 import { Stack } from '@mui/system';
+import Head from 'next/head';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useMemo } from 'react';
@@ -90,6 +91,17 @@ function Home() {
 
   return (
     <ContainerStyle>
+      <Head>
+        <title>Bookmark</title>
+        <meta
+          name="description"
+          content="Buy your favorite book from our site"
+        />
+        <link
+          rel="icon"
+          href="https://upload.wikimedia.org/wikipedia/commons/2/2f/Icon-green-line-b-default.svg"
+        />
+      </Head>
       <HeroContainer sx={{ cursor: 'pointer' }}>
         <Link href={`/books/${banners?.data?.attributes?.book?.data?.id}`}>
           <Banner bannerData={home?.data?.attributes?.sliders} />

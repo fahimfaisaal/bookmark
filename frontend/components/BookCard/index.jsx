@@ -75,7 +75,7 @@ function BookCard({ book, bookId }) {
     <StyledBox>
       <Link href={`/books/${bookId}`} sx={{ cursor: 'pointer' }}>
         <Box sx={{ cursor: 'pointer' }}>
-          <CustomImage src={bookImage} />
+          <CustomImage src={bookImage} alt={book?.name} />
         </Box>
       </Link>
       <ContentContainerStyle>

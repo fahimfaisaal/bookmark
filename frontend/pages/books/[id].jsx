@@ -11,6 +11,7 @@ import {
 } from '@mui/material';
 import Rating from '@mui/material/Rating';
 import { Stack } from '@mui/system';
+import Head from 'next/head';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
@@ -250,6 +251,14 @@ function BookItem() {
 
   return (
     <Box>
+      <Head>
+        <title>{bookData?.name || 'Book Name'}</title>
+        <meta name="description" content={bookData?.description} />
+        <link
+          rel="icon"
+          href="https://upload.wikimedia.org/wikipedia/commons/2/2f/Icon-green-line-b-default.svg"
+        />
+      </Head>
       <BookInfoContainer>
         <Grid container spacing="50px">
           <Grid item lg={6} md={12}>
@@ -260,6 +269,7 @@ function BookItem() {
                 <>
                   <CustomImage
                     src={`http://localhost:1337${bookData?.images?.data[activeImg].attributes.url}`}
+                    alt={bookData?.name}
                   />
                   <LeftBtnStyle onClick={handleImgPrev}>
                     <FiChevronLeft />
@@ -304,6 +314,7 @@ function BookItem() {
                   >
                     <CustomImage
                       src={`http://localhost:1337${img.attributes.url}`}
+                      alt={bookData?.name}
                     />
                   </ImgListItem>
                 ))

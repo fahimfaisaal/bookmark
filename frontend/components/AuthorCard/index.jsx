@@ -1,4 +1,5 @@
 import { Box, Stack } from '@mui/system';
+// import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 import { adjustValidURL } from '../../utils';
@@ -10,6 +11,7 @@ function AuthorCard({ author }) {
     attributes: { name, avatar },
     id
   } = author;
+  console.log({ image: avatar?.data?.attributes?.url });
 
   const url =
     adjustValidURL(avatar?.data?.attributes?.url) || '/images/author-dummy.png';
@@ -17,7 +19,7 @@ function AuthorCard({ author }) {
     <Stack direction="row">
       <Stack direction="column" alignItems="center">
         <ImgContainerStyle>
-          <img src={url} alt={name} />
+          <img src={url} alt={name} width="180px" height="180px" />
         </ImgContainerStyle>
         <Link href={`/authors/${id}`}>
           <Box>
