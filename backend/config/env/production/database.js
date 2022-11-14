@@ -14,7 +14,11 @@ module.exports = ({ env }) => {
         port: port ?? env.int('PORT_PRODUCTION', 5432),
         database,
         user,
-        password
+        password,
+        schema: env('DATABASE_SCHEMA', 'public'),
+        ssl: {
+          rejectUnauthorized: env.bool('DATABASE_SSL_SELF', false)
+        }
       }
     }
   };
