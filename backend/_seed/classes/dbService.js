@@ -49,15 +49,15 @@ class DbService {
     const response = await this.strapiService.create(modelName, {
       data: {
         createdAt: new Date(),
-        updatedAt: new Date(),
-        publishedAt: new Date()
+        updatedAt: new Date()
       }
     });
 
     await this.strapiService.update(
       modelName,
       response.id,
-      generateModel[modelName](strapi)
+
+      { ...generateModel[modelName](strapi), publishedAt: new Date() }
     );
     console.info(`✅ ${modelName} model created successfully`);
   }
