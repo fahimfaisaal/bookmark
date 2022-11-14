@@ -19,7 +19,6 @@ services:
       - key: CLOUDINARY_SECRET
         sync: true
       - key: DATABASE_URL_PRODUCTION
-        fromDatabase:
         sync: true
       - key: JWT_SECRET_PRODUCTION
         generateValue: true
