@@ -3,9 +3,12 @@ services:
     name: bookmark-backend
     env: node
     plan: starter
+    repo: https://github.com/fahimfaisaal/bookmark
+    branch: deploy_backend
+    rootDir: ./backend
     buildCommand: yarn; yarn build
     startCommand: yarn start
-    healthCheckPath: /_health
+    healthCheckPath: /health
     autoDeploy: true
     envVars:
       - key: NODE_VERSION
@@ -19,10 +22,17 @@ services:
       - key: CLOUDINARY_SECRET
         sync: true
       - key: DATABASE_URL_PRODUCTION
-        sync: true
+        fromDatabase:
+          name: bookmark-backend-db
+          property: connectionString
       - key: JWT_SECRET_PRODUCTION
         generateValue: true
       - key: ADMIN_JWT_SECRET_PRODUCTION
         generateValue: true
       - key: APP_KEYS_PRODUCTION
         generateValue: true
+      - key: API_TOKEN_SALT_PRODUCTION
+        generateValue: true
+databases:
+  - name: bookmark-backend-db
+    databaseName: bookmarkdb
