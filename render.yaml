@@ -8,7 +8,6 @@ services:
     buildCommand: yarn; yarn build
     startCommand: yarn start
     healthCheckPath: /health
-    autoDeploy: true
     envVars:
       - key: NODE_VERSION
         value: ~16.15.0
