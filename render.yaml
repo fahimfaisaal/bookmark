@@ -24,9 +24,8 @@ services:
         sync: true
         value: null
       - key: DATABASE_URL_PRODUCTION
-        fromDatabase:
-          name: bookmark-backend-db
-          property: connectionString
+        sync: true
+        value: null
       - key: JWT_SECRET_PRODUCTION
         generateValue: true
       - key: ADMIN_JWT_SECRET_PRODUCTION
@@ -35,7 +34,3 @@ services:
         generateValue: true
       - key: API_TOKEN_SALT_PRODUCTION
         generateValue: true
-databases:
-  - name: bookmark backend db
-    databaseName: bookmarkdb
-    plan: free
