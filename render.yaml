@@ -2,7 +2,6 @@ services:
   - type: web
     name: bookmark-backend
     env: node
-    plan: free
     repo: https://github.com/fahimfaisaal/bookmark
     branch: deploy_backend
     rootDir: ./backend
@@ -37,5 +36,6 @@ services:
       - key: API_TOKEN_SALT_PRODUCTION
         generateValue: true
 databases:
-  - name: bookmark-backend-db
+  - name: bookmark backend db
     databaseName: bookmarkdb
+    plan: free
