@@ -17,10 +17,13 @@ services:
         value: production
       - key: CLOUDINARY_NAME
         sync: true
+        value: null
       - key: CLOUDINARY_KEY
         sync: true
+        value: null
       - key: CLOUDINARY_SECRET
         sync: true
+        value: null
       - key: DATABASE_URL_PRODUCTION
         fromDatabase:
           name: bookmark-backend-db
