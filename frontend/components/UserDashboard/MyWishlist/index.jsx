@@ -39,7 +39,7 @@ function MyWishlist({ book, bookId }) {
       <Grid container>
         <Grid item sm={12} md={5} lg={6}>
           <Stack direction="row" spacing={3} alignItems="center">
-            <StyledImage>
+            <StyledImage onClick={() => router.push(`/books/${bookId}`)}>
               <CustomImage src={imgUrl} width="70px" height="70px" alt={name} />
             </StyledImage>
             <Stack direction="column" spacing={1}>
@@ -65,7 +65,7 @@ function MyWishlist({ book, bookId }) {
         <Grid item sm={12} md={7} lg={6}>
           <Stack direction="column" textAlign="right" marginTop="10px">
             <Typography variant="h3">
-              ${variants?.data[0]?.attributes?.price}
+              ${variants?.data[0]?.attributes?.price || 0}
             </Typography>
             <Stack direction="row" justifyContent="end">
               <StyledCart onClick={() => router.push(`/books/${bookId}`)}>
