@@ -11,7 +11,6 @@ function AuthorCard({ author }) {
     attributes: { name, avatar },
     id
   } = author;
-  console.log({ image: avatar?.data?.attributes?.url });
 
   const url =
     adjustValidURL(avatar?.data?.attributes?.url) || '/images/author-dummy.png';

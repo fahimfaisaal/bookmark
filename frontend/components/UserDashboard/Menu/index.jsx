@@ -1,50 +1,30 @@
 import { List } from '@mui/material';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { useGetNavigationQuery } from '../../../store/features/singleType/navigation/navigationApi';
 import { shortId } from '../../../utils';
 import { StyledContainer, StyledLink, StyledListItem } from './Styles';
 
-const profileMenu = [
-  {
-    path: '/profile',
-    label: 'Profile'
-  },
-  {
-    path: '/profile/change-password',
-    label: 'Change Password'
-  },
-  {
-    path: '/profile/my-orders',
-    label: 'My Orders'
-  },
-  {
-    path: '/profile/my-wishlist',
-    label: 'My Wishlist'
-  }
-];
-
 function ProfileMenu() {
   const router = useRouter();
+
+  const { data } = useGetNavigationQuery();
   return (
     <StyledContainer marginTop={2} sx={{ boxShadow: 2 }}>
       <List>
-        {profileMenu.map((item) => (
+        {data?.data?.attributes?.profileMenus?.map((item) => (
           <StyledListItem
             key={shortId()}
-            active={router.pathname === item.path}
+            active={router.pathname === item.url}
+            sx={item.text === 'Logout' ? { borderTop: '1px solid gray' } : ''}
           >
-            <Link href={item.path}>
-              <StyledLink active={router.pathname === item.path}>
-                {item.label}
+            <Link href={item.url}>
+              <StyledLink active={router.pathname === item.url}>
+                {item.text}
               </StyledLink>
             </Link>
           </StyledListItem>
         ))}
-        <StyledListItem sx={{ borderTop: '1px solid gray' }}>
-          <Link href="/">
-            <StyledLink>Logout</StyledLink>
-          </Link>
-        </StyledListItem>
       </List>
     </StyledContainer>
   );

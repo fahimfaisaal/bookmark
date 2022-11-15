@@ -40,7 +40,7 @@ const Form = ({ contactData }) => {
               const myRegister = register(input.label, {
                 required: `${labelCapital} is required`
               });
-              console.log({ myRegister, field });
+
               return (
                 <Box>
                   <InputLabel

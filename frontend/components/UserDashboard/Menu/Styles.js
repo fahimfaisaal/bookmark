@@ -34,6 +34,6 @@ export const StyledContainer = styled(Box)(({ theme }) => ({
   backgroundColor: `${theme.palette.background.default}`,
   boxShadow: myShadows.common,
   [theme.breakpoints.down('md')]: {
-    // position: 'fixed',
+    display: 'none'
   }
 }));
