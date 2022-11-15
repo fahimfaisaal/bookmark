@@ -33,9 +33,11 @@ const Banner = ({ bannerData }) => {
             </Stack>
           </StyledGridItem>
           <Grid item md={6} lg={6}>
-            <Box>
-              <img src="/banner.png" width="100%" alt={myData?.heading} />
-            </Box>
+            {myData?.coverImage?.data?.map((image) => (
+              <Box key={image.id}>
+                <img src={'/banner.png'} width="100%" alt={myData?.heading} />
+              </Box>
+            ))}
           </Grid>
         </>
       ))}
