@@ -66,15 +66,17 @@ function BookItem() {
   const router = useRouter();
   const { id } = router.query;
   const authUser = useSelector((state) => state?.auth?.user);
-  const { data: book, isLoading } = useGetBookQuery(id);
+  const { data: book, isLoading } = useGetBookQuery(id, { skip: !id });
   const bookData = book?.data?.attributes || {};
   const dispatch = useDispatch();
 
   const { data: bookRatings } = useGetNestedBookItemQuery(
-    `${id}?populate[ratings][populate][0]=userId`
+    `${id}?populate[ratings][populate][0]=userId`,
+    { skip: !id }
   );
   const { data: bookVariants } = useGetNestedBookItemQuery(
-    `${id}?populate[variants][populate][0]=languageId`
+    `${id}?populate[variants][populate][0]=languageId`,
+    { skip: !id }
   );
 
   const relatedBooksQuery = [];
@@ -87,9 +89,12 @@ function BookItem() {
   const { data: relatedBooks } = useGetBooksByTagsQuery(
     relatedBooksQuery.join()
   );
-  const { data: cartBook } = useGetCartByUserBookQuery({
-    params: `filters[book][id]=${book?.data?.id}&filters[userId][id]=${authUser?.id}&populate[0]=variant`
-  });
+  const { data: cartBook } = useGetCartByUserBookQuery(
+    {
+      params: `filters[book][id]=${book?.data?.id}&filters[userId][id]=${authUser?.id}&populate[0]=variant`
+    },
+    { skip: !authUser?.id || !book?.data?.id }
+  );
 
   const [updateCart] = useUpdateCartMutation();
   const [addToCart] = useAddToCartMutation();

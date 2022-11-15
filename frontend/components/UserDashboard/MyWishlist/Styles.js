@@ -31,7 +31,8 @@ export const StyledImage = styled(Box)(({ theme }) => ({
   padding: '4px',
   margin: '2px',
   display: 'flex',
-  alignItems: 'center'
+  alignItems: 'center',
+  cursor: 'pointer'
 }));
 
 export const StyledRemove = styled(Button)(({ theme }) => ({

@@ -15,10 +15,12 @@ export const generateQuery = ({
   page,
   pageSize,
   authors,
+  sortKey,
   ...filters
 }) => {
   const query = {
     populate: '*',
+    sort: sortKey,
     pagination: {
       page,
       pageSize

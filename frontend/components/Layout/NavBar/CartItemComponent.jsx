@@ -29,6 +29,7 @@ export default function CartItemComponent({
   cartLists,
   totalAmount
 }) {
+  console.log({ totalAmount });
   const isAuthenticated = useSelector((state) => state?.auth);
   const [postOrder] = usePostOrderMutation();
 
@@ -115,7 +116,7 @@ export default function CartItemComponent({
           width={'100%'}
           sx={{ background: `${theme.palette.background.default}` }}
         >
-          {cartLists?.length > 0 && totalAmount && (
+          {cartLists?.length > 0 && (
             <Box pb={5} px={3}>
               <Typography variant="h2" py={3}>
                 Total: {totalAmount}$

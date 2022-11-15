@@ -73,7 +73,7 @@ function CartItem({ cart, cartId }) {
         <Stack direction="row" justifyContent="space-between">
           <PriceContainerStyle variant="body1">
             {' '}
-            ${variant?.data?.attributes?.price}
+            ${variant?.data?.attributes?.price || 0}
           </PriceContainerStyle>
 
           {/* <TotalPriceContainerStyle variant="body1">

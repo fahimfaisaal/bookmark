@@ -127,7 +127,7 @@ const NavBar = () => {
   const totalAmount = cartLists?.data?.reduce(
     (acc, curr) =>
       acc +
-      curr?.attributes?.variant?.data?.attributes?.price *
+      (curr?.attributes?.variant?.data?.attributes?.price || 0) *
         curr?.attributes?.quantity,
     0
   );

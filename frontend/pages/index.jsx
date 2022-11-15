@@ -92,7 +92,8 @@ function Home() {
     useGetBooksQuery({
       query: generateQuery({
         pageSize: renderCounts.popular,
-        bestSelling: true
+        bestSelling: true,
+        sortKey: 'id'
       })
     });
 
