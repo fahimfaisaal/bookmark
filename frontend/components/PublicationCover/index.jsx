@@ -14,13 +14,15 @@ import {
 } from './style';
 
 function PublicationCover({ publisherData }) {
-  // const { name, logo, banner, socials, website } = publisherData;
   const logoUrl =
     (publisherData?.data && publisherData?.logo?.data[0]?.attributes?.url) ||
     '/images/publisher-logo.png';
   const bannerUrl =
     (publisherData?.data && publisherData?.banner?.data[0]?.attributes?.url) ||
     '/images/publisher-banner.png';
+  const logoText =
+    (publisherData?.data && publisherData?.logo?.data[0]?.attributes?.name) ||
+    'Logo';
 
   return (
     <ContainerStyle>
@@ -30,7 +32,7 @@ function PublicationCover({ publisherData }) {
         justifyContent="center"
       >
         <LogoContainer>
-          <img src={logoUrl} alt="" />
+          <CustomImage src={logoUrl} alt={logoText} />
         </LogoContainer>
         <DetailsContainerStyle>
           <TitleStyle variant="h2">{publisherData?.name}</TitleStyle>

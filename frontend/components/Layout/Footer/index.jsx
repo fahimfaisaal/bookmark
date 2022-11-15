@@ -2,6 +2,7 @@ import { Box, Grid, Typography } from '@mui/material';
 import { Stack } from '@mui/system';
 import Link from 'next/link';
 import { useGetFooterQuery } from '../../../store/features/singleType/footer/footerApi';
+import CustomImage from '../../CustomImage';
 import Logo from '../../Logo';
 import { LogoContainer } from '../NavBar/Styles';
 import FooterItem from './FooterItem';
@@ -58,7 +59,7 @@ function Footer() {
           >
             {footerData?.data?.attributes?.payment?.data?.map((image) => (
               <PaymentImgContainer key={image.id}>
-                <img
+                <CustomImage
                   src={image?.attributes?.url}
                   alt={image?.attributes?.url}
                 />

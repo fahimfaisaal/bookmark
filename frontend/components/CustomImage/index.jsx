@@ -1,6 +1,6 @@
 import { adjustValidURL } from '../../utils';
 
-function CustomImage({ src, alt, width, height }) {
+function CustomImage({ src, alt, width, height, ...props }) {
   return (
     <img
       style={{
@@ -13,6 +13,7 @@ function CustomImage({ src, alt, width, height }) {
       alt={alt}
       width={width}
       height={height}
+      {...props}
     />
   );
 }

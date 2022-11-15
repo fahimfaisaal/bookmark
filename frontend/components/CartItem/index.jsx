@@ -6,7 +6,7 @@ import {
   useDeleteCartMutation,
   useUpdateCartMutation
 } from '../../store/features/carts/cartsApi';
-import { adjustValidURL } from '../../utils';
+import CustomImage from '../CustomImage';
 import {
   ImgContainerStyle,
   ItemContainerStyle,
@@ -30,7 +30,7 @@ function CartItem({ cart, cartId }) {
     if (cartQty > 0) setCartQty((prev) => prev - 1);
   };
 
-  const url = adjustValidURL(cart?.cartImage || '/images/product-dummy.png');
+  const url = cart?.cartThumbnail || '/images/product-dummy.png';
 
   useEffect(() => {
     if (cartQty !== cart?.quantity) {
@@ -61,11 +61,11 @@ function CartItem({ cart, cartId }) {
         cartQty={cartQty}
       />
       <ImgContainerStyle>
-        <img
+        <CustomImage
           src={url}
           alt={book?.data?.attributes?.name}
-          height={70}
-          width={60}
+          height={20}
+          width={30}
         />
       </ImgContainerStyle>
       <Stack direction="column" spacing={2}>

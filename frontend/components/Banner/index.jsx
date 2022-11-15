@@ -2,7 +2,7 @@ import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArro
 import { Box, Button, Grid, Typography } from '@mui/material';
 import { Stack } from '@mui/system';
 import Link from 'next/link';
-import { adjustValidURL } from '../../utils';
+import CustomImage from '../CustomImage';
 import { StyledGrid, StyledGridItem, StyledText } from './Styles';
 
 const Banner = ({ bannerData }) => {
@@ -35,11 +35,11 @@ const Banner = ({ bannerData }) => {
           </StyledGridItem>
           <Grid item md={6} lg={6}>
             <Box>
-              <img
-                src={adjustValidURL(
+              <CustomImage
+                src={
                   myData.coverImage?.data?.at()?.attributes?.url ??
-                    '/banner.png'
-                )}
+                  '/banner.png'
+                }
                 width="100%"
                 alt={myData?.heading}
               />

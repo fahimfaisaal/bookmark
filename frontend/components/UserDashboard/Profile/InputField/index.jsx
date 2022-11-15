@@ -2,12 +2,13 @@ import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import { Button, InputLabel } from '@mui/material';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
-import { useState, useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { StyledContainer } from '../../Styles';
 // import ImageUploadCard from './ImageUpload';
-import { StyledBox, StyledLabel } from './Styles';
 import CloseIcon from '@mui/icons-material/Close';
+import CustomImage from '../../../CustomImage';
+import { StyledBox, StyledLabel } from './Styles';
 
 const initialValues = {
   username: '',
@@ -85,7 +86,7 @@ function InputField({ profileData }) {
           render={() => {
             return preview ? (
               <>
-                <img
+                <CustomImage
                   src={preview}
                   style={{
                     objectFit: 'cover',

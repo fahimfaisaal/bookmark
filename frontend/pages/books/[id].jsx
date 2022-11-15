@@ -219,6 +219,8 @@ function BookItem() {
     }
     let data = {};
     data.book = book?.data?.id;
+    data.cartThumbnail =
+      book?.data?.attributes?.images?.data?.at()?.attributes?.formats?.thumbnail?.url;
     data.userId = authUser?.id;
     data.variant =
       bookVariants?.data?.attributes?.variants?.data[activeVariant]?.id;
