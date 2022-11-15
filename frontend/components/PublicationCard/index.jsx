@@ -11,7 +11,7 @@ function PublicationCard({ publisher }) {
     attributes: { name, logo, socials }
   } = publisher;
   const logoUrl =
-    (logo?.data && `http://localhost:1337${logo?.data[0]?.attributes?.url}`) ||
+    (logo?.data && logo?.data[0]?.attributes?.url) ||
     '/images/publisher-logo.png';
   return (
     <Stack direction="row">

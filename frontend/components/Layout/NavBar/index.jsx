@@ -13,8 +13,8 @@ import IconButton from '@mui/material/IconButton';
 import { Stack } from '@mui/system';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import qs from 'qs';
 import { useEffect, useState } from 'react';
-import { toast } from 'react-hot-toast';
 import { AiOutlineFilter } from 'react-icons/ai';
 import { BiSearch, BiUser } from 'react-icons/bi';
 import { BsSunFill } from 'react-icons/bs';
@@ -24,10 +24,9 @@ import { MdOutlineFavoriteBorder } from 'react-icons/md';
 import { RiMoonLine } from 'react-icons/ri';
 import { VscHome } from 'react-icons/vsc';
 import { useDispatch, useSelector } from 'react-redux';
-import { BOOKMARK_AUTH } from '../../../constant';
 import { UseThemeContext } from '../../../context/ThemeContext';
 import useAuthCheck from '../../../hooks/useAuthCheck';
-import { userLoggedOut } from '../../../store/features/auth/authSlice';
+import useProfileMenuHandlers from '../../../hooks/useProfileMenuHandlers';
 import {
   closeLoginModal,
   closeRegisterModal,
@@ -36,6 +35,7 @@ import {
 } from '../../../store/features/authModal/authModalSlice';
 import { useGetBooksQuery } from '../../../store/features/books/booksApi';
 import { useGetCartsByUserQuery } from '../../../store/features/carts/cartsApi';
+import { useGetNavigationQuery } from '../../../store/features/singleType/navigation/navigationApi';
 import { shortId } from '../../../utils';
 import Logo from '../../Logo';
 import SearchBar from '../../shared/SearchBar';
@@ -43,8 +43,6 @@ import Login from '../Auth/Login';
 import Register from '../Auth/Register';
 import CartItemComponent from './CartItemComponent';
 import Drawer from './Drawer';
-import { categoreyItems, menuItems } from './menuLinks';
-import qs from 'qs';
 import {
   AppBarContainer,
   IconContainer,
@@ -57,7 +55,6 @@ import {
   MobMenuItemContainer,
   ThemeSwitchStyle
 } from './Styles';
-import { useGetNavigationQuery } from '../../../store/features/singleType/navigation/navigationApi';
 
 const NavBar = () => {
   const theme = useTheme();
@@ -71,15 +68,17 @@ const NavBar = () => {
   const [cartModalTrg, setCartModalTrig] = useState(false);
   const [mobMenuTrig, setMobMenuTrig] = useState(false);
   const [mobSearchTrig, setMobSearchTrig] = useState(false);
-  const [filterMenuTrig, setFilterMenuTrig] = useState(false);
+  const [, setFilterMenuTrig] = useState(false);
   const [profileMenuTrig, setProfileMenuTrig] = useState(false);
   const { handleChangeMode } = UseThemeContext();
   const router = useRouter();
+  const { data: navigation } = useGetNavigationQuery();
   const isAuthenticated = useSelector((state) => state?.auth);
   const authUser = isAuthenticated?.user || {};
   const { loginModal, registerModal } = useSelector(
     (state) => state?.authModal ?? false
   );
+  const profileMenuHandlers = useProfileMenuHandlers();
 
   const { data: cartLists } = useGetCartsByUserQuery(
     { userId: authUser?.id },
@@ -141,42 +140,19 @@ const NavBar = () => {
     setAnchorElUser(null);
   };
 
-  const logoutUser = () => {
-    dispatch(userLoggedOut());
-    localStorage.removeItem(BOOKMARK_AUTH);
-    router.push('/');
-    toast.success('You are logged out!');
-  };
-
   // have logout dependency
-  const profileMenuItems = [
-    {
-      link: '/profile',
-      text: 'Profile'
-    },
-    {
-      link: '/profile/my-orders',
-      text: 'My Orders'
-    },
-    {
-      link: '/profile/my-wishlist',
-      text: 'My Wishlists'
-    },
-    {
-      link: '/checkout',
-      text: 'Checkout'
-    },
-    {
-      link: '/profile/change-password',
-      text: 'Change Password'
-    },
-    {
-      link: '/logout',
-      text: 'Logout',
-      onClickHandler: logoutUser
-    }
-  ];
+  const profileMenuItems = navigation?.data?.attributes?.profileMenus?.map(
+    ({ ...menu }) => {
+      if (typeof profileMenuHandlers[menu.onClickHandler] === 'function') {
+        menu.onClickHandler = profileMenuHandlers[menu.onClickHandler];
+      } else {
+        delete menu.onClickHandler;
+      }
 
+      return menu;
+    }
+  );
+  const menuItems = navigation?.data?.attributes?.menus;
   const toggleDrawer = (open) => (event) => {
     if (
       event &&
@@ -253,8 +229,6 @@ const NavBar = () => {
     dispatch(closeRegisterModal());
   };
 
-  const { data: menuItem } = useGetNavigationQuery();
-
   return (
     <>
       <AppBarContainer position="fixed">
@@ -271,7 +245,7 @@ const NavBar = () => {
           </Link>
           {!serachTrig ? (
             <Stack direction="row" spacing={2} alignItems="center">
-              {menuItem?.data?.attributes?.menus?.map((item) => (
+              {menuItems?.map((item) => (
                 <Link key={shortId()} href={item.url}>
                   <LinkContainer
                     key={item.id}
@@ -336,24 +310,24 @@ const NavBar = () => {
                 open={Boolean(anchorElUser)}
                 onClose={handleCloseUserMenu}
               >
-                {profileMenuItems.map((item) =>
-                  item?.onClickHandler ? (
-                    <MenuItemContainer key={item.id}>
+                {profileMenuItems?.map((menu) =>
+                  typeof menu?.onClickHandler === 'function' ? (
+                    <MenuItemContainer key={menu.id}>
                       <MenuItem onClick={handleCloseUserMenu}>
                         <Typography
                           textAlign="center"
-                          onClick={item?.onClickHandler}
+                          onClick={menu?.onClickHandler}
                         >
-                          {item.text}
+                          {menu.text}
                         </Typography>
                       </MenuItem>
                     </MenuItemContainer>
                   ) : (
-                    <MenuItemContainer key={item.id}>
-                      <Link href={item.url}>
+                    <MenuItemContainer key={menu.id}>
+                      <Link href={menu.url}>
                         <MenuItem onClick={handleCloseUserMenu}>
                           <Typography textAlign="center">
-                            {item.text}
+                            {menu.text}
                           </Typography>
                         </MenuItem>
                       </Link>
@@ -422,13 +396,6 @@ const NavBar = () => {
             </ThemeSwitchStyle>
           </IconContainer>
         </Stack>
-
-        <Drawer
-          anchor="left"
-          open={filterMenuTrig}
-          toggle={toggleFilterDraw}
-          data={categoreyItems}
-        />
       </MiniTopBarContainer>
 
       <MobileMenuContainer position="fexed">
@@ -471,7 +438,7 @@ const NavBar = () => {
           anchor="right"
           open={profileMenuTrig}
           toggle={toggleProfileDraw}
-          data={profileMenuItems}
+          data={profileMenuItems ?? []}
         />
       </MobileMenuContainer>
 

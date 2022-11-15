@@ -24,6 +24,9 @@
     },
     "icon": {
       "type": "string"
+    },
+    "onClickHandler": {
+      "type": "string"
     }
   }
 }

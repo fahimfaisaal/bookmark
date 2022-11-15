@@ -268,7 +268,7 @@ function BookItem() {
               ) : (
                 <>
                   <CustomImage
-                    src={`http://localhost:1337${bookData?.images?.data[activeImg].attributes.url}`}
+                    src={bookData?.images?.data[activeImg].attributes.url}
                     alt={bookData?.name}
                   />
                   <LeftBtnStyle onClick={handleImgPrev}>
@@ -313,7 +313,7 @@ function BookItem() {
                     onClick={() => handleImgCurrent(ind)}
                   >
                     <CustomImage
-                      src={`http://localhost:1337${img.attributes.url}`}
+                      src={img.attributes.url}
                       alt={bookData?.name}
                     />
                   </ImgListItem>

@@ -1,8 +1,9 @@
 import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight';
 import { Box, Button, Grid, Typography } from '@mui/material';
 import { Stack } from '@mui/system';
-import { StyledGrid, StyledGridItem, StyledText } from './Styles';
 import Link from 'next/link';
+import { adjustValidURL } from '../../utils';
+import { StyledGrid, StyledGridItem, StyledText } from './Styles';
 
 const Banner = ({ bannerData }) => {
   console.log('BannerData', bannerData);
@@ -33,11 +34,16 @@ const Banner = ({ bannerData }) => {
             </Stack>
           </StyledGridItem>
           <Grid item md={6} lg={6}>
-            {myData?.coverImage?.data?.map((image) => (
-              <Box key={image.id}>
-                <img src={'/banner.png'} width="100%" alt={myData?.heading} />
-              </Box>
-            ))}
+            <Box>
+              <img
+                src={adjustValidURL(
+                  myData.coverImage?.data?.at()?.attributes?.url ??
+                    '/banner.png'
+                )}
+                width="100%"
+                alt={myData?.heading}
+              />
+            </Box>
           </Grid>
         </>
       ))}

@@ -162,8 +162,9 @@ const generateModel = {
         text: 'Change Password'
       },
       {
-        url: '/logout',
-        text: 'Logout'
+        url: '/',
+        text: 'Logout',
+        onClickHandler: 'logoutUser'
       }
     ]
   }),

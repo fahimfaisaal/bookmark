@@ -6,6 +6,7 @@ import {
   useDeleteCartMutation,
   useUpdateCartMutation
 } from '../../store/features/carts/cartsApi';
+import { adjustValidURL } from '../../utils';
 import {
   ImgContainerStyle,
   ItemContainerStyle,
@@ -29,7 +30,7 @@ function CartItem({ cart, cartId }) {
     if (cartQty > 0) setCartQty((prev) => prev - 1);
   };
 
-  const url = cart?.cartImage || '/images/product-dummy.png';
+  const url = adjustValidURL(cart?.cartImage || '/images/product-dummy.png');
 
   useEffect(() => {
     if (cartQty !== cart?.quantity) {

@@ -18,7 +18,6 @@ import {
   CustomRightBtn
 } from '../components/shared/ui/CarouselBtn';
 import { useGetAuthorsQuery } from '../store/features/authors/authorsApi';
-import { useGetBannersQuery } from '../store/features/banner/bannerApi';
 import {
   useGetBooksQuery,
   useGetCategoryQuery
@@ -61,19 +60,28 @@ const responsive = (xl, lg, md, sm, xs) => ({
 
 function Home() {
   const router = useRouter();
+  const { data: home } = useGetHomeQuery();
+
+  const renderCounts = {
+    newArrival: home?.data?.attributes?.newArrival?.renderCount,
+    categories: home?.data?.attributes?.categories?.renderCount,
+    popular: home?.data?.attributes?.popular?.renderCount,
+    publisher: home?.data?.attributes?.publisher?.renderCount,
+    author: home?.data?.attributes?.author?.renderCount
+  };
+
   const { data: authorLists, isLoading: isAuthorLoading } =
     useGetAuthorsQuery();
   const { data: publisherLists, isLoading: isPublisherLoading } =
     useGetPublishersQuery();
   const { data: categories, isLoading: isCategoriesLoading } =
     useGetCategoryQuery();
-  const { data: home } = useGetHomeQuery();
 
   const memoDate = useMemo(() => new Date().toISOString(), []);
   // TODO: use useFilterBooksQuery
   const { data: newBooks, isLoading: isNewBooksLoading } = useGetBooksQuery({
     query: generateQuery({
-      pageSize: 8,
+      pageSize: renderCounts.newArrival,
       publishedAt: {
         $lte: memoDate
       }
@@ -83,11 +91,10 @@ function Home() {
   const { data: popularBooks, isLoading: isPopularBookLoading } =
     useGetBooksQuery({
       query: generateQuery({
-        pageSize: 8,
+        pageSize: renderCounts.popular,
         bestSelling: true
       })
     });
-  const { data: banners } = useGetBannersQuery();
 
   return (
     <ContainerStyle>
@@ -103,7 +110,7 @@ function Home() {
         />
       </Head>
       <HeroContainer sx={{ cursor: 'pointer' }}>
-        <Link href={`/books/${banners?.data?.attributes?.book?.data?.id}`}>
+        <Link href={`/books`}>
           <Banner bannerData={home?.data?.attributes?.sliders} />
         </Link>
       </HeroContainer>
@@ -115,7 +122,7 @@ function Home() {
 
         <Grid container spacing={3}>
           {isPopularBookLoading
-            ? fakeArr(8).map((item) => (
+            ? fakeArr(renderCounts.popular ?? 12).map((item) => (
                 <Grid item lg={3} md={6} xs={12} key={item}>
                   <BookSkeleton />
                 </Grid>
@@ -138,7 +145,7 @@ function Home() {
             customLeftArrow={<CustomLeftBtn />}
             customRightArrow={<CustomRightBtn />}
           >
-            {fakeArr(12).map((item) => (
+            {fakeArr(renderCounts.categories ?? 12).map((item) => (
               <Box key={item} px={2}>
                 <Skeleton width={'100%'} height={150} variant={'rounded'} />
                 <Skeleton width={'50%'} height={15} variant={'text'} />
@@ -169,7 +176,7 @@ function Home() {
         </SectionHeaderStyle>
         <Grid container spacing={2}>
           {isNewBooksLoading
-            ? fakeArr(12).map((item) => (
+            ? fakeArr(renderCounts.newArrival ?? 12).map((item) => (
                 <Grid item lg={3} md={6} xs={12} key={item}>
                   <BookSkeleton />
                 </Grid>
@@ -206,8 +213,8 @@ function Home() {
           </SectionHeaderStyle>
 
           {home?.data?.attributes?.author?.buttons?.map((btn) => (
-            <Link href={btn.url} key={btn.id}>
-              <SeeAllLinkStyle> {btn.text} </SeeAllLinkStyle>
+            <Link href={btn.url || '/'} key={btn.id}>
+              <SeeAllLinkStyle>{btn.text}</SeeAllLinkStyle>
             </Link>
           ))}
         </Stack>
@@ -217,7 +224,7 @@ function Home() {
             customLeftArrow={<CustomLeftBtn />}
             customRightArrow={<CustomRightBtn />}
           >
-            {fakeArr(12).map((item) => (
+            {fakeArr(renderCounts.author ?? 12).map((item) => (
               <AuthorSkeleton key={item} />
             ))}
           </Carousel>
@@ -245,8 +252,8 @@ function Home() {
             {home?.data?.attributes?.publisher?.title}
           </SectionHeaderStyle>
           {home?.data?.attributes?.publisher?.buttons?.map((btn) => (
-            <Link href={btn.url} key={btn.id}>
-              <SeeAllLinkStyle> {btn.text} </SeeAllLinkStyle>
+            <Link href={btn?.url || '/'} key={btn.id}>
+              <SeeAllLinkStyle>{btn.text}</SeeAllLinkStyle>
             </Link>
           ))}
         </Stack>
@@ -256,7 +263,7 @@ function Home() {
             customLeftArrow={<CustomLeftBtn />}
             customRightArrow={<CustomRightBtn />}
           >
-            {fakeArr(12).map((item) => (
+            {fakeArr(renderCounts.publisher ?? 12).map((item) => (
               <PublisherSkeleton key={item} />
             ))}
           </Carousel>

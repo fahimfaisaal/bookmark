@@ -7,7 +7,6 @@ import { useState } from 'react';
 import { FaShoppingCart } from 'react-icons/fa';
 import { useSelector } from 'react-redux';
 import { useUpdateFavoriteBookMutation } from '../../store/features/books/booksApi';
-import { adjustValidURL } from '../../utils';
 
 import CustomImage from '../CustomImage';
 
@@ -28,7 +27,7 @@ function BookCard({ book, bookId }) {
   const { authors, images, variants, status, ratings } = book || {};
 
   const bookImage =
-    (images?.data && adjustValidURL(images?.data[0]?.attributes?.url)) ||
+    (images?.data && images?.data[0]?.attributes?.url) ||
     '/images/product-dummy.png';
   const authUser = useSelector((state) => state?.auth?.user);
   const [updateFavoriteBook] = useUpdateFavoriteBookMutation();

@@ -41,10 +41,10 @@ const Drawer = ({ anchor, data, open, toggle }) => {
         <Divider />
 
         <MenuListContainer>
-          {data.map((item) => (
+          {data?.map((item) => (
             <ListItem key={shortId()} onClick={toggle(false)}>
-              <Link href={item.link}>
-                <MenuLinkContainer active={router.pathname.includes(item.link)}>
+              <Link href={item.url || '/'}>
+                <MenuLinkContainer active={router.pathname.includes(item.url)}>
                   {item.text}
                 </MenuLinkContainer>
               </Link>

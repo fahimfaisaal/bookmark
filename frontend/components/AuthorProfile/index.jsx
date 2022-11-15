@@ -6,8 +6,7 @@ import { HeaderStyle, StyledBox } from './Styles';
 function AuthorProfile({ authorInfo }) {
   // console.log({ profile: authorInfo });
   const avaterUrl =
-    (authorInfo?.avatar?.data &&
-      `http://localhost:1337${authorInfo?.avatar?.data?.attributes?.url}`) ||
+    (authorInfo?.avatar?.data && authorInfo?.avatar?.data?.attributes?.url) ||
     '/images/publisher-logo.png';
   return (
     <Grid container spacing={6}>

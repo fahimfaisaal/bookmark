@@ -1,3 +1,5 @@
+import { adjustValidURL } from '../../utils';
+
 function CustomImage({ src, alt, width, height }) {
   return (
     <img
@@ -7,7 +9,7 @@ function CustomImage({ src, alt, width, height }) {
         width: '100%',
         height: '100%'
       }}
-      src={src}
+      src={adjustValidURL(src)}
       alt={alt}
       width={width}
       height={height}
