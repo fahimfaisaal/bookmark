@@ -336,9 +336,9 @@ const NavBar = () => {
                 open={Boolean(anchorElUser)}
                 onClose={handleCloseUserMenu}
               >
-                {profileMenuItems?.map((item) =>
+                {profileMenuItems.map((item) =>
                   item?.onClickHandler ? (
-                    <MenuItemContainer key={item.text}>
+                    <MenuItemContainer key={item.id}>
                       <MenuItem onClick={handleCloseUserMenu}>
                         <Typography
                           textAlign="center"
@@ -349,8 +349,8 @@ const NavBar = () => {
                       </MenuItem>
                     </MenuItemContainer>
                   ) : (
-                    <MenuItemContainer key={item.text}>
-                      <Link href={item.link}>
+                    <MenuItemContainer key={item.id}>
+                      <Link href={item.url}>
                         <MenuItem onClick={handleCloseUserMenu}>
                           <Typography textAlign="center">
                             {item.text}

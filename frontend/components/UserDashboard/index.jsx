@@ -4,7 +4,7 @@ import ProfileMenu from './Menu';
 
 function UserDashboard({ children }) {
   return (
-    <Grid container spacing={4} sx={{ paddingTop: 5, marginTop: -5 }}>
+    <Grid container spacing={4} sx={{ paddingTop: 5, marginTop: -6.5 }}>
       <Grid item xs={12} sm={0} md={4} lg={3}>
         <ProfileMenu />
       </Grid>
