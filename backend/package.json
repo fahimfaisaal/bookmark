@@ -28,9 +28,7 @@
     "axios": "^1.1.3",
     "pg": "^8.8.0",
     "pg-connection-string": "^2.5.0",
-    "strapi-plugin-populate-deep": "^1.1.2"
-
-    "axios": "^1.1.3",
+    "strapi-plugin-populate-deep": "^1.1.2",
     "@faker-js/faker": "^7.6.0",
     "cross-env": "^7.0.3",
     "yaml": "^2.1.3"
