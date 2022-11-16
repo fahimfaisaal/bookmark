@@ -9,8 +9,8 @@ import BookSkeleton from '../../components/BookSkeleton';
 import Filter from '../../components/Filter';
 import useBooksFilterQuery from '../../hooks/useBooksFilterQuery';
 
+import { FilterButtonContainer } from '../../styles/publisherStyle';
 import { fakeArr } from '../../utils';
-import { FilterButtonContainer } from '../publishers/Style';
 
 function Books() {
   const {

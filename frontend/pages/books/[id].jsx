@@ -37,9 +37,6 @@ import {
   useGetCartByUserBookQuery,
   useUpdateCartMutation
 } from '../../store/features/carts/cartsApi';
-import { shortId } from '../../utils';
-import ReviewForm from './ReviewForm';
-import ReviewItem from './ReviewItem';
 import {
   AuthorLinkStyle,
   BookDetailsContainer,
@@ -55,7 +52,10 @@ import {
   QtyBtnLeft,
   QtyBtnRight,
   VariantBtnStyle
-} from './Styles';
+} from '../../styles/booksStyles';
+import { shortId } from '../../utils';
+import ReviewForm from './ReviewForm';
+import ReviewItem from './ReviewItem';
 
 function BookItem() {
   const [openReview, setOpenReview] = useState(false);

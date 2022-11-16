@@ -10,8 +10,12 @@ import Filter from '../../components/Filter';
 import PublicationCover from '../../components/PublicationCover';
 import useBooksFilterQuery from '../../hooks/useBooksFilterQuery';
 import { useGetPublisherQuery } from '../../store/features/publishers/publishersApi';
+import {
+  BooksContainer,
+  FilterButtonContainer,
+  TitleStyle
+} from '../../styles/publisherStyle';
 import { fakeArr } from '../../utils';
-import { BooksContainer, FilterButtonContainer, TitleStyle } from './Style';
 
 function PublicationItem() {
   const router = useRouter();

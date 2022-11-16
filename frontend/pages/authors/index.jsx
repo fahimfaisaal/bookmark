@@ -7,8 +7,8 @@ import CustomLink from '../../components/shared/CustomLink';
 import SearchBar from '../../components/shared/SearchBar';
 import { useGetAuthorsQuery } from '../../store/features/authors/authorsApi';
 import { useGetWriterQuery } from '../../store/features/singleType/writer/writerApi';
+import { HeaderContainerStyle, HeaderStyle } from '../../styles/authorStyles';
 import { fakeArr, generateQuery } from '../../utils';
-import { HeaderContainerStyle, HeaderStyle } from './Styles';
 
 function Authors() {
   const [searchText, setSearchText] = useState('');

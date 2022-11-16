@@ -11,9 +11,9 @@ import BookSkeleton from '../../components/BookSkeleton';
 import Filter from '../../components/Filter';
 import useBooksFilterQuery from '../../hooks/useBooksFilterQuery';
 import { useGetAuthorQuery } from '../../store/features/authors/authorsApi';
+import { SectionHeaderStyle } from '../../styles/authorStyles';
 import { fakeArr } from '../../utils';
-import { FilterButtonContainer } from '../publishers/Style';
-import { SectionHeaderStyle } from './Styles';
+import { FilterButtonContainer } from '../../styles/publisherStyle';
 
 const AuthorItem = () => {
   const router = useRouter();

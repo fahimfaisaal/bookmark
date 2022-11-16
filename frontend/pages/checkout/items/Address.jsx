@@ -6,7 +6,7 @@ import { Stack } from '@mui/system';
 import * as React from 'react';
 import AddressModal from '../../../components/shared/Modals/AddressModal';
 import { StyledContainer } from '../../../components/UserDashboard/Styles';
-import { StyledTypo } from './Styles';
+import { StyledTypo } from '../../../styles/checkoutItemsStyles';
 
 function Address({ label, text }) {
   const [formValue, setFormValue] = React.useState('');

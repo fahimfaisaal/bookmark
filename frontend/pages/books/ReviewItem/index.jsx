@@ -2,7 +2,10 @@ import { Box, Menu, MenuItem, Typography } from '@mui/material';
 import { Stack } from '@mui/system';
 import React from 'react';
 import { AiFillCheckCircle, AiFillStar, AiOutlineMore } from 'react-icons/ai';
-import { IconMenuContainer, ReviewPointStyle } from './Styles';
+import {
+  IconMenuContainer,
+  ReviewPointStyle
+} from '../../../styles/reviewItemStyles';
 
 function ReviewItem(rating) {
   const [anchorEl, setAnchorEl] = React.useState(null);
