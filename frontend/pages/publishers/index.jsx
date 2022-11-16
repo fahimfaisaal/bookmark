@@ -7,8 +7,8 @@ import CustomLink from '../../components/shared/CustomLink';
 import SearchBar from '../../components/shared/SearchBar';
 import { useGetPublishersQuery } from '../../store/features/publishers/publishersApi';
 import { useGetManufacturerQuery } from '../../store/features/singleType/manufacturer/manufacturerApi';
+import { HeaderContainerStyle, HeaderStyle } from '../../styles/authorStyles';
 import { fakeArr, generateQuery } from '../../utils';
-import { HeaderContainerStyle, HeaderStyle } from '../authors/Styles';
 
 function Publications() {
   const [searchText, setSearchText] = useState('');

@@ -4,6 +4,7 @@ let stripePromise;
 
 const getStripe = () => {
   if (!stripePromise) {
+    /* eslint-disable no-undef */
     stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
   }
   return stripePromise;

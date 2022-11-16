@@ -37,13 +37,19 @@ export const apiSlice = createApi({
     'nestedBook',
     'tags',
     'user',
-    'favourites',
     'authors',
     'author',
     'publishers',
     'publisher',
     'banner',
-    'categories'
+    'categories',
+    'contact',
+    'footer',
+    'home',
+    'logo',
+    'manufacturer',
+    'navigation',
+    'writer'
   ],
   keepUnusedDataFor: 3600,
   endpoints: () => ({})

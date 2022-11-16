@@ -32,7 +32,7 @@ import {
   SectionContainer,
   SectionHeaderStyle,
   SeeAllLinkStyle
-} from './Styles';
+} from '../styles/mainStyles';
 
 const responsive = (xl, lg, md, sm, xs) => ({
   superLargeDesktop: {

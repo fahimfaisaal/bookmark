@@ -5,7 +5,11 @@ import Link from 'next/link';
 import { useEffect } from 'react';
 import toast from 'react-hot-toast';
 import { BsFillBagCheckFill } from 'react-icons/bs';
-import { ContainerStyle, HeaderStyle, IconStyle } from './Styles';
+import {
+  ContainerStyle,
+  HeaderStyle,
+  IconStyle
+} from '../../styles/successStyles';
 
 const Success = () => {
   useEffect(() => {

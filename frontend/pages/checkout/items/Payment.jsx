@@ -3,7 +3,7 @@ import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import { Button, InputAdornment, TextField, Typography } from '@mui/material';
 import { Stack } from '@mui/system';
 import { StyledContainer } from '../../../components/UserDashboard/Styles';
-import { StyledBtn } from './Styles';
+import { StyledBtn } from '../../../styles/checkoutItemsStyles';
 
 function Payment() {
   return (

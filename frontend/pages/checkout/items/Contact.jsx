@@ -3,7 +3,7 @@ import { Stack } from '@mui/system';
 import { useState } from 'react';
 import ContactModal from '../../../components/shared/Modals/ContactModal';
 import { StyledContainer } from '../../../components/UserDashboard/Styles';
-import { StyledTypo } from './Styles';
+import { StyledTypo } from '../../../styles/checkoutItemsStyles';
 
 function Contact({ text }) {
   const [formValue, setFormValue] = useState('');
