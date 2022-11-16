@@ -6,7 +6,6 @@ import CustomImage from '../CustomImage';
 import { StyledGrid, StyledGridItem, StyledText } from './Styles';
 
 const Banner = ({ bannerData }) => {
-  console.log('BannerData', bannerData);
   return (
     <StyledGrid container>
       {bannerData?.map((myData) => (
