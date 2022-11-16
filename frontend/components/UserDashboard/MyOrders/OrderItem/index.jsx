@@ -9,7 +9,7 @@ import {
 } from '@mui/material';
 import { StyledTableCell, StyledTableContainer } from './Styles';
 
-function OrderItem() {
+function OrderItem({ orderId, status, deliveryTime, orderDate }) {
   return (
     <StyledTableContainer>
       <Table>
@@ -17,21 +17,21 @@ function OrderItem() {
           <TableRow>
             <TableCell>
               Order
-              <Typography component="span">#66</Typography>
+              <Typography component="span"> #{orderId}</Typography>
             </TableCell>
             <TableCell>
-              <Button variant="btnOrder">Order Received</Button>
+              <Button variant="btnOrder">{status}</Button>
             </TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           <TableRow>
             <TableCell>Order Date :</TableCell>
-            <TableCell>January 12, 2022</TableCell>
+            <TableCell>{orderDate}</TableCell>
           </TableRow>
           <TableRow>
             <TableCell>Delivery Time :</TableCell>
-            <TableCell>Express Delivery</TableCell>
+            <TableCell>{deliveryTime}</TableCell>
           </TableRow>
           <TableRow>
             <StyledTableCell>Amount :</StyledTableCell>

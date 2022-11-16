@@ -3,11 +3,12 @@ import { apiSlice } from '../api/apiSlice';
 export const ordersApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getOrders: builder.query({
-      query: ({ userId }) => `/orders/${userId}`,
+      query: ({ usersId }) =>
+        `/orders?filters[usersId]=${usersId}&populate=deep`,
       providesTags: ['orders']
     }),
     getOrder: builder.query({
-      query: ({ orderId }) => `/orders/${orderId}`,
+      query: ({ orderId }) => `/orders/${orderId}?populate=*`,
       providesTags: (result, error, arg) => [{ type: 'order', id: arg }]
     }),
     postOrder: builder.mutation({
