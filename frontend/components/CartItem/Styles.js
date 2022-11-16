@@ -7,6 +7,7 @@ export const ItemContainerStyle = styled(Stack)(() => ({
 
 export const ImgContainerStyle = styled(Box)(({ theme }) => ({
   padding: '0 10px',
+  width: '170px',
   background: `${theme.palette.background.default}`
 }));
 

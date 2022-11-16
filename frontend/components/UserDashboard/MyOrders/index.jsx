@@ -2,6 +2,7 @@ import { Box, Grid, Typography } from '@mui/material';
 import { Stack } from '@mui/system';
 import React from 'react';
 import { useGetOrdersQuery } from '../../../store/features/orders/ordersApi';
+import { NoOrderItemFound } from '../../Layout/NavBar/NoDataItemFound';
 import OrderDetails from './OrderDetails';
 import OrderItem from './OrderItem';
 import ProgressBar from './ProgressBar';
@@ -18,27 +19,35 @@ function MyOrders() {
           My Orders
         </Typography>
         <Stack spacing={2} sx={{ overflow: 'auto', height: '70%' }}>
-          {usersOrders?.data?.map((order) => {
-            order?.attributes?.usersId?.data?.attributes?.carts?.data?.map(
-              (p) => {
-                const price = p?.attributes?.variant?.data?.attributes?.price;
-                console.log(price);
-              }
-            );
-            console.log({ totalPrice, order });
-            return (
-              <Box key={order.id}>
-                <OrderItem
-                  orderId={order?.attributes?.id}
-                  status={order?.attributes?.status}
-                  deliveryTime={order?.attributes?.placedOn}
-                  orderDate={new Date(
-                    order?.attributes?.createdAt
-                  ).toLocaleDateString()}
-                />
-              </Box>
-            );
-          })}
+          {usersOrders?.data?.length > 0 ? (
+            usersOrders?.data?.map((order) => {
+              order?.attributes?.usersId?.data?.attributes?.carts?.data?.map(
+                (p) => {
+                  const price = p?.attributes?.variant?.data?.attributes?.price;
+                  console.log(price);
+                }
+              );
+              console.log({ totalPrice, order });
+              return (
+                <Box key={order.id}>
+                  <OrderItem
+                    orderId={order?.attributes?.id}
+                    status={order?.attributes?.status}
+                    deliveryTime={order?.attributes?.placedOn}
+                    orderDate={new Date(
+                      order?.attributes?.createdAt
+                    ).toLocaleDateString()}
+                  />
+                </Box>
+              );
+            })
+          ) : (
+            <NoOrderItemFound
+              imgSrc={'/images/notfound/empty-order.webp'}
+              btnText={'Go To Shopping'}
+              url={'/books'}
+            />
+          )}
         </Stack>
       </StyledGrid>
       <StyledGrid item xs={12} sm={12} md={12} lg={7}>
