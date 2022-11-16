@@ -152,6 +152,7 @@ const NavBar = () => {
       return menu;
     }
   );
+  console.log({ profileMenuItems });
   const menuItems = navigation?.data?.attributes?.menus;
   const toggleDrawer = (open) => (event) => {
     if (
@@ -231,7 +232,7 @@ const NavBar = () => {
 
   return (
     <>
-      <AppBarContainer position="fixed">
+      <AppBarContainer position="fixed" sx={{ px: { xs: '3%', md: '5%' } }}>
         <Stack
           direction="row"
           spacing={2}
@@ -263,90 +264,100 @@ const NavBar = () => {
             <SearchBar normal={false} />
           )}
           {/* <SearchBar normal /> */}
-          <IconContainer onClick={handleChangeMode}>
-            <ThemeSwitchStyle>
-              {theme.palette.mode === 'light' ? <RiMoonLine /> : <BsSunFill />}
-            </ThemeSwitchStyle>
-          </IconContainer>
-          {isAuthenticated?.accessToken && (
-            <>
-              <IconContainer fontSize="28px" onClick={toggleDrawer(true)}>
-                <Badge badgeContent={cartLists?.data?.length} color="primary">
-                  <HiOutlineShoppingBag />
-                </Badge>
-              </IconContainer>
-              <Link href="/profile/my-wishlist">
-                <IconContainer fontSize="32px">
-                  <Badge badgeContent={null} color="primary">
-                    <MdOutlineFavoriteBorder />
+          <Box sx={{ display: 'flex', gap: '2rem' }}>
+            <IconContainer onClick={handleChangeMode}>
+              <ThemeSwitchStyle>
+                {theme.palette.mode === 'light' ? (
+                  <RiMoonLine />
+                ) : (
+                  <BsSunFill />
+                )}
+              </ThemeSwitchStyle>
+            </IconContainer>
+
+            {isAuthenticated?.accessToken && (
+              <>
+                <IconContainer fontSize="28px" onClick={toggleDrawer(true)}>
+                  <Badge badgeContent={cartLists?.data?.length} color="primary">
+                    <HiOutlineShoppingBag />
                   </Badge>
                 </IconContainer>
-              </Link>
-            </>
-          )}
+                <Link href="/profile/my-wishlist">
+                  <IconContainer fontSize="32px">
+                    <Badge badgeContent={null} color="primary">
+                      <MdOutlineFavoriteBorder />
+                    </Badge>
+                  </IconContainer>
+                </Link>
+              </>
+            )}
 
-          {isAuthenticated?.accessToken ? (
-            <Box sx={{ flexGrow: 0 }}>
-              <Tooltip title="Open settings">
-                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-                </IconButton>
-              </Tooltip>
-              <Menu
-                sx={{
-                  mt: '45px'
-                }}
-                id="menu-appbar"
-                anchorEl={anchorElUser}
-                anchorOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right'
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right'
-                }}
-                open={Boolean(anchorElUser)}
-                onClose={handleCloseUserMenu}
-              >
-                {profileMenuItems?.map((menu) =>
-                  typeof menu?.onClickHandler === 'function' ? (
-                    <MenuItemContainer key={menu.id}>
-                      <MenuItem onClick={handleCloseUserMenu}>
-                        <Typography
-                          textAlign="center"
-                          onClick={menu?.onClickHandler}
-                        >
-                          {menu.text}
-                        </Typography>
-                      </MenuItem>
-                    </MenuItemContainer>
-                  ) : (
-                    <MenuItemContainer key={menu.id}>
-                      <Link href={menu.url}>
+            {isAuthenticated?.accessToken ? (
+              <Box sx={{ flexGrow: 0 }}>
+                <Tooltip title="Open settings">
+                  <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                    <Avatar
+                      alt="Remy Sharp"
+                      src="/static/images/avatar/2.jpg"
+                    />
+                  </IconButton>
+                </Tooltip>
+                <Menu
+                  sx={{
+                    mt: '45px'
+                  }}
+                  id="menu-appbar"
+                  anchorEl={anchorElUser}
+                  anchorOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right'
+                  }}
+                  keepMounted
+                  transformOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right'
+                  }}
+                  open={Boolean(anchorElUser)}
+                  onClose={handleCloseUserMenu}
+                >
+                  {profileMenuItems?.map((menu) =>
+                    typeof menu?.onClickHandler === 'function' ? (
+                      <MenuItemContainer key={menu.id}>
                         <MenuItem onClick={handleCloseUserMenu}>
-                          <Typography textAlign="center">
+                          <Typography
+                            textAlign="center"
+                            onClick={menu?.onClickHandler}
+                          >
                             {menu.text}
                           </Typography>
                         </MenuItem>
-                      </Link>
-                    </MenuItemContainer>
-                  )
-                )}
-              </Menu>
-            </Box>
-          ) : (
-            <Box>
-              <Button
-                variant="contained"
-                disableElevation
-                onClick={handleClickOpenLogin}
-              >
-                Join
-              </Button>
-            </Box>
-          )}
+                      </MenuItemContainer>
+                    ) : (
+                      <MenuItemContainer key={menu.id}>
+                        <Link href={menu.url}>
+                          <MenuItem onClick={handleCloseUserMenu}>
+                            <Typography textAlign="center">
+                              {menu.text}
+                            </Typography>
+                          </MenuItem>
+                        </Link>
+                      </MenuItemContainer>
+                    )
+                  )}
+                </Menu>
+              </Box>
+            ) : (
+              <Box>
+                <Button
+                  variant="contained"
+                  disableElevation
+                  onClick={handleClickOpenLogin}
+                >
+                  Join
+                </Button>
+              </Box>
+            )}
+          </Box>
         </Stack>
 
         <CartItemComponent
