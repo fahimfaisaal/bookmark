@@ -38,7 +38,7 @@
       "target": "plugin::users-permissions.user",
       "inversedBy": "orders"
     },
-    "books": {
+    "cart": {
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::cart.cart"
