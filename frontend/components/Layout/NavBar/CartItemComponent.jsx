@@ -15,6 +15,7 @@ import getStripe from '../../../lib/getStripe';
 import { usePostOrderMutation } from '../../../store/features/orders/ordersApi';
 import { shortId } from '../../../utils';
 import CartItem from '../../CartItem';
+import NoDataItemFound from './NoDataItemFound';
 import {
   CartContainer,
   CartHeaderContainer,
@@ -101,12 +102,17 @@ export default function CartItemComponent({
             </Stack>
           </CartHeaderContainer>
           <Divider />
-
-          {cartLists?.map((cart) => (
-            <CartItemContainer key={shortId()}>
-              <CartItem cart={cart} cartId={cart?.id} key={cart?.id} />
-            </CartItemContainer>
-          ))}
+          <Box sx={{ overflowY: 'scroll' }}>
+            {cartLists?.length > 0 ? (
+              cartLists?.map((cart) => (
+                <CartItemContainer key={shortId()}>
+                  <CartItem cart={cart} cartId={cart?.id} key={cart?.id} />
+                </CartItemContainer>
+              ))
+            ) : (
+              <NoDataItemFound imgSrc={'/images/notfound/empty-cart.png'} />
+            )}
+          </Box>
         </CartContainer>
 
         <Box

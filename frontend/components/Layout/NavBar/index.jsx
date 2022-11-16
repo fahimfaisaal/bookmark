@@ -152,7 +152,6 @@ const NavBar = () => {
       return menu;
     }
   );
-  console.log({ profileMenuItems });
   const menuItems = navigation?.data?.attributes?.menus;
   const toggleDrawer = (open) => (event) => {
     if (
