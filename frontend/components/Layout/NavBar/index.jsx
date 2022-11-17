@@ -296,7 +296,7 @@ const NavBar = () => {
                 <Tooltip title="Open settings">
                   <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                     <Avatar
-                      alt="Remy Sharp"
+                      alt={authUser?.username?.toUpperCase()}
                       src="/static/images/avatar/2.jpg"
                     />
                   </IconButton>

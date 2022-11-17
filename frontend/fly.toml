@@ -1,6 +1,6 @@
 # fly.toml file generated for bookmark-frontend on 2022-11-15T22:07:05+06:00
 
-app = "bookmark-frontend"
+app = "bookmark"
 kill_signal = "SIGINT"
 kill_timeout = 5
 processes = []
