@@ -1,4 +1,4 @@
-<h1 align="center">Bookmark<h1>
+# Bookmark
 
 The “FullStack Army” a learning platform of programming under the monitoring of the best promising programmer in BD Mr. H M Nayem. As a student we were selected for building an E-commerce web application. We chose our product as a “book” and named it as “BOOKMARK”.
 This application is fully made of modern technology in running trends of the IT industry.
@@ -19,10 +19,6 @@ After selecting an application site we mixed our thoughts to build the site as m
   link [https://app.diagrams.net/#G1wNdCHSYpqH2e38unt7cXo60WwZlVuBpd]
   We use the wireframe to design our interface how it looks, with some pages and components. From the component tree our design made easy deciding the features of our product.
 - For database anyalysis ER diagram link [https://app.diagrams.net/#G1wNdCHSYpqH2e38unt7cXo60WwZlVuBpd]
-
-## frontend Details link: here readme link or host link.. will show
-
-## backend Details link: backend readme link or host link...will show
 
 ## UI screens (some screen shot of project pages will show with 3 or 4 images)
 
@@ -177,10 +173,8 @@ Base Project Requirement -You have to create an Ecommerce application containing
 ## Deployment:
 
 yet to be deployed
-
-### Contributiors :
-
-<<<<<<< HEAD
+  frontend: https://bookmark-bd.fly.dev/
+  api: https://bookmark-backend.fly.dev/api
 
 ### project members:
 
