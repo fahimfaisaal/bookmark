@@ -116,4 +116,4 @@ Representation Layer:
 - Tags —> tagsApi.js
 - User —> userApi.js
 
-deployed at fly: https://bookmark.fly.dev/
+deployed at fly: https://bookmark-bd.fly.dev/
