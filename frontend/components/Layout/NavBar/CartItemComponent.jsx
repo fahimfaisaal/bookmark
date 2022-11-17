@@ -30,7 +30,7 @@ export default function CartItemComponent({
   cartLists,
   totalAmount
 }) {
-  console.log({ totalAmount });
+  // console.log({ totalAmount });
   const isAuthenticated = useSelector((state) => state?.auth);
   const [postOrder] = usePostOrderMutation();
 
@@ -105,7 +105,10 @@ export default function CartItemComponent({
           <Box sx={{ overflowY: 'scroll' }}>
             {cartLists?.length > 0 ? (
               cartLists?.map((cart) => (
-                <CartItemContainer key={shortId()}>
+                <CartItemContainer
+                  key={shortId()}
+                  sx={{ '&:last-child': { mb: '8rem' } }}
+                >
                   <CartItem cart={cart} cartId={cart?.id} key={cart?.id} />
                 </CartItemContainer>
               ))

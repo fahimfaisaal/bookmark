@@ -7,7 +7,7 @@ import {
   TableRow,
   Typography
 } from '@mui/material';
-import { StyledTableCell, StyledTableContainer } from './Styles';
+import { StyledTableContainer } from './Styles';
 
 function OrderItem({ orderId, status, deliveryTime, orderDate }) {
   return (
@@ -33,14 +33,14 @@ function OrderItem({ orderId, status, deliveryTime, orderDate }) {
             <TableCell>Delivery Time :</TableCell>
             <TableCell>{deliveryTime}</TableCell>
           </TableRow>
-          <TableRow>
+          {/* <TableRow>
             <StyledTableCell>Amount :</StyledTableCell>
             <StyledTableCell>$150.00</StyledTableCell>
           </TableRow>
           <TableRow>
             <StyledTableCell>Total Price :</StyledTableCell>
             <StyledTableCell>$153.00</StyledTableCell>
-          </TableRow>
+          </TableRow> */}
         </TableBody>
       </Table>
     </StyledTableContainer>

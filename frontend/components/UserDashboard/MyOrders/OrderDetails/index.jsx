@@ -11,10 +11,18 @@ import { Box } from '@mui/system';
 import { StyledTableCell } from '../OrderItem/Styles';
 import { StyledBox, StyledOrderBox } from './Styles';
 
-function OrderDetails() {
-  return (
+function OrderDetails({ selectedOrder }) {
+  const totalPrice = selectedOrder?.attributes?.cart?.data?.reduce(
+    (acc, curr) =>
+      acc +
+      (curr?.attributes?.variant?.data?.attributes?.price || 0) *
+        curr?.attributes?.quantity,
+    0
+  );
+
+  return selectedOrder ? (
     <>
-      <Typography variant="h3">Order Details - CDDSGG445</Typography>
+      <Typography variant="h3">Order Details - #{selectedOrder?.id}</Typography>
       <StyledOrderBox>
         <Grid container spacing={6}>
           <Grid item sm={12} md={6}>
@@ -32,7 +40,7 @@ function OrderDetails() {
                   <TableBody>
                     <TableRow>
                       <TableCell>Sub Total</TableCell>
-                      <TableCell>$150.00</TableCell>
+                      <TableCell>${totalPrice}</TableCell>
                     </TableRow>
                     <TableRow>
                       <TableCell>Discount</TableCell>
@@ -44,11 +52,11 @@ function OrderDetails() {
                     </TableRow>
                     <TableRow>
                       <TableCell>Tax</TableCell>
-                      <TableCell>$3.00</TableCell>
+                      <TableCell>$0.00</TableCell>
                     </TableRow>
                     <TableRow>
                       <StyledTableCell>Total</StyledTableCell>
-                      <StyledTableCell>$153.00</StyledTableCell>
+                      <StyledTableCell>${totalPrice}</StyledTableCell>
                     </TableRow>
                   </TableBody>
                 </Table>
@@ -58,6 +66,8 @@ function OrderDetails() {
         </Grid>
       </StyledOrderBox>
     </>
+  ) : (
+    'No Order Select'
   );
 }
 

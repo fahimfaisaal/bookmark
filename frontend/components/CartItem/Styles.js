@@ -3,6 +3,9 @@ import { Stack, styled } from '@mui/system';
 
 export const ItemContainerStyle = styled(Stack)(() => ({
   alignItems: 'center'
+  // '&:last-child': {
+  //   background: 'red'
+  // }
 }));
 
 export const ImgContainerStyle = styled(Box)(({ theme }) => ({

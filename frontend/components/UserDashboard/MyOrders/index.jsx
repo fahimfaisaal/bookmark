@@ -1,6 +1,7 @@
 import { Box, Grid, Typography } from '@mui/material';
 import { Stack } from '@mui/system';
-import React from 'react';
+import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import { useGetOrdersQuery } from '../../../store/features/orders/ordersApi';
 import { NoOrderItemFound } from '../../Layout/NavBar/NoDataItemFound';
 import OrderDetails from './OrderDetails';
@@ -9,9 +10,11 @@ import ProgressBar from './ProgressBar';
 import { StyledGrid } from './Styles';
 
 function MyOrders() {
-  const { data: usersOrders } = useGetOrdersQuery({ usersId: 85 });
-  console.log({ usersOrders });
-  let totalPrice = 0;
+  const [selectedOrder, setSelectOrder] = useState();
+  const authUser = useSelector((state) => state?.auth?.user);
+  const { data: usersOrders } = useGetOrdersQuery({ usersId: authUser?.id });
+
+  console.log({ selectedOrder });
   return (
     <Grid container spacing={2} sx={{ marginTop: 0.5 }}>
       <StyledGrid item xs={12} sm={12} md={12} lg={4}>
@@ -21,17 +24,10 @@ function MyOrders() {
         <Stack spacing={2} sx={{ overflow: 'auto', height: '70%' }}>
           {usersOrders?.data?.length > 0 ? (
             usersOrders?.data?.map((order) => {
-              order?.attributes?.usersId?.data?.attributes?.carts?.data?.map(
-                (p) => {
-                  const price = p?.attributes?.variant?.data?.attributes?.price;
-                  console.log(price);
-                }
-              );
-              console.log({ totalPrice, order });
               return (
-                <Box key={order.id}>
+                <Box key={order.id} onClick={() => setSelectOrder(order)}>
                   <OrderItem
-                    orderId={order?.attributes?.id}
+                    orderId={order?.id}
                     status={order?.attributes?.status}
                     deliveryTime={order?.attributes?.placedOn}
                     orderDate={new Date(
@@ -51,8 +47,8 @@ function MyOrders() {
         </Stack>
       </StyledGrid>
       <StyledGrid item xs={12} sm={12} md={12} lg={7}>
-        <OrderDetails />
-        <ProgressBar />
+        <OrderDetails selectedOrder={selectedOrder} />
+        <ProgressBar status={selectedOrder?.attributes?.status} />
       </StyledGrid>
     </Grid>
   );
