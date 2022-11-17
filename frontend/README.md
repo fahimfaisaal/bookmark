@@ -1,119 +1,119 @@
 # Bookmark : frontend
 
+## Introduction
 
-# Introduction 
-Project bookmark frontend is structured based on the clientsite requirement. This portion is a continuous process of analytics of different mechanisms by the team. Team members were busy making the ui/ux to functionalities of all aspects along with the coding part. The Front part has a lot more user activities and interaction with the project. NEXTJs and Material Ui are chosen to build the layout. 
+Project bookmark frontend is structured based on the clientsite requirement. This portion is a continuous process of analytics of different mechanisms by the team. Team members were busy making the ui/ux to functionalities of all aspects along with the coding part. The Front part has a lot more user activities and interaction with the project. NEXTJs and Material Ui are chosen to build the layout.
 
+## Environment:
 
-# Environment:
-The frontend part is constructed on the NODE.js environment. Npm package manager latest version used. Next.js is used to create react based web applications and Material UI is used for styling the application. 
+The frontend part is constructed on the NODE.js environment. Npm package manager latest version used. Next.js is used to create react based web applications and Material UI is used for styling the application.
 
-# Installation
+## Installation
 
-***Next.js :***  to install the next.js run the command 
+**_Next.js :_** to install the next.js run the command
+
 ```
 $ npx create-next-app@latest
 ```
-**Material UI :** 
-``` 
+
+**Material UI :**
+
+```
 $ yarn add @mui/material @emotion/react @emotion/styled
 ```
 
 **Theme Customization :**
 
-
 **Link** see[https://github.com/minimal-ui-kit/material-kit-react/tree/main/src/theme]
 
+### Table of contents
 
-## Table of contents
 - Representation Layer
 - Data layer // rtk query
-- Network layer 
-- Logical layer // 
+- Network layer
+- Logical layer //
 
-**Note :**  if user input a data it will take by the network layer to data layer reach the db.
+**Note :** if user input a data it will take by the network layer to data layer reach the db.
 Representation Layer:
 
-**Layout:** 
+**Layout:**
 
+### List of UI Reusable components:
 
-## List of UI Reusable components:
 - Address Card
 - Author Card
 - Author Profile
-- Book card 
+- Book card
 - Cart Item
 - Category Card
 - Custom image
-**- Filter** 
-- cartList 
-- radioButtonGroup 
+  **Filter**
+- cartList
+- radioButtonGroup
 - rangeSlider
 - search
 - squireList
-- Icons  -->location
-         --> socialMedia
-**Layout**
-- Auth 
+- Icons -->location
+  --> socialMedia
+  **Layout**
+- Auth
 - Footer
 - Navber
-- Publication Card  -> cardTitle
+- Publication Card -> cardTitle
 - Publication Cover
 - Review Card
 - Shared folder
-- ***custom LInk***
+- **_custom LInk_**
 - Modals
 - SearchBar
 - UI --→ carosalBtn
-**UserDashboard**
+  **UserDashboard**
 - change Password
-- Menu 
-- myOrders 
+- Menu
+- myOrders
 - my wishList
 - profile
-**Buttons**
- - Checkout:
- - Cart:
- - Load More:
- - Slider:
- - Newsletter:
- - Menu cart:
- - Side Cart
- - Join
- - Login/Register
+  **Buttons**
+- Checkout:
+- Cart:
+- Load More:
+- Slider:
+- Newsletter:
+- Menu cart:
+- Side Cart
+- Join
+- Login/Register
 
- ---
-## Pages : 
-- About page 
+---
+
+### Pages
+
+- About page
 - Authors
 - Books
-- Checkout -→ items 
-- Contact 
-**Profile** 
+- Checkout -→ items
+- Contact
+  **Profile**
 - Change Password
 - my orders
-- wishList 
+- wishList
 - Publishers
 
+### Data layer and Logical layer:
 
- ### Data layer and Logical layer:
- ***RTK Query:***  
+**_RTK Query:_**  
  the regarding all logical function is included into RTK Query
- **Feature of all store :**
-* Api -> Apislice.js
-* Auth → authSlice.js  authApi.js 
-* Book → booksApi.js bookSlice.js  
-* Carts → cartApi.js cartSlice.js
-* Checkout -> checkoutApi.js
-* Favorite  -> favoureatesApi.js
-* Order    - > orderApi.js
-* Rating   → rattingApi.js 
-* Tags    —> tagsApi.js
-* User   —> userApi.js
+**Feature of all store :**
 
-### Network Layer
+- Api -> Apislice.js
+- Auth → authSlice.js authApi.js
+- Book → booksApi.js bookSlice.js
+- Carts → cartApi.js cartSlice.js
+- Checkout -> checkoutApi.js
+- Favorite -> favoureatesApi.js
+- Order - > orderApi.js
+- Rating → rattingApi.js
+- Tags —> tagsApi.js
+- User —> userApi.js
 
-
-
-
-
+deployed at fly: https://bookmark.fly.dev/
