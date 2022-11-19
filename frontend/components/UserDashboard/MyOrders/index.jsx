@@ -12,9 +12,12 @@ import { StyledGrid } from './Styles';
 function MyOrders() {
   const [selectedOrder, setSelectOrder] = useState();
   const authUser = useSelector((state) => state?.auth?.user);
-  const { data: usersOrders } = useGetOrdersQuery({ usersId: authUser?.id });
+  const { data: usersOrders } = useGetOrdersQuery(
+    { usersId: authUser?.id },
+    { skip: !authUser?.id }
+  );
 
-  console.log({ selectedOrder });
+  console.log({ selectedOrder, usersOrders });
   return (
     <Grid container spacing={2} sx={{ marginTop: 0.5 }}>
       <StyledGrid item xs={12} sm={12} md={12} lg={4}>

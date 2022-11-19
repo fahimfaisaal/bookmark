@@ -37,6 +37,14 @@
     },
     "cartThumbnail": {
       "type": "string"
+    },
+    "process": {
+      "type": "enumeration",
+      "enum": [
+        "IN_CART",
+        "IN_ORDER",
+        "IN_COMPLETE"
+      ]
     }
   }
 }

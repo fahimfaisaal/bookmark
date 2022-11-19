@@ -4,7 +4,7 @@ export const cartsApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getCartsByUser: builder.query({
       query: ({ userId }) =>
-        `/carts?populate=*&filters[userId][id][$eq]=${userId}`,
+        `/carts?populate=*&filters[userId][id][$eq]=${userId}&filters[process][$eq]=IN_CART`,
       providesTags: ['carts']
     }),
 
