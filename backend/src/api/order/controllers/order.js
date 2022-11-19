@@ -72,7 +72,7 @@ module.exports = createCoreController('api::order.order', ({ strapi }) => ({
     //   return res.status(404).send({ error: "This product doesn't exist" });
     // }
 
-    const { user } = ctx.state; //From Magic Plugin
+    const { user } = ctx.state;
 
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],

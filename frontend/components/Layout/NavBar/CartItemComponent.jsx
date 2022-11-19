@@ -32,42 +32,6 @@ export default function CartItemComponent({
   const isAuthenticated = useSelector((state) => state?.auth);
   const [postOrder] = usePostOrderMutation();
 
-  // const navigateCheckout = async () => {
-  //   toggleDrawer(false);
-  //   if (isAuthenticated?.user) {
-  //     // router.push('/checkout');
-  //     const stripe = await getStripe();
-
-  //     const response = await axios.post(
-  //       '/api/stripe',
-  //       JSON.stringify(cartLists),
-  //       {
-  //         headers: {
-  //           'Content-Type': 'application/json'
-  //         }
-  //       }
-  //     );
-
-  //     if (response.statusCode === 500) return;
-
-  //     const orderData = {
-  //       userId: cartLists[0]?.usersId?.data?.id,
-  //       books: []
-  //     };
-  //     cartLists.map((item) => {
-  //       orderData.books.push(item?.id);
-  //     });
-
-  //     postOrder(orderData);
-
-  //     const data = await response.data;
-
-  //     toast.loading('Redirecting...');
-
-  //     stripe.redirectToCheckout({ sessionId: data.id });
-  //   }
-  // };
-
   const navigateCheckout = async () => {
     toggleDrawer(false);
     if (isAuthenticated?.user) {
