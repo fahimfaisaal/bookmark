@@ -42,6 +42,9 @@
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::cart.cart"
+    },
+    "checkout_session": {
+      "type": "string"
     }
   }
 }

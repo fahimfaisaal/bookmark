@@ -230,6 +230,7 @@ function BookItem() {
     data.variant =
       bookVariants?.data?.attributes?.variants?.data[activeVariant]?.id;
     data.quantity = cartQty;
+    data.process = 'IN_CART';
     if (
       cartBook?.data[0]?.id &&
       cartBook?.data[0]?.attributes?.variant?.data?.id === data?.variant

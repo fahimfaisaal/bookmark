@@ -6,12 +6,10 @@ import {
   Typography
 } from '@mui/material';
 import { Stack } from '@mui/system';
-import axios from 'axios';
 import { toast } from 'react-hot-toast';
 import { HiShoppingBag } from 'react-icons/hi';
 import { IoIosClose } from 'react-icons/io';
 import { useSelector } from 'react-redux';
-import getStripe from '../../../lib/getStripe';
 import { usePostOrderMutation } from '../../../store/features/orders/ordersApi';
 import { shortId } from '../../../utils';
 import CartItem from '../../CartItem';
@@ -37,36 +35,15 @@ export default function CartItemComponent({
   const navigateCheckout = async () => {
     toggleDrawer(false);
     if (isAuthenticated?.user) {
-      // router.push('/checkout');
-      const stripe = await getStripe();
+      const cart = cartLists?.map((item) => item.id);
 
-      const response = await axios.post(
-        '/api/stripe',
-        JSON.stringify(cartLists),
-        {
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        }
-      );
+      postOrder({ data: { cart } });
 
-      if (response.statusCode === 500) return;
-
-      const orderData = {
-        userId: cartLists[0]?.usersId?.data?.id,
-        books: []
-      };
-      cartLists.map((item) => {
-        orderData.books.push(item?.id);
-      });
-
-      postOrder(orderData);
-
-      const data = await response.data;
+      // const data = await response.data;
 
       toast.loading('Redirecting...');
 
-      stripe.redirectToCheckout({ sessionId: data.id });
+      // stripe.redirectToCheckout({ sessionId: data.id });
     }
   };
 
